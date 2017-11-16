@@ -104,14 +104,11 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
     }
 
     onOptionsChange(e: TopClientOptionSelection) {
-        let ret: Partial<TopClientState> = {};
-        if (e.Group !== undefined) ret.currentGroup = e.Group;
-        if (e.Indicator !== undefined) ret.currentIndicator = e.Indicator;
-        const newData = this.calculateData(this.props.clients, ret.currentGroup, ret.currentIndicator);
-        this.setState(prev => {
-            ret.currentData = newData;
-            return ret;
-        });
+        let newState: Partial<TopClientState> = {};
+        if (e.Group !== undefined) newState.currentGroup = e.Group;
+        if (e.Indicator !== undefined) newState.currentIndicator = e.Indicator;
+        newState.currentData = this.calculateData(this.props.clients, newState.currentGroup, newState.currentIndicator);
+        this.setState(prev => newState);
     }
 
     render() {
