@@ -240,7 +240,7 @@ const createAllSecuritiesPerformance = () => {
 
 const fixPerformance = (perf: { date: string, perf: number }[]) => {
     const dict = perf.reduce((prev,curr) =>{
-        prev[curr.date] = perf;
+        prev[curr.date] = curr.perf;
         return prev;
     },{});    
 
@@ -249,7 +249,7 @@ const fixPerformance = (perf: { date: string, perf: number }[]) => {
     let ret:{ date: string, perf: number }[] = [];
     let lastPerf = dict[maxDate];
 
-    while (dt.year() >=2017) {
+    while (dt.year() >=2013) {
         const date = dt.format('YYYY-MM-DD');
         lastPerf = dict[date] || lastPerf;
         console.log(date, lastPerf);
@@ -262,14 +262,13 @@ const fixPerformance = (perf: { date: string, perf: number }[]) => {
     return ret;
 }
 
-
 const fixPerformances = (perf: { [id: string]: { date: string, perf: number }[] }) => {
     return Object.keys(perf).reduce((prev, curr) => {
+        console.log('ISIN', curr);
         prev[curr] = fixPerformance(perf[curr]);
         return prev;
     },{});
 }
-
 
 const go = async () => {
     try {
@@ -322,7 +321,7 @@ const go = async () => {
         dump('output/strategy.json', { ...strategies, ...strategies2 });
         
         console.log(`created ${Object.keys(preformances).length} performances`);
-        dump('output/performance.json', fixPerformances({ ...preformances, ...performances2 }));
+        dump('output/performances.json', fixPerformances({ ...preformances, ...performances2 }));
         
     } catch (error) {
         console.error(error);
