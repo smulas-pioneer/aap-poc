@@ -5,8 +5,8 @@ import { rnd, numArray, getRndItem, hasFlag, getAgentViewsFromClients } from './
 import { SpotlightSearchParms, SpotlightContext, Holding, StrategyItem, InterviewResult } from './common/interfaces';
 import * as ce from './coreEngine';
 import { intersection } from 'lodash';
-import { getRandomRadar } from './coreEngine';
 import * as moment from 'moment';
+import { getRandomRadar } from './common/radarUtils';
 
 export const patchHoldings = (holdings: Model.Holding[], transactions: Model.Transaction[]): Promise<Model.Holding[]> => {
     return Promise.resolve([]);

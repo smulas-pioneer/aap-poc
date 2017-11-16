@@ -1,12 +1,12 @@
 import { Portfolio, Holding, Client, Radar, InterviewResult, StrategyItem, AlertHistory, TimeHorizon } from './common/interfaces';
 import { securities, cash } from './common/securities';
-import {createRadarFromStrategy} from './common/radarUtils';
+import { createRadarFromStrategy } from './common/radarUtils';
 //import * as ce from './_db/coreEngine';
 
 import * as faker from 'faker';
 //import * as svc from './_db/service';
 import * as fs from 'fs';
-import { sumBy ,maxBy} from 'lodash';
+import { sumBy, maxBy } from 'lodash';
 import * as moment from 'moment';
 import { getAllSecuirities, getAllPerformances, getAllStrategies } from './fakedata'
 var f = faker;
@@ -16,7 +16,7 @@ const log = console.log;
 const rnd = (min: number, max: number) => Math.floor(Math.random() * (max - min)) + min;
 
 
-const dump = (file: string, data: any) => fs.writeFileSync(`./build/${file}`,JSON.stringify(data, null, 2));
+const dump = (file: string, data: any) => fs.writeFileSync(`./build/${file}`, JSON.stringify(data, null, 2));
 
 const MODEL_COUNT = 10;
 const CLIENT_COUNT = 150;
@@ -239,37 +239,36 @@ const createAllSecuritiesPerformance = () => {
 }
 
 const fixPerformance = (perf: { date: string, perf: number }[]) => {
-    const dict = perf.reduce((prev,curr) =>{
-        prev[curr.date] = perf;
+    const dict = perf.reduce((prev, curr) => {
+        prev[curr.date] = curr.perf;
         return prev;
-    },{});    
+    }, {});
 
-    const maxDate = maxBy(perf, d=>d.date).date;
+    const maxDate = maxBy(perf, d => d.date).date;
     let dt = moment(maxDate);
-    let ret:{ date: string, perf: number }[] = [];
+    let ret: { date: string, perf: number }[] = [];
     let lastPerf = dict[maxDate];
 
-    while (dt.year() >=2017) {
+    while (dt.year() >= 2013) {
         const date = dt.format('YYYY-MM-DD');
         lastPerf = dict[date] || lastPerf;
-        console.log(date, lastPerf);
         ret.push({
             date,
-            perf:lastPerf
+            perf: lastPerf
         });
-        dt = dt.subtract('days',10);
+        dt = dt.subtract('days', 10);
     }
-    return ret;
+    return ret.sort((a,b)=>a.date.localeCompare(b.date));
 }
-
 
 const fixPerformances = (perf: { [id: string]: { date: string, perf: number }[] }) => {
-    return Object.keys(perf).reduce((prev, curr) => {
+    const ret = Object.keys(perf).reduce((prev, curr) => {
         prev[curr] = fixPerformance(perf[curr]);
         return prev;
-    },{});
+    }, {} as { [id: string]: { date: string, perf: number }[] });
+    const onlyCash = ret['FR0010314401'].map(r => ({ ...r, perf: 1 }));
+    return { ...ret, ['CASH']: onlyCash };
 }
-
 
 const go = async () => {
     try {
@@ -305,25 +304,25 @@ const go = async () => {
 
         console.log(`created ${alertHistory.length} Alert History`);
         dump('output/securities2.json', secuirities);
-        
+
         console.log(`created ${alertHistory.length} Alert History`);
         dump('output/alertHistory.json', alertHistory);
-        
+
         console.log(`created ${clients.length} clients`);
         dump('output/clients.json', clients);
-        
+
         console.log(`created ${agents.length} agents`);
         dump('output/agents.json', agents);
-        
+
         console.log(`created ${Object.keys(histories).length} history`);
         dump('output/history.json', histories);
-        
+
         console.log(`created ${Object.keys(strategies).length} strategy`);
         dump('output/strategy.json', { ...strategies, ...strategies2 });
-        
+
         console.log(`created ${Object.keys(preformances).length} performances`);
-        dump('output/performance.json', fixPerformances({ ...preformances, ...performances2 }));
-        
+        dump('output/performances.json', fixPerformances({ ...preformances, ...performances2 }));
+
     } catch (error) {
         console.error(error);
     }

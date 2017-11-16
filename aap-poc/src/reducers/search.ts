@@ -4,8 +4,8 @@ import * as Model from '../actions/model';
 import { getAgentViewsFromClients } from '../_db/utils';
 import { createSelector } from 'reselect';
 import { intersection } from 'lodash';
-import { calculateAlertHistory } from '../_db/coreEngine';
 import { access } from 'fs';
+import { calculateAlertHistory } from '../_db/common/radarUtils';
 
 export interface State {
     result: {

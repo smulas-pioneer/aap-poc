@@ -2,12 +2,12 @@ import * as React from 'react';
 import { StrategyItem, Security } from '../../_db/interfaces';
 import { Table, Button, Segment, Menu, Icon, Dropdown } from 'semantic-ui-react';
 import { LangDictionary } from '../../reducers/language/interfaces';
-import { suggestedPosition } from '../../_db/coreEngine';
 import { HoldingWeigthControl } from './HoldingWeightControl';
 import { sumBy } from 'lodash';
 import { numArray } from '../../_db/utils';
 import { Spotlight } from '../spotlight';
 import { ConfirmDialog } from '../shared/ConfirmDialog';
+import { suggestedPosition } from '../../_db/common/radarUtils';
 
 interface Props {
     holdings: StrategyItem[],
@@ -123,7 +123,7 @@ export class Holdings extends React.Component<Props, State> {
                                 const factor = this.state.mode == 'Weight' ? 1
                                     : this.state.mode == 'Quantity' ? t.currentQuantity / t.currentWeight / 100
                                         : t.currentAmount / t.currentWeight / 100;
-                                return (!t.newSecurity && t.currentQuantity == 0 && t.suggestedDelta == 0) ||
+                                return (!t.newSecurity && t.currentQuantity == 0 && t.suggestedDelta == 0) ? null :
                                     <Table.Row key={i}>
                                         <Table.Cell>{
                                             i == 1 ? <Icon color="green" name='thumbs up' /> :
@@ -142,7 +142,6 @@ export class Holdings extends React.Component<Props, State> {
                                     </Table.Row>
                             })
                         }
-                        {/*numArray(9 - holdings.length).map(createEmptyRow)*/}
                     </Table.Body>
                     <Table.Footer>
                         <Table.Row>

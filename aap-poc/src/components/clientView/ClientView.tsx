@@ -21,6 +21,7 @@ import { PerformanceChart } from '../securityView/PerformanceChart';
 import { RiskReturnGraph } from './RiskReturnGraph';
 import { AdvancedGrid } from '../shared/GridOverflow';
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
+import { createRadarFromStrategy, suggestedPosition, currentPosition, modelPosition } from '../../_db/common/radarUtils';
 
 const conn = appConnector<{ id: string }>()(
     (s, p) => ({
@@ -68,9 +69,9 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
     componentWillReceiveProps(next: any) {
         if (next.strategy.length > 0) {
-            const sugg = ce.suggestedPosition(next.strategy);
+            const sugg = suggestedPosition(next.strategy);
             const suggBreakdown = ce.getBreakdown(sugg);
-            const radar = ce.createRadarFromStrategy(next.strategy);
+            const radar = createRadarFromStrategy(next.strategy);
 
             this.setState({
                 breakdown: suggBreakdown,
@@ -121,12 +122,12 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                 {radar && <Segment basic>
                     <h5 onClick={() => this.setState({ currentGraphIndex: 1 })} style={{ textAlign: 'center', cursor: 'pointer' }}>Performance</h5>
                     <PerformanceChart
-                        data={ce.getPositionPerformance(ce.suggestedPosition(strategy))}
+                        data={ce.getPositionPerformance(suggestedPosition(strategy))}
                         width={1 == currentGraphIndex ? 700 : 350}
                         height={1 == currentGraphIndex ? 413 : 300}
                         advancedView={1 == currentGraphIndex}
                         lang={this.props.lang}
-                        actualData={ce.getPositionPerformance(ce.currentPosition(strategy))}
+                        actualData={ce.getPositionPerformance(currentPosition(strategy))}
                         
                     />
                 </Segment>}
@@ -135,7 +136,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                 {radar && <Segment basic>
                     <h5 onClick={() => this.setState({ currentGraphIndex: 2 })} style={{ textAlign: 'center', cursor: 'pointer' }}>Risk Return</h5>
                     <RiskReturnGraph
-                        data={ce.getRiskReturn(ce.suggestedPosition(strategy), ce.modelPosition(strategy), 'All')}
+                        data={ce.getRiskReturn(suggestedPosition(strategy), modelPosition(strategy), 'All')}
                         width={2 == currentGraphIndex ? 700 : 350}
                         height={2 == currentGraphIndex ? 413 : 300}
                         lang={this.props.lang}
