@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { appConnector } from 'app-support';
-import { getCurrentClient, getLanguage, getHistory, selectStrategy } from '../../reducers/index';
+import { getCurrentClient, getLanguage, getHistory, selectStrategy, selectStrategySuccessCount } from '../../reducers/index';
 import { getClient, getSuggestions, getClientSuccess, addSecurity, addHistory } from '../../actions/index';
 import { LangDictionary } from '../../reducers/language/interfaces';
 import { Client, Breakdown, Radar, StrategyItem, RadarStrategyParm, InterviewResult } from '../../_db/interfaces';
@@ -25,7 +25,8 @@ const conn = appConnector<{ id: string }>()(
         client: getCurrentClient(s),
         lang: getLanguage(s),
         history: getHistory(s),
-        strategy: selectStrategy(s)
+        strategy: selectStrategy(s),
+        strategySuccessCount: selectStrategySuccessCount(s),
     }),
     { getClient, getSuggestions, getClientSuccess, addSecurity, addHistory }
 )
@@ -131,6 +132,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     height={413}
                     clientTimeHorizon={this.props.client!.timeHorizon}
                     advancedView={0 == currentGraphIndex}
+                    version={this.props.strategySuccessCount}
                     lang={this.props.lang} />
             },
             {

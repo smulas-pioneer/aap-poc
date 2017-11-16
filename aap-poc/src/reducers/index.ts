@@ -46,6 +46,7 @@ export const getSearchFilter = (state: AppState, uid: string) => fromSearch.getS
 
 export const getCurrentClient = (state: AppState) => fromClient.getCurrentClient(state.client);
 export const getSuggestedTransactions = (state: AppState) => fromClient.getSuggestedTransactions(state.client);
+export const selectStrategySuccessCount = (state: AppState) => fromClient.selectStrategySuccessCount(state.client);
 
 export const getAgentView = (state: AppState, uid: string) => fromSearch.getAgentView(state.search, uid);
 export const getBreakdowns = (state: AppState) => fromClient.getBreakdowns(state.client);

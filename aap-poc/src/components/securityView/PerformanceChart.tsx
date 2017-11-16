@@ -32,8 +32,10 @@ interface PerformanceChartProps {
     showLegend?: boolean
 
     lang: LangDictionary;
-    advancedView?: boolean
-    clientTimeHorizon?: TimeHorizon
+    advancedView?: boolean;
+    clientTimeHorizon?: TimeHorizon;
+    version: number;
+
 }
 
 interface PerformanceChartState {
@@ -71,6 +73,12 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
     componentWillReceiveProps(next: PerformanceChartProps) {
         if (next.data && next.data[next.data.length - 1].perf != this.state.data[this.state.data.length - 1].perf) {
             this.setData({ data: next.data })
+        }
+        if (next.version != this.props.version) {
+            this.setState({
+                targetReturn: this.returnFor95(next.clientTimeHorizon || 'SHORT').toString(),
+                probability: 95,
+            });
         }
     }
 
@@ -122,7 +130,7 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
     }
     render() {
         const { width, height, showLegend, advancedView, lang, actualData } = this.props;
-        const { data, period,initalPerf } = this.state;
+        const { data, period, initalPerf } = this.state;
         const actualHeight = advancedView ? (height || 200) * 2.3 / 3 : height || 200;
         const fmt = new Intl.NumberFormat(lang.NUMBER_FORMAT, {
             minimumFractionDigits: 2,

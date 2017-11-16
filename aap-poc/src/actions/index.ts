@@ -88,7 +88,6 @@ export const getStrategy = createPromiseAction('GET_STRATEGY', svc.getStrategy, 
 
 export const getSuggestions = createPromiseAction('GET_SUGGESTIONS', svc.getSuggestion, getStrategySuccess);
 
-
 export const getAlertHistorySuccess = createAction<AlertHistory[]>('GET_ALERT_HISTORY_SUCCESS');
 export const getAlertHistory = createPromiseAction('GET_ALERT_HISTORY', svc.getAlertHistory, getAlertHistorySuccess);
 

@@ -119,7 +119,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                 />}
             </div>,
             <div key={1}>
-                {radar && <Segment basic>
+                {/*radar && <Segment basic>
                     <h5 onClick={() => this.setState({ currentGraphIndex: 1 })} style={{ textAlign: 'center', cursor: 'pointer' }}>Performance</h5>
                     <PerformanceChart
                         data={ce.getPositionPerformance(suggestedPosition(strategy))}
@@ -128,9 +128,9 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         advancedView={1 == currentGraphIndex}
                         lang={this.props.lang}
                         actualData={ce.getPositionPerformance(currentPosition(strategy))}
-                        
+                        version={1}
                     />
-                </Segment>}
+                </Segment>*/}
             </div>,
             <div key={2}>
                 {radar && <Segment basic>
