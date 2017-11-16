@@ -127,7 +127,7 @@ export class Holdings extends React.Component<Props, State> {
                                     <Table.Row key={i}>
                                         <Table.Cell>{
                                             i == 1 ? <Icon color="green" name='thumbs up' /> :
-                                                i == 2 ? <Icon color="black" name='bomb' /> :
+                                                i == 2 ? <Icon color="black" name='thumbs down' /> :
                                                     i == 3 ? <Icon color="red" name='heart' /> : null
                                         }</Table.Cell>
                                         <Table.Cell>{t.security.SecurityName}</Table.Cell>

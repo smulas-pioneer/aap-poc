@@ -262,6 +262,15 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
             </Grid.Column>
         </Grid.Row>
         <Grid.Row>
+            <Grid.Column width={16} style={{margin:0}}>
+                <Grid fluid columns="equal">
+                    <COL data={{ 'Client Id': client.id, 'Entry Date': client.lastAdvicedate }} />
+                    <COL data={{ 'Tel': client.phone, 'Email': client.email }} />
+                    <COL data={{ 'Address': client.address.streetAddress, 'City': client.address.city }} />
+                    <COL right data={{ 'Mifid': client.mifid, 'Model': client.modelName, [lang.TIME_HORIZON]:client.timeHorizon }} />
+                </Grid>
+            </Grid.Column>
+            {/*}
             <Grid.Column width="12" >
                 <Form size="large">
                     <Form.Group inline widths={3} style={{ marginBottom: 0 }}>
@@ -303,10 +312,22 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
                     </Form.Group>
                 </Form>
             </Grid.Column>
+            */}
         </Grid.Row>
     </Grid>
     )
 }
+
+const COL = (props: { data: { [label: string]: string|number }, right?:boolean }) => {
+    return <Grid.Column textAlign={props.right?"right":"left"} style={{fontSize:'medium',paddingTop:0}}>
+        {Object.keys(props.data).map((d, i) => {
+            return <div key={i} >
+                <b>{d}:</b> &nbsp; {props.data[d]}
+            </div>
+        })}
+    </Grid.Column>
+}
+
 
 const ClientAlert = (props: { radar: Radar, lang: LangDictionary }) => {
     const ICONS = {
