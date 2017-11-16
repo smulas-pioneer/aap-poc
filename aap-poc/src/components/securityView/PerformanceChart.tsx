@@ -36,6 +36,7 @@ interface PerformanceChartProps {
     clientTimeHorizon?: TimeHorizon;
     version: number;
 
+    onCalculate95TargetRetForClientTimeHorizon?: (value: number) => void;
 }
 
 interface PerformanceChartState {
@@ -60,14 +61,16 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
         const reg = regression(props.advancedView || false, TimeHorizonMonths[props.clientTimeHorizon || 'SHORT'], this.props.data, this.props.actualData || this.props.data);
         this.getProbabilityByTimeHorizon = reg.getProbabilityByTimeHorizon;
         this.returnFor95 = reg.returnFor95;
+        const targetReturn = this.returnFor95(props.clientTimeHorizon || 'SHORT');
         this.state = {
             data: reg.data,
             period: 'All',
-            targetReturn: this.returnFor95(props.clientTimeHorizon || 'SHORT').toString(),
+            targetReturn: targetReturn.toString(),
             timeHorizon: props.clientTimeHorizon || 'SHORT',
             probability: 95,
             initalPerf: 0
         }
+        this.props.onCalculate95TargetRetForClientTimeHorizon && this.props.onCalculate95TargetRetForClientTimeHorizon(targetReturn);
     }
 
     componentWillReceiveProps(next: PerformanceChartProps) {
@@ -75,9 +78,12 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
             this.setData({ data: next.data })
         }
         if (next.version != this.props.version) {
+            const targetReturn = this.returnFor95(next.clientTimeHorizon || 'SHORT');
             this.setState({
-                targetReturn: this.returnFor95(next.clientTimeHorizon || 'SHORT').toString(),
+                targetReturn: targetReturn.toString(),
                 probability: 95,
+            }, () => {
+                this.props.onCalculate95TargetRetForClientTimeHorizon && this.props.onCalculate95TargetRetForClientTimeHorizon(targetReturn);
             });
         }
     }

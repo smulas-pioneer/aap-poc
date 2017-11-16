@@ -79,7 +79,8 @@ export const English: LanguageState = {
         CITY: "City",
         BRANCH: "Branch",
         ADVISOR: "Advisor",
-
+        RESULTS: "Results",
+        TARGET_RESULT:"Target Result",
 
         PROPOSAL_VALIDATION: { title: 'Proposal validation', message: 'Please validate the proposal for generating the document' },
         HISTORY: {

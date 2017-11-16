@@ -3,7 +3,7 @@ import { appConnector } from 'app-support';
 import { getCurrentClient, getLanguage, getHistory, selectStrategy, selectStrategySuccessCount } from '../../reducers/index';
 import { getClient, getSuggestions, getClientSuccess, addSecurity, addHistory } from '../../actions/index';
 import { LangDictionary } from '../../reducers/language/interfaces';
-import { Client, Breakdown, Radar, StrategyItem, RadarStrategyParm, InterviewResult } from '../../_db/interfaces';
+import { Client, Breakdown, Radar, StrategyItem, RadarStrategyParm, InterviewResult, TimeHorizonMonths, TimeHorizon } from '../../_db/interfaces';
 import * as ce from '../../_db/coreEngine';
 import { sumBy } from 'lodash';
 
@@ -18,7 +18,7 @@ import { ClientAlerts } from '../clientsView/ClientAlerts';
 import { HistoryView, HistoryViewTimeline, HistoryViewTimelineEvent } from './HistoryView';
 import { settings } from 'cluster';
 import { PerformanceContributionGraph } from './PerformanceContribution';
-import { createRadarFromStrategy, suggestedPosition,currentPosition ,modelPosition} from '../../_db/common/radarUtils';
+import { createRadarFromStrategy, suggestedPosition, currentPosition, modelPosition } from '../../_db/common/radarUtils';
 
 const conn = appConnector<{ id: string }>()(
     (s, p) => ({
@@ -38,7 +38,8 @@ interface State {
     radar?: Radar,
     strategy: StrategyItem[],
     axes: RadarStrategyParm,
-    autoplay: boolean
+    autoplay: boolean,
+    currentTargetReturn?: number
 }
 
 class ClientViewCompo extends conn.StatefulCompo<State> {
@@ -133,6 +134,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     clientTimeHorizon={this.props.client!.timeHorizon}
                     advancedView={0 == currentGraphIndex}
                     version={this.props.strategySuccessCount}
+                    onCalculate95TargetRetForClientTimeHorizon={currentTargetReturn => this.setState({ currentTargetReturn })}
                     lang={this.props.lang} />
             },
             {
@@ -190,8 +192,13 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                 <AdvancedGrid gridTemplateColumns="auto 39%">
                     <Segment style={{ margin: 0 }} as={OverflowColumn}>
                         <h5>HOLDINGS</h5>
-                        <Holdings clientId={client.id} lang={lang} holdings={strategy} onChange={this.handleOnChange} onAddSecurity={this.props.addSecurity} onAddHistory={this.props.addHistory} />
-                        <Fees strategy={strategy} lang={lang} />
+                        <Holdings
+                            clientId={client.id} lang={lang} holdings={strategy}
+                            onChange={this.handleOnChange}
+                            onAddSecurity={this.props.addSecurity}
+                            onAddHistory={this.props.addHistory}
+                        />
+                        <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} />
                     </Segment>
                     <Segment style={{ margin: 0 }}>
                         <h5>RADAR</h5>
@@ -265,7 +272,7 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
                             <label>Tel :</label> {client.phone}
                         </Form.Field>
                         <Form.Field>
-                            <label>Address :</label> {client.address.streetAddress} {client.address.city}
+                            <label>Address :</label> {client.address.streetAddress}
                         </Form.Field>
                     </Form.Group>
                     <Form.Group inline widths={3} style={{ marginBottom: 0 }}>
@@ -273,10 +280,10 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
                             <label>Entry Date :</label> {client.lastAdvicedate}
                         </Form.Field>
                         <Form.Field>
-                            <label>Email :</label> {client.email}
+                            <label>Email:</label> {client.email}
                         </Form.Field>
                         <Form.Field>
-                            <label>Time Horizion:</label> {client.timeHorizon}
+                            <label>City:</label>  {client.address.city}
                         </Form.Field>
                     </Form.Group>
                 </Form>
@@ -285,12 +292,13 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
                 <Form size="large">
                     <Form.Group inline widths={1} style={{ marginBottom: 0, display: 'block' }}>
                         <Form.Field>
-                            <label>Mifid :</label> {client.id}
+                        <label>Model:</label> {client.modelName}
+                        <label>Mifid:</label> {client.id}
                         </Form.Field>
                     </Form.Group>
                     <Form.Group inline widths={1} style={{ marginBottom: 0, display: 'block' }}>
                         <Form.Field>
-                            <label>Model :</label> {client.modelName}
+                            <label>Time Horizion:</label> {client.timeHorizon}
                         </Form.Field>
                     </Form.Group>
                 </Form>
@@ -384,7 +392,13 @@ const ClientHistory = (props: { history: InterviewResult[], lang: LangDictionary
     return <Tab menu={{ pointing: true, secondary: true }} panes={panes} style={{ height: '95%' }} />
 }
 
-const Fees = (props: { strategy: StrategyItem[], lang: LangDictionary }) => {
+const Fees = (props: {
+    strategy: StrategyItem[],
+    lang: LangDictionary,
+    targetReturn?: number,
+    timeHorizon: TimeHorizon
+
+}) => {
     const { lang, strategy } = props;
     const fmt = new Intl.NumberFormat(lang.NUMBER_FORMAT, {
         minimumFractionDigits: 0,
@@ -392,24 +406,34 @@ const Fees = (props: { strategy: StrategyItem[], lang: LangDictionary }) => {
     });
     const fees = Math.round(sumBy(strategy.filter(s => s.suggestionAccepted), s => s.fee * Math.abs(s.suggestedDelta * s.currentAmount) * .05));
     const perc = 100 * fees / sumBy(strategy, v => v.currentAmount);
+    const amount = sumBy(strategy, s => s.currentAmount);
+
 
     return fees != 0 ? <Segment textAlign="center" floated="right">
-        <Segment basic compact style={{padding:0}} >
-                <Statistic size="mini" color="blue">
-                    <Statistic.Value>{lang.FEES.toUpperCase()}:</Statistic.Value>
-                </Statistic>
-                <Statistic size="mini">
-                    <Statistic.Value>{fmt.format(fees)}</Statistic.Value>
-                    <Statistic.Label>Euro</Statistic.Label>
-                </Statistic>
-                <Statistic size="mini">
-                    <Statistic.Value>{fmt.format(perc)}</Statistic.Value>
-                    <Statistic.Label>%</Statistic.Label>
-                </Statistic>
-                <Statistic size="mini">
-                    <Statistic.Value>{fmt.format(perc)}</Statistic.Value>
-                    <Statistic.Label>Target</Statistic.Label>
-                </Statistic>
+        <Segment basic compact style={{ padding: 0 }} >
+            <Statistic size="mini" color="blue">
+                <Statistic.Value>{lang.RESULTS}:</Statistic.Value>
+            </Statistic>
+            <Statistic size="mini">
+                <Statistic.Value>{fmt.format(fees)} €</Statistic.Value>
+                <Statistic.Label>{lang.FEES}</Statistic.Label>
+            </Statistic>
+            <Statistic size="mini">
+                <Statistic.Value>{fmt.format(perc)} %</Statistic.Value>
+                <Statistic.Label>{lang.FEES}</Statistic.Label>
+            </Statistic>
+            {props.targetReturn && <Statistic size="mini">
+                <Statistic.Value>{fmt.format(amount * (props.targetReturn / 100))} €</Statistic.Value>
+                <Statistic.Label>{lang.TARGET_RESULT}</Statistic.Label>
+            </Statistic>}
+            {props.targetReturn && <Statistic size="mini">
+                <Statistic.Value>{fmt.format(props.targetReturn)}%</Statistic.Value>
+                <Statistic.Label>{lang.TARGET_RESULT}</Statistic.Label>
+            </Statistic>}
+            {props.targetReturn && <Statistic size="mini">
+                <Statistic.Value>{props.timeHorizon}</Statistic.Value>
+                <Statistic.Label>{lang.TIME_HORIZON}</Statistic.Label>
+            </Statistic>}
         </Segment>
     </Segment> : null
 }

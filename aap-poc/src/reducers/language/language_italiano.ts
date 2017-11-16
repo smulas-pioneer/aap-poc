@@ -78,6 +78,8 @@ export const Italiano: LanguageState = {
         CITY: "Città",
         BRANCH: "Agenzia",
         ADVISOR: "Advisor",
+        RESULTS: "Risultato",
+        TARGET_RESULT:"Perf. Attesa",
 
 
         PROPOSAL_VALIDATION: { title: 'Validazione della proposta', message: 'Prego validare la proposta per generare il documento' },

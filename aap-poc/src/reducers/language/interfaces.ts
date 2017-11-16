@@ -81,7 +81,8 @@ export interface LangDictionary {
     BRANCH: string,
     ADVISOR: string,
 
-
+    RESULTS:string,
+    TARGET_RESULT:string,
 
     PROPOSAL_VALIDATION: { title: string, message: string },
     HISTORY: {
