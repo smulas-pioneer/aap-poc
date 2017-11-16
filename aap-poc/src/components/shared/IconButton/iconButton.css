@@ -1,0 +1,12 @@
+
+.iconButton {
+    transform: scale(1);
+    transition: opacity 0.2s, color 0.2s, transform 0.4s;
+  }
+  
+  .iconButton:hover {
+    transform: scale(1.3);
+    cursor:pointer;
+    transition: opacity 0.2s, color 0.2s, transform 0.4s;
+  }
+  

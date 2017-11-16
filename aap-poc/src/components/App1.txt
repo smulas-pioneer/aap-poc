@@ -1,0 +1,40 @@
+import * as React from 'react';
+import { Route, RouteComponentProps } from 'react-router';
+import { LangBar } from './LangBar';
+import { Menu } from 'semantic-ui-react';
+import { ClientsView } from './clientsView/ClientsView';
+import { Link } from 'react-router-dom';
+import { MapView } from './mapView/MapView';
+import { ClientView } from './clientView/ClientView';
+import { Spotlight } from './spotlight';
+
+const logo = require('./logo.png');
+
+class App extends React.Component<any, any> {
+    render() {
+        return (
+            <div>
+                <Menu inverted color="red" >
+                    <Menu.Item >
+                        <img src={logo} />
+                    </Menu.Item>
+                    <Menu.Item as={Link} to='/clients'>Clients</Menu.Item>
+                    <Menu.Item as={Link} to='/agents'>Agents</Menu.Item>
+                    <Menu.Item as={Link} to='/Dashboard'>Dashboard</Menu.Item>
+                    <Menu.Item as={Link} to='/spl'>Spotlight Test</Menu.Item>
+                    <Menu.Item position="right">
+                        <LangBar style={{ float: 'right' }} />
+                    </Menu.Item>
+                </Menu>
+                <div style={{ minHeight: '95vh' }} >
+                    <Route exact path="/agents" component={p => <ClientsView uid="def" isAgentView={true} />} />
+                    <Route exact path="/clients/:id" component={(p: RouteComponentProps<any>) => <ClientView id={p.match.params.id} />} />
+                    <Route exact path="/map" component={p => <MapView uid="def" />} />
+                    <Route exact path="/spl" component={Spotlight} />
+                </div>
+            </div>
+        );
+    }
+}
+
+export default App;

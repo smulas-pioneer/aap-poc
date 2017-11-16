@@ -1,0 +1,146 @@
+.grid-overflow {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 1fr fit-content(30%) ;
+    grid-template-rows: fit-content(100%);
+    grid-column-gap: 1em;
+}
+
+.grid-overflow .column-overflow {
+   overflow: hidden;
+   max-height: 100%;
+}
+
+.grid-overflow .column-overflow > * {
+    height: 100%;
+ }
+ 
+.grid-overflow .column-overflow .overflow {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 95%;
+}
+
+/****************************************************/
+
+.card.colorred {
+    border-left: 10px solid #db2828!important;
+    box-shadow: 0 0 0 1px #db2828!important;
+}
+.card.colorblue {
+    border-left: 10px solid #2185d0!important;
+    box-shadow: 0 0 0 1px #2185d0!important;
+}
+.card.colorteal {
+    border-left: 10px solid #00b5ad!important;
+    box-shadow: 0 0 0 1px #00b5ad!important;
+}
+.card.coloryellow {
+    border-left: 10px solid #fbbd08!important;
+    box-shadow: 0 0 0 1px #fbbd08!important;
+}
+.card.colorgrey {
+    border-left: 10px solid #767676!important;
+    box-shadow: 0 0 0 1px #767676!important;
+}
+
+/****************************************************/
+
+.ui.cards>.card.client-card {
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5, 6px 6px 5px #888888;
+    cursor: pointer;
+}
+
+.card.client-card .client-card-left {
+    text-align: center;
+}
+
+.card.client-card .client-card-right div {
+    padding: 4px;
+}
+
+.card.client-card .ui.statistics {
+    display: block;
+}
+
+.card.client-card .ui.statistics .ui.statistic {
+    margin: 0 1.5em 0 1.5em !important;
+}
+
+.card.client-card .ui.statistics .ui.statistic>.value {
+    font-size: 1.3em !important;
+}
+
+/*****************************************/
+
+.ui.cards>.card.client-card {
+    font-size: x-small;
+}
+
+
+/*****************************************/
+.menuIcon .icons {
+    text-align: 'center'
+}
+
+.menuIcon .icons .icon {
+    background-color: white;
+}
+
+.menuIcon .icons>span {
+    display: none;
+}
+
+.menuIcon .icons:hover>span {
+    display: block;
+}
+
+html {
+    background: #f8f5f5
+}
+
+.vertical-timeline::before {
+    background: gray !important;
+    border: 1px solid black;
+}
+.vertical-timeline-element::after{
+    border: 1px solid gray !important;
+}
+
+.vertical-timeline-element-icon .svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    margin-left: -12px;
+    margin-top: -12px;
+    font-size: 2em;
+}
+
+.vertical-timeline-element-content {
+    position: relative;
+    margin-left: 60px;
+    border: 1px solid gray;
+    border-radius: .25em;
+    padding: 1em;
+    box-shadow: 0 3px 0 black !important;
+}
+
+svg .area:not(.unselectable) {
+    cursor: pointer;
+
+}
+
+svg .regions .area:not(.unselectable):hover > path {
+    fill: darkkhaki !important;
+}
+
+svg .boundaries > path{
+    stroke: gray;
+}
+
+.i.icon.alarm:before {
+    content: "\f0a2";
+  }

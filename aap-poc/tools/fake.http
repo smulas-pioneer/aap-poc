@@ -1,0 +1,2 @@
+curl http://faker.hook.io?property=name.findName&locale=it
+

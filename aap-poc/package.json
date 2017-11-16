@@ -1,0 +1,43 @@
+{
+  "name": "aap-poc",
+  "version": "1.0.17",
+  "homepage": ".",
+  "private": true,
+  "dependencies": {
+    "@types/react-sortable-hoc": "^0.6.0",
+    "@types/react-tooltip": "^3.3.2",
+    "app-support": "^2.0.17",
+    "javascript-lp-solver": "^0.4.5",
+    "lodash": "^4.17.4",
+    "mathjs": "^3.16.5",
+    "moment": "^2.19.1",
+    "react-event-timeline": "^1.4.0",
+    "react-google-charts": "^1.5.5",
+    "react-scripts-ts": "2.8.0",
+    "react-slick": "^0.15.4",
+    "react-sortable-hoc": "^0.6.8",
+    "react-tooltip": "^3.4.0",
+    "react-vertical-timeline-component": "^2.0.1",
+    "recharts": "^1.0.0-alpha.6",
+    "regression": "^2.0.0",
+    "reselect": "^3.0.1",
+    "semantic-ui-css": "^2.2.12",
+    "semantic-ui-react": "^0.75.1",
+    "sprintf-js": "^1.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  },
+  "devDependencies": {
+    "@types/jest": "^21.1.4",
+    "@types/lodash": "^4.14.78",
+    "@types/mathjs": "^0.0.35",
+    "@types/react-slick": "^0.14.1"
+  },
+  "main": "index.js",
+  "repository": "http://github.com/pioneer-investments/mildev-aap-poc",
+  "license": "MIT"
+}

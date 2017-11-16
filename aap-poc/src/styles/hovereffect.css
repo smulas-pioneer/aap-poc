@@ -1,0 +1,33 @@
+.hovereffect {
+    width: 100%;
+    height: 100%;
+    float: left;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    cursor: default;
+}
+
+.hovereffect .overlay {
+    position: absolute;
+    overflow: hidden;
+    width: 80%;
+    height: 80%;
+    left: 10%;
+    top: 10%;
+    border-bottom: 1px solid gray;
+    border-top: 1px solid gray;
+    transition: transform 0.35s;
+    transform: scale(0, 1);
+    opacity: 1;
+    background: white !important;
+}
+
+.hovereffect:hover .overlay {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.hovereffect:hover .content  {
+  filter: brightness(0.6) !important;
+}
