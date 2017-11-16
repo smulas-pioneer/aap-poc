@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Segment, Icon, Table } from 'semantic-ui-react';
 import { RadarStrategyParm, Radar } from '../../_db/interfaces';
-import { getRAG } from '../../_db/coreEngine';
+import { getRAG } from '../../_db/common/radarUtils';
 
 interface AxesSelectionProps {
     data: RadarStrategyParm,

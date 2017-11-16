@@ -18,6 +18,7 @@ import { ClientAlerts } from '../clientsView/ClientAlerts';
 import { HistoryView, HistoryViewTimeline, HistoryViewTimelineEvent } from './HistoryView';
 import { settings } from 'cluster';
 import { PerformanceContributionGraph } from './PerformanceContribution';
+import { createRadarFromStrategy, suggestedPosition,currentPosition ,modelPosition} from '../../_db/common/radarUtils';
 
 const conn = appConnector<{ id: string }>()(
     (s, p) => ({
@@ -68,9 +69,9 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
     componentWillReceiveProps(next: any) {
         if (next.strategy.length > 0) {
-            const sugg = ce.suggestedPosition(next.strategy);
+            const sugg = suggestedPosition(next.strategy);
             const suggBreakdown = ce.getBreakdown(sugg);
-            const radar = ce.createRadarFromStrategy(next.strategy);
+            const radar = createRadarFromStrategy(next.strategy);
             this.setState({
                 breakdown: suggBreakdown,
                 strategy: next.strategy,
@@ -124,8 +125,8 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                 title: 'PERFORMANCE',
                 icon: 'line graph',
                 chart: radar && <PerformanceChart key={0}
-                    data={ce.getPositionPerformance(ce.suggestedPosition(strategy))}
-                    actualData={ce.getPositionPerformance(ce.currentPosition(strategy))}
+                    data={ce.getPositionPerformance(suggestedPosition(strategy))}
+                    actualData={ce.getPositionPerformance(currentPosition(strategy))}
                     width={700}
                     height={413}
                     clientTimeHorizon={this.props.client!.timeHorizon}
@@ -136,7 +137,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                 title: 'RISK RETURN',
                 icon: 'area graph',
                 chart: radar && <RiskReturnGraph key={1}
-                    data={ce.getRiskReturn(ce.suggestedPosition(strategy), ce.modelPosition(strategy), 'All')}
+                    data={ce.getRiskReturn(suggestedPosition(strategy), modelPosition(strategy), 'All')}
                     width={700}
                     height={413}
                     lang={this.props.lang} />
@@ -389,8 +390,6 @@ const Fees = (props: { strategy: StrategyItem[], lang: LangDictionary }) => {
     });
     const fees = Math.round(sumBy(strategy.filter(s => s.suggestionAccepted), s => s.fee * Math.abs(s.suggestedDelta * s.currentAmount) * .05));
     const perc = 100 * fees / sumBy(strategy, v => v.currentAmount);
-
-    console.log(strategy, fees, perc);
 
     return fees != 0 ? <Segment textAlign="center" floated="right">
         <Segment basic compact style={{padding:0}} >

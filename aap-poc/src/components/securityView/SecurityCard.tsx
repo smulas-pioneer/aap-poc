@@ -12,7 +12,6 @@ export const SecurityCard = ({ security, lang }: { security: Security } & WithLa
         maximumFractionDigits: 2,
     });
 
-    // console.log('perf', p);
     const lastPerf = fmt.format(100 * (p[p.length - 1].perf )) + '%';
     const delta = p[p.length - 1].perf - p[p.length - 2].perf;
 

@@ -137,5 +137,3 @@ render(
     </Provider>,
     document.getElementById('root')
 );
-
-console.log(process.env);
