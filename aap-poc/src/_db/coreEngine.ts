@@ -107,7 +107,6 @@ export const getPositionPerformance = (position: PositionItem[], period: Perform
         return prev;
     }, {} as { [key: string]: number });
     
-
     const perfCompo = getPerformances(keys, period);
     return perfCompo[keys[0]].map((i, ix) => {
         return {
@@ -176,28 +175,3 @@ export const calculateProjection = (data: { date: string, perf: number }[], days
         returnFor95 
     };
 }
-
-export const calculateProjection_ = (data: { date: string, perf: number }[], days: number) => {
-    let newData = [...data] as { date: string, perf?: number, projection?: number, min?: number, max?: number }[];
-
-    const r = calculateRegression(data);
-    const lastValue = data[data.length - 1];
-    let date = moment(lastValue.date);
-    let perf = lastValue.perf;
-    newData[newData.length - 1].projection = perf;
-    newData[newData.length - 1].min = perf;
-    newData[newData.length - 1].max = perf;
-
-    for (let i = 0; i < days; i++) {
-        date = date.add('days', 10);
-        perf += r.gradient;
-        newData.push({
-            date: moment(date).format('YYYY-MM-DD'),
-            projection: perf,
-            min: perf - Math.log(2 + i) / 80,
-            max: perf + Math.log(2 + i) / 80,
-        });
-    }
-    return newData;
-}
-
