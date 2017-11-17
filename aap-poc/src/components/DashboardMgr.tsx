@@ -13,13 +13,7 @@ import { AlertsView } from './alertsView/AlertsView';
 import { formatAum } from '../_db/utils';
 import { ClientFilter } from './shared/ClientFilter';
 import { ItalyMap } from './italymaps/ItalyMap';
-<<<<<<< HEAD
-import { formatAum } from '../_db/utils';
-import { TopClient } from './topClientView';
 import { WidgetTitle } from './shared/WidgetTitle';
-=======
-
->>>>>>> 29e0c9e46c2e9441f2fde1808e65af47bf77ea06
 
 const sprintf = require("sprintf-js").sprintf;
 
@@ -106,6 +100,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
             <Grid.Column>
                 <Segment style={{ height: 562 }}>
+                    <WidgetTitle title={lang.REGION}/>
                     <ItalyMap lang={lang} clients={data} />
                 </Segment>
             </Grid.Column>
@@ -161,7 +156,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
         return (
             <Segment>
-                <h5>{header}</h5>
+                <WidgetTitle title={header}/>
                 <CustomPieChart width={500} height={500} data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
             </Segment>
         );
@@ -236,6 +231,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                         <Tab menu={{ pointing: true, secondary: true }} panes={panes} style={{ height: '95%' }} />
                     </Card>
                     <Segment style={{ margin: 0 }}>
+                        <WidgetTitle title={lang.FILTER}/>
                         <ClientFilter
                             searchPlaceholder={lang.ENTER_FILTER_TEXT}
                             data={filter}
