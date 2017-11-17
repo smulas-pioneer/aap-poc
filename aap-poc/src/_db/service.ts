@@ -1,4 +1,4 @@
-import {   clientList, securityList, history, strategies, alertHistory } from './data';
+import { clientList, securityList, history, strategies, alertHistory } from './data';
 import * as Model from './common/interfaces';
 import { sumBy, groupBy } from 'lodash'
 import { rnd, numArray, getRndItem, hasFlag, getAgentViewsFromClients } from './utils';
@@ -146,6 +146,7 @@ export const spotlightSearch = (parms: SpotlightSearchParms): Promise<Model.Spot
     const ctx = parms.context;
     const limit = parms.limit || 5;
     const filter = parms.filter.toLowerCase();
+    const onlyPushed = parms.onlyPushedSecurity || false;
 
     let cc = SpotlightContext.All;
     if (ctx) cc = SpotlightContext[ctx];
@@ -162,6 +163,7 @@ export const spotlightSearch = (parms: SpotlightSearchParms): Promise<Model.Spot
         }
         if (hasFlag(cc, SpotlightContext.Security)) {
             sec = securityList.filter((s, ix) => s.SecurityName.toLowerCase().indexOf(filter) !== -1 && ix != 0); // skip 0 cash
+            if (onlyPushed) sec = sec.filter(sec => sec.pushed === true);
         }
     }
     let ret: any = {};

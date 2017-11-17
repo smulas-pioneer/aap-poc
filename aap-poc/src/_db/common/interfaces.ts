@@ -219,6 +219,7 @@ export interface SpotlightSearchParms {
     context?: 'Client' | 'Agent' | 'Security';
     filter: string;
     agents?: string[];
+    onlyPushedSecurity?: boolean;
     limit?: number;
 }
 
