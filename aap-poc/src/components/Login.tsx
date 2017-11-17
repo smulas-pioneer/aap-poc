@@ -17,7 +17,7 @@ export class Login extends React.Component<LoginProps, LoginState>{
     constructor(props: LoginProps) {
         super(props);
         this.state = {
-            user: 'manager',
+            user: '',
             password: '',
             error: false
         }

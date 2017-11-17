@@ -128,9 +128,17 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
             if (!val.data || !val.data.length) return memo;
 
             let prop = val.attributeName;
+            let title = val.attributeName.toUpperCase();
 
-            if (prop === 'MacroAssetClass' || prop === 'MicroAssetClass') prop = "AssetClass";
-            if (prop === 'Rating' || prop === 'Maturity') prop = "Bond Indicators";
+            if (prop === 'MacroAssetClass') {
+                title = "MACRO";
+                prop = "AssetClass";
+            } else if (prop === 'MicroAssetClass') {
+                title = "MICRO";
+                prop = "AssetClass";
+            } else if (prop === 'Rating' || prop === 'Maturity') {
+                prop = "Bond Indicators";
+            }
 
             const chartView = (prop === "AssetClass" ? 'pie' : prop === 'Bond Indicators' ? 'pie' : 'composed');
 
@@ -141,7 +149,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
             });
 
             element.charts.push({
-                title: val.attributeName.toUpperCase(),
+                title,
                 chart: <BreakdownView key={`breakdown${i}`}
                     breakdown={val}
                     width={700}
