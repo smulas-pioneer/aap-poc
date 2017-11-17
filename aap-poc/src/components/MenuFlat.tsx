@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { appConnectorWithRouter } from 'app-support';
 import { getLanguage, getCurrentUser } from '../reducers/index';
-import { Menu, MenuItemProps, Dropdown, Image } from 'semantic-ui-react';
+import { Menu, MenuItemProps, Dropdown, Image, Header } from 'semantic-ui-react';
 import * as Model from '../actions/model';
 import { Link } from "react-router-dom";
 import { LangBar } from './LangBar';
@@ -12,7 +12,7 @@ import { LangDictionary } from '../reducers/language/interfaces';
 import { SpotlightSearchResultItem } from '../_db/interfaces';
 import { isClient, isAgent } from '../_db/utils';
 const userImage = require('./user.png');
-const logo = require('./logo.png');
+const logo2 = require('./logo2.png');
 
 export interface MenuFlatProps {
 }
@@ -109,11 +109,13 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
 
                 <Menu attached secondary >
 
-                    <Menu.Item as={Link} to="/homepage">
-                        <img src={logo} />
+                    <img src={logo2} />
+
+                    <Menu.Item color="blue" icon={logo2} to="/">
+                        <h2 style={{ color: '#005483', fontFamily: 'HelveticaNeue' }} > Amundi Digital Advisory </h2>
                     </Menu.Item>
 
-                    {Model.memuItems.map((v: any, i: any) => this.renderItem(v, i, activeMenuItem))}
+                    {/*Model.memuItems.map((v: any, i: any) => this.renderItem(v, i, activeMenuItem))*/}
 
                     <Menu secondary compact floated='right' >
                         {this.spotlightMenuItem()}
