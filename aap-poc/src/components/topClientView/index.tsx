@@ -3,7 +3,7 @@ import { LangDictionary } from "../../reducers/language/interfaces";
 import { Client } from "../../_db/interfaces";
 import { IndicatorType, IndicatorOptionsType } from "../../actions/model";
 import { Dictionary, groupBy, sumBy } from "lodash";
-import { TopClientOptionSelection, TopClientOptionSelector } from "./TopTenOptionSelector";
+import { TopClientOptionSelection, TopClientOptionSelector } from "./TopClientOptionSelector";
 import { TopClientList } from "./TopClientList";
 
 

@@ -48,10 +48,10 @@ export const TopClientOptionSelector = ({ group, indicator, onChange }: TopClien
 
     return (
         <Segment basic>
-            <h3 style={{textAlign:'center',color:'black'}}>
-                Top 
+            <h3 style={{ textAlign: 'center', color: 'black' }}>
+                Top
                 &nbsp;
-                <Dropdown icon={false} compact text={startCase(curGroup)} as='a' >
+                <Dropdown className="topClientDropOption" icon={false} compact text={startCase(curGroup)} as='a' >
                     <Dropdown.Menu >
                         {renderOptions(curGroup, GroupTypes, onGroupChange)}
                     </Dropdown.Menu>
@@ -59,42 +59,12 @@ export const TopClientOptionSelector = ({ group, indicator, onChange }: TopClien
                 &nbsp;
                 Performers by
                 &nbsp;
-                <Dropdown icon={false} compact  text={startCase(curIndicator)} as='a'>
+                <Dropdown className="topClientDropOption" icon={false} compact text={startCase(curIndicator)} as='a'>
                     <Dropdown.Menu>
                         {renderOptions(curIndicator, IndicatorOptionsType, onIndicatorChange)}
                     </Dropdown.Menu>
                 </Dropdown>
             </h3>
-            {/*
-            <Grid columns={14}>
-                <Grid.Column width={6} textAlign='right' >
-                    Top
-                    </Grid.Column>
-                <Grid.Column width={2} textAlign='left'>
-                    <Dropdown text={startCase(curGroup)} as='a' >
-                        <Dropdown.Menu >
-                            {renderOptions(curGroup, GroupTypes, onGroupChange)}
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Grid.Column>
-
-                <Grid.Column width={1} textAlign='left' >
-                    performer
-                    </Grid.Column>
-
-                <Grid.Column width={2} textAlign='left'>
-                    by
-                    </Grid.Column>
-
-                <Grid.Column width={3} textAlign='left'>
-                    <Dropdown text={startCase(curIndicator)} as='a'>
-                        <Dropdown.Menu>
-                            {renderOptions(curIndicator, IndicatorOptionsType, onIndicatorChange)}
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Grid.Column>
-
-            </Grid>*/}
         </Segment >
     );
 }

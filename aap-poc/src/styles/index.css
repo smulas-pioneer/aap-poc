@@ -144,3 +144,8 @@ svg .boundaries > path{
 .i.icon.alarm:before {
     content: "\f0a2";
   }
+
+/** Top Client List */
+.topClientDropOption > div[role="alert"] {
+    text-decoration: underline;
+}
