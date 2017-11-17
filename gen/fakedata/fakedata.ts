@@ -49,6 +49,7 @@ export const case_3_model = [
 ]
 
 export const case_3_initial = [
+    { Symbol: 'CASH_EUR', MacroAssetClass: 'CASH', AssetClass: 'CASH', AssetType: 'CASH', Name: 'CASH', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 0, SRRI: 1, Amont: 0, Price: 1, Shares: 0, },
     { Symbol: 'NL0011585146', MacroAssetClass: 'Equity', AssetClass: 'Equity', AssetType: 'Equity', Name: 'Ferrari NV', Mstar_BCH: '', Mstar_SRRI: 6, WEIGHT: 0.2, SRRI: 1.2, Amont: 20000, Price: 55.3, Shares: 361.663652802893, },
     { Symbol: 'XS1327539976', MacroAssetClass: 'Fixed Income', AssetClass: 'Fixed Income', AssetType: 'Corporate', Name: 'OTE Plc 4.375% 02-DEC-2019', Mstar_BCH: '', Mstar_SRRI: 7, WEIGHT: 0.1, SRRI: 0.7, Amont: 10000, Price: 106.28, Shares: 94.0910801656003, },
     { Symbol: 'LU0145482039', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Corporate Bond', Name: 'Generali IS Euro Corporate Bond', Mstar_BCH: '', Mstar_SRRI: 3, WEIGHT: 0.15, SRRI: 0.45, Amont: 15000, Price: 215.113, Shares: 69.7307926531637, },
@@ -78,6 +79,7 @@ export const case_4_model = [
 ]
 
 export const case_4_initial = [
+    { Symbol: 'CASH_EUR', MacroAssetClass: 'CASH', AssetClass: 'CASH', AssetType: 'CASH', Name: 'CASH', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 0, SRRI: 1, Amont: 0, Price: 1, Shares: 0, },
     { Symbol: 'FR0010314401', MacroAssetClass: 'Funds', AssetClass: 'Equity', AssetType: 'Large Cap', Name: 'Amundi Actions Euro', Mstar_BCH: 'MSCI EMU NR USD', Mstar_SRRI: 6, WEIGHT: 0.2, SRRI: 1.2, Amont: 40000, Price: 66147, Shares: 0.604713743631608, },
     { Symbol: 'LU0119099819', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Corporate Bond', Name: 'Amundi Fds Bond Euro Corporate', Mstar_BCH: 'Barclays Euro Agg Corps TR EUR', Mstar_SRRI: 3, WEIGHT: 0.3, SRRI: 0.9, Amont: 60000, Price: 19.21, Shares: 3123.37324310255, },
     { Symbol: 'LU0281578517', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Government Bond', Name: 'Pioneer Fds Euro Bond', Mstar_BCH: 'Citi EMU GBI EUR', Mstar_SRRI: 3, WEIGHT: 0.3, SRRI: 0.9, Amont: 60000, Price: 131.89, Shares: 454.924558344075, },

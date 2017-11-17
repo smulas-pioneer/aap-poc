@@ -178,8 +178,6 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
             newSecurity: false
         }));
 
-        console.log('suggSecs', JSON.stringify(suggSecs,null,2));
-        
         const posSecs = pos.map(p => ({
             security: p.Symbol == 'CASH_EUR' ? cash : mapSecurity(p),
             radar: getRandomRadar(),
@@ -210,7 +208,7 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
                 currentPrice: items[0].currentPrice,
                 currentAmount: sumBy(items, w => w.currentAmount||0),
                 modelWeight: sumBy(items, w => w.modelWeight||0),
-                suggestedDelta: suggDelta > 0 ? suggDelta- weight : 0,
+                suggestedDelta: suggDelta- weight,
                 suggestionAccepted: false,
                 isCash: items[0].isCash,
                 fee: 1,
@@ -218,19 +216,12 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
             }
         });
     }
-    
-
-
-
 
 export const getAllStrategies = () => {
     let x = {
-        "0": mapSuggestion(FD.case_2_initial, FD.case_2_model, FD.case_2_proposed),
-        "1": mapSuggestion(FD.case_3_initial, FD.case_3_model, FD.case_3_proposed),
-        "2": mapSuggestion(FD.case_4_initial, FD.case_4_model, FD.case_4_proposed),
+        "0": mapSuggestion(FD.case_2_initial, FD.case_2_model, FD.case_2_proposed).sort((a,b)=>a.isCash ? -1: 1),
+        "1": mapSuggestion(FD.case_3_initial, FD.case_3_model, FD.case_3_proposed).sort((a,b)=>a.isCash ? -1: 1),
+        "2": mapSuggestion(FD.case_4_initial, FD.case_4_model, FD.case_4_proposed).sort((a,b)=>a.isCash ? -1: 1),
     }
-
-
-    console.log('AAA',x);
     return x;
 }

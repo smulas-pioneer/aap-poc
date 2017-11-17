@@ -15,7 +15,7 @@ import { RiskReturnGraph } from './RiskReturnGraph';
 import { BreakdownView } from './BreakdownView';
 import { AdvancedGrid, OverflowColumn, OverflowItem } from '../shared/GridOverflow';
 import { ClientAlerts } from '../clientsView/ClientAlerts';
-import { HistoryView, HistoryViewTimeline, HistoryViewTimelineEvent } from './HistoryView';
+import { HistoryViewTimelineEvent } from './HistoryView';
 import { settings } from 'cluster';
 import { PerformanceContributionGraph } from './PerformanceContribution';
 import { createRadarFromStrategy, suggestedPosition, currentPosition, modelPosition } from '../../_db/common/radarUtils';
@@ -128,9 +128,17 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
             if (!val.data || !val.data.length) return memo;
 
             let prop = val.attributeName;
+            let title = val.attributeName.toUpperCase();
 
-            if (prop === 'MacroAssetClass' || prop === 'MicroAssetClass') prop = "AssetClass";
-            if (prop === 'Rating' || prop === 'Maturity') prop = "Bond Indicators";
+            if (prop === 'MacroAssetClass') {
+                title = "MACRO";
+                prop = "AssetClass";
+            } else if (prop === 'MicroAssetClass') {
+                title = "MICRO";
+                prop = "AssetClass";
+            } else if (prop === 'Rating' || prop === 'Maturity') {
+                prop = "Bond Indicators";
+            }
 
             const chartView = (prop === "AssetClass" ? 'pie' : prop === 'Bond Indicators' ? 'pie' : 'composed');
 
@@ -141,7 +149,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
             });
 
             element.charts.push({
-                title: val.attributeName.toUpperCase(),
+                title,
                 chart: <BreakdownView key={`breakdown${i}`}
                     breakdown={val}
                     width={700}
@@ -250,7 +258,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                                     <Segment key={ix} basic >
                                         <WidgetTitle title={lang.PORTFOLIO_VIEWS} subtitle={item.title} />
                                         <Grid columns="equal" >
-                                            {item.charts.map((v: any, j: number) => <Grid.Column key={j} textAlign="center">{v.title!==item.title ? v.title : '' }{v.chart}</Grid.Column>)}
+                                            {item.charts.map((v: any, j: number) => <Grid.Column key={j} textAlign="center">{v.title !== item.title ? v.title : ''}{v.chart}</Grid.Column>)}
                                         </Grid>
                                     </Segment>
                                 );
@@ -347,7 +355,7 @@ const ClientAlert = (props: { radar: Radar, lang: LangDictionary }) => {
     }
 
     const title = (
-        <Segment basic as="span">
+        <Segment basic as="span" >
             <Icon name='alarm' circular inverted color={radar.numOfAlerts ? 'red' : 'green'} />
             &nbsp;
             <Header key="0" as='h2' style={{ display: 'initial' }} color="red">
@@ -360,11 +368,12 @@ const ClientAlert = (props: { radar: Radar, lang: LangDictionary }) => {
         const accordion = [
             {
                 key: 'Alert',
-                title: { content: title },
+                title: { key: 'alertTitle', content: title },
                 content: {
+                    key: 'alertContent',
                     content: (
                         <Segment basic>
-                            {Object.keys(lang.ALERTS).map((v, i) => alertsListItem(v, i))}
+                            Object.keys(lang.ALERTS).map((v, i) => alertsListItem(v, i))
                         </Segment>
                     )
                 }
@@ -427,13 +436,13 @@ const Fees = (props: { strategy: StrategyItem[], lang: LangDictionary, targetRet
             {props.targetReturn && <Statistic size="mini">
                 <Statistic.Value>{fmt.format(amount * (props.targetReturn / 100))} €</Statistic.Value>
                 <Statistic.Label>{lang.TARGET_RESULT} </Statistic.Label>
-                <Statistic.Label style={{fontSize:10}}>(prob. 95%)</Statistic.Label>
+                <Statistic.Label style={{ fontSize: 10 }}>(prob. 95%)</Statistic.Label>
             </Statistic>}
             {props.targetReturn && <Statistic size="mini">
                 <Statistic.Value>{fmt.format(props.targetReturn)}%</Statistic.Value>
                 <Statistic.Label>{lang.TARGET_RESULT} </Statistic.Label>
-                <Statistic.Label style={{fontSize:10}}>(prob. 95%)</Statistic.Label>
-                </Statistic>}
+                <Statistic.Label style={{ fontSize: 10 }}>(prob. 95%)</Statistic.Label>
+            </Statistic>}
             {props.targetReturn && <Statistic size="mini">
                 <Statistic.Value>{props.timeHorizon}</Statistic.Value>
                 <Statistic.Label>{lang.TIME_HORIZON}</Statistic.Label>

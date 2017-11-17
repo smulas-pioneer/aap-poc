@@ -87,8 +87,8 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
             slidesToScroll: 1,
             autoplay: true,
             pauseOnHover: true,
-            arrows:true,
-            initialSlide:0
+            arrows: true,
+            initialSlide: 0
         };
 
         if (!client) return <div />
@@ -97,7 +97,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         return <div>
             <Grid columns={2} padded='horizontally' >
                 <Grid.Column width={8} textAlign="center">
-                  <ClientCard lang={lang} client={client} />
+                    <ClientCard lang={lang} client={client} />
                     {graphs.find((item, ix) => ix == currentGraphIndex)}
                     <br />
                     <div>
@@ -107,7 +107,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     </div>
                 </Grid.Column>
                 <Grid.Column width={8}>
-                    <HistoryView lang={lang} history={history}/>
+                    <HistoryView lang={lang} history={history} />
                     <h3>{securityView}
                         <Button size="mini" floated="right" color="olive" onClick={this.toggleSecurityView}>
                             {altView}
@@ -129,7 +129,6 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 export const ClientView = conn.connect(ClientViewCompo);
 
 import { Divider } from 'semantic-ui-react'
-import { HistoryView } from './HistoryView';
 
 export default class TransitionExampleTransition extends React.Component {
     state = { visible: true }

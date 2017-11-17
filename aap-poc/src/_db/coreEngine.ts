@@ -6,24 +6,18 @@ import { performances, perfSummary } from "./data/index";
 import * as moment from 'moment';
 import * as math from 'mathjs';
 import { networkInterfaces } from "os";
-import { suggestedPositionExCash, currentPosition } from "./common/radarUtils";
+import { suggestedPositionExCash, currentPosition, suggestedPosition } from "./common/radarUtils";
 
 
 export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean, forced?: StrategyItem[]): StrategyItem[] => {
 
-    if (forced) {
-        /*        const w = currentPosition(forced);
-                const delta = sumBy(w, s => s.weight) - 1;
-                return [{ ...position[0], suggestedDelta: -delta, suggestionAccepted: delta != 0 }].concat(position.slice(1));
-          */
-        console.log('forced', forced);
-        return forced;
-    }
-
     if (calculateFromAxes) {
+        if ( forced) return forced;
         return solve(position, axes);
     } else {
-        const w = suggestedPositionExCash(position);
+        const w = forced 
+            ? suggestedPosition(forced)
+            : suggestedPositionExCash(position);
         const delta = sumBy(w, s => s.weight) - 1;
         return [{ ...position[0], suggestedDelta: -delta, suggestionAccepted: delta != 0 }].concat(position.slice(1));
     }

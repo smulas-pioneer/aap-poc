@@ -91,6 +91,7 @@ export const suggestedPosition = (position: StrategyItem[]): PositionItem[] =>
 export const suggestedPositionExCash = (position: StrategyItem[]): PositionItem[] =>
     position.map(p => ({ security: p.security, radar: p.radar, weight: p.suggestionAccepted && !p.isCash ? p.currentWeight + p.suggestedDelta : p.currentWeight }));
 
+    
 const radarToAlertHistory = (clients: Client[], date: string): AlertHistory2 => {
     const count = (color: string) => sumBy(
         clients.map(c => c.radar)

@@ -116,7 +116,7 @@ export class Holdings extends React.Component<Props, State> {
                             <Table.HeaderCell width={2} textAlign="right">{lang.FINAL_WEIGHT}</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
-                    <Table.Body>
+                    <Table.Body style={{overflow:'visible'}}>
                         {
                             holdings.map((t, i) => {
                                 const show = t.currentQuantity != 0;
@@ -135,7 +135,7 @@ export class Holdings extends React.Component<Props, State> {
                                         <Table.Cell>{t.security.MacroAssetClass}</Table.Cell>
                                         <Table.Cell textAlign="right">{show && fmt.format(t.currentQuantity)}</Table.Cell>
                                         <Table.Cell textAlign="right">{show && fmt.format(t.currentAmount)}</Table.Cell>
-                                        <Table.Cell textAlign="right">{show && fmt.format(t.currentWeight * 100)} ({fmt.format(t.modelWeight * 100)})</Table.Cell>
+                                        <Table.Cell textAlign="right">{show && fmt.format(t.currentWeight * 100)} </Table.Cell>
                                         <Table.Cell textAlign="left">
                                             <HoldingWeigthControl factor={factor} data={t} onChange={(item) => this.handleItemChanged(item, i)} />
                                         </Table.Cell>
