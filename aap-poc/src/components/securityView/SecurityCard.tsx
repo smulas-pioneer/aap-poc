@@ -6,13 +6,13 @@ import { getPerformances } from "../../_db/coreEngine";
 import { PerformanceChart } from "./PerformanceChart";
 
 export const SecurityCard = ({ security, lang }: { security: Security } & WithLang) => {
-    const p = getPerformances([security.IsinCode], 'All')[security.IsinCode];
+    const p = getPerformances([security.IsinCode], '1Y')[security.IsinCode];
     const fmt = new Intl.NumberFormat(lang.NUMBER_FORMAT, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
     });
 
-    const lastPerf = fmt.format(100 * (p[p.length - 1].perf )) + '%';
+    const lastPerf = fmt.format(100 * (p[p.length - 1].perf)) + '%';
     const delta = p[p.length - 1].perf - p[p.length - 2].perf;
 
     return <Segment padded fluid="very">
@@ -34,11 +34,12 @@ export const SecurityCard = ({ security, lang }: { security: Security } & WithLa
                             <Item label="Rating" value={security.Rating} />
                             <Item label="Region" value={security.Region} />
                             <Item label="Sector" value={security.Sector} />
+                            <Advise label="Advise" value={security} />
                         </Table.Body>
                     </Table>
                 </Grid.Column>
                 <Grid.Column width={8}>
-                    <PerformanceChart data={p} width={300} lang={lang} version={1}/>
+                    <PerformanceChart data={p} width={300} lang={lang} version={1} />
                     <Statistic.Group size="small" widths="1">
                         <Statistic>
                             <Statistic.Value>
@@ -73,5 +74,15 @@ const Item = (props: { label: string, value: string | null }) => {
     return props.value ? <Table.Row>
         <Table.Cell style={{ fontWeight: 'bold' }} textAlign="right">{props.label}</Table.Cell>
         <Table.Cell>{props.value}</Table.Cell>
+    </Table.Row> : null
+}
+
+const Advise = (props: { label: string, value: Security }) => {
+    return (props.value.blacklisted || props.value.pushed) ? <Table.Row>
+        <Table.Cell style={{ fontWeight: 'bold' }} textAlign="right">{props.label}</Table.Cell>
+        <Table.Cell>
+            {props.value.blacklisted && <Icon color="black" name='thumbs down' />}
+            {props.value.pushed && <Icon color="green" name='thumbs up' />}
+        </Table.Cell>
     </Table.Row> : null
 }

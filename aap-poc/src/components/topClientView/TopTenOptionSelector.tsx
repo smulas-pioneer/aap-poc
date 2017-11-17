@@ -48,7 +48,7 @@ export const TopClientOptionSelector = ({ group, indicator, onChange }: TopClien
 
     return (
         <Segment basic>
-            <h2 style={{textAlign:'center',color:'black'}}>
+            <h3 style={{textAlign:'center',color:'black'}}>
                 Top 
                 &nbsp;
                 <Dropdown icon={false} compact text={startCase(curGroup)} as='a' >
@@ -57,14 +57,14 @@ export const TopClientOptionSelector = ({ group, indicator, onChange }: TopClien
                     </Dropdown.Menu>
                 </Dropdown>
                 &nbsp;
-                Performer by
+                Performers by
                 &nbsp;
                 <Dropdown icon={false} compact  text={startCase(curIndicator)} as='a'>
                     <Dropdown.Menu>
                         {renderOptions(curIndicator, IndicatorOptionsType, onIndicatorChange)}
                     </Dropdown.Menu>
                 </Dropdown>
-            </h2>
+            </h3>
             {/*
             <Grid columns={14}>
                 <Grid.Column width={6} textAlign='right' >

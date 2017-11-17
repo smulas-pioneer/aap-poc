@@ -95,6 +95,7 @@ export const Italiano: LanguageState = {
         WELCOME: 'Benvenuto',
 
         ALERTS: {
+            riskAdequacyAlert: { name: 'Rischio Adeguatezza', sentence: 'Il livello del rischio del portafoglio non è adeguato al profilo MIFID del cliente' },
             efficencyAlert: { name: 'Efficienza', sentence: `L'efficienza del portafoglio non è allineata al suo modello` },
             consistencyAlert: { name: 'Consistenza', sentence: 'La consistenza del portafoglio non è allineata al suo modello' },
             riskAnalysisAlert: { name: 'Analisi del rischio', sentence: 'Il livello di rischio del portafoglio non è adeguato al profilo MIFID del cliente' },

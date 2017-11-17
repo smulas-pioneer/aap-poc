@@ -88,7 +88,9 @@ export interface Security {
     Region: string | null,
     Maturity: string | null,
     SRRI?: number ,
-    Price?: number 
+    Price?: number ,
+    blacklisted?:boolean,
+    pushed?:boolean
 }
 
 export interface Transaction {
@@ -234,6 +236,8 @@ export interface StrategyItem {
     fee: number;
 
     newSecurity: boolean;
+    
+    clientFavorites?: boolean;
 
 };
 

@@ -13,10 +13,10 @@
 
 # Simple RD
 
-- S Client segment. 'Private, Mass Affluent, Retail'
-- S Advisor type (city, branch)
+- ~~S Client segment. 'Private, Mass Affluent, Retail'~~
+- ~~S Advisor type (city, branch)~~
 - S Dates on  Alert graph
-- S History panel and commands.. (fake)
+- ~~S History panel and commands.. (fake)~~
 - S Switch button to show labels on risk-return
 - S AllWidgets Page
 
@@ -27,9 +27,9 @@
 - S Change Delta analysis to numbers.
 - ~~S Start client view with all strategies selected~~
 - S Unicredit and Client strong view on Client page
-- S Show expected return based on the portfolio time-horizon (and probability)
+- ~~S Show expected return based on the portfolio time-horizon (and probability)~~
 - ~~S Weight and Quantity, and values ~~
-- S Target return on performance Widget
+- ~~S Target return on performance Widget~~
 
 # Priority 0 
 - M New Fake data.

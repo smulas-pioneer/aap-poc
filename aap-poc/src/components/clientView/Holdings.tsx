@@ -125,11 +125,11 @@ export class Holdings extends React.Component<Props, State> {
                                         : t.currentAmount / t.currentWeight / 100;
                                 return (!t.newSecurity && t.currentQuantity == 0 && t.suggestedDelta == 0) ? null :
                                     <Table.Row key={i}>
-                                        <Table.Cell>{
-                                            i == 1 ? <Icon color="green" name='thumbs up' /> :
-                                                i == 2 ? <Icon color="black" name='thumbs down' /> :
-                                                    i == 3 ? <Icon color="red" name='heart' /> : null
-                                        }</Table.Cell>
+                                        <Table.Cell>
+                                            {t.security.blacklisted && <Icon color="black" name='thumbs down' />}
+                                            {t.security.pushed && <Icon color="green" name='thumbs up' />}
+                                            {t.clientFavorites && <Icon color="red" name='heart' />}
+                                        </Table.Cell>
                                         <Table.Cell>{t.security.SecurityName}</Table.Cell>
                                         <Table.Cell>{t.security.MacroAssetClass}</Table.Cell>
                                         <Table.Cell textAlign="right">{show && fmt.format(t.currentQuantity)}</Table.Cell>

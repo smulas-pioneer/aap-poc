@@ -14,7 +14,8 @@
     "Region": null,
     "Maturity": null,
     "SRRI": 1.2,
-    "Price": 66147
+    "Price": 66147,
+    "pushed": true
   },
   {
     "IsinCode": "LU0533595319",
@@ -31,7 +32,8 @@
     "Region": null,
     "Maturity": null,
     "SRRI": 0.9,
-    "Price": 44.65
+    "Price": 44.65,
+    "pushed": false
   },
   {
     "IsinCode": "IE0007472990",
@@ -48,7 +50,8 @@
     "Region": null,
     "Maturity": null,
     "SRRI": 0.9,
-    "Price": 222.6777
+    "Price": 222.6777,
+    "pushed": false
   },
   {
     "IsinCode": "FR0000989501",
@@ -65,7 +68,8 @@
     "Region": null,
     "Maturity": null,
     "SRRI": 0.15,
-    "Price": 172.04
+    "Price": 172.04,
+    "pushed": true
   },
   {
     "IsinCode": "LU0257968619",
@@ -82,7 +86,8 @@
     "Region": null,
     "Maturity": null,
     "SRRI": 0.15,
-    "Price": 35.56
+    "Price": 35.56,
+    "pushed": false
   },
   {
     "IsinCode": "FR0011006360",
@@ -99,7 +104,8 @@
     "Region": null,
     "Maturity": null,
     "SRRI": 0.1,
-    "Price": 103048.35
+    "Price": 103048.35,
+    "pushed": false
   },
   {
     "IsinCode": "NL0011585146",
@@ -115,7 +121,8 @@
     "Country": null,
     "Region": null,
     "Maturity": null,
-    "SRRI": 1.2
+    "SRRI": 1.2,
+    "pushed": false
   },
   {
     "IsinCode": "XS1327539976",
@@ -131,7 +138,8 @@
     "Country": null,
     "Region": null,
     "Maturity": null,
-    "SRRI": 0.7
+    "SRRI": 0.7,
+    "pushed": false
   },
   {
     "IsinCode": "LU0145482039",
@@ -147,7 +155,8 @@
     "Country": null,
     "Region": null,
     "Maturity": null,
-    "SRRI": 0.45
+    "SRRI": 0.45,
+    "pushed": false
   },
   {
     "IsinCode": "LU0201576401",
@@ -163,7 +172,8 @@
     "Country": null,
     "Region": null,
     "Maturity": null,
-    "SRRI": 0.4
+    "SRRI": 0.4,
+    "pushed": false
   },
   {
     "IsinCode": "LU1191877379",
@@ -179,7 +189,8 @@
     "Country": null,
     "Region": null,
     "Maturity": null,
-    "SRRI": 0.3
+    "SRRI": 0.3,
+    "pushed": false
   },
   {
     "IsinCode": "IE00B4ND3602",
@@ -196,7 +207,8 @@
     "Region": null,
     "Maturity": null,
     "SRRI": 0.1,
-    "Price": 21.74615
+    "Price": 21.74615,
+    "pushed": false
   },
   {
     "IsinCode": "LU0399031052",
@@ -213,7 +225,8 @@
     "Region": null,
     "Maturity": null,
     "SRRI": 0.5,
-    "Price": 201.01
+    "Price": 201.01,
+    "pushed": false
   },
   {
     "IsinCode": "FR0010816819",
@@ -230,7 +243,8 @@
     "Region": null,
     "Maturity": null,
     "SRRI": 0.09,
-    "Price": 118.75
+    "Price": 118.75,
+    "pushed": false
   },
   {
     "IsinCode": "FR0010930446",
@@ -247,7 +261,8 @@
     "Region": null,
     "Maturity": null,
     "SRRI": 0.24,
-    "Price": 241878.9
+    "Price": 241878.9,
+    "pushed": false
   },
   {
     "IsinCode": "LU0627756538",
@@ -264,7 +279,8 @@
     "Region": null,
     "Maturity": null,
     "SRRI": 0.12,
-    "Price": 104.48742
+    "Price": 104.48742,
+    "pushed": true
   },
   {
     "IsinCode": "LU0518421895",
@@ -281,6 +297,7 @@
     "Region": null,
     "Maturity": null,
     "SRRI": 0.6,
-    "Price": 131.89
+    "Price": 131.89,
+    "pushed": false
   }
 ]

@@ -307,7 +307,7 @@ const go = async () => {
             c.radar = createRadarFromStrategy(strategies[c.id]);
             c.aum = sumBy(strategies[c.id], v => v.currentAmount);
             c.size = c.aum > 20000000 ? '>20M' : c.aum > 10000000 ? '10-20M' : c.aum > 5000000 ? '5-10M' : c.aum > 1000000 ? '1-5M' : '<1M';
-            c.segment = c.aum > 15000000 ? 'Retail' : c.aum > 2000000 ? 'Mass Affluent' : 'Retail';
+            c.segment = c.aum > 15000000 ? 'Private' : c.aum > 2000000 ? 'Mass Affluent' : 'Retail';
             c.breaks = Object.keys(c.radar).filter(k => k.endsWith("Alert")).filter(k => c.radar[k] !== "green").map(k => k.replace('Alert', ''));
             c.lastInterviewDate = histories[c.id][0].date;
             const acc = histories[c.id].filter(p => p.status == 'ACCEPTED');

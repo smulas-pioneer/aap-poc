@@ -22,7 +22,8 @@ const mapSecurity = (p: any) => {
         Region: null,
         Maturity: null,
         SRRI: p.SRRI,
-        Price: p.Price
+        Price: p.Price,
+        pushed: FD.pushed.indexOf(p.Symbol) > -1,
     } as Security;
 }
 
@@ -62,7 +63,8 @@ const mapStrategy = (pos: any[], mod: any[]): StrategyItem[] => {
         suggestionAccepted: false,
         isCash: p.Symbol == 'CASH_EUR',
         fee: 1,
-        newSecurity: false
+        newSecurity: false,
+        clientFavorites: FD.fav.indexOf(p.Symbol) > -1
     }));
 
     const gData = groupBy([...modelSecs, ...posSecs], g => g.security.IsinCode);

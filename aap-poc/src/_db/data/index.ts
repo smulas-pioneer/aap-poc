@@ -19,7 +19,8 @@ fetch('/perfSummary.json').then(r => r.json()).then(p => perfSummary = p);
 //SECURITIES
 let securities2: Security[];
 fetch('/securities2.json').then(r => r.json()).then(p => {
-    securities2 = securityList.concat(p);
+    securities2 = securityList.map(p => ({ ...p, blacklisted: p.Rating == "BBB" && p.Sector == "Utilities" }))
+        .concat(p);
 });
 
 //SECURITIES
@@ -33,7 +34,7 @@ let strategies: { [isin: string]: StrategyItem[] };
 fetch('/strategy.json').then(r => r.json()).then(p => strategies = p);
 
 //ALERT HISTORY
-let alertHistory: AlertHistory[] ;
+let alertHistory: AlertHistory[];
 fetch('/alertHistory.json').then(r => r.json()).then(p => alertHistory = p);
 
 //History
@@ -41,8 +42,8 @@ let history: { [isin: string]: InterviewResult[] };
 fetch('/history.json').then(r => r.json()).then(p => history = p);
 
 //ALERT HISTORY
-let agents: string[] ;
+let agents: string[];
 fetch('/agents.json').then(r => r.json()).then(p => agents = p);
 
 
-export { securities2 as securityList, clients as clientList,  history, agents, strategies, performances, alertHistory, perfSummary };
+export { securities2 as securityList, clients as clientList, history, agents, strategies, performances, alertHistory, perfSummary };

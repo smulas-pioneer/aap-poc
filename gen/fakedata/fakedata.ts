@@ -1,3 +1,14 @@
+export const pushed = [
+    'FR0010314401',
+    'FR0000989501',
+    'LU0627756538'
+]
+
+export const fav =[
+    'LU0145482039',
+    'LU1191877379'
+]
+
 export const case_2_model = [
     { Symbol: 'FR0010314401', MacroAssetClass: 'Funds', AssetClass: 'Equity', AssetType: 'Large Cap', Name: 'Amundi Actions Euro', Mstar_BCH: 'MSCI EMU NR USD', Mstar_SRRI: 6, WEIGHT: 0.2, SRRI: 1.2, Amont: 4000, Price: 66147, Shares: 0.0604713743631608, },
     { Symbol: 'LU0533595319', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Corporate Bond', Name: 'Nordea 1 - European Corporate Bond Fund', Mstar_BCH: 'Barclays Euro Agg Corps TR EUR', Mstar_SRRI: 3, WEIGHT: 0.3, SRRI: 0.9, Amont: 6000, Price: 44.65, Shares: 134.37849944009, },
