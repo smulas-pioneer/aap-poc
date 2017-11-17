@@ -51,6 +51,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
     static AREA_MAP_INDEX = ['Nord Ovest', 'Lombardia', 'Nord Est', 'Centro Nord', 'Centro', 'Sud', 'Sicilia'];
 
     colors: number[][];
+    MAX_COLORS_LEN = 0;
 
     constructor(props: ItalyMapProps) {
         super(props);
@@ -93,7 +94,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
         for (var i = 0; i < steps; i++) {
             interpolatedColorArray.push(this.interpolateColor(col1, col2, stepFactor * i));
         }
-
+        this.MAX_COLORS_LEN = interpolatedColorArray.length - 1;
         return interpolatedColorArray;
     }
 
@@ -138,27 +139,33 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
             default: { }
         }
 
-        let tot = 0;
+        let minValue: number | undefined = undefined;
+        let maxValue = 0;
         let countWithValues = 0;
-        let min: number | undefined = undefined;
 
         Object.keys(values).forEach(key => {
             const v = values[key];
-            if (v > tot) tot = v;
-            if (!min || v < min) min = v;
+            if (v > maxValue) maxValue = v;
+            if (minValue === undefined || v < minValue) minValue = v;
         });
 
         const areaValues = ItalyMap.AREA_MAP_INDEX.reduce((acc, key, idx) => {
             const value = values[key] ? values[key] : 0;
-            const perc = (value * 100) / tot;
+            const perc = (value * 100) / maxValue;
             const area = `area_${idx}`;
-            const lenCol = this.colors.length - 1;
-            if (!min) min = 0;
 
-            const color = (tot - min) === 0 ? this.colors[lenCol] : value !== 0 ? this.colors[Math.ceil((value - min) / (tot - min) * lenCol)] : undefined;
+            if (minValue === undefined) minValue = 0;
 
-            // if (!color) throw Error("Color not defined!!!");
+            let color: number[] | undefined = undefined;
+
+            if ((maxValue - minValue) === 0) {
+                color = this.colors[this.MAX_COLORS_LEN];
+            } else if (value !== 0) {
+                color = this.colors[Math.ceil((value - minValue) / (maxValue - minValue) * this.MAX_COLORS_LEN)]
+            };
+
             if (value) countWithValues++;
+
             acc.push({
                 key,
                 value,
