@@ -9,7 +9,7 @@ import { clientList } from '../_db/data';
 
 export enum LoginType {
     Manager,
-    Agent
+    Advisor
 }
 
 export const logoutSuccess = createAction('LOGOUT');
@@ -26,7 +26,7 @@ export const login = createPromiseAction('LOGIN', (lt: LoginType) => {
     const agent = getValidAgent();
     const sn = agent.split(' ');
     switch (lt) {
-        case LoginType.Agent:
+        case LoginType.Advisor:
             return Promise.resolve<UserInfo>({
                 firstName: sn[0],
                 lastName: sn[1],
