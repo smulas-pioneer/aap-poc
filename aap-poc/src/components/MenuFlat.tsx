@@ -112,7 +112,7 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
                     <img src={logo2} />
 
                     <Menu.Item color="blue" icon={logo2} as={Link} to="/">
-                        <h2 style={{ color: '#005483', fontFamily: 'HelveticaNeue' }} > Amundi Digital Advisory </h2>
+                        <h2 style={{ color: '#005483', fontFamily: 'HelveticaNeue' }} >Advisory Platform</h2>
                     </Menu.Item>
 
                     {/*Model.memuItems.map((v: any, i: any) => this.renderItem(v, i, activeMenuItem))*/}
