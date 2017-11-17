@@ -96,7 +96,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
             overlap: true,
             efficency: true
         }
-        this.setState({ axes }, () => this.props.getSuggestions({ id: this.props.client!.id,position: this.state.strategy, axes, calculateFromAxes: true }));
+        this.setState({ axes }, () => this.props.getSuggestions({ id: this.props.client!.id, position: this.state.strategy, axes, calculateFromAxes: true }));
 
     }
 
@@ -111,67 +111,96 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
     }
 
     handleOnChange = (strategy: StrategyItem[]) => {
-        this.props.getSuggestions({id: this.props.client!.id, position: strategy, axes: this.state.axes, calculateFromAxes: false });
+        this.props.getSuggestions({ id: this.props.client!.id, position: strategy, axes: this.state.axes, calculateFromAxes: false });
     }
 
     handleAxesChange = (key: string) => {
         const axes = { ...this.state.axes, [key]: !this.state.axes[key] };
         this.setState({ axes }, () => {
-            this.props.getSuggestions({ id: this.props.client!.id,position: this.state.strategy, axes: axes, calculateFromAxes: true });
+            this.props.getSuggestions({ id: this.props.client!.id, position: this.state.strategy, axes: axes, calculateFromAxes: true });
         })
     }
 
     graphs = () => {
         const { currentGraphIndex, breakdown, radar, strategy } = this.state;
-        return [
-            {
+
+        const graphBreakDown = breakdown && breakdown.reduce((memo, val, i) => {
+            if (!val.data || !val.data.length) return memo;
+
+            let prop = val.attributeName;
+
+            if (prop === 'MacroAssetClass' || prop === 'MicroAssetClass') prop = "AssetClass";
+            if (prop === 'Rating' || prop === 'Maturity') prop = "Bond Indicators";
+
+            const chartView = (prop === "AssetClass" ? 'pie' : prop === 'Bond Indicators' ? 'pie' : 'composed');
+
+            const element = (memo[prop] || {
+                title: prop.toUpperCase(),
+                icon: chartView === "pie" ? 'pie graph' : 'bar graph',
+                charts: []
+            });
+
+            element.charts.push({
+                title: val.attributeName.toUpperCase(),
+                chart: <BreakdownView key={`breakdown${i}`}
+                    breakdown={val}
+                    width={700}
+                    height={413}
+                    chartView={chartView} />
+            })
+
+            return { ...memo, [prop]: element }
+
+        }, {} = {} as any);
+
+        const graphFixed = {
+            Performance: {
                 title: 'PERFORMANCE',
                 icon: 'line graph',
-                chart: radar && <PerformanceChart key={0}
-                    data={ce.getPositionPerformance(suggestedPosition(strategy))}
-                    actualData={ce.getPositionPerformance(currentPosition(strategy))}
-                    width={700}
-                    height={413}
-                    clientTimeHorizon={this.props.client!.timeHorizon}
-                    advancedView={0 == currentGraphIndex}
-                    version={this.props.strategySuccessCount}
-                    onCalculate95TargetRetForClientTimeHorizon={currentTargetReturn => this.setState({ currentTargetReturn })}
-                    lang={this.props.lang} />
-            },
-            {
-                title: 'RISK RETURN',
-                icon: 'area graph',
-                chart: radar && <RiskReturnGraph key={1}
-                    data={ce.getRiskReturn(suggestedPosition(strategy), modelPosition(strategy), 'All')}
-                    width={700}
-                    height={413}
-                    lang={this.props.lang} />
-            },
-            {
-                title: 'PERF. CONTR.',
-                icon: 'bar graph',
-                chart: radar && <PerformanceContributionGraph key={2}
-                    data={ce.getPerfContribution(suggestedPosition(strategy))}
-                    width={700}
-                    height={413}
-                    lang={this.props.lang} />
-            },
-        ].concat(
-            breakdown
-                .map((p, i) => {
-                    return {
-                        title: p.attributeName.toUpperCase(),
-                        icon: p.attributeName === "MacroAssetClass" ? 'pie graph' : p.attributeName == 'Rating' ? 'pie graph' : 'bar graph',
-                        chart: <BreakdownView key={3 + i}
-                            breakdown={p}
+                charts: radar && [
+                    {
+                        title: 'PERFORMANCE',
+                        chart: <PerformanceChart key={0}
+                            data={ce.getPositionPerformance(suggestedPosition(strategy))}
+                            actualData={ce.getPositionPerformance(currentPosition(strategy))}
                             width={700}
                             height={413}
-                            onClick={() => this.setState({ currentGraphIndex: i + 4 })}
-                            chartView={p.attributeName === "MacroAssetClass" ? 'pie' : p.attributeName == 'Rating' ? 'pie' : 'composed'} />
+                            clientTimeHorizon={this.props.client!.timeHorizon}
+                            advancedView={0 == currentGraphIndex}
+                            version={this.props.strategySuccessCount}
+                            onCalculate95TargetRetForClientTimeHorizon={currentTargetReturn => this.setState({ currentTargetReturn })}
+                            lang={this.props.lang} />
+                    }]
+            },
+            RiskReturn: {
+                title: 'RISK RETURN',
+                icon: 'area graph',
+                charts: radar && [
+                    {
+                        title: 'RISK RETURN',
+                        chart: <RiskReturnGraph key={1}
+                            data={ce.getRiskReturn(suggestedPosition(strategy), modelPosition(strategy), 'All')}
+                            width={700}
+                            height={413}
+                            lang={this.props.lang} />
+                    }]
+            },
+            PerfContr: {
+                title: 'PERF. CONTR.',
+                icon: 'bar graph',
+                charts: radar && [
+                    {
+                        title: 'PERF. CONTR.',
+                        chart: <PerformanceContributionGraph key={2}
+                            data={ce.getPerfContribution(suggestedPosition(strategy))}
+                            width={700}
+                            height={413}
+                            lang={this.props.lang} />
+                    }]
+            }
+        };
 
-                    }
-                })
-            )
+        return { ...graphFixed, ...graphBreakDown };
     }
 
     render() {
@@ -181,11 +210,12 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         if (!client || history.length === 0) return <div />
 
         const graphs = this.graphs();
+        const graphsKeys = Object.keys(graphs);
 
         return (
             <AdvancedGrid gridTemplateRows="min-content min-content 600px auto" style={{ marginBottom: '10px' }}>
                 <Segment style={{ margin: 0 }} >
-                    <WidgetTitle title={lang.PERSONAL_INFORMATION}/>
+                    <WidgetTitle title={lang.PERSONAL_INFORMATION} />
                     <ClientCard client={client} lang={lang} color={'blue'} />
                 </Segment>
                 {client.radar.numOfAlerts
@@ -197,7 +227,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
                 <AdvancedGrid gridTemplateColumns="auto 40%">
                     <Segment style={{ margin: 0 }} as={OverflowColumn}>
-                        <WidgetTitle title={lang.PORTFOLIO_HOLDINGS}/>
+                        <WidgetTitle title={lang.PORTFOLIO_HOLDINGS} />
                         <Holdings
                             clientId={client.id} lang={lang} holdings={strategy}
                             onChange={this.handleOnChange}
@@ -207,29 +237,32 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} />
                     </Segment>
                     <Segment style={{ margin: 0 }}>
-                        <WidgetTitle title={lang.PORTFOLIO_MONITORING}/>
+                        <WidgetTitle title={lang.PORTFOLIO_MONITORING} />
                         {radar && <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} />}
                     </Segment>
                 </AdvancedGrid>
                 <AdvancedGrid gridTemplateColumns="60% auto">
                     <Segment style={{ margin: 0 }}>
-                        {graphs.reduce((memo, item, ix) => {
+                        {graphsKeys.reduce((memo, key, ix) => {
                             if (ix === currentGraphIndex) {
-                                memo.push(
+                                const item = graphs[key];
+                                item.charts && memo.push(
                                     <Segment key={ix} basic >
-                                        <WidgetTitle title={lang.PORTFOLIO_VIEWS} subtitle={item.title}/>
-                                        {item.chart}
+                                        <WidgetTitle title={lang.PORTFOLIO_VIEWS} subtitle={item.title} />
+                                        <Grid columns="equal" >
+                                            {item.charts.map((v: any, j: number) => <Grid.Column key={j} textAlign="center">{v.title!==item.title ? v.title : '' }{v.chart}</Grid.Column>)}
+                                        </Grid>
                                     </Segment>
                                 );
                             }
                             return memo;
                         }, [] = [] as any)}
                         <Button.Group basic fluid size="mini">
-                            {graphs.reduce((memo, item, ix) => {
+                            {graphsKeys.reduce((memo, key, ix) => {
                                 memo.push(
                                     <Button key={ix} size="mini" active={ix === currentGraphIndex} onClick={() => this.setState({ currentGraphIndex: ix })} >
-                                        <Icon name={item.icon as any} />
-                                        <br /> <br />{item.title}
+                                        <Icon name={graphs[key].icon as any} />
+                                        <br /> <br />{graphs[key].title}
                                     </Button>
                                 );
                                 return memo;
@@ -237,7 +270,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         </Button.Group>
                     </Segment>
                     <Segment style={{ margin: 0 }} as={OverflowColumn}>
-                        <WidgetTitle title={lang.CLIENT_EVENT_HISTORY}/>
+                        <WidgetTitle title={lang.CLIENT_EVENT_HISTORY} />
                         <ClientHistory lang={lang} history={history} />
                     </Segment>
                 </AdvancedGrid>

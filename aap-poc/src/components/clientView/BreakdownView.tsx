@@ -7,7 +7,7 @@ import { CustomPieChart, CustomComposedChart } from '../chart/CustomCharts';
 interface Props {
     breakdown: Breakdown,
     chartView?: 'pie' | 'composed'
-    onClick: () => void,
+    onClick?: () => void,
     width: number,
     height: number,
     responsiveHeight?: number | string

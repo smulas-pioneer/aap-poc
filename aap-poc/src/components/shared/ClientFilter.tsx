@@ -21,17 +21,26 @@ export interface ClientFilterProps {
 }
 
 export interface ClientFilterState {
+    renderAllFilters: any;
 }
 
 export class ClientFilter extends React.Component<ClientFilterProps, ClientFilterState> {
     constructor(props: any) {
         super(props);
 
+        this.state = { renderAllFilters: {} };
+
         this.renderFilter = this.renderFilter.bind(this);
         this.renderFilterMenu = this.renderFilterMenu.bind(this);
         this.searchAdvanced = this.searchAdvanced.bind(this);
         this.hasMoreThenOneFilter = this.hasMoreThenOneFilter.bind(this);
         this.clearAllFilters = this.clearAllFilters.bind(this);
+        this.renderAllFiltersHandler = this.renderAllFiltersHandler.bind(this);
+    }
+
+
+    renderAllFiltersHandler(name: string, value: boolean) {
+        this.setState({ renderAllFilters: { ...this.state.renderAllFilters, [name]: value } })
     }
 
     searchAdvanced(name: string, value: string, remove: boolean) {
@@ -55,6 +64,10 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
     renderFilterMenuNew(key: number, map: FilterMap, values: SearchFilter) {
         const { searchprop, render: { icon, header, label, max }, enableClearAll = true } = map;
 
+        const { renderAllFilters } = this.state;
+
+        const currentRenderAllFilters = renderAllFilters[searchprop] || false;
+
         let current = values && Object.keys(values).sort((a, b) => {
             if (b.startsWith('<1')) return 1;
             if (b.startsWith('>20')) return -1;
@@ -73,7 +86,8 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
                 </Menu.Item>
             );
 
-            if (max && j >= max && !isInUse) {
+
+            if (!currentRenderAllFilters && !isInUse && max && j >= max) {
                 memo.others.push(item);
             } else {
                 memo.menu.push(item);
@@ -82,12 +96,13 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
             return memo;
         }, { menu: [], others: [] } = { menu: [] as any, others: [] as any });
 
-
         return (current.menu &&
             <Menu.Item key={key}>
                 <Menu.Header>
                     <Icon name={icon} />{header}
-                    {enableClearAll && this.hasMoreThenOneFilter(values) && <IconButton color="red" name="remove" floated="right" onClick={() => this.clearAllFilters(searchprop)} />}
+                    {enableClearAll && this.hasMoreThenOneFilter(values) && <IconButton color="grey" name="remove" floated="right" onClick={() => this.clearAllFilters(searchprop)} />}
+                    {current.others && current.others.length && !currentRenderAllFilters ? <IconButton color="grey" name="expand" floated="right" onClick={() => this.renderAllFiltersHandler(searchprop, true)} /> : null}
+                    {currentRenderAllFilters ? <IconButton color="grey" name="compress" floated="right" onClick={() => this.renderAllFiltersHandler(searchprop, false)} /> : null}
                 </Menu.Header>
                 <Menu.Menu>
                     {current.menu}
