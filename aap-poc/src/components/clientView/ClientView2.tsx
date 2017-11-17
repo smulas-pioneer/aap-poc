@@ -195,7 +195,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     </Segment>
                     : <div />}
 
-                <AdvancedGrid gridTemplateColumns="auto 39%">
+                <AdvancedGrid gridTemplateColumns="auto 40%">
                     <Segment style={{ margin: 0 }} as={OverflowColumn}>
                         <WidgetTitle title={lang.PORTFOLIO_HOLDINGS}/>
                         <Holdings
