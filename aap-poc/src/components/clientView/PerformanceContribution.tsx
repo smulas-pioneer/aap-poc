@@ -1,19 +1,24 @@
 import * as React from 'react';
 import { LangDictionary } from '../../reducers/language/interfaces';
 import { Segment } from 'semantic-ui-react';
-import { groupBy ,uniq} from 'lodash';
+import { groupBy, uniq } from 'lodash';
 const { ScatterChart, XAxis, CartesianGrid, Legend, Scatter, Tooltip, YAxis, ResponsiveContainer, BarChart, Bar } = require('recharts');
 
-const Colors = {
-    ORANGE: "#F07D00",
-    BLUE: "#004F9F",
-    RED: "#E6325E",
-    GRAY: "#3B7296",
-    GREEN: "#39B2B6",
-}
+const Colors = [
+    "#F07D00",
+    "#004F9F",
+    "#E6325E",
+    "#3B7296",
+    "#39B2B6",
+    "red",
+    "green",
+    "yellow",
+    "blue",
+    "orange"
+]
 
 interface PerformanceContributionProps {
-    data: { id: string, perf: number, year: number }[];
+    data: any[];
     width?: number;
     height?: number;
     showLegend?: boolean
@@ -22,7 +27,7 @@ interface PerformanceContributionProps {
 
 interface PerformanceContributionState {
     data: any[],
-    ids:string[]
+    ids: string[]
 }
 
 const perc = (num: number) => (num).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -31,6 +36,7 @@ export class PerformanceContributionGraph extends React.Component<PerformanceCon
 
     constructor(props: PerformanceContributionProps) {
         super(props);
+        /*
         const gData = groupBy(props.data, d => d.year)
         const data = Object.keys(gData).reduce((prev, curr) => {
             prev.push(
@@ -41,10 +47,18 @@ export class PerformanceContributionGraph extends React.Component<PerformanceCon
             );
             return prev;
         }, [] as any[]);
+*/
+        let ids = {};
+        this.props.data.forEach(d => {
+            Object.keys(d).filter(k => k != 'year').forEach(i => {
+                ids[i] = true;
+            });
+        });
+
 
         this.state = {
-            data,
-            ids: uniq (props.data.map(p=>p.id))
+            data: this.props.data,
+            ids: Object.keys(ids)
         };
     }
 
@@ -60,8 +74,8 @@ export class PerformanceContributionGraph extends React.Component<PerformanceCon
                 <Tooltip />
                 <Legend />
                 {
-                    this.state.ids.map((d,i)=><Bar key={i} dataKey={d} stackId="a" fill="#8884d8" />)
-                }                
+                    this.state.ids.map((d, i) => <Bar key={i} dataKey={d} stackId="a" fill={Colors[i]} />)
+                }
             </BarChart>
         </ResponsiveContainer>
     }

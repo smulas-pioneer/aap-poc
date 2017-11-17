@@ -2,7 +2,7 @@ import { PositionItem, RadarItem, StrategyItem, RadarStrategyParm, Breakdown, Al
 import { sumBy, groupBy } from "lodash";
 import { numArray, rnd } from "./utils";
 import { solve } from "./solver";
-import { performances } from "./data/index";
+import { performances, perfSummary } from "./data/index";
 import * as moment from 'moment';
 import * as math from 'mathjs';
 import { networkInterfaces } from "os";
@@ -99,6 +99,34 @@ export const getRiskReturn = (position: PositionItem[], model: PositionItem[], p
     return ret.filter(o => o.id !== 'CASH').sort((a, b) => a.devSt - b.devSt);
 }
 
+const getPerfContrib = (isin: string[]) => {
+    let ret: { perf: number, date: string, id: string }[] = [];
+    isin.forEach(i => {
+        ret = [...ret, ...perfSummary[i].map(p => ({ ...p, id: i }))]
+    });
+    return ret;
+}
+
+export const getPerfContribution = (position: PositionItem[]) => {
+    const filteredPos = position.filter(w => w.weight != 0);
+    const keys = filteredPos.map(p => p.security.IsinCode);
+    const weights = filteredPos.reduce((prev, curr) => {
+        prev[curr.security.IsinCode] = curr.weight;
+        return prev;
+    }, {} as { [key: string]: number });
+    const perfCompo = getPerfContrib(keys);
+
+    const gPerf = groupBy(perfCompo, g => g.date);
+    return Object.keys(gPerf).map(k => {
+        const o = gPerf[k].reduce((pr, cu) => {
+            pr[cu.id]= cu.perf * weights[cu.id] * 100;
+            return pr;
+        }, {year:parseInt(k)} as any);
+        return o;
+    });
+}
+
+
 export const getPositionPerformance = (position: PositionItem[], period: PerformancePeriod = 'All') => {
     const filteredPos = position.filter(w => w.weight != 0);
     const keys = filteredPos.map(p => p.security.IsinCode);
@@ -106,7 +134,7 @@ export const getPositionPerformance = (position: PositionItem[], period: Perform
         prev[curr.security.IsinCode] = curr.weight;
         return prev;
     }, {} as { [key: string]: number });
-    
+
     const perfCompo = getPerformances(keys, period);
     return perfCompo[keys[0]].map((i, ix) => {
         return {
@@ -129,18 +157,18 @@ export const calculateRegression = (data: { date: string, perf: number }[]) => {
     }
 }
 
-export const calculateProjection = (data: { date: string, perf: number }[], days: number, startValue:number) => {
+export const calculateProjection = (data: { date: string, perf: number }[], days: number, startValue: number) => {
     let newData = [] as { date: string, perf?: number, projection?: number, min?: number, max?: number }[];
 
     const r = calculateRegression(data);
-    let date = moment(data[data.length-1].date);
+    let date = moment(data[data.length - 1].date);
     let perf = startValue;
     newData.push({
-        date:data[data.length-1].date,
-        projection:startValue,
+        date: data[data.length - 1].date,
+        projection: startValue,
         perf: startValue,
-        min:startValue,
-        max:startValue,
+        min: startValue,
+        max: startValue,
     });
     for (let i = 0; i < days; i++) {
         date = date.add('days', 1);
@@ -152,26 +180,26 @@ export const calculateProjection = (data: { date: string, perf: number }[], days
             max: perf + Math.log(2 + i) / 80,
         });
     }
-    const r95 =  math.ceil(10000 * (newData[newData.length-1].projection! - startValue))/100;
+    const r95 = math.ceil(10000 * (newData[newData.length - 1].projection! - startValue)) / 100;
 
-    const getProbabilityByTimeHorizon = (th:TimeHorizon , targetReturn: number) => {
-        const min = r95  > 0 ? 0 : r95;
-        const max = r95 > 0 ?  r95: 0;
+    const getProbabilityByTimeHorizon = (th: TimeHorizon, targetReturn: number) => {
+        const min = r95 > 0 ? 0 : r95;
+        const max = r95 > 0 ? r95 : 0;
 
-        const d = targetReturn < min ? min- targetReturn :
-                targetReturn > max ? targetReturn -max :
+        const d = targetReturn < min ? min - targetReturn :
+            targetReturn > max ? targetReturn - max :
                 0;
-        const prob = math.round( 96 - (30* d/(max-min)));
-        return math.max(prob,1);
-    }  
-
-    const returnFor95 = (th:TimeHorizon ) => {
-      return r95;
+        const prob = math.round(96 - (30 * d / (max - min)));
+        return math.max(prob, 1);
     }
-        
+
+    const returnFor95 = (th: TimeHorizon) => {
+        return r95;
+    }
+
     return {
-        data:newData,
+        data: newData,
         getProbabilityByTimeHorizon,
-        returnFor95 
+        returnFor95
     };
 }

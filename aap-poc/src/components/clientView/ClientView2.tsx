@@ -147,10 +147,10 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     lang={this.props.lang} />
             },
             {
-                title: 'Performance Contribution',
+                title: 'PERF. CONTR.',
                 icon: 'bar graph',
                 chart: radar && <PerformanceContributionGraph key={2}
-                    data={[]}
+                    data={ce.getPerfContribution(suggestedPosition(strategy))}
                     width={700}
                     height={413}
                     lang={this.props.lang} />
@@ -262,12 +262,12 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
             </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-            <Grid.Column width={16} style={{margin:0}}>
-                <Grid fluid columns="equal">
+            <Grid.Column width={16} style={{ margin: 0 }}>
+                <Grid  columns="equal">
                     <COL data={{ 'Client Id': client.id, 'Entry Date': client.lastAdvicedate }} />
                     <COL data={{ 'Tel': client.phone, 'Email': client.email }} />
                     <COL data={{ 'Address': client.address.streetAddress, 'City': client.address.city }} />
-                    <COL right data={{ 'Mifid': client.mifid, 'Model': client.modelName, [lang.TIME_HORIZON]:client.timeHorizon }} />
+                    <COL right data={{ 'Mifid': client.mifid, 'Model': client.modelName, [lang.TIME_HORIZON]: client.timeHorizon }} />
                 </Grid>
             </Grid.Column>
             {/*}
@@ -318,8 +318,8 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
     )
 }
 
-const COL = (props: { data: { [label: string]: string|number }, right?:boolean }) => {
-    return <Grid.Column textAlign={props.right?"right":"left"} style={{fontSize:'medium',paddingTop:0}}>
+const COL = (props: { data: { [label: string]: string | number }, right?: boolean }) => {
+    return <Grid.Column textAlign={props.right ? "right" : "left"} style={{ fontSize: 'medium', paddingTop: 0 }}>
         {Object.keys(props.data).map((d, i) => {
             return <div key={i} >
                 <b>{d}:</b> &nbsp; {props.data[d]}

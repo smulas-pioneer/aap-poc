@@ -6,7 +6,7 @@ import { createRadarFromStrategy } from './common/radarUtils';
 import * as faker from 'faker';
 //import * as svc from './_db/service';
 import * as fs from 'fs';
-import { sumBy, maxBy } from 'lodash';
+import { sumBy, maxBy, groupBy } from 'lodash';
 import * as moment from 'moment';
 import { getAllSecuirities, getAllPerformances, getAllStrategies } from './fakedata'
 var f = faker;
@@ -258,8 +258,10 @@ const fixPerformance = (perf: { date: string, perf: number }[]) => {
         });
         dt = dt.subtract('days', 10);
     }
-    return ret.sort((a,b)=>a.date.localeCompare(b.date));
+    return ret.sort((a, b) => a.date.localeCompare(b.date));
 }
+
+
 
 const fixPerformances = (perf: { [id: string]: { date: string, perf: number }[] }) => {
     const ret = Object.keys(perf).reduce((prev, curr) => {
@@ -270,6 +272,22 @@ const fixPerformances = (perf: { [id: string]: { date: string, perf: number }[] 
     return { ...ret, ['CASH']: onlyCash };
 }
 
+const perfSummary = (perf: { date: string, perf: number }[]) => {
+    const gData = groupBy(perf, p => p.date.substr(0, 4));
+    return Object.keys(gData).map(k=>{
+        return {
+            date: k,
+            perf: gData[k][gData[k].length-1].perf / gData[k][0].perf-1
+        }
+    });
+}
+const perfSummaryAll = (perf: { [id: string]: { date: string, perf: number }[] }) => {
+    const ret = Object.keys(perf).reduce((prev, curr) => {
+        prev[curr] = perfSummary(perf[curr]);
+        return prev;
+    }, {} as { [id: string]: { date: string, perf: number }[] });
+    return ret;
+}
 const go = async () => {
     try {
         if (!fs.existsSync('build/output')) fs.mkdirSync('build/output');
@@ -282,6 +300,7 @@ const go = async () => {
         const preformances = createAllSecuritiesPerformance();
         const performances2 = getAllPerformances();
         const secuirities = getAllSecuirities();
+        const allPerf =  { ...preformances, ...performances2 };
         //Calculate Clients Radar and aum
 
         clients.forEach(c => {
@@ -321,7 +340,9 @@ const go = async () => {
         dump('output/strategy.json', { ...strategies, ...strategies2 });
 
         console.log(`created ${Object.keys(preformances).length} performances`);
-        dump('output/performances.json', fixPerformances({ ...preformances, ...performances2 }));
+        const perf = fixPerformances(allPerf)
+        dump('output/performances.json', perf );
+        dump('output/perfSummary.json', perfSummaryAll(perf));
 
     } catch (error) {
         console.error(error);

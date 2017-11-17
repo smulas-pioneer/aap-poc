@@ -13,6 +13,9 @@ export const group = <T>(data: T[], key: keyof (T)) => data.reduce(
 let performances: { [isin: string]: { date: string, perf: number }[] };
 fetch('/performances.json').then(r => r.json()).then(p => performances = p);
 
+let perfSummary: { [isin: string]: { date: string, perf: number }[] };
+fetch('/perfSummary.json').then(r => r.json()).then(p => perfSummary = p);
+
 //SECURITIES
 let securities2: Security[];
 fetch('/securities2.json').then(r => r.json()).then(p => {
@@ -42,4 +45,4 @@ let agents: string[] ;
 fetch('/agents.json').then(r => r.json()).then(p => agents = p);
 
 
-export { securities2 as securityList, clients as clientList,  history, agents, strategies, performances, alertHistory };
+export { securities2 as securityList, clients as clientList,  history, agents, strategies, performances, alertHistory, perfSummary };
