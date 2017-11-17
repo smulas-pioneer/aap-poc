@@ -97,7 +97,7 @@ export const RadarGraph = (props: {
 
     return (
         <ResponsiveContainer width="100%" height={props.responsiveHeight || props.height} >
-            <RadarChart cx='50%' cy='50%' height={props.height} data={data} outerRadius={'75%'} >
+            <RadarChart cx='50%' cy='50%' width={props.width} height={props.height} data={data} outerRadius={'75%'} >
                 <Legend height={1} verticalAlign="bottom" />
                 <Radar name="Guidelines" dataKey="guideLines" stroke="blue" fill="# 00f" fillOpacity={0} />
                 <Radar name="Limits" dataKey="limits" stroke="red" fill="#D10505" fillOpacity={0} />
