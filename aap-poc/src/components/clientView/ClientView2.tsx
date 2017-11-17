@@ -19,6 +19,7 @@ import { HistoryView, HistoryViewTimeline, HistoryViewTimelineEvent } from './Hi
 import { settings } from 'cluster';
 import { PerformanceContributionGraph } from './PerformanceContribution';
 import { createRadarFromStrategy, suggestedPosition, currentPosition, modelPosition } from '../../_db/common/radarUtils';
+import { WidgetTitle } from '../shared/WidgetTitle';
 
 const conn = appConnector<{ id: string }>()(
     (s, p) => ({
@@ -184,7 +185,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         return (
             <AdvancedGrid gridTemplateRows="min-content min-content 600px auto" style={{ marginBottom: '10px' }}>
                 <Segment style={{ margin: 0 }} >
-                    <CustomTitle title="Personal Information"/>
+                    <WidgetTitle title={lang.PERSONAL_INFORMATION}/>
                     <ClientCard client={client} lang={lang} color={'blue'} />
                 </Segment>
                 {client.radar.numOfAlerts
@@ -196,7 +197,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
                 <AdvancedGrid gridTemplateColumns="auto 39%">
                     <Segment style={{ margin: 0 }} as={OverflowColumn}>
-                        <CustomTitle title="Portfolio Holdings"/>
+                        <WidgetTitle title={lang.PORTFOLIO_HOLDINGS}/>
                         <Holdings
                             clientId={client.id} lang={lang} holdings={strategy}
                             onChange={this.handleOnChange}
@@ -206,7 +207,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} />
                     </Segment>
                     <Segment style={{ margin: 0 }}>
-                        <CustomTitle title="Portfolio Monitoring"/>
+                        <WidgetTitle title={lang.PORTFOLIO_MONITORING}/>
                         {radar && <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} />}
                     </Segment>
                 </AdvancedGrid>
@@ -216,7 +217,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                             if (ix === currentGraphIndex) {
                                 memo.push(
                                     <Segment key={ix} basic >
-                                        <CustomTitle title="Portfolio Views" subtitle={item.title}/>
+                                        <WidgetTitle title={lang.PORTFOLIO_VIEWS} subtitle={item.title}/>
                                         {item.chart}
                                     </Segment>
                                 );
@@ -236,7 +237,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         </Button.Group>
                     </Segment>
                     <Segment style={{ margin: 0 }} as={OverflowColumn}>
-                        <CustomTitle title={'Client event history'}/>
+                        <WidgetTitle title={lang.CLIENT_EVENT_HISTORY}/>
                         <ClientHistory lang={lang} history={history} />
                     </Segment>
                 </AdvancedGrid>
@@ -245,10 +246,6 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
     }
 }
 export const ClientView = conn.connect(ClientViewCompo);
-
-const CustomTitle = (props: { title: string, subtitle?: string, icon? : SemanticICONS, color?: SemanticCOLORS }) => {
-    return (<Header as="h2" color={props.color} icon={props.icon} content={props.title} subheader={props.subtitle} />)
-}
 
 const ClientCard = (props: { client: Client, lang: LangDictionary, color?: SemanticCOLORS }) => {
     const { client, lang, color } = props;
@@ -284,9 +281,9 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
         <Grid.Row>
             <Grid.Column width={16} style={{ margin: 0 }}>
                 <Grid columns="equal">
-                    {renderColumns({ 'Client Id': client.id, 'Entry Date': client.lastAdvicedate })}
-                    {renderColumns({ 'Tel': client.phone, 'Email': client.email })}
-                    {renderColumns({ 'Address': client.address.streetAddress, 'City': client.address.city })}
+                    {renderColumns({ 'Client Id': client.id, 'Entry Date': client.lastAdvicedate, 'Segment': client.segment })}
+                    {renderColumns({ 'Tel': client.phone, 'Email': client.email, 'Branch': client.branch })}
+                    {renderColumns({ 'Address': client.address.streetAddress, 'City': client.address.city, 'Region': client.address.region })}
                     {renderColumns({ 'Mifid': client.mifid, 'Model': client.modelName, [lang.TIME_HORIZON]: client.timeHorizon }, true)}
                 </Grid>
             </Grid.Column>

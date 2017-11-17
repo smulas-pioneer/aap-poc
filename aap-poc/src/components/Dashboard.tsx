@@ -16,6 +16,7 @@ import { AlertsView } from './alertsView/AlertsView';
 import { ClientFilter } from './shared/ClientFilter';
 
 import { AdvancedGrid, OverflowColumn, OverflowItem } from './shared/GridOverflow';
+import { WidgetTitle } from './shared/WidgetTitle';
 
 const sprintf = require("sprintf-js").sprintf;
 
@@ -148,7 +149,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
 
         return (
             <Segment>
-                <h5>{header}</h5>
+                <WidgetTitle title={header}/>
                 <CustomPieChart width={500} height={500} data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
             </Segment>
         );

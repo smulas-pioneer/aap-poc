@@ -70,6 +70,14 @@ export const Italiano: LanguageState = {
         TARGET_RESULT: "Perf. Attesa",
 
 
+
+        //client view
+        PERSONAL_INFORMATION: 'Informazioni Personali',
+        PORTFOLIO_HOLDINGS: 'Portafoglio',
+        PORTFOLIO_MONITORING: 'Monitor del portafoglio',
+        PORTFOLIO_VIEWS: 'Viste del portafoglio',
+        CLIENT_EVENT_HISTORY: 'Eventi del cliente',
+
         PROPOSAL_VALIDATION: { title: 'Validazione della proposta', message: 'Prego validare la proposta per generare il documento' },
         HISTORY: {
             clientEventHistory: 'Tutti',
@@ -78,8 +86,14 @@ export const Italiano: LanguageState = {
             interviews: 'Interviste'
         },
         ALERT: { name: 'Avvisi', sentence: 'monitoring indicators breached' },
-    
-
+        ALERTS: {
+            riskAdequacyAlert: { name: 'Rischio Adeguatezza', sentence: 'Il livello del rischio del portafoglio non è adeguato al profilo MIFID del cliente' },
+            efficencyAlert: { name: 'Efficienza', sentence: `L'efficienza del portafoglio non è allineata al suo modello` },
+            consistencyAlert: { name: 'Consistenza', sentence: 'La consistenza del portafoglio non è allineata al suo modello' },
+            riskAnalysisAlert: { name: 'Analisi del rischio', sentence: 'Il livello di rischio del portafoglio non è adeguato al profilo MIFID del cliente' },
+            concentrationAlert: { name: 'Concentrazione', sentence: 'La concentrazione del portafoglio non è allineata al suo modello' },
+            overlapAlert: { name: 'Sovrapposizione', sentence: 'La sovrapposizione del portafoglio non è allineata al suo modello' }
+        },
 
         DASHBOARD: 'Cruscotto',
         DB_ASSET_ADVISE: 'Totale Patrimonio',
@@ -92,15 +106,6 @@ export const Italiano: LanguageState = {
         LAST_ADVICE_DATE: 'Ultima Proposta',
         LAST_INTERVIEW_DATE: 'Ultima Intervista',
         MY_BUSINNESS: 'Le mie Attività',
-        WELCOME: 'Benvenuto',
-
-        ALERTS: {
-            riskAdequacyAlert: { name: 'Rischio Adeguatezza', sentence: 'Il livello del rischio del portafoglio non è adeguato al profilo MIFID del cliente' },
-            efficencyAlert: { name: 'Efficienza', sentence: `L'efficienza del portafoglio non è allineata al suo modello` },
-            consistencyAlert: { name: 'Consistenza', sentence: 'La consistenza del portafoglio non è allineata al suo modello' },
-            riskAnalysisAlert: { name: 'Analisi del rischio', sentence: 'Il livello di rischio del portafoglio non è adeguato al profilo MIFID del cliente' },
-            concentrationAlert: { name: 'Concentrazione', sentence: 'La concentrazione del portafoglio non è allineata al suo modello' },
-            overlapAlert: { name: 'Sovrapposizione', sentence: 'La sovrapposizione del portafoglio non è allineata al suo modello' }
-        }
+        WELCOME: 'Benvenuto'
     }
 };

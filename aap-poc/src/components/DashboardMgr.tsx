@@ -13,7 +13,13 @@ import { AlertsView } from './alertsView/AlertsView';
 import { formatAum } from '../_db/utils';
 import { ClientFilter } from './shared/ClientFilter';
 import { ItalyMap } from './italymaps/ItalyMap';
+<<<<<<< HEAD
+import { formatAum } from '../_db/utils';
+import { TopClient } from './topClientView';
+import { WidgetTitle } from './shared/WidgetTitle';
+=======
 
+>>>>>>> 29e0c9e46c2e9441f2fde1808e65af47bf77ea06
 
 const sprintf = require("sprintf-js").sprintf;
 
