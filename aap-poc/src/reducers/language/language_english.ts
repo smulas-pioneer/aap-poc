@@ -84,7 +84,7 @@ export const English: LanguageState = {
 
         PROPOSAL_VALIDATION: { title: 'Proposal validation', message: 'Please validate the proposal for generating the document' },
         HISTORY: {
-            clientEventHistory: 'Client Event History',
+            clientEventHistory: 'All events',
             transactions: 'Transactions',
             proposals: 'Proposals',
             interviews: 'Interviews'

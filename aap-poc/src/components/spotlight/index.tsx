@@ -167,7 +167,7 @@ class SpotlightCompo extends conn.StatefulCompo<SpotlightState> {
             </Modal>
         );
 
-        return <div>{dialog}</div>
+        return dialog;
     }
 }
 

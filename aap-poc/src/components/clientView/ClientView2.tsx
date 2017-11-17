@@ -184,14 +184,19 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         return (
             <AdvancedGrid gridTemplateRows="min-content min-content 600px auto" style={{ marginBottom: '10px' }}>
                 <Segment style={{ margin: 0 }} >
+                    <CustomTitle title="Personal Information"/>
                     <ClientCard client={client} lang={lang} color={'blue'} />
                 </Segment>
-                <Segment style={{ margin: 0 }}>
-                    <ClientAlert radar={client.radar} lang={lang} />
-                </Segment>
+                {client.radar.numOfAlerts
+                    ?
+                    <Segment style={{ margin: 0 }}>
+                        <ClientAlert radar={client.radar} lang={lang} />
+                    </Segment>
+                    : <div />}
+
                 <AdvancedGrid gridTemplateColumns="auto 39%">
                     <Segment style={{ margin: 0 }} as={OverflowColumn}>
-                        <h5>HOLDINGS</h5>
+                        <CustomTitle title="Portfolio Holdings"/>
                         <Holdings
                             clientId={client.id} lang={lang} holdings={strategy}
                             onChange={this.handleOnChange}
@@ -201,7 +206,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} />
                     </Segment>
                     <Segment style={{ margin: 0 }}>
-                        <h5>RADAR</h5>
+                        <CustomTitle title="Portfolio Monitoring"/>
                         {radar && <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} />}
                     </Segment>
                 </AdvancedGrid>
@@ -211,7 +216,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                             if (ix === currentGraphIndex) {
                                 memo.push(
                                     <Segment key={ix} basic >
-                                        <h5>{item.title}</h5>
+                                        <CustomTitle title="Portfolio Views" subtitle={item.title}/>
                                         {item.chart}
                                     </Segment>
                                 );
@@ -231,6 +236,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         </Button.Group>
                     </Segment>
                     <Segment style={{ margin: 0 }} as={OverflowColumn}>
+                        <CustomTitle title={'Client event history'}/>
                         <ClientHistory lang={lang} history={history} />
                     </Segment>
                 </AdvancedGrid>
@@ -240,6 +246,10 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 }
 export const ClientView = conn.connect(ClientViewCompo);
 
+const CustomTitle = (props: { title: string, subtitle?: string, icon? : SemanticICONS, color?: SemanticCOLORS }) => {
+    return (<Header as="h2" color={props.color} icon={props.icon} content={props.title} subheader={props.subtitle} />)
+}
+
 const ClientCard = (props: { client: Client, lang: LangDictionary, color?: SemanticCOLORS }) => {
     const { client, lang, color } = props;
 
@@ -247,6 +257,16 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
     });
+
+    const renderColumns = (data: { [label: string]: string | number }, right?: boolean) => {
+        return <Grid.Column textAlign={right ? "right" : "left"} style={{ fontSize: 'medium', paddingTop: 0 }}>
+            {Object.keys(data).map((d, i) => {
+                return <div key={i} >
+                    <b>{d}:</b> &nbsp; {data[d]}
+                </div>
+            })}
+        </Grid.Column>
+    }
 
     return (<Grid basic='very' verticalAlign="top">
         <Grid.Row>
@@ -263,82 +283,19 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
         </Grid.Row>
         <Grid.Row>
             <Grid.Column width={16} style={{ margin: 0 }}>
-                <Grid  columns="equal">
-                    <COL data={{ 'Client Id': client.id, 'Entry Date': client.lastAdvicedate }} />
-                    <COL data={{ 'Tel': client.phone, 'Email': client.email }} />
-                    <COL data={{ 'Address': client.address.streetAddress, 'City': client.address.city }} />
-                    <COL right data={{ 'Mifid': client.mifid, 'Model': client.modelName, [lang.TIME_HORIZON]: client.timeHorizon }} />
+                <Grid columns="equal">
+                    {renderColumns({ 'Client Id': client.id, 'Entry Date': client.lastAdvicedate })}
+                    {renderColumns({ 'Tel': client.phone, 'Email': client.email })}
+                    {renderColumns({ 'Address': client.address.streetAddress, 'City': client.address.city })}
+                    {renderColumns({ 'Mifid': client.mifid, 'Model': client.modelName, [lang.TIME_HORIZON]: client.timeHorizon }, true)}
                 </Grid>
             </Grid.Column>
-            {/*}
-            <Grid.Column width="12" >
-                <Form size="large">
-                    <Form.Group inline widths={3} style={{ marginBottom: 0 }}>
-                        <Form.Field>
-                            <label>Client Id :</label> {client.id}
-                        </Form.Field>
-                        <Form.Field>
-                            <label>Tel :</label> {client.phone}
-                        </Form.Field>
-                        <Form.Field>
-                            <label>Address :</label> {client.address.streetAddress}
-                        </Form.Field>
-                    </Form.Group>
-                    <Form.Group inline widths={3} style={{ marginBottom: 0 }}>
-                        <Form.Field>
-                            <label>Entry Date :</label> {client.lastAdvicedate}
-                        </Form.Field>
-                        <Form.Field>
-                            <label>Email:</label> {client.email}
-                        </Form.Field>
-                        <Form.Field>
-                            <label>City:</label>  {client.address.city}
-                        </Form.Field>
-                    </Form.Group>
-                </Form>
-            </Grid.Column>
-            <Grid.Column width="4" textAlign="right">
-                <Form size="large">
-                    <Form.Group inline widths={1} style={{ marginBottom: 0, display: 'block' }}>
-                        <Form.Field>
-                        <label>Model:</label> {client.modelName}
-                        <label>Mifid:</label> {client.id}
-                        </Form.Field>
-                    </Form.Group>
-                    <Form.Group inline widths={1} style={{ marginBottom: 0, display: 'block' }}>
-                        <Form.Field>
-                            <label>Time Horizion:</label> {client.timeHorizon}
-                        </Form.Field>
-                    </Form.Group>
-                </Form>
-            </Grid.Column>
-            */}
         </Grid.Row>
     </Grid>
     )
 }
 
-const COL = (props: { data: { [label: string]: string | number }, right?: boolean }) => {
-    return <Grid.Column textAlign={props.right ? "right" : "left"} style={{ fontSize: 'medium', paddingTop: 0 }}>
-        {Object.keys(props.data).map((d, i) => {
-            return <div key={i} >
-                <b>{d}:</b> &nbsp; {props.data[d]}
-            </div>
-        })}
-    </Grid.Column>
-}
-
-
 const ClientAlert = (props: { radar: Radar, lang: LangDictionary }) => {
-    const ICONS = {
-        concentrationAlert: 'random',
-        consistencyAlert: 'save',
-        efficencyAlert: 'lab',
-        riskAdequacyAlert: 'eur',
-        overlapAlert: 'sitemap',
-        riskAnalysisAlert: 'payment',
-    }
-
     const { radar, lang } = props;
 
     const alertsListItem = (prop: string, key: any) => {
@@ -350,7 +307,7 @@ const ClientAlert = (props: { radar: Radar, lang: LangDictionary }) => {
                 <List.Content style={{ marginBottom: '6px' }}>
                     <Statistic size="mini" color={value}>
                         <Statistic.Value>
-                            <Icon name={ICONS[prop]} color={value} />{` ${alert.name} : ${alert.sentence}`}
+                            {` ${alert.name} : ${alert.sentence}`}
                         </Statistic.Value>
                     </Statistic>
 
@@ -403,7 +360,7 @@ const ClientHistory = (props: { history: InterviewResult[], lang: LangDictionary
         const allow = listOfHistory[key];
         if (allow) {
             memo.push({
-                menuItem: <Menu.Item name={lang.HISTORY[key]} key={i}>{lang.HISTORY[key]}</Menu.Item>,
+                menuItem: <Menu.Item key={i}>{lang.HISTORY[key]}</Menu.Item>,
                 render: () => <Tab.Pane as={OverflowItem} style={{ padding: '5px 15px' }} content={<HistoryViewTimelineEvent lang={lang} history={history} />} />
             });
         }
@@ -413,13 +370,7 @@ const ClientHistory = (props: { history: InterviewResult[], lang: LangDictionary
     return <Tab menu={{ pointing: true, secondary: true }} panes={panes} style={{ height: '95%' }} />
 }
 
-const Fees = (props: {
-    strategy: StrategyItem[],
-    lang: LangDictionary,
-    targetReturn?: number,
-    timeHorizon: TimeHorizon
-
-}) => {
+const Fees = (props: { strategy: StrategyItem[], lang: LangDictionary, targetReturn?: number, timeHorizon: TimeHorizon }) => {
     const { lang, strategy } = props;
     const fmt = new Intl.NumberFormat(lang.NUMBER_FORMAT, {
         minimumFractionDigits: 0,
