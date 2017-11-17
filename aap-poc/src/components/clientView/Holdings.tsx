@@ -134,7 +134,7 @@ export class Holdings extends React.Component<Props, State> {
                                         <Table.Cell>{t.security.MacroAssetClass}</Table.Cell>
                                         <Table.Cell textAlign="right">{show && fmt.format(t.currentQuantity)}</Table.Cell>
                                         <Table.Cell textAlign="right">{show && fmt.format(t.currentAmount)}</Table.Cell>
-                                        <Table.Cell textAlign="right">{show && fmt.format(t.currentWeight * 100)} ({fmt.format(t.modelWeight * 100)})</Table.Cell>
+                                        <Table.Cell textAlign="right">{show && fmt.format(t.currentWeight * 100)} </Table.Cell>
                                         <Table.Cell textAlign="left">
                                             <HoldingWeigthControl factor={factor} data={t} onChange={(item) => this.handleItemChanged(item, i)} />
                                         </Table.Cell>
