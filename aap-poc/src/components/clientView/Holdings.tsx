@@ -115,7 +115,7 @@ export class Holdings extends React.Component<Props, State> {
                             <Table.HeaderCell width={2} textAlign="right">{lang.FINAL_WEIGHT}</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
-                    <Table.Body>
+                    <Table.Body style={{overflow:'visible'}}>
                         {
                             holdings.map((t, i) => {
                                 const show = t.currentQuantity != 0;
