@@ -6,10 +6,16 @@ import { performances, perfSummary } from "./data/index";
 import * as moment from 'moment';
 import * as math from 'mathjs';
 import { networkInterfaces } from "os";
-import { suggestedPositionExCash } from "./common/radarUtils";
+import { suggestedPositionExCash, currentPosition } from "./common/radarUtils";
 
 
-export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean): StrategyItem[] => {
+export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean, forced?: StrategyItem[]): StrategyItem[] => {
+
+    if (forced){
+        const w = currentPosition(forced);
+        const delta = sumBy(w, s => s.weight) - 1;
+        return [{ ...position[0], suggestedDelta: -delta, suggestionAccepted: delta != 0 }].concat(position.slice(1));
+    }
 
     if (calculateFromAxes) {
         return solve(position, axes);
@@ -18,9 +24,10 @@ export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm,
         const delta = sumBy(w, s => s.weight) - 1;
         return [{ ...position[0], suggestedDelta: -delta, suggestionAccepted: delta != 0 }].concat(position.slice(1));
     }
-
-
 };
+
+
+
 
 const getAttributeBreakDown = (attributeName: string, holdings: PositionItem[]): Breakdown => {
     const mappedData = holdings
