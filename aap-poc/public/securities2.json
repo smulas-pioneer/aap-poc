@@ -342,6 +342,24 @@
     "pushed": true
   },
   {
+    "IsinCode": "LU0257968619",
+    "SecurityName": "Pioneer Fds Euro High Yield",
+    "AssetId": "LU0257968619",
+    "IsFund": "0",
+    "Kilovar": null,
+    "MacroAssetClass": "High Yield",
+    "MicroAssetClass": "Funds",
+    "Sector": null,
+    "Currency": "Eur",
+    "Rating": null,
+    "Country": null,
+    "Region": null,
+    "Maturity": null,
+    "SRRI": 0.15,
+    "Price": 67.68,
+    "pushed": false
+  },
+  {
     "IsinCode": "FR0011006360",
     "SecurityName": "Amundi Fds Cash EUR",
     "AssetId": "FR0011006360",
