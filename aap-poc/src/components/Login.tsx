@@ -17,7 +17,7 @@ export class Login extends React.Component<LoginProps, LoginState>{
     constructor(props: LoginProps) {
         super(props);
         this.state = {
-            user: '',
+            user: 'manager',
             password: '',
             error: false
         }
@@ -42,7 +42,7 @@ export class Login extends React.Component<LoginProps, LoginState>{
                     <Header as="h2" style={{ color: '#005483', fontFamily: 'HelveticaNeue' }} content="Advisory Platform" />
                     <Form size='large'>
                         <Segment stacked secondary>
-                            <Form.Input autoFocus icon="user" iconPosition="left" placeholder='User' onChange={(e, d) => this.setState(prev => ({ error: this.checkError(d.value), user: d.value }))} />
+                            <Form.Input autoFocus icon="user" defaultValue={this.state.user} iconPosition="left" placeholder='User' onChange={(e, d) => this.setState(prev => ({ error: this.checkError(d.value), user: d.value }))} />
                             <Form.Input icon="lock" type="Password" iconPosition="left" placeholder='Password' onChange={(e, d) => this.setState(prev => ({ error: this.checkError(d.value), password: d.value }))} />
                             <Button fluid color="blue" size="large" content="Login" onClick={this.onLogin} />
                             <Message visible={this.state.error} error>

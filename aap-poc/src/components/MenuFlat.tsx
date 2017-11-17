@@ -109,7 +109,7 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
 
                 <Menu attached secondary >
 
-                    <img src={logo2} />
+                    <img style={{ width: '50px', height: '50px', padding: '4px' }} src={logo2} />
 
                     <Menu.Item color="blue" icon={logo2} as={Link} to="/">
                         <h2 style={{ color: '#005483', fontFamily: 'HelveticaNeue' }} >Advisory Platform</h2>
