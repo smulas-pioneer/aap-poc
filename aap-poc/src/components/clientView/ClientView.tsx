@@ -6,7 +6,7 @@ import { Grid, Segment, Statistic, Card, Button, } from 'semantic-ui-react';
 import { RadarGraph } from '../RadarGraph';
 import { Breakdown, Radar, StrategyItem, RadarStrategyParm } from '../../_db/interfaces';
 import { Holdings } from './Holdings';
-import { HistoryView, HistoryViewTimeline, HistoryViewTimelineEvent  } from './HistoryView';
+import { HistoryViewTimelineEvent } from './HistoryView';
 import { ClientCard } from '../clientsView/ClientCard';
 import { BreakdownView } from './BreakdownView';
 import Slider, { Settings } from 'react-slick';
@@ -101,7 +101,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
     handleAxesChange = (axes: RadarStrategyParm) => {
         this.setState({ axes }, () => {
-            this.props.getSuggestions({ id: this.props.client!.id,position: this.state.strategy, axes: axes, calculateFromAxes: true });
+            this.props.getSuggestions({ id: this.props.client!.id, position: this.state.strategy, axes: axes, calculateFromAxes: true });
         })
     }
 
@@ -165,9 +165,9 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         return (
             <div>
                 <AdvancedGrid {...gridProps}>
-                    {graphs.map( (v,i) => <Segment key={i} style={{ margin: 0 }} content={v} />)}
+                    {graphs.map((v, i) => <Segment key={i} style={{ margin: 0 }} content={v} />)}
                 </AdvancedGrid>
-                <Button icon='grid layout' onClick={()=>this.handleOnViewAllGraph(false)} color='yellow' circular style={{ position: 'fixed', top: '85px', zOrder: 9999, left: '25px' }} />
+                <Button icon='grid layout' onClick={() => this.handleOnViewAllGraph(false)} color='yellow' circular style={{ position: 'fixed', top: '85px', zOrder: 9999, left: '25px' }} />
             </div>
         );
     }
@@ -222,7 +222,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                                     name={this.state.autoplay ? 'play' : 'pause'}
                                     color={this.state.autoplay ? 'green' : 'grey'}
                                     onClick={() => this.setState({ autoplay: !this.state.autoplay })} />
-                            </Segment>                            
+                            </Segment>
                         </Card>
 
                     </Grid.Column>

@@ -15,7 +15,7 @@ import { RiskReturnGraph } from './RiskReturnGraph';
 import { BreakdownView } from './BreakdownView';
 import { AdvancedGrid, OverflowColumn, OverflowItem } from '../shared/GridOverflow';
 import { ClientAlerts } from '../clientsView/ClientAlerts';
-import { HistoryView, HistoryViewTimeline, HistoryViewTimelineEvent } from './HistoryView';
+import { HistoryViewTimelineEvent } from './HistoryView';
 import { settings } from 'cluster';
 import { PerformanceContributionGraph } from './PerformanceContribution';
 import { createRadarFromStrategy, suggestedPosition, currentPosition, modelPosition } from '../../_db/common/radarUtils';
