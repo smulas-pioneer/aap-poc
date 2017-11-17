@@ -120,7 +120,6 @@ class SpotlightCompo extends conn.StatefulCompo<SpotlightState> {
     }
 
     onSecurityPushedClick = (index: number) => {
-        console.log(index);
         this.setState(prev => ({ onlyPushedSecurity: !prev.onlyPushedSecurity, activePosition: index }), () => this.onSearch());
     }
 
