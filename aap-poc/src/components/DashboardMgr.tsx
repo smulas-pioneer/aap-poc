@@ -99,9 +99,9 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         return (<Grid columns={2}>
 
             <Grid.Column>
-                <Segment style={{ height: 562 }}>
-                    <WidgetTitle title={lang.REGION}/>
-                    <ItalyMap lang={lang} clients={data} />
+                <Segment>
+                    <WidgetTitle title={'Key Figures Map'}/>
+                    <ItalyMap lang={lang} clients={data} height="500px" />
                 </Segment>
             </Grid.Column>
 

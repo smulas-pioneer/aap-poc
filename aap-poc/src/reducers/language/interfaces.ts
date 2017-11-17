@@ -86,6 +86,9 @@ export interface LangDictionary {
     RESULTS: string,
     TARGET_RESULT: string,
 
+
+    
+
     //client view
     PERSONAL_INFORMATION: string,
     PORTFOLIO_HOLDINGS: string,
