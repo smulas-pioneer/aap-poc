@@ -82,7 +82,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
     // render statistic
     renderItem(value: any, label?: string, sublabel?: any, valueIcon?: SemanticICONS, color?: SemanticCOLORS) {
-        return (<Statistic color='blue' >
+        return (<Statistic size="small" color='blue' >
             {label && <Statistic.Label>{label}</Statistic.Label>}
             <Statistic.Value>
                 {valueIcon && <Icon name={valueIcon} color={color} />}
@@ -117,7 +117,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         )
     }
 
-    Colors = ["#F07D00", "#004F9F", "#E6325E", "#3B7296", "#39B2B6"]
+    private Colors = ["#F07D00", "#004F9F", "#E6325E", "#3B7296", "#39B2B6"];
 
     renderFilterGraphItem(key: number, map: FilterMap, values: any) {
         const { searchprop, render: { header, label } } = map;
@@ -194,21 +194,24 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
             }
         ]
 
-        const info = data.result.reduce(
+        const info = data.result.reduce<
+            { length: number, assetUnder: number, clientAlert: number, interviews: number, mifidAlert: number, acceptedProposals: number, totalProposals: number }>(
             (ret, v, i) => {
                 ret.length += 1;
+                ret.acceptedProposals += v.numOfAcceptedProposal;
+                ret.totalProposals += v.numOfInterviews;
                 ret.assetUnder += v.aum;
                 ret.clientAlert += v.radar.numOfAlerts > 0 ? 1 : 0;
                 ret.mifidAlert += v.radar.riskAdequacyAlert != 'green' ? 1 : 0;
                 return ret;
             },
-            { length: 0, assetUnder: 0, clientAlert: 0, interviews: 65, mifidAlert: 0 } as any);
+            { length: 0, assetUnder: 0, clientAlert: 0, interviews: 65, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0 });
 
 
         return (
             <AdvancedGrid gridTemplateRows="140px auto" >
                 <Segment style={{ margin: 0 }}>
-                    <Grid columns={5} >
+                    <Grid columns={6} >
                         <Grid.Column textAlign="center" >
                             {this.renderItem(`${info.length}`, lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
                         </Grid.Column>
@@ -223,6 +226,9 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                         </Grid.Column>
                         <Grid.Column textAlign="center">
                             {this.renderItem(undefined, lang.DB_CLIENT_FEEDBACK, this.percDetail(15, '1', 'Y'), 'smile', 'green')}
+                        </Grid.Column>
+                        <Grid.Column textAlign="center">
+                            {this.renderItem(info.acceptedProposals, lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${info.totalProposals}`)}
                         </Grid.Column>
                     </Grid>
                 </Segment>

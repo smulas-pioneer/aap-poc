@@ -21,6 +21,7 @@ export interface Client {
 
     numOfInterviews: number,
     numOfAcceptedProposal: number;
+    numOfRejectedProposal: number;
     timeHorizon: TimeHorizon;
     segment: ClientSegment;
 
@@ -87,10 +88,10 @@ export interface Security {
     Country: string | null,
     Region: string | null,
     Maturity: string | null,
-    SRRI?: number ,
-    Price?: number ,
-    blacklisted?:boolean,
-    pushed?:boolean
+    SRRI?: number,
+    Price?: number,
+    blacklisted?: boolean,
+    pushed?: boolean
 }
 
 export interface Transaction {
@@ -236,7 +237,7 @@ export interface StrategyItem {
     fee: number;
 
     newSecurity: boolean;
-    
+
     clientFavorites?: boolean;
 
 };

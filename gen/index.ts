@@ -75,6 +75,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
         decision: '',
         mifid: rnd(1, 40),
         numOfAcceptedProposal: 0,
+        numOfRejectedProposal: 0,
         numOfInterviews: 0,
         segment: 'Retail',
         timeHorizon: THOR[rnd(0, 2)],
@@ -274,10 +275,10 @@ const fixPerformances = (perf: { [id: string]: { date: string, perf: number }[] 
 
 const perfSummary = (perf: { date: string, perf: number }[]) => {
     const gData = groupBy(perf, p => p.date.substr(0, 4));
-    return Object.keys(gData).map(k=>{
+    return Object.keys(gData).map(k => {
         return {
             date: k,
-            perf: gData[k][gData[k].length-1].perf / gData[k][0].perf-1
+            perf: gData[k][gData[k].length - 1].perf / gData[k][0].perf - 1
         }
     });
 }
@@ -300,10 +301,10 @@ const go = async () => {
         const preformances = createAllSecuritiesPerformance();
         const performances2 = getAllPerformances();
         const secuirities = getAllSecuirities();
-        const allPerf =  { ...preformances, ...performances2 };
+        const allPerf = { ...preformances, ...performances2 };
         //Calculate Clients Radar and aum
 
-        const strategies = { ...strategies1, ...strategies2 } as {[cli:string]:StrategyItem[]}
+        const strategies = { ...strategies1, ...strategies2 } as { [cli: string]: StrategyItem[] }
 
         clients.forEach(c => {
             c.radar = createRadarFromStrategy(strategies[c.id]);
@@ -317,6 +318,7 @@ const go = async () => {
             c.decision = histories[c.id][0].status;
             c.numOfInterviews = histories[c.id].length;
             c.numOfAcceptedProposal = histories[c.id].filter(p => p.status == 'ACCEPTED').length;
+            c.numOfRejectedProposal = histories[c.id].filter(p => p.status == 'REJECTED').length;
             c.sales = c.aum * rnd(-100, 100) / 1000;
 
         });
@@ -339,11 +341,11 @@ const go = async () => {
         dump('output/history.json', histories);
 
         console.log(`created ${Object.keys(strategies).length} strategy`);
-        dump('output/strategy.json',strategies );
+        dump('output/strategy.json', strategies);
 
         console.log(`created ${Object.keys(preformances).length} performances`);
         const perf = fixPerformances(allPerf)
-        dump('output/performances.json', perf );
+        dump('output/performances.json', perf);
         dump('output/perfSummary.json', perfSummaryAll(perf));
 
     } catch (error) {

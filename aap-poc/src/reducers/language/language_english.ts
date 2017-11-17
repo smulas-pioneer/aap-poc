@@ -24,7 +24,9 @@ export const English: LanguageState = {
         DB_CLIENT_FEEDBACK: 'Client Feedback',
         DB_PERC_DETAIL: "%s(%s from %s%s)",
         DB_ALERTS_DETAIL: "Including %s MIFID Alerts",
+        DB_CLIENT_ACCEPTED_PROPOSALS: "Accepted Proposals",
         //other
+        OUT_OF: 'out of',
         YEAR: 'Y',
         MONTH: 'M',
         DAY: 'D',
@@ -80,7 +82,7 @@ export const English: LanguageState = {
         BRANCH: "Branch",
         ADVISOR: "Advisor",
         RESULTS: "Results",
-        TARGET_RESULT:"Target Result",
+        TARGET_RESULT: "Target Result",
 
         //client view
         PERSONAL_INFORMATION: 'Personal Information',
