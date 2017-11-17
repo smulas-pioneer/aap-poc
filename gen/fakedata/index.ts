@@ -3,6 +3,10 @@ import { uniqBy, groupBy, sumBy } from 'lodash';
 import * as FD from './fakedata';
 import * as P1 from './fds_c2_c';
 import * as P2 from './fds_c3_c';
+import * as P3 from './fds_c4_c';
+import * as P4 from './fds_c2_m';
+import * as P5 from './fds_c3_m';
+import * as P6 from './fds_c4_m';
 import { getRandomRadar } from '../index';
 import { cash } from '../common/securities';
 
@@ -118,10 +122,15 @@ const getPerf = (obj: any[]): { [isin: string]: { date: string, perf: number }[]
 }
 
 export const getAllPerformances = () => {
+    console.log('get all performances');
     //const dict = getAllSecuirities().reduce((p, c) => { p[c.SecurityName] = p.IsinCode; return p; }, {} as { [name: string]: string });
     const perf = [
         ...P1.perf,
-        ...P2.perf
+        ...P2.perf,
+        ...P3.perf,
+        ...P4.perf,
+        ...P5.perf,
+        ...P6.perf,
     ];
     let allValues = getPerf(perf);
     Object.keys(allValues).forEach(k => {

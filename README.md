@@ -23,10 +23,10 @@
 # Simple
 - ~~S Add Button to add Financial instrument~~
 - ~~S Add Germany~~ 
-- S Push Commercial information at financial info.
+- ~~S Push Commercial information at financial info.~~
 - S Change Delta analysis to numbers.
 - ~~S Start client view with all strategies selected~~
-- S Unicredit and Client strong view on Client page
+- ~~S Unicredit and Client strong view on Client page~~
 - ~~S Show expected return based on the portfolio time-horizon (and probability)~~
 - ~~S Weight and Quantity, and values ~~
 - ~~S Target return on performance Widget~~

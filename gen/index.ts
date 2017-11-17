@@ -295,13 +295,15 @@ const go = async () => {
         const models = createModels();
         const clients = clientsCreator(models);
         const histories = historyCreator(clients);
-        const strategies = clientStrategyCreator(clients);
+        const strategies1 = clientStrategyCreator(clients);
         const strategies2 = getAllStrategies();
         const preformances = createAllSecuritiesPerformance();
         const performances2 = getAllPerformances();
         const secuirities = getAllSecuirities();
         const allPerf =  { ...preformances, ...performances2 };
         //Calculate Clients Radar and aum
+
+        const strategies = { ...strategies1, ...strategies2 } as {[cli:string]:StrategyItem[]}
 
         clients.forEach(c => {
             c.radar = createRadarFromStrategy(strategies[c.id]);
@@ -337,7 +339,7 @@ const go = async () => {
         dump('output/history.json', histories);
 
         console.log(`created ${Object.keys(strategies).length} strategy`);
-        dump('output/strategy.json', { ...strategies, ...strategies2 });
+        dump('output/strategy.json',strategies );
 
         console.log(`created ${Object.keys(preformances).length} performances`);
         const perf = fixPerformances(allPerf)
