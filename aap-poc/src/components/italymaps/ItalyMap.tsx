@@ -60,7 +60,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
         this.interpolateColors = this.interpolateColors.bind(this);
         this.onMapOptionsChange = this.onMapOptionsChange.bind(this);
         this.getAreaById = this.getAreaById.bind(this);
-        this.colors = this.interpolateColors('rgb(2, 2, 234)', 'rgb(255, 192, 77)', 10);
+        this.colors = this.interpolateColors('rgb(255, 192, 77)', 'rgb(2, 2, 234)', 10);
 
         this.state = {
             mapIndex: undefined,
