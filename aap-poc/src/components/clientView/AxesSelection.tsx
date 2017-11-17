@@ -23,7 +23,7 @@ export const AxesSelection = (props: AxesSelectionProps) => {
             ? { color: 'black', fontWeight: 'bold' }
             : { color: 'lightgrey' }
         const delta = props.radar.actual[props.name] - props.radar.proposed[props.name];
-        const proposedColor = getRAG (props.radar.proposed[props.name] , props.radar.limits[props.name]);
+        const proposedColor = getRAG (props.radar.proposed[props.name] , props.radar.limits[props.name], props.name=='riskAdequacy');
         return <Table.Row
             onClick={() => handler(props.name)}
             style={style} >

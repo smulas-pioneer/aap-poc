@@ -8,6 +8,7 @@ import { capitalize } from "lodash";
 
 export interface SpotlightResultListProps extends WithLang {
     data: { [key: string]: SpotlightSearchResultItem[] | undefined };
+    customHeader?: (key: string, firstKeyItemIndex: number) => void;
     active: number;
     onItemSelect: (index: number, item: SpotlightSearchResultItem) => void;
     onItemNavigate: (index: number, item: SpotlightSearchResultItem) => void;
@@ -47,7 +48,7 @@ export class SpotlightResultList extends React.Component<SpotlightResultListProp
     }
 
     render() {
-        const { data, lang } = this.props;
+        const { data, customHeader, lang } = this.props;
         this.itemsCount = 0;
 
         return <div>
@@ -57,7 +58,7 @@ export class SpotlightResultList extends React.Component<SpotlightResultListProp
                         <Table striped color={SpotlightResultList.COLORS[ikey]} key={ikey}>
                             <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell style={{ minWidth: 280 }}>{capitalize(key)}</Table.HeaderCell>
+                                    <Table.HeaderCell style={{ minWidth: 280 }}>{capitalize(key)}{customHeader && customHeader(key, (this.itemsCount - ikey) + 1)}</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
                             <Table.Body>

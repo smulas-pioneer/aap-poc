@@ -19,8 +19,8 @@ const rnd = (min: number, max: number) => Math.floor(Math.random() * (max - min)
 const dump = (file: string, data: any) => fs.writeFileSync(`./build/${file}`, JSON.stringify(data, null, 2));
 
 const MODEL_COUNT = 10;
-const CLIENT_COUNT = 150;
-const AGENT_COUNT = 15;
+const CLIENT_COUNT = 1500;
+const AGENT_COUNT = 23;
 const STRAGEGY_MIN_SECURITY_COUNT = 4;
 const STRATEGY_MAX_SECURITY_COUNT = 8;
 

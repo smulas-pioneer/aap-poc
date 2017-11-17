@@ -426,12 +426,14 @@ const Fees = (props: { strategy: StrategyItem[], lang: LangDictionary, targetRet
             </Statistic>
             {props.targetReturn && <Statistic size="mini">
                 <Statistic.Value>{fmt.format(amount * (props.targetReturn / 100))} €</Statistic.Value>
-                <Statistic.Label>{lang.TARGET_RESULT}</Statistic.Label>
+                <Statistic.Label>{lang.TARGET_RESULT} </Statistic.Label>
+                <Statistic.Label style={{fontSize:10}}>(prob. 95%)</Statistic.Label>
             </Statistic>}
             {props.targetReturn && <Statistic size="mini">
                 <Statistic.Value>{fmt.format(props.targetReturn)}%</Statistic.Value>
-                <Statistic.Label>{lang.TARGET_RESULT}</Statistic.Label>
-            </Statistic>}
+                <Statistic.Label>{lang.TARGET_RESULT} </Statistic.Label>
+                <Statistic.Label style={{fontSize:10}}>(prob. 95%)</Statistic.Label>
+                </Statistic>}
             {props.targetReturn && <Statistic size="mini">
                 <Statistic.Value>{props.timeHorizon}</Statistic.Value>
                 <Statistic.Label>{lang.TIME_HORIZON}</Statistic.Label>

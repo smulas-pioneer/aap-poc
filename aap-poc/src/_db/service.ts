@@ -1,4 +1,4 @@
-import {   clientList, securityList, history, strategies, alertHistory } from './data';
+import { clientList, securityList, history, strategies, alertHistory } from './data';
 import * as Model from './common/interfaces';
 import { sumBy, groupBy } from 'lodash'
 import { rnd, numArray, getRndItem, hasFlag, getAgentViewsFromClients } from './utils';
@@ -135,12 +135,10 @@ export const getStrategy = (clientId: string) => {
 }
 
 export const getSuggestion = (args: { id:string, position: Model.StrategyItem[], axes: Model.RadarStrategyParm, calculateFromAxes: boolean }) => {
-    /*
-    if (args.id=="0" || args.id=="1" || args.id == "2"){
+   /* if (args.id=="0" || args.id=="1" || args.id == "2"){
         const ret = strategies[args.id + "!"];
         return Promise.resolve(ret);
-    } 
-*/
+    } */
     return Promise.resolve(ce.getSuggestion(args.position, args.axes, args.calculateFromAxes));
 };
 
@@ -148,6 +146,7 @@ export const spotlightSearch = (parms: SpotlightSearchParms): Promise<Model.Spot
     const ctx = parms.context;
     const limit = parms.limit || 5;
     const filter = parms.filter.toLowerCase();
+    const onlyPushed = parms.onlyPushedSecurity || false;
 
     let cc = SpotlightContext.All;
     if (ctx) cc = SpotlightContext[ctx];
@@ -164,6 +163,7 @@ export const spotlightSearch = (parms: SpotlightSearchParms): Promise<Model.Spot
         }
         if (hasFlag(cc, SpotlightContext.Security)) {
             sec = securityList.filter((s, ix) => s.SecurityName.toLowerCase().indexOf(filter) !== -1 && ix != 0); // skip 0 cash
+            if (onlyPushed) sec = sec.filter(sec => sec.pushed === true);
         }
     }
     let ret: any = {};

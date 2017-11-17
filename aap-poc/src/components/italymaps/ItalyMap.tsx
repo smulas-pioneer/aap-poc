@@ -51,6 +51,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
     static AREA_MAP_INDEX = ['Nord Ovest', 'Lombardia', 'Nord Est', 'Centro Nord', 'Centro', 'Sud', 'Sicilia'];
 
     colors: number[][];
+    MAX_COLORS_LEN = 0;
 
     constructor(props: ItalyMapProps) {
         super(props);
@@ -60,7 +61,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
         this.interpolateColors = this.interpolateColors.bind(this);
         this.onMapOptionsChange = this.onMapOptionsChange.bind(this);
         this.getAreaById = this.getAreaById.bind(this);
-        this.colors = this.interpolateColors('rgb(2, 2, 234)', 'rgb(255, 192, 77)', 10);
+        this.colors = this.interpolateColors('rgb(255, 192, 77)', 'rgb(2, 2, 234)', 10);
 
         this.state = {
             mapIndex: undefined,
@@ -93,7 +94,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
         for (var i = 0; i < steps; i++) {
             interpolatedColorArray.push(this.interpolateColor(col1, col2, stepFactor * i));
         }
-
+        this.MAX_COLORS_LEN = interpolatedColorArray.length - 1;
         return interpolatedColorArray;
     }
 
@@ -138,25 +139,36 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
             default: { }
         }
 
-        let tot = 0;
+        let minValue: number | undefined = undefined;
+        let maxValue = 0;
         let countWithValues = 0;
 
         Object.keys(values).forEach(key => {
             const v = values[key];
-            if (v > tot) tot = v;
+            if (v > maxValue) maxValue = v;
+            if (minValue === undefined || v < minValue) minValue = v;
         });
 
         const areaValues = ItalyMap.AREA_MAP_INDEX.reduce((acc, key, idx) => {
             const value = values[key] ? values[key] : 0;
-            const perc = (value * 100) / tot;
+            const perc = (value * 100) / maxValue;
             const area = `area_${idx}`;
-            const color = this.colors[Math.ceil(perc / 10) - 1];
-            if (value) countWithValues++;
+
+            if (minValue === undefined) minValue = 0;
+
+            let color: number[] | undefined = undefined;
+
+            if ((maxValue - minValue) === 0) {
+                color = this.colors[this.MAX_COLORS_LEN];
+            } else if (value !== 0) {
+                color = this.colors[Math.ceil((value - minValue) / (maxValue - minValue) * this.MAX_COLORS_LEN)];
+                countWithValues++;
+            };
             acc.push({
                 key,
                 value,
                 perc,
-                color: color ? `rgb(${color[0]}, ${color[1]}, ${color[2]}` : '#CECCCC'
+                color: color !== undefined ? `rgb(${color[0]}, ${color[1]}, ${color[2]}` : '#CECCCC'
             });
             return acc;
         }, [] as AreaValue[]
@@ -242,45 +254,41 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
             <div style={{ width: this.props.width, height: this.props.height }}>
 
                 <Transition visible={showItaly} animation='fade up' duration={350} onComplete={(_, e) => { !showItaly && this.setState(prev => ({ mapIndex: prev.requestMapIndex })) }} >
-                    <ResponsiveContainer >
-                        <div style={{ width: "100%", height: "100%" }}>
-                            {countWithValues > 1 ? <ColorsLegend type={type} values={areaValues} lang={lang} /> : <SingleAreaLegend type={type} value={areaValues.find(e => e.value !== 0)!} lang={lang} />}
-                            <svg version="1.2" id="aap-italy" baseProfile="tiny" x="0px" y="0px" width="100%" height="87%" viewBox="0 0 340 400">
-                                <g className="regions" >
-                                    {
-                                        ItalyMap.AREA_MAP_INDEX.map((val, idx) => {
-                                            const aValue = areaValues[idx];
-                                            const htmlTooltip = aValue.value !== 0 ? this.getTooltipText(aValue.key, type, aValue.value) : undefined;
-                                            return this.getAreaById(idx,
-                                                {
-                                                    fill: false,
-                                                    color: aValue.color,
-                                                    onClick: aValue.value !== 0 ? () => this.setState({ requestMapIndex: idx }) : undefined,
-                                                    // percentage: countWithValues > 1 ? aValue.perc : undefined,
-                                                    htmlTooltip
-                                                })
-                                        })
-                                    }
-                                </g>
-                                <Boundaries />
-                            </svg>
+                    <div style={{ width: "100%", height: "100%" }}>
+                        {countWithValues > 1 ? <ColorsLegend type={type} values={areaValues} lang={lang} /> : <SingleAreaLegend type={type} value={areaValues.find(e => e.value !== 0)!} lang={lang} />}
+                        <svg version="1.2" id="aap-italy" baseProfile="tiny" x="0px" y="0px" width="100%" height="87%" viewBox="0 0 340 400">
+                            <g className="regions" >
+                                {
+                                    ItalyMap.AREA_MAP_INDEX.map((val, idx) => {
+                                        const aValue = areaValues[idx];
+                                        const htmlTooltip = aValue.value !== 0 ? this.getTooltipText(aValue.key, type, aValue.value) : undefined;
+                                        return this.getAreaById(idx,
+                                            {
+                                                fill: false,
+                                                color: aValue.color,
+                                                onClick: aValue.value !== 0 ? () => this.setState({ requestMapIndex: idx }) : undefined,
+                                                // percentage: countWithValues > 1 ? aValue.perc : undefined,
+                                                htmlTooltip
+                                            })
+                                    })
+                                }
+                            </g>
+                            <Boundaries />
+                        </svg>
 
-                            <MapOptions onChange={e => this.onMapOptionsChange(e)} lang={lang} />
-                            <ReactTooltip html type='info' delayShow={countWithValues > 1 ? 600 : 100} place="bottom" />
-                        </div>
-                    </ResponsiveContainer >
+                        <MapOptions onChange={e => this.onMapOptionsChange(e)} lang={lang} />
+                        <ReactTooltip html type='info' delayShow={countWithValues > 1 ? 600 : 100} place="bottom" />
+                    </div>
                 </Transition>
 
                 <Transition visible={showRegion} animation="fade" duration={350} onComplete={(_, e) => { !showRegion && this.setState(prev => ({ mapIndex: prev.requestMapIndex })) }} >
-                    <ResponsiveContainer >
-                        <div style={{ margin: 0, width: "100%", height: "100%" }}>
-                            <Label size="medium" color="blue" ribbon >{regionLegend && regionLegend.title}</Label>
-                            <FillAreaLegend legend={regionLegend} />
-                            <svg version="1.2" id="aap-italy" baseProfile="tiny" x="0px" y="0px" width="100%" height="98%" viewBox="-832 802.4417725 340 400" onClick={() => this.setState({ requestMapIndex: undefined })}>
-                                {this.getAreaById(this.state.mapIndex!, { fill: true, color: '#CECCCC' })}
-                            </svg>
-                        </div>
-                    </ResponsiveContainer>
+                    <div style={{ margin: 0, width: "100%", height: "100%" }}>
+                        <Label size="medium" color="blue" ribbon >{regionLegend && regionLegend.title}</Label>
+                        <FillAreaLegend legend={regionLegend} />
+                        <svg version="1.2" id="aap-italy" baseProfile="tiny" x="0px" y="0px" width="100%" height="98%" viewBox="-832 802.4417725 340 400" onClick={() => this.setState({ requestMapIndex: undefined })}>
+                            {this.getAreaById(this.state.mapIndex!, { fill: true, color: '#CECCCC' })}
+                        </svg>
+                    </div>
                 </Transition>
             </div >
         )

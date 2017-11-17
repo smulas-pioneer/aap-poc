@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Modal, Input, InputOnChangeData } from "semantic-ui-react";
+import { Modal, Input, InputOnChangeData, Button, ButtonProps, Icon, SemanticCOLORS } from "semantic-ui-react";
 import { SpotlightResultList } from "./SpotlightResultList";
 import { SpotlightResultItemPreview } from "./SpotlightResultItemPreview";
 import { appConnector } from "app-support";
@@ -22,6 +22,7 @@ export interface SpotlightProps {
 export interface SpotlightState {
     searchText?: string;
     activePosition: number;
+    onlyPushedSecurity: boolean;
 }
 
 const conn = appConnector<SpotlightProps>()(
@@ -41,7 +42,8 @@ class SpotlightCompo extends conn.StatefulCompo<SpotlightState> {
         super(props);
         this.state = {
             searchText: props.searchText,
-            activePosition: 0
+            activePosition: 0,
+            onlyPushedSecurity: false
         }
     }
 
@@ -60,7 +62,13 @@ class SpotlightCompo extends conn.StatefulCompo<SpotlightState> {
     handleSearchChange = (e: React.SyntheticEvent<HTMLInputElement>, v: InputOnChangeData) =>
         this.setState(prevState => ({ activePosition: 0, searchText: v.value }), () => this.onSearch());
 
-    onSearch = () => this.props.spotlightSearch({ filter: this.state.searchText || '', context: this.props.context, limit: this.props.limit });
+    onSearch = () => this.props.spotlightSearch(
+        {
+            filter: this.state.searchText || '',
+            onlyPushedSecurity: this.state.onlyPushedSecurity,
+            context: this.props.context,
+            limit: this.props.limit
+        });
 
     onCancel = () => this.props.onCancel && this.props.onCancel();
 
@@ -111,8 +119,28 @@ class SpotlightCompo extends conn.StatefulCompo<SpotlightState> {
         }
     }
 
+    onSecurityPushedClick = (index: number) => {
+        this.setState(prev => ({ onlyPushedSecurity: !prev.onlyPushedSecurity, activePosition: index }), () => this.onSearch());
+    }
+
+    renderCustomHeader = (key: string, index: number) => {
+        switch (key.toLowerCase()) {
+            case "security":
+                const colIcon: SemanticCOLORS = this.state.onlyPushedSecurity ? "green" : "black";
+                return (
+                    <Button floated="right" basic toggle animated='vertical' onClick={() => this.onSecurityPushedClick(index)}>
+                        <Button.Content hidden>{this.state.onlyPushedSecurity ? "All" : "Advise"}</Button.Content>
+                        <Button.Content visible>
+                            <Icon color={colIcon} name='thumbs up' />
+                        </Button.Content>
+                    </Button>
+                );
+        }
+        return null;
+    }
+
     render() {
-        const { activePosition, searchText } = this.state;
+        const { activePosition, searchText, onlyPushedSecurity } = this.state;
         const { data, lang, visible } = this.props;
         const emptyData = !data || !data.items || !Object.keys(data.items).length;
 
@@ -153,6 +181,7 @@ class SpotlightCompo extends conn.StatefulCompo<SpotlightState> {
                                     active={activePosition}
                                     onItemSelect={(index, item) => this.setActivePosition(index)}
                                     onItemNavigate={(index, item) => this.onItemNavigate(item)}
+                                    customHeader={this.renderCustomHeader}
                                     lang={lang}
                                 />
                             </div>
