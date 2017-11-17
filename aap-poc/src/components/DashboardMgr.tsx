@@ -100,7 +100,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
             <Grid.Column>
                 <Segment>
-                    <WidgetTitle title={'Key Figures Map'}/>
+                    <WidgetTitle title={'Key Figures Map'} />
                     <ItalyMap lang={lang} clients={data} height="500px" />
                 </Segment>
             </Grid.Column>
@@ -195,7 +195,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         ]
 
         const info = data.result.reduce<
-            { length: number, assetUnder: number, clientAlert: number, interviews: number, mifidAlert: number, acceptedProposals: number, totalProposals: number }>(
+            { length: number, assetUnder: number, clientAlert: number, mifidAlert: number, acceptedProposals: number, totalProposals: number }>(
             (ret, v, i) => {
                 ret.length += 1;
                 ret.acceptedProposals += v.numOfAcceptedProposal;
@@ -205,13 +205,13 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 ret.mifidAlert += v.radar.riskAdequacyAlert != 'green' ? 1 : 0;
                 return ret;
             },
-            { length: 0, assetUnder: 0, clientAlert: 0, interviews: 65, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0 });
+            { length: 0, assetUnder: 0, clientAlert: 0, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0 });
 
 
         return (
             <AdvancedGrid gridTemplateRows="140px auto" >
                 <Segment style={{ margin: 0 }}>
-                    <Grid columns={6} >
+                    <Grid columns={5} >
                         <Grid.Column textAlign="center" >
                             {this.renderItem(info.length, lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
                         </Grid.Column>
@@ -221,9 +221,9 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                         <Grid.Column textAlign="center">
                             {this.renderItem(<span style={{ color: 'red' }}>{info.clientAlert}</span>, lang.DB_CLIENTS_ALERTS, this.alertsDetail(info.mifidAlert))}
                         </Grid.Column>
-                        <Grid.Column textAlign="center">
+                        {/* <Grid.Column textAlign="center">
                             {this.renderItem(info.interviews, lang.DB_INTERVIEWS, this.percDetail(undefined, '1', 'M'))}
-                        </Grid.Column>
+                        </Grid.Column> */}
                         <Grid.Column textAlign="center">
                             {this.renderItem(undefined, lang.DB_CLIENT_FEEDBACK, this.percDetail(15, '1', 'Y'), 'smile', 'green')}
                         </Grid.Column>

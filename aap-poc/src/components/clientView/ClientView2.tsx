@@ -96,7 +96,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
             overlap: true,
             efficency: true
         }
-        this.setState({ axes }, () => this.props.getSuggestions({ position: this.state.strategy, axes, calculateFromAxes: true }));
+        this.setState({ axes }, () => this.props.getSuggestions({ id: this.props.client!.id,position: this.state.strategy, axes, calculateFromAxes: true }));
 
     }
 
@@ -111,13 +111,13 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
     }
 
     handleOnChange = (strategy: StrategyItem[]) => {
-        this.props.getSuggestions({ position: strategy, axes: this.state.axes, calculateFromAxes: false });
+        this.props.getSuggestions({id: this.props.client!.id, position: strategy, axes: this.state.axes, calculateFromAxes: false });
     }
 
     handleAxesChange = (key: string) => {
         const axes = { ...this.state.axes, [key]: !this.state.axes[key] };
         this.setState({ axes }, () => {
-            this.props.getSuggestions({ position: this.state.strategy, axes: axes, calculateFromAxes: true });
+            this.props.getSuggestions({ id: this.props.client!.id,position: this.state.strategy, axes: axes, calculateFromAxes: true });
         })
     }
 

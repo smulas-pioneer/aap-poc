@@ -17,8 +17,8 @@ export interface LangDictionary {
     DB_TOTAL_CLIENTS: string,
     DB_ASSET_ADVISE: string,
     DB_CLIENTS_ALERTS: string,
-    DB_INTERVIEWS: string,
-    DB_INTERVIEWS_PENDING: string,
+    DB_PROPOSALS: string,
+    DB_PENDING_PROPOSALS: string,
     DB_PROPOSAL_ACCEPTED_NOT_EXECUTED: string,
     DB_CLIENT_FEEDBACK: string,
     DB_CLIENT_ACCEPTED_PROPOSALS: string,
@@ -73,7 +73,7 @@ export interface LangDictionary {
     SOUTH: string,
     MAP_OPTS_CLIENTS: string,
     MAP_OPTS_AUM: string,
-    MAP_OPTS_INTERVIEWS: string,
+    MAP_OPTS_PROPOSALS: string,
     MAP_OPTS_PROPOSAL: string,
     MAP_OPTS_ALERTS: string,
 
@@ -87,7 +87,7 @@ export interface LangDictionary {
     TARGET_RESULT: string,
 
 
-    
+
 
     //client view
     PERSONAL_INFORMATION: string,
