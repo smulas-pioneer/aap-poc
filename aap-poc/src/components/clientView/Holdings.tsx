@@ -96,7 +96,7 @@ export class Holdings extends React.Component<Props, State> {
                 <Table compact size="small" >
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell width={1}></Table.HeaderCell>
+                            <Table.HeaderCell style={{width:'10px'}} ></Table.HeaderCell>
                             <Table.HeaderCell >{lang.SECURITY_NAME}</Table.HeaderCell>
                             <Table.HeaderCell width={2}>{lang.ASSET_CLASS}</Table.HeaderCell>
                             <Table.HeaderCell width={2} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
@@ -123,18 +123,18 @@ export class Holdings extends React.Component<Props, State> {
                                 const factor = this.state.mode == 'Weight' ? 1
                                     : this.state.mode == 'Quantity' ? t.currentQuantity / t.currentWeight / 100
                                         : t.currentAmount / t.currentWeight / 100;
-                                return (!t.newSecurity && t.currentQuantity == 0 && t.suggestedDelta == 0) ? null :
-                                    <Table.Row key={i}>
+                                //return (!t.newSecurity && t.currentQuantity == 0 && t.suggestedDelta == 0) ? null :
+                                return    <Table.Row key={i}>
                                         <Table.Cell>
-                                            {t.security.blacklisted && <Icon color="black" name='thumbs down' />}
-                                            {t.security.pushed && <Icon color="green" name='thumbs up' />}
-                                            {t.clientFavorites && <Icon color="red" name='heart' />}
+                                            {t.security.blacklisted && <Icon size="large" color="black" name='thumbs down' />}
+                                            {t.security.pushed && <Icon size="large"  color="green" name='thumbs up' />}
+                                            {t.clientFavorites && <Icon size="large"  color="red" name='heart' />}
                                         </Table.Cell>
                                         <Table.Cell>{t.security.SecurityName}</Table.Cell>
                                         <Table.Cell>{t.security.MacroAssetClass}</Table.Cell>
                                         <Table.Cell textAlign="right">{show && fmt.format(t.currentQuantity)}</Table.Cell>
                                         <Table.Cell textAlign="right">{show && fmt.format(t.currentAmount)}</Table.Cell>
-                                        <Table.Cell textAlign="right">{show && fmt.format(t.currentWeight * 100)}</Table.Cell>
+                                        <Table.Cell textAlign="right">{show && fmt.format(t.currentWeight * 100)} ({fmt.format(t.modelWeight * 100)})</Table.Cell>
                                         <Table.Cell textAlign="left">
                                             <HoldingWeigthControl factor={factor} data={t} onChange={(item) => this.handleItemChanged(item, i)} />
                                         </Table.Cell>
