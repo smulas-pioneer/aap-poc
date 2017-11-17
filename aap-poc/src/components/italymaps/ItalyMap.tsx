@@ -140,23 +140,30 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
 
         let tot = 0;
         let countWithValues = 0;
+        let min: number | undefined = undefined;
 
         Object.keys(values).forEach(key => {
             const v = values[key];
             if (v > tot) tot = v;
+            if (!min || v < min) min = v;
         });
 
         const areaValues = ItalyMap.AREA_MAP_INDEX.reduce((acc, key, idx) => {
             const value = values[key] ? values[key] : 0;
             const perc = (value * 100) / tot;
             const area = `area_${idx}`;
-            const color = this.colors[Math.ceil(perc / 10) - 1];
+            const lenCol = this.colors.length - 1;
+            if (!min) min = 0;
+
+            const color = (tot - min) === 0 ? this.colors[lenCol] : value !== 0 ? this.colors[Math.ceil((value - min) / (tot - min) * lenCol)] : undefined;
+
+            // if (!color) throw Error("Color not defined!!!");
             if (value) countWithValues++;
             acc.push({
                 key,
                 value,
                 perc,
-                color: color ? `rgb(${color[0]}, ${color[1]}, ${color[2]}` : '#CECCCC'
+                color: color !== undefined ? `rgb(${color[0]}, ${color[1]}, ${color[2]}` : '#CECCCC'
             });
             return acc;
         }, [] as AreaValue[]
