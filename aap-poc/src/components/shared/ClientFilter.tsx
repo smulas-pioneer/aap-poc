@@ -135,7 +135,7 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
         const { filterValue, searchPlaceholder, onChange, freeFilterText } = this.props;
 
         return (
-            <Menu vertical fluid style={{margin:0, border:0, boxShadow: 'none'}}>
+            <Menu vertical fluid style={{margin:0, border:0, boxShadow: 'none'}} className="custom-filter">
                 {freeFilterText &&
                     <Menu.Item>
                         <Menu.Header>

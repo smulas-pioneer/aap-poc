@@ -20,7 +20,7 @@ export const English: LanguageState = {
         DB_CLIENTS_ALERTS: 'Clients Alerts',
         DB_INTERVIEWS: 'Interviews',
         DB_INTERVIEWS_PENDING: 'Pending Interviews',
-        DB_REBALANCING: 'Rebalancing Not Executed',
+        DB_PROPOSAL_ACCEPTED_NOT_EXECUTED: 'Accepted Proposals Not Executed',
         DB_CLIENT_FEEDBACK: 'Client Feedback',
         DB_PERC_DETAIL: "%s(%s from %s%s)",
         DB_ALERTS_DETAIL: "Including %s MIFID Alerts",

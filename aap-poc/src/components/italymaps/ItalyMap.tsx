@@ -28,6 +28,9 @@ import { FillAreaLegend } from './FillAreaLegend';
 export interface ItalyMapProps {
     lang: LangDictionary,
     clients: Client[]
+
+    width?: number | string;
+    height?: number | string;
 }
 
 export interface ItalyMapState {
@@ -236,7 +239,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
 
 
         return (
-            <div style={{ width: "100%", height: "100%" }}>
+            <div style={{ width: this.props.width, height: this.props.height }}>
 
                 <Transition visible={showItaly} animation='fade up' duration={350} onComplete={(_, e) => { !showItaly && this.setState(prev => ({ mapIndex: prev.requestMapIndex })) }} >
                     <ResponsiveContainer >
