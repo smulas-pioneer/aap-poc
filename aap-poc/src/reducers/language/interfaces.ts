@@ -21,6 +21,7 @@ export interface LangDictionary {
     DB_INTERVIEWS_PENDING: string,
     DB_REBALANCING: string,
     DB_CLIENT_FEEDBACK: string,
+    DB_CLIENT_ACCEPTED_PROPOSALS: string,
     DB_PERC_DETAIL: string,
     DB_ALERTS_DETAIL: string,
     // other
@@ -48,6 +49,7 @@ export interface LangDictionary {
     NOTES: string
     DATE_FORMAT: string
     AGENTS: string,
+    OUT_OF: string,
     ACCEPTED: string
     REJECTED: string
     ONGOING: string,
@@ -81,8 +83,8 @@ export interface LangDictionary {
     BRANCH: string,
     ADVISOR: string,
 
-    RESULTS:string,
-    TARGET_RESULT:string,
+    RESULTS: string,
+    TARGET_RESULT: string,
 
     PROPOSAL_VALIDATION: { title: string, message: string },
     HISTORY: {

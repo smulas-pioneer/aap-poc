@@ -17,7 +17,9 @@ export const Italiano: LanguageState = {
         DB_REBALANCING: 'Rebalancing non eseguito',
         DB_PERC_DETAIL: "%s(%s da %s%s)",
         DB_ALERTS_DETAIL: "Inclusi %s allarmi Mifid",
+        DB_CLIENT_ACCEPTED_PROPOSALS: "Proposte accettate",
         //other
+        OUT_OF: 'di',
         YEAR: 'A',
         MONTH: 'M',
         DAY: 'G',
@@ -78,7 +80,7 @@ export const Italiano: LanguageState = {
             interviews: 'Interviste'
         },
         ALERT: { name: 'Avvisi', sentence: 'monitoring indicators breached' },
-    
+
 
 
         DASHBOARD: 'Cruscotto',
