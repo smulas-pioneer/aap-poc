@@ -56,6 +56,10 @@ export const getBreakdown = (holdings: PositionItem[]) => {
 
 const performanceForPeriod = (isin: string, period: PerformancePeriod) => {
     const data = performances[isin];
+    if (!data) {
+        console.error('performances not found for:',isin);
+       return [];
+    }
     const maxDate = moment(data[data.length - 1].date);
     const minDate = period == '1M' ? maxDate.subtract(1, 'month') :
         period == '3M' ? maxDate.subtract(3, 'month') :
