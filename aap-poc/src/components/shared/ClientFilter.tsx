@@ -55,42 +55,50 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
     renderFilterMenuNew(key: number, map: FilterMap, values: SearchFilter) {
         const { searchprop, render: { icon, header, label, max }, enableClearAll = true } = map;
 
-        let menu = values && Object.keys(values).sort((a, b) => {
+        let current = values && Object.keys(values).sort((a, b) => {
             if (b.startsWith('<1')) return 1;
             if (b.startsWith('>20')) return -1;
             if (a.startsWith('10-')) return 1;
             if (a < b) return -1;
             if (a > b) return 1;
             return 0;
-        }).map((prop, j) => {
-            return (
-                <Menu.Item key={j} name='prop' link onClick={() => searchprop && this.searchAdvanced(searchprop, prop, values[prop].isInUse)}>
-                    {values[prop].current > 0 && <Label size="tiny" content={values[prop].current} />}
-                    {values[prop].isInUse && <Icon name="checkmark" color="green" style={{ float: 'none', margin: '0 .5em 0 0' }} />}
+        }).reduce((memo, prop, j) => {
+            const { current, isInUse } = values[prop];
+
+            const item = (
+                <Menu.Item key={j} name='prop' link onClick={() => searchprop && this.searchAdvanced(searchprop, prop, isInUse)}>
+                    {current > 0 && <Label size="tiny" content={current} />}
+                    {isInUse && <Icon name="checkmark" color="green" style={{ float: 'none', margin: '0 .5em 0 0' }} />}
                     {prop !== '0' ? (label ? label(prop) : prop) : 'none'}
                 </Menu.Item>
             );
-        });
 
-        let others = max !== undefined && menu.splice(max);
-        
+            if (max && j >= max && !isInUse) {
+                memo.others.push(item);
+            } else {
+                memo.menu.push(item);
+            }
 
-        return (menu &&
+            return memo;
+        }, { menu: [], others: [] } = { menu: [] as any, others: [] as any });
+
+
+        return (current.menu &&
             <Menu.Item key={key}>
                 <Menu.Header>
                     <Icon name={icon} />{header}
                     {enableClearAll && this.hasMoreThenOneFilter(values) && <IconButton color="red" name="remove" floated="right" onClick={() => this.clearAllFilters(searchprop)} />}
                 </Menu.Header>
                 <Menu.Menu>
-                    {menu}
-                    {others && others.length ?
+                    {current.menu}
+                    {current.others && current.others.length ?
                         (
-                            <Dropdown item text='More'>
+                            <Dropdown item text={`More..`}>
                                 <Dropdown.Menu className='left'>
-                                    {others}
+                                    {current.others}
                                 </Dropdown.Menu>
                             </Dropdown>
-                      
+
                         ) : null}
                 </Menu.Menu>
 
