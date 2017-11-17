@@ -11,10 +11,13 @@ import { suggestedPositionExCash, currentPosition } from "./common/radarUtils";
 
 export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean, forced?: StrategyItem[]): StrategyItem[] => {
 
-    if (forced){
-        const w = currentPosition(forced);
-        const delta = sumBy(w, s => s.weight) - 1;
-        return [{ ...position[0], suggestedDelta: -delta, suggestionAccepted: delta != 0 }].concat(position.slice(1));
+    if (forced) {
+        /*        const w = currentPosition(forced);
+                const delta = sumBy(w, s => s.weight) - 1;
+                return [{ ...position[0], suggestedDelta: -delta, suggestionAccepted: delta != 0 }].concat(position.slice(1));
+          */
+        console.log('forced', forced);
+        return forced;
     }
 
     if (calculateFromAxes) {
@@ -64,8 +67,8 @@ export const getBreakdown = (holdings: PositionItem[]) => {
 const performanceForPeriod = (isin: string, period: PerformancePeriod) => {
     const data = performances[isin];
     if (!data) {
-        console.error('performances not found for:',isin);
-       return [];
+        console.error('performances not found for:', isin);
+        return [];
     }
     const maxDate = moment(data[data.length - 1].date);
     const minDate = period == '1M' ? maxDate.subtract(1, 'month') :
@@ -130,9 +133,9 @@ export const getPerfContribution = (position: PositionItem[]) => {
     const gPerf = groupBy(perfCompo, g => g.date);
     return Object.keys(gPerf).map(k => {
         const o = gPerf[k].reduce((pr, cu) => {
-            pr[cu.id]= cu.perf * weights[cu.id] * 100;
+            pr[cu.id] = cu.perf * weights[cu.id] * 100;
             return pr;
-        }, {year:parseInt(k)} as any);
+        }, { year: parseInt(k) } as any);
         return o;
     });
 }
