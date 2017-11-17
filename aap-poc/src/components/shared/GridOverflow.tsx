@@ -21,7 +21,7 @@ export const OverflowColumn = (props: any) => {
 
 export interface GridOverflowProps {
     gridTemplateColumns?: '1fr fit-content(30%)' | 'fit-content(30%) 1fr' | 'auto' | string,
-    gridTemplateRows?: 'fit-content(100 %)' | 'min-content auto' | 'auto' | string
+    gridTemplateRows?: 'fit-content(100%)' | 'min-content auto' | 'auto' | string
 }
 
 export const AdvancedGrid = (props: any & GridOverflowProps) => {
@@ -29,7 +29,7 @@ export const AdvancedGrid = (props: any & GridOverflowProps) => {
 
     const newprops = {
         ...otherprops,
-        style: { margin: 0, display: 'grid', height: '100%', gridColumnGap: '1em', gridRowGap: '1em', gridTemplateColumns, gridTemplateRows, ...props.style }
+        style: { margin: 0, display: 'grid', height: '100%', gridColumnGap: '0.5em', gridRowGap: '0.5em', gridTemplateColumns, gridTemplateRows, ...props.style }
     }
 
     return <div {...newprops} />

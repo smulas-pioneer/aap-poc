@@ -7,6 +7,7 @@ import * as P3 from './fds_c4_c';
 import * as P4 from './fds_c2_m';
 import * as P5 from './fds_c3_m';
 import * as P6 from './fds_c4_m';
+import * as P7 from './fds_c3_c_bis';
 import { getRandomRadar } from '../index';
 import { cash } from '../common/securities';
 
@@ -90,7 +91,6 @@ const mapStrategy = (pos: any[], mod: any[]): StrategyItem[] => {
             newSecurity: false
         }
     });
-
 }
 
 export const getAllSecuirities = () => {
@@ -131,7 +131,8 @@ export const getAllPerformances = () => {
         ...P4.perf,
         ...P5.perf,
         ...P6.perf,
-    ];
+        ...P7.perf,
+    ]
     let allValues = getPerf(perf);
     Object.keys(allValues).forEach(k => {
         allValues[k] = allValues[k].sort((a, b) => a.date.localeCompare(b.date));
@@ -141,13 +142,92 @@ export const getAllPerformances = () => {
     return allValues;
 }
 
-export const getAllStrategies = () => {
-    return {
-        "0": mapStrategy(FD.case_2_initial, FD.case_2_model),
-        "0!": mapStrategy(FD.case_2_proposed, FD.case_2_model),
-        "1": mapStrategy(FD.case_3_initial, FD.case_3_model),
-        "1!": mapStrategy(FD.case_3_proposed, FD.case_3_model),
-        "2": mapStrategy(FD.case_4_initial, FD.case_3_model),
-        "2!": mapStrategy(FD.case_4_proposed, FD.case_3_model),
+
+
+const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
+    
+        const modelSecs = mod.map(p => ({
+            security: p.Symbol == 'CASH_EUR' ? cash : mapSecurity(p),
+            radar: getRandomRadar(),
+            currentWeight: 0,
+            currentQuantity: 0,
+            currentPrice: p.Price,
+            currentAmount: 0,
+            modelWeight: p.WEIGHT,
+            suggestedDelta: 0,
+            suggestionAccepted: false,
+            isCash: p.Symbol == 'CASH_EUR',
+            fee: 1,
+            newSecurity: false
+        }));
+
+        const suggSecs= sugg.map(p => ({
+            security: p.Symbol == 'CASH_EUR' ? cash : mapSecurity(p),
+            radar: getRandomRadar(),
+            currentWeight: 0,
+            currentQuantity: 0,
+            currentPrice: 0,
+            currentAmount: 0,
+            modelWeight: 0,
+            suggestedDelta: p.WEIGHT,
+            suggestionAccepted: false,
+            isCash: p.Symbol == 'CASH_EUR',
+            fee: 1,
+            newSecurity: false
+        }));
+
+        const posSecs = pos.map(p => ({
+            security: p.Symbol == 'CASH_EUR' ? cash : mapSecurity(p),
+            radar: getRandomRadar(),
+            currentWeight: p.WEIGHT,
+            currentQuantity: p.Shares,
+            currentPrice: p.Price,
+            currentAmount: p.Amont,
+            modelWeight: 0,
+            suggestedDelta: 0,
+            suggestionAccepted: false,
+            isCash: p.Symbol == 'CASH_EUR',
+            fee: 1,
+            newSecurity: false,
+            clientFavorites: FD.fav.indexOf(p.Symbol) > -1
+        }));
+    
+        const gData = groupBy([...suggSecs,...modelSecs, ...posSecs], g => g.security.IsinCode);
+    
+        return Object.keys(gData).map(k => {
+            const items = gData[k];
+            return {
+                security: items[0].security,
+                radar: items[0].radar,
+                currentWeight: sumBy(items, w => w.currentWeight||0),
+                currentQuantity: sumBy(items, w => w.currentQuantity||0),
+                currentPrice: items[0].currentPrice,
+                currentAmount: sumBy(items, w => w.currentAmount||0),
+                modelWeight: sumBy(items, w => w.modelWeight||0),
+                suggestedDelta: sumBy(items,w=>w.suggestedDelta||0) - sumBy(items, w => w.currentWeight||0),
+                suggestionAccepted: false,
+                isCash: items[0].isCash,
+                fee: 1,
+                newSecurity: false
+            }
+        });
     }
+    
+
+
+
+
+export const getAllStrategies = () => {
+    let x = {
+        "0": mapStrategy(FD.case_2_initial, FD.case_2_model),
+        "0!": mapSuggestion(FD.case_2_proposed, FD.case_2_model, FD.case_2_proposed),
+        "1": mapStrategy(FD.case_3_initial, FD.case_3_model),
+        "1!": mapSuggestion(FD.case_3_proposed, FD.case_3_model, FD.case_3_proposed),
+        "2": mapStrategy(FD.case_4_initial, FD.case_3_model),
+        "2!": mapSuggestion(FD.case_4_proposed, FD.case_3_model, FD.case_4_proposed),
+    }
+
+
+    console.log('AAA',x);
+    return x;
 }

@@ -134,12 +134,22 @@ export const getStrategy = (clientId: string) => {
     );
 }
 
+<<<<<<< HEAD
 export const getSuggestion = (args: { id: string, position: Model.StrategyItem[], axes: Model.RadarStrategyParm, calculateFromAxes: boolean }) => {
     if (args.id == "0" || args.id == "1" || args.id == "2") {
         const ret = strategies[args.id + "!"];
         return Promise.resolve(ce.getSuggestion(args.position, args.axes, false, ret));
     }
 
+=======
+export const getSuggestion = (args: { id:string, position: Model.StrategyItem[], axes: Model.RadarStrategyParm, calculateFromAxes: boolean }) => {
+    /*
+    if (args.id=="0" || args.id=="1" || args.id == "2"){
+        const ret = strategies[args.id + "!"];
+        return Promise.resolve(ret);
+    } 
+*/
+>>>>>>> f6d0b44271a3a95811de9780e2963086e2cd7d7f
     return Promise.resolve(ce.getSuggestion(args.position, args.axes, args.calculateFromAxes));
 };
 

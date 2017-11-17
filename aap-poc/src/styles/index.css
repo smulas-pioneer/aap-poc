@@ -24,7 +24,7 @@ background-color: rgba(0,0,0,.55) !important;
     height: 95%;
 }
 
-.custom-filter .menu .item {
+.custom-filter.menu > .item {
     padding-right: 0 !important;
     padding-left :0 !important;
 }
