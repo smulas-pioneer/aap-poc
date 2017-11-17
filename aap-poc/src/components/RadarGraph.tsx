@@ -122,7 +122,7 @@ const CustomizedShape = (props: any) => {
     const actualY = y + 5;
 
     return (
-        <g onClick={() => onClickShape && onClickShape(value)}>
+        <g onClick={() => onClickShape && onClickShape(value)} className="selectable">
             {selected ?
                 (
                     <g>

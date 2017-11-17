@@ -136,9 +136,8 @@ html {
     box-shadow: 0 3px 0 black !important;
 }
 
-svg .area:not(.unselectable) {
+svg .area:not(.unselectable), svg g.selectable {
     cursor: pointer;
-
 }
 
 svg .regions .area:not(.unselectable):hover > path {
@@ -148,10 +147,6 @@ svg .regions .area:not(.unselectable):hover > path {
 svg .boundaries > path{
     stroke: gray;
 }
-
-.i.icon.alarm:before {
-    content: "\f0a2";
-  }
 
 /** Top Client List */
 .topClientDropOption > div[role="alert"] {
