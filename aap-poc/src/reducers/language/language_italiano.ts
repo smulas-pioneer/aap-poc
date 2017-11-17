@@ -9,18 +9,12 @@ export const Italiano: LanguageState = {
         MY_CLIENTS: 'I miei Clienti',
         MY_ALERTS: 'I miei Allarmi',
         MY_PORTFOLIOS: 'I miei Portafogli',
-        MY_BUSINNESS: 'Il mio Businness',
         NEWS_INSIGHTS: 'Notizie & Approfondimenti',
-        DASHBOARD: 'Dashboard',
         MENU_SPOTLIGHT: 'Cerca',
         // dashboard
-        DB_TOTAL_CLIENTS: 'Totale dei Clienti',
-        DB_ASSET_ADVISE: 'Asset Sotto Consulenza',
-        DB_CLIENTS_ALERTS: 'Allarmi dei Clienti',
         DB_INTERVIEWS: 'Interviste',
         DB_INTERVIEWS_PENDING: 'Interviste In Attesa',
         DB_REBALANCING: 'Rebalancing non eseguito',
-        DB_CLIENT_FEEDBACK: 'Riscontri Dei Clienti',
         DB_PERC_DETAIL: "%s(%s da %s%s)",
         DB_ALERTS_DETAIL: "Inclusi %s allarmi Mifid",
         //other
@@ -30,8 +24,6 @@ export const Italiano: LanguageState = {
         FILTER: 'Filtra',
         ENTER_FILTER_TEXT: 'Inserire il testo da ricercare',
         MANAGED_BY: 'Gestito da',
-        LAST_INTERVIEW_DATE: 'Intervista',
-        LAST_ADVICE_DATE: 'Avviso',
         SECURITY_NAME: 'Titolo',
         QUANTITY: 'Quantità',
         ISIN: 'Codice Isin',
@@ -59,12 +51,8 @@ export const Italiano: LanguageState = {
         FEES: 'Commissioni',
         TOTAL: 'Totale',
         SIGN_OUT: 'Esci',
-        WELCOME: 'Ciao',
-        CLIENT_NAME: 'Nome cliente',
         AUA: 'AuA',
-        DECISION: 'Decision',
         MIFID: 'MIFID',
-        DELTA_ANALYSIS: 'Analisi delta',
         NORTH: 'Nord',
         CENTER: 'Centro',
         SOUTH: 'Sud',
@@ -79,7 +67,7 @@ export const Italiano: LanguageState = {
         BRANCH: "Agenzia",
         ADVISOR: "Advisor",
         RESULTS: "Risultato",
-        TARGET_RESULT:"Perf. Attesa",
+        TARGET_RESULT: "Perf. Attesa",
 
 
         PROPOSAL_VALIDATION: { title: 'Validazione della proposta', message: 'Prego validare la proposta per generare il documento' },
@@ -90,13 +78,28 @@ export const Italiano: LanguageState = {
             interviews: 'Interviste'
         },
         ALERT: { name: 'Avvisi', sentence: 'monitoring indicators breached' },
+    
+
+
+        DASHBOARD: 'Cruscotto',
+        DB_ASSET_ADVISE: 'Totale Patrimonio',
+        DB_CLIENTS_ALERTS: 'Allarmi',
+        DB_CLIENT_FEEDBACK: 'Feedback Dei Clienti',
+        DB_TOTAL_CLIENTS: 'Numero Clienti',
+        CLIENT_NAME: 'Nome Cliente',
+        DECISION: 'Decisione',
+        DELTA_ANALYSIS: 'Analisi Delta',
+        LAST_ADVICE_DATE: 'Ultima Proposta',
+        LAST_INTERVIEW_DATE: 'Ultima Intervista',
+        MY_BUSINNESS: 'Le mie Attività',
+        WELCOME: 'Benvenuto',
+
         ALERTS: {
-            riskAdequacyAlert: { name: 'Rischio Adeguatezza', sentence: 'Il livello del rischio del portafoglio non è adeguato al profilo MIFID del cliente' },
-            efficencyAlert: { name: 'Efficienza', sentence: `L'efficienza non è allineata al modello del portafoglio` },
-            consistencyAlert: { name: 'Consistenza', sentence: 'La consistenza non è allineata al modello del portafoglio' },
-            riskAnalysisAlert: { name: 'Analisi del rischio', sentence: 'Il livello del rischio del portafoglio non è adeguato al profilo MIFID del cliente' },
-            concentrationAlert: { name: 'Concentrazione', sentence: 'La concentrazione non è allineata al modello del portafoglio' },
-            overlapAlert: { name: 'Sovrapposizione', sentence: 'La sovrapposizione non è allineata al modello del portafoglio' }
+            efficencyAlert: { name: 'Efficienza', sentence: `L'efficienza del portafoglio non è allineata al suo modello` },
+            consistencyAlert: { name: 'Consistenza', sentence: 'La consistenza del portafoglio non è allineata al suo modello' },
+            riskAnalysisAlert: { name: 'Analisi del rischio', sentence: 'Il livello di rischio del portafoglio non è adeguato al profilo MIFID del cliente' },
+            concentrationAlert: { name: 'Concentrazione', sentence: 'La concentrazione del portafoglio non è allineata al suo modello' },
+            overlapAlert: { name: 'Sovrapposizione', sentence: 'La sovrapposizione del portafoglio non è allineata al suo modello' }
         }
     }
 };
