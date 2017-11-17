@@ -58,7 +58,7 @@ export class Holdings extends React.Component<Props, State> {
         const acceptAll = !(accepted == proposed);
         const isValid = holdings.filter(h => (h.currentWeight + h.suggestedDelta) < 0 || (h.currentWeight + h.suggestedDelta) > 1).length == 0;
         return (
-            <div>
+            <div >
                 {
                     this.state.addingSecurity && <Spotlight
                         onCancel={() => { this.setState({ addingSecurity: false }) }}
@@ -94,7 +94,7 @@ export class Holdings extends React.Component<Props, State> {
                         }
                     </Menu.Menu>
                 </Menu>
-                <Table compact size="small" as={OverflowItem}>
+                <Table compact size="small">
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell style={{width:'10px'}} ></Table.HeaderCell>
