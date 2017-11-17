@@ -91,7 +91,7 @@ export const case_4_proposed = [
     { Symbol: 'LU0533595319', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Corporate Bond', Name: 'Amundi Fds Bond Euro Corporate', Mstar_BCH: 'Barclays Euro Agg Corps TR EUR', Mstar_SRRI: 3, WEIGHT: 0.3, SRRI: 0.9, Amont: 66000, Price: 19.21, Shares: 3435.71056741281, },
     { Symbol: 'LU0518421895', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Government Bond', Name: 'Amundi Fds Bond Euro Government', Mstar_BCH: 'Citi EMU GBI EUR', Mstar_SRRI: 3, WEIGHT: 0.3, SRRI: 0.9, Amont: 66000, Price: 131.89, Shares: 500.417014178482, },
     { Symbol: 'FR0000989501', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Inflation Linked', Name: 'Amundi Fds Bond Euro Inflation', Mstar_BCH: 'Barclays Euro Infln Lkd TR EUR', Mstar_SRRI: 3, WEIGHT: 0.05, SRRI: 0.15, Amont: 11000, Price: 151.8, Shares: 72.463768115942, },
-    { Symbol: 'LU0257968619', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'High Yield', Name: 'Pioneer Fds Euro High Yield', Mstar_BCH: 'BofAML European Ccy HY Constnd TR HEUR', Mstar_SRRI: 3, WEIGHT: 0.05, SRRI: 0.15, Amont: 11000, Price: 67.68, Shares: 162.529550827423, },
+    { Symbol: 'LU0281579598', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'High Yield', Name: 'Pioneer Fds Euro High Yield', Mstar_BCH: 'BofAML European Ccy HY Constnd TR HEUR', Mstar_SRRI: 3, WEIGHT: 0.05, SRRI: 0.15, Amont: 11000, Price: 67.68, Shares: 162.529550827423, },
     { Symbol: 'FR0011006360', MacroAssetClass: 'Funds', AssetClass: 'Money Market', AssetType: 'Money Market', Name: 'Amundi Fds Cash EUR', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 0.1, SRRI: 0.1, Amont: 22000, Price: 100.87, Shares: 218.102508178844, },
 ]
 
