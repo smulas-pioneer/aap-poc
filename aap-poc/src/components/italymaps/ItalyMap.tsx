@@ -211,7 +211,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
                     value: formatAum(this.calculateAreaValues(clients, IndicatorOptionsType.aum, region.key).areaValues.filter(a => a.key === region.key)[0].value)
                 },
                 c: {
-                    label: lang.MAP_OPTS_INTERVIEWS,
+                    label: lang.MAP_OPTS_PROPOSALS,
                     value: this.calculateAreaValues(clients, IndicatorOptionsType.interviews, region.key).areaValues.filter(a => a.key === region.key)[0].value
                 },
                 d: {
@@ -256,7 +256,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
                                                     fill: false,
                                                     color: aValue.color,
                                                     onClick: aValue.value !== 0 ? () => this.setState({ requestMapIndex: idx }) : undefined,
-                                                    percentage: countWithValues > 1 ? aValue.perc : undefined,
+                                                    // percentage: countWithValues > 1 ? aValue.perc : undefined,
                                                     htmlTooltip
                                                 })
                                         })
