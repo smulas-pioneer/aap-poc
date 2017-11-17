@@ -132,6 +132,11 @@ export const getAllPerformances = () => {
 
 export const getAllStrategies = () => {
     return {
-        "0": mapStrategy(FD.case_2_initial, FD.case_2_model)
+        "0": mapStrategy(FD.case_2_initial, FD.case_2_model),
+        "0!": mapStrategy(FD.case_2_proposed, FD.case_2_model),
+        "1": mapStrategy(FD.case_3_initial, FD.case_3_model),
+        "1!": mapStrategy(FD.case_3_proposed, FD.case_3_model),
+        "2": mapStrategy(FD.case_4_initial, FD.case_3_model),
+        "2!": mapStrategy(FD.case_4_proposed, FD.case_3_model),
     }
 }
