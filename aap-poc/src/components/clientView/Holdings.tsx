@@ -8,6 +8,7 @@ import { numArray } from '../../_db/utils';
 import { Spotlight } from '../spotlight';
 import { ConfirmDialog } from '../shared/ConfirmDialog';
 import { suggestedPosition } from '../../_db/common/radarUtils';
+import { OverflowItem } from '../shared/GridOverflow';
 
 interface Props {
     holdings: StrategyItem[],
@@ -93,7 +94,7 @@ export class Holdings extends React.Component<Props, State> {
                         }
                     </Menu.Menu>
                 </Menu>
-                <Table compact size="small" >
+                <Table compact size="small" as={OverflowItem}>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell style={{width:'10px'}} ></Table.HeaderCell>

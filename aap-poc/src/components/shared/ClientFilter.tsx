@@ -38,7 +38,6 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
         this.renderAllFiltersHandler = this.renderAllFiltersHandler.bind(this);
     }
 
-
     renderAllFiltersHandler(name: string, value: boolean) {
         this.setState({ renderAllFilters: { ...this.state.renderAllFilters, [name]: value } })
     }
@@ -86,8 +85,7 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
                 </Menu.Item>
             );
 
-
-            if (!currentRenderAllFilters && !isInUse && max && j >= max) {
+            if (!currentRenderAllFilters && !isInUse && max !== undefined && j >= max) {
                 memo.others.push(item);
             } else {
                 memo.menu.push(item);
@@ -96,17 +94,20 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
             return memo;
         }, { menu: [], others: [] } = { menu: [] as any, others: [] as any });
 
-        return (current.menu &&
+        const hasUs = current.menu && current.menu.length;
+        const hasOthers = current.others && current.others.length;
+
+        return (
             <Menu.Item key={key}>
                 <Menu.Header>
                     <Icon name={icon} />{header}
                     {enableClearAll && this.hasMoreThenOneFilter(values) && <IconButton color="grey" name="remove" floated="right" onClick={() => this.clearAllFilters(searchprop)} />}
-                    {current.others && current.others.length && !currentRenderAllFilters ? <IconButton color="grey" name="expand" floated="right" onClick={() => this.renderAllFiltersHandler(searchprop, true)} /> : null}
+                    {!currentRenderAllFilters && hasOthers ? <IconButton color="grey" name="expand" floated="right" onClick={() => this.renderAllFiltersHandler(searchprop, true)} /> : null}
                     {currentRenderAllFilters ? <IconButton color="grey" name="compress" floated="right" onClick={() => this.renderAllFiltersHandler(searchprop, false)} /> : null}
                 </Menu.Header>
                 <Menu.Menu>
                     {current.menu}
-                    {current.others && current.others.length ?
+                    {hasOthers && max ?
                         (
                             <Dropdown item text={`More..`}>
                                 <Dropdown.Menu className='left'>
@@ -116,7 +117,6 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
 
                         ) : null}
                 </Menu.Menu>
-
             </Menu.Item>
 
         );

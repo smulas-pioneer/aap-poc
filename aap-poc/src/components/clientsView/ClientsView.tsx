@@ -9,6 +9,7 @@ import { AgentList } from '../agentView/AgentList';
 import { ClientList } from './ClientList';
 import { ClientFilter } from '../shared/ClientFilter';
 import { AdvancedGrid, OverflowColumn, OverflowItem } from '../shared/GridOverflow';
+import { WidgetTitle } from '../shared/WidgetTitle';
 
 const conn = appConnector<{ uid: string, agent?: string, showFilter?: boolean, showTitle?: boolean }>()(
     (s, p) => ({
@@ -75,13 +76,14 @@ class ClientsViewCompo extends conn.StatefulCompo<{ searchParms: SearchParms }> 
                 </Segment>}
 
             {showFilter
-                ? <AdvancedGrid gridTemplateColumns="1fr fit-content(30%)">
+                ? <AdvancedGrid gridTemplateColumns="auto 250px">
                     <Card as={OverflowColumn} fluid>
                         <Segment as={OverflowItem}>
                             <ClientList data={data.result} lang={lang} />
                         </Segment>
                     </Card>
-                    <Card style={{ margin: 0 }} >
+                    <Segment style={{margin: 0}}>
+                        <WidgetTitle title={lang.FILTER} />
                         <ClientFilter
                             freeFilterText
                             searchPlaceholder={lang.ENTER_FILTER_TEXT}
@@ -90,7 +92,7 @@ class ClientsViewCompo extends conn.StatefulCompo<{ searchParms: SearchParms }> 
                             filterValue={searchParms}
                             onChange={this.handleOnChangeFilter}
                         />
-                    </Card>
+                    </Segment>
                 </AdvancedGrid>
                 : <ClientList data={data.result} lang={lang} />
             }

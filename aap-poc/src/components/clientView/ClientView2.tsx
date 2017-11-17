@@ -213,7 +213,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         const graphsKeys = Object.keys(graphs);
 
         return (
-            <AdvancedGrid gridTemplateRows="min-content min-content 600px auto" style={{ marginBottom: '10px' }}>
+            <AdvancedGrid gridTemplateRows="min-content min-content 200px fit-content()" style={{ marginBottom: '10px' }}>
                 <Segment style={{ margin: 0 }} >
                     <WidgetTitle title={lang.PERSONAL_INFORMATION} />
                     <ClientCard client={client} lang={lang} color={'blue'} />
@@ -226,7 +226,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     : <div />}
 
                 <AdvancedGrid gridTemplateColumns="auto 40%">
-                    <Segment style={{ margin: 0 }} as={OverflowColumn}>
+                    <Segment style={{ margin: 0 }}>
                         <WidgetTitle title={lang.PORTFOLIO_HOLDINGS} />
                         <Holdings
                             clientId={client.id} lang={lang} holdings={strategy}
