@@ -34,7 +34,7 @@ export class SpotlightResultListItem extends React.Component<SpotlightSearchResu
     item = (item: SpotlightSearchResultItem, active: boolean, onClick: () => void, onNavigate: () => void) => {
         let ret = undefined;
         let itemNavigate = false;
-        if (active) itemNavigate = isClient(item) || isAgent(item);
+        if (active) itemNavigate = isClient(item) || isAgent(item) || isSecurity(item);
         return <Table.Cell selectable={!itemNavigate}>
             <a ref={(n) => this.cellNode = n}
                 style={{ cursor: 'pointer' }}
