@@ -152,7 +152,7 @@ export class CustomPieChart extends React.Component<CustomPieProps, CustomChartS
             <CustomResponsiveContainer height={responsiveHeight || height}>
                 <PieChart width={width} height={height}>
                     <Legend layout="horizontal" verticalAlign="bottom" payload={legendPayload} />
-                    <Pie {...pieProps} onClick={this.onCellClick} cx={'50%'} cy={'50%'} innerRadius={'20%'} outerRadius={'75%'} label={this.renderLabel} labelLine={false} >
+                    <Pie {...pieProps} onClick={this.onCellClick} cx={'50%'} cy={'50%'} innerRadius={'20%'} outerRadius={'85%'} label={this.renderLabel} labelLine={false} >
                         {cellPayload}
                     </Pie>
                 </ PieChart >

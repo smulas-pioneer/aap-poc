@@ -30,9 +30,13 @@ export class Login extends React.Component<LoginProps, LoginState>{
         this.setState(prev => ({ error: true }));
     }
 
-    checkError(user: string): boolean {
-        if (!user.length) return false;
-        return !'advisor'.startsWith(user.trim().toLowerCase()) && !'manager'.startsWith(user.trim().toLowerCase());
+    checkError(): void {
+        const { user } = this.state;
+        let error = false;
+        if (user.length) {
+            error = !'advisor'.startsWith(user.trim().toLowerCase()) && !'manager'.startsWith(user.trim().toLowerCase());
+        }
+        this.setState(prev => ({ error }));
     }
 
     render() {
@@ -42,8 +46,8 @@ export class Login extends React.Component<LoginProps, LoginState>{
                     <Header as="h2" style={{ color: '#005483', fontFamily: 'HelveticaNeue' }} content="Advisory Platform" />
                     <Form size='large'>
                         <Segment stacked secondary>
-                            <Form.Input autoFocus icon="user" defaultValue={this.state.user} iconPosition="left" placeholder='User' onChange={(e, d) => this.setState(prev => ({ error: this.checkError(d.value), user: d.value }))} />
-                            <Form.Input icon="lock" type="Password" iconPosition="left" placeholder='Password' onChange={(e, d) => this.setState(prev => ({ error: this.checkError(d.value), password: d.value }))} />
+                            <Form.Input autoFocus icon="user" defaultValue={this.state.user} iconPosition="left" placeholder='User' onChange={(e, d) => this.setState(prev => ({ user: d.value }), this.checkError)} />
+                            <Form.Input icon="lock" type="Password" iconPosition="left" placeholder='Password' onChange={(e, d) => this.setState(prev => ({ password: d.value }), this.checkError)} />
                             <Button fluid color="blue" size="large" content="Login" onClick={this.onLogin} />
                             <Message visible={this.state.error} error>
                                 <Header content="Wrong Credentials" size="tiny" />
