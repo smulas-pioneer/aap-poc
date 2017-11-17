@@ -22,7 +22,7 @@ export const SecurityCard = ({ security, lang }: { security: Security } & WithLa
         <Grid>
             <Grid.Row columns={2}  >
                 <Grid.Column width={8}>
-                    <Table>
+                    <Table compact>
                         <Table.Body>
                             <Item label="Country" value={security.Country} />
                             <Item label="Currency" value={security.Currency} />
