@@ -178,9 +178,6 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
             newSecurity: false
         }));
 
-
-        console.log('SUGG',JSON.stringify(suggSecs.map(s=>`${s.security.IsinCode} ${s.suggestedDelta}`),null,2));        
-
         const posSecs = pos.map(p => ({
             security: p.Symbol == 'CASH_EUR' ? cash : mapSecurity(p),
             radar: getRandomRadar(),
@@ -219,10 +216,6 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
             }
         });
     }
-    
-
-
-
 
 export const getAllStrategies = () => {
     let x = {
@@ -230,8 +223,5 @@ export const getAllStrategies = () => {
         "1": mapSuggestion(FD.case_3_initial, FD.case_3_model, FD.case_3_proposed).sort((a,b)=>a.isCash ? -1: 1),
         "2": mapSuggestion(FD.case_4_initial, FD.case_4_model, FD.case_4_proposed).sort((a,b)=>a.isCash ? -1: 1),
     }
-
-
-    console.log('AAA',JSON.stringify(x["2"].map(s=>`${s.security.IsinCode} ${s.suggestedDelta}`),null,2));
     return x;
 }
