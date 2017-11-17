@@ -10,6 +10,7 @@ import * as P6 from './fds_c4_m';
 import * as P7 from './fds_c3_c_bis';
 import { getRandomRadar } from '../index';
 import { cash } from '../common/securities';
+import { modelPosition } from '../common/radarUtils';
 
 const mapSecurity = (p: any) => {
     return {
@@ -161,6 +162,7 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
             newSecurity: false
         }));
 
+
         const suggSecs= sugg.map(p => ({
             security: p.Symbol == 'CASH_EUR' ? cash : mapSecurity(p),
             radar: getRandomRadar(),
@@ -176,6 +178,8 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
             newSecurity: false
         }));
 
+        console.log('suggSecs', JSON.stringify(suggSecs,null,2));
+        
         const posSecs = pos.map(p => ({
             security: p.Symbol == 'CASH_EUR' ? cash : mapSecurity(p),
             radar: getRandomRadar(),
@@ -193,18 +197,20 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
         }));
     
         const gData = groupBy([...suggSecs,...modelSecs, ...posSecs], g => g.security.IsinCode);
-    
+
         return Object.keys(gData).map(k => {
             const items = gData[k];
+            const suggDelta = sumBy(items,w=>w.suggestedDelta||0) ;
+            const weight =  sumBy(items, w => w.currentWeight||0);
             return {
                 security: items[0].security,
                 radar: items[0].radar,
-                currentWeight: sumBy(items, w => w.currentWeight||0),
+                currentWeight:weight,
                 currentQuantity: sumBy(items, w => w.currentQuantity||0),
                 currentPrice: items[0].currentPrice,
                 currentAmount: sumBy(items, w => w.currentAmount||0),
                 modelWeight: sumBy(items, w => w.modelWeight||0),
-                suggestedDelta: sumBy(items,w=>w.suggestedDelta||0) - sumBy(items, w => w.currentWeight||0),
+                suggestedDelta: suggDelta > 0 ? suggDelta- weight : 0,
                 suggestionAccepted: false,
                 isCash: items[0].isCash,
                 fee: 1,
@@ -219,12 +225,9 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
 
 export const getAllStrategies = () => {
     let x = {
-        "0_": mapStrategy(FD.case_2_initial, FD.case_2_model),
-        "0": mapSuggestion(FD.case_2_proposed, FD.case_2_model, FD.case_2_proposed),
-        "1": mapStrategy(FD.case_3_initial, FD.case_3_model),
-        "1!": mapSuggestion(FD.case_3_proposed, FD.case_3_model, FD.case_3_proposed),
-        "2": mapStrategy(FD.case_4_initial, FD.case_3_model),
-        "2!": mapSuggestion(FD.case_4_proposed, FD.case_3_model, FD.case_4_proposed),
+        "0": mapSuggestion(FD.case_2_initial, FD.case_2_model, FD.case_2_proposed),
+        "1": mapSuggestion(FD.case_3_initial, FD.case_3_model, FD.case_3_proposed),
+        "2": mapSuggestion(FD.case_4_initial, FD.case_4_model, FD.case_4_proposed),
     }
 
 
