@@ -149,7 +149,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
 
         return (
             <Segment>
-                <WidgetTitle title={header}/>
+                <WidgetTitle title={header} />
                 <CustomPieChart width={500} height={500} data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
             </Segment>
         );
@@ -230,13 +230,16 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                         <Card fluid>
                             {this.renderItem(2, lang.DB_REBALANCING)}
                         </Card>
-                        <ClientFilter
-                            searchPlaceholder={lang.ENTER_FILTER_TEXT}
-                            data={filter}
-                            filterMaps={['Regions', 'Alerts', 'Aum', 'Segment']}
-                            filterValue={data.parms}
-                            onChange={this.handleOnChangeFilter}
-                        />
+                        <Segment>
+                            <WidgetTitle title={lang.FILTER} />
+                            <ClientFilter
+                                searchPlaceholder={lang.ENTER_FILTER_TEXT}
+                                data={filter}
+                                filterMaps={['Regions', 'Alerts', 'Aum', 'Segment']}
+                                filterValue={data.parms}
+                                onChange={this.handleOnChangeFilter}
+                            />
+                        </Segment>
                     </Segment>
                 </AdvancedGrid>
             </AdvancedGrid >
