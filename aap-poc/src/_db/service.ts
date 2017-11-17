@@ -135,10 +135,10 @@ export const getStrategy = (clientId: string) => {
 }
 
 export const getSuggestion = (args: { id:string, position: Model.StrategyItem[], axes: Model.RadarStrategyParm, calculateFromAxes: boolean }) => {
-   /* if (args.id=="0" || args.id=="1" || args.id == "2"){
-        const ret = strategies[args.id + "!"];
+    if (args.id=="0" || args.id=="1" || args.id == "2"){
+        const ret = strategies[args.id];
         return Promise.resolve(ret);
-    } */
+    } 
     return Promise.resolve(ce.getSuggestion(args.position, args.axes, args.calculateFromAxes));
 };
 

@@ -9,6 +9,11 @@ const Colors = {
     RED: "#E6325E",
     GRAY: "#3B7296",
     GREEN: "#39B2B6",
+    VIOLET : "#ED00EE",
+    GREENDARK : "#003F03",
+    YELLOW: '#D5D300',
+    PINK: '#DA98D2',
+    ACQUA: 'aqua'
 }
 
 
@@ -127,7 +132,7 @@ export class CustomPieChart extends React.Component<CustomPieProps, CustomChartS
             const fill = entry.fillColor || (colors[key % colors.length])
             const fillOpacity = entry.fillColorOpacity || (allowFilter ? (isActive ? '1' : '0.4') : '1');
 
-            if (name) {
+            if (name && entry[this.props.dataKey])  {
                 legendPayload.push({ value: name, id: key, type: 'rect', color: fill });
             }
 
