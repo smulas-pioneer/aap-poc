@@ -23,11 +23,8 @@ export const avgRadar = (position: PositionItem[]): RadarItem => {
     }
 }
 
-export const getRAG = (act: number, limit: number): Alert => {
-    const d = act - limit;
-    if (d < -0.5) return 'green';
-    if (d < 1) return 'orange';
-    return 'red';
+export const getRAG = (act: number, limit: number, mifid: boolean): Alert => {
+    return act > limit ? (mifid ? 'red' : 'orange') : 'green'
 }
 
 export const createRadarFromStrategy = (strategy: StrategyItem[]) => {
@@ -53,34 +50,32 @@ export const createRadarSync = (guideLines: RadarItem,
         actual,
         limits,
         proposed,
-        concentrationAlert: getRAG(proposed.concentration, limits.concentration),
-        consistencyAlert: getRAG(proposed.consistency, limits.consistency),
-        efficencyAlert: getRAG(proposed.efficency, limits.efficency),
-        overlapAlert: getRAG(proposed.overlap, limits.overlap),
-        riskAdequacyAlert: getRAG(proposed.riskAdequacy, limits.riskAdequacy),
-        riskAnalysisAlert: getRAG(proposed.riskAnalysis, limits.riskAnalysis),
+        concentrationAlert: getRAG(proposed.concentration, limits.concentration, false),
+        consistencyAlert: getRAG(proposed.consistency, limits.consistency, false),
+        efficencyAlert: getRAG(proposed.efficency, limits.efficency, false),
+        overlapAlert: getRAG(proposed.overlap, limits.overlap, false),
+        riskAdequacyAlert: getRAG(proposed.riskAdequacy, limits.riskAdequacy, true),
+        riskAnalysisAlert: getRAG(proposed.riskAnalysis, limits.riskAnalysis, false),
     }
 
     const alerts = [data.concentrationAlert, data.consistencyAlert, data.efficencyAlert, data.riskAdequacyAlert, data.riskAnalysisAlert, data.overlapAlert];
     const reds = alerts.filter(r => r == 'red').length;
     const oranges = alerts.filter(r => r == 'orange').length;
     const numOfAlerts = reds + oranges;
-    const color = numOfAlerts == 0 ? 'green' :
-        reds == 0 ? 'yellow' :
-            oranges == 0 ? 'red' : 'orange';
+    const color = numOfAlerts == 0 ? 'green' : reds == 0 ? 'orange' : 'red';
 
     return { ...data, numOfAlerts, color };
-    
+
 }
 
 export const getRadarLimitSync = (radarItem: RadarItem): RadarItem => {
     return {
-        concentration: radarItem.concentration + 1,//rnd(1, 20) / 10,
-        efficency: radarItem.efficency + 1,// rnd(1, 20) / 10,
-        consistency: radarItem.consistency + 1,// + rnd(1, 20) / 10,
-        overlap: radarItem.overlap + 1,// + rnd(1, 20) / 10,
-        riskAdequacy: radarItem.riskAdequacy + 1,// + rnd(1, 20) / 10,
-        riskAnalysis: radarItem.riskAnalysis + 1,// + rnd(1, 20) / 10
+        concentration: radarItem.concentration + 0.8,//rnd(1, 20) / 10,
+        efficency: radarItem.efficency + 0.8,// rnd(1, 20) / 10,
+        consistency: radarItem.consistency + 0.8,// + rnd(1, 20) / 10,
+        overlap: radarItem.overlap + 0.8,// + rnd(1, 20) / 10,
+        riskAdequacy: radarItem.riskAdequacy + 0.8,// + rnd(1, 20) / 10,
+        riskAnalysis: radarItem.riskAnalysis + 0.8,// + rnd(1, 20) / 10
     }
 };
 

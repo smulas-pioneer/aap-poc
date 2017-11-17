@@ -145,7 +145,7 @@ export const getAllPerformances = () => {
 
 
 const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
-    
+
         const modelSecs = mod.map(p => ({
             security: p.Symbol == 'CASH_EUR' ? cash : mapSecurity(p),
             radar: getRandomRadar(),
@@ -219,8 +219,8 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
 
 export const getAllStrategies = () => {
     let x = {
-        "0": mapStrategy(FD.case_2_initial, FD.case_2_model),
-        "0!": mapSuggestion(FD.case_2_proposed, FD.case_2_model, FD.case_2_proposed),
+        "0_": mapStrategy(FD.case_2_initial, FD.case_2_model),
+        "0": mapSuggestion(FD.case_2_proposed, FD.case_2_model, FD.case_2_proposed),
         "1": mapStrategy(FD.case_3_initial, FD.case_3_model),
         "1!": mapSuggestion(FD.case_3_proposed, FD.case_3_model, FD.case_3_proposed),
         "2": mapStrategy(FD.case_4_initial, FD.case_3_model),
