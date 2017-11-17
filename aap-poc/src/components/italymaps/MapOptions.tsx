@@ -60,7 +60,7 @@ export class MapOptions extends React.Component<MapOptionsProps, MapOptionsState
 
         return (
             <div>
-                <Button.Group fluid>
+                <Button.Group fluid >
                     {buttons.map(b => this.renderButton(b[0], b[1]))}
                 </Button.Group>
             </div>
