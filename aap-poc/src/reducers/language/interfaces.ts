@@ -84,14 +84,25 @@ export interface LangDictionary {
     RESULTS:string,
     TARGET_RESULT:string,
 
-    PROPOSAL_VALIDATION: { title: string, message: string },
+    //client view
+    PERSONAL_INFORMATION: string,
+    PORTFOLIO_HOLDINGS: string,
+    PORTFOLIO_MONITORING: string,
+    PORTFOLIO_VIEWS: string,
+    CLIENT_EVENT_HISTORY: string,
+
+    PROPOSAL_VALIDATION: { 
+        title: string, message: string 
+    },
     HISTORY: {
         clientEventHistory: string,
         transactions: string,
         proposals: string,
         interviews: string
     },
-    ALERT: { name: string, sentence: string },
+    ALERT: { 
+        name: string, sentence: string 
+    },
     ALERTS: {
         riskAdequacyAlert: { name: string, sentence: string },
         efficencyAlert: { name: string, sentence: string },

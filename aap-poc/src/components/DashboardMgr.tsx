@@ -21,6 +21,7 @@ import { GeoItalyClientsChart } from './alertsView/GeoItalyClientsChart';
 import { ItalyMap } from './italymaps/ItalyMap';
 import { formatAum } from '../_db/utils';
 import { TopClient } from './topClientView';
+import { WidgetTitle } from './shared/WidgetTitle';
 
 const sprintf = require("sprintf-js").sprintf;
 

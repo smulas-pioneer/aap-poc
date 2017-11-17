@@ -19,7 +19,7 @@ export const English: LanguageState = {
         DB_ASSET_ADVISE: 'Asset Under Advise',
         DB_CLIENTS_ALERTS: 'Clients Alerts',
         DB_INTERVIEWS: 'Interviews',
-        DB_INTERVIEWS_PENDING: 'Interviews Pending',
+        DB_INTERVIEWS_PENDING: 'Pending Interviews',
         DB_REBALANCING: 'Rebalancing Not Executed',
         DB_CLIENT_FEEDBACK: 'Client Feedback',
         DB_PERC_DETAIL: "%s(%s from %s%s)",
@@ -81,6 +81,13 @@ export const English: LanguageState = {
         ADVISOR: "Advisor",
         RESULTS: "Results",
         TARGET_RESULT:"Target Result",
+
+        //client view
+        PERSONAL_INFORMATION: 'Personal Information',
+        PORTFOLIO_HOLDINGS: 'Portfolio Holdings',
+        PORTFOLIO_MONITORING: 'Portfolio Monitoring',
+        PORTFOLIO_VIEWS: 'Portfolio Views',
+        CLIENT_EVENT_HISTORY: 'Client Event History',
 
         PROPOSAL_VALIDATION: { title: 'Proposal validation', message: 'Please validate the proposal for generating the document' },
         HISTORY: {

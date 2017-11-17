@@ -7,6 +7,7 @@ import { LangDictionary } from "../../reducers/language/interfaces";
 import IconButton from "./IconButton/index";
 import { isArray } from "util";
 import { PeerCertificate } from "tls";
+import { WidgetTitle } from "./WidgetTitle";
 
 export type FilterMapDefinition = {[k in FilterMapTypes]?: { clearAll?: boolean } | undefined };
 
@@ -134,7 +135,7 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
         const { filterValue, searchPlaceholder, onChange, freeFilterText } = this.props;
 
         return (
-            <Menu vertical fluid  style={{margin:0}}>
+            <Menu vertical fluid style={{margin:0, border:0, boxShadow: 'none'}}>
                 {freeFilterText &&
                     <Menu.Item>
                         <Menu.Header>
