@@ -14,7 +14,7 @@ export const Italiano: LanguageState = {
         // dashboard
         DB_INTERVIEWS: 'Interviste',
         DB_INTERVIEWS_PENDING: 'Interviste In Attesa',
-        DB_REBALANCING: 'Rebalancing non eseguito',
+        DB_PROPOSAL_ACCEPTED_NOT_EXECUTED: 'Proposte accettate non eseguite',
         DB_PERC_DETAIL: "%s(%s da %s%s)",
         DB_ALERTS_DETAIL: "Inclusi %s allarmi Mifid",
         DB_CLIENT_ACCEPTED_PROPOSALS: "Proposte accettate",

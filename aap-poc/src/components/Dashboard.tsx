@@ -17,6 +17,7 @@ import { ClientFilter } from './shared/ClientFilter';
 
 import { AdvancedGrid, OverflowColumn, OverflowItem } from './shared/GridOverflow';
 import { WidgetTitle } from './shared/WidgetTitle';
+import { formatAum } from '../_db/utils';
 
 const sprintf = require("sprintf-js").sprintf;
 
@@ -85,7 +86,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
 
     // render statistic
     renderItem(value: any, label?: string, sublabel?: any, valueIcon?: SemanticICONS, color?: SemanticCOLORS) {
-        return (<Statistic color='blue' >
+        return (<Statistic size="small" color='blue' >
             {label && <Statistic.Label>{label}</Statistic.Label>}
             <Statistic.Value>
                 {valueIcon && <Icon name={valueIcon} color={color} />}
@@ -187,35 +188,41 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
             }
         ]
 
-        const info = data.result.reduce(
+        const info = data.result.reduce<
+            { length: number, assetUnder: number, clientAlert: number, interviews: number, mifidAlert: number, acceptedProposals: number, totalProposals: number, rejectedProposals: number }>(
             (ret, v, i) => {
                 ret.length += 1;
-                ret.assetUnder += Math.floor(v.aum / 1000000);
+                ret.acceptedProposals += v.numOfAcceptedProposal;
+                ret.totalProposals += v.numOfInterviews;
+                ret.rejectedProposals += v.numOfRejectedProposal;
+                ret.assetUnder += v.aum;
                 ret.clientAlert += v.radar.numOfAlerts > 0 ? 1 : 0;
                 ret.mifidAlert += v.radar.riskAdequacyAlert != 'green' ? 1 : 0;
                 return ret;
             },
-            { length: 0, assetUnder: 0, clientAlert: 0, interviews: 65, mifidAlert: 0 } as any);
-
+            { length: 0, assetUnder: 0, clientAlert: 0, interviews: 65, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0, rejectedProposals: 0 });
 
         return (
             <AdvancedGrid gridTemplateRows="140px auto"  >
                 <Segment style={{ margin: 0 }}>
-                    <Grid columns={5} >
+                    <Grid columns={6} >
                         <Grid.Column textAlign="center">
-                            {this.renderItem(`${info.length}`, lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
+                            {this.renderItem(info.length, lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
-                            {this.renderItem(`${info.assetUnder} M€`, lang.DB_ASSET_ADVISE, this.percDetail(15, ' 1', 'Y', 'NET CASHFLOWS'), undefined, 'green')}
+                            {this.renderItem(formatAum(info.assetUnder), lang.DB_ASSET_ADVISE, this.percDetail(15, ' 1', 'Y', 'NET CASHFLOWS'), undefined, 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
                             {this.renderItem(<span style={{ color: 'red' }}>{info.clientAlert}</span>, lang.DB_CLIENTS_ALERTS, this.alertsDetail(info.mifidAlert))}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
-                            {this.renderItem(`${info.interviews}`, lang.DB_INTERVIEWS, this.percDetail(undefined, '1', 'M'))}
+                            {this.renderItem(info.interviews, lang.DB_INTERVIEWS, this.percDetail(undefined, '1', 'M'))}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
                             {this.renderItem(undefined, lang.DB_CLIENT_FEEDBACK, this.percDetail(15, '1', 'Y'), 'smile', 'green')}
+                        </Grid.Column>
+                        <Grid.Column textAlign="center">
+                            {this.renderItem(info.acceptedProposals, lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${info.totalProposals}`)}
                         </Grid.Column>
                     </Grid>
                 </Segment>
@@ -225,10 +232,10 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                     </Card>
                     <Segment style={{ margin: 0 }}>
                         <Card fluid>
-                            {this.renderItem(17, lang.DB_INTERVIEWS_PENDING)}
+                            {this.renderItem(info.totalProposals - (info.acceptedProposals + info.rejectedProposals), lang.DB_INTERVIEWS_PENDING)}
                         </Card>
                         <Card fluid>
-                            {this.renderItem(2, lang.DB_REBALANCING)}
+                            {this.renderItem(info.rejectedProposals, lang.DB_PROPOSAL_ACCEPTED_NOT_EXECUTED)}
                         </Card>
                         <Segment>
                             <WidgetTitle title={lang.FILTER} />
