@@ -51,6 +51,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
     static AREA_MAP_INDEX = ['Nord Ovest', 'Lombardia', 'Nord Est', 'Centro Nord', 'Centro', 'Sud', 'Sicilia'];
 
     colors: number[][];
+    MAX_COLORS_LEN = 0;
 
     constructor(props: ItalyMapProps) {
         super(props);
@@ -60,7 +61,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
         this.interpolateColors = this.interpolateColors.bind(this);
         this.onMapOptionsChange = this.onMapOptionsChange.bind(this);
         this.getAreaById = this.getAreaById.bind(this);
-        this.colors = this.interpolateColors('rgb(2, 2, 234)', 'rgb(255, 192, 77)', 10);
+        this.colors = this.interpolateColors('rgb(255, 192, 77)', 'rgb(2, 2, 234)', 10);
 
         this.state = {
             mapIndex: undefined,
@@ -93,7 +94,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
         for (var i = 0; i < steps; i++) {
             interpolatedColorArray.push(this.interpolateColor(col1, col2, stepFactor * i));
         }
-
+        this.MAX_COLORS_LEN = interpolatedColorArray.length - 1;
         return interpolatedColorArray;
     }
 
@@ -138,25 +139,36 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
             default: { }
         }
 
-        let tot = 0;
+        let minValue: number | undefined = undefined;
+        let maxValue = 0;
         let countWithValues = 0;
 
         Object.keys(values).forEach(key => {
             const v = values[key];
-            if (v > tot) tot = v;
+            if (v > maxValue) maxValue = v;
+            if (minValue === undefined || v < minValue) minValue = v;
         });
 
         const areaValues = ItalyMap.AREA_MAP_INDEX.reduce((acc, key, idx) => {
             const value = values[key] ? values[key] : 0;
-            const perc = (value * 100) / tot;
+            const perc = (value * 100) / maxValue;
             const area = `area_${idx}`;
-            const color = this.colors[Math.ceil(perc / 10) - 1];
-            if (value) countWithValues++;
+
+            if (minValue === undefined) minValue = 0;
+
+            let color: number[] | undefined = undefined;
+
+            if ((maxValue - minValue) === 0) {
+                color = this.colors[this.MAX_COLORS_LEN];
+            } else if (value !== 0) {
+                color = this.colors[Math.ceil((value - minValue) / (maxValue - minValue) * this.MAX_COLORS_LEN)];
+                countWithValues++;
+            };
             acc.push({
                 key,
                 value,
                 perc,
-                color: color ? `rgb(${color[0]}, ${color[1]}, ${color[2]}` : '#CECCCC'
+                color: color !== undefined ? `rgb(${color[0]}, ${color[1]}, ${color[2]}` : '#CECCCC'
             });
             return acc;
         }, [] as AreaValue[]

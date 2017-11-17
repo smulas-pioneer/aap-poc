@@ -48,7 +48,7 @@ export const TopClientOptionSelector = ({ group, indicator, onChange }: TopClien
 
     return (
         <Segment basic>
-            <h3 style={{ textAlign: 'center', color: 'black' }}>
+            <h2 style={{ textAlign: 'center', color: 'black' }}>
                 Top
                 &nbsp;
                 <Dropdown className="topClientDropOption" icon={false} compact text={startCase(curGroup)} as='a' >
@@ -64,7 +64,7 @@ export const TopClientOptionSelector = ({ group, indicator, onChange }: TopClien
                         {renderOptions(curIndicator, IndicatorOptionsType, onIndicatorChange)}
                     </Dropdown.Menu>
                 </Dropdown>
-            </h3>
+            </h2>
         </Segment >
     );
 }
