@@ -1,26 +1,19 @@
 import * as React from 'react';
+import { SearchParms, Client } from '../_db/interfaces';
 import { appConnector } from 'app-support';
-import { getSearchResult, getSearchFilter, getLanguage, getCurrentUser } from '../reducers/index';
 import { searchClient } from '../actions/index';
-
-import { SearchParms, Client } from "../_db/interfaces";
-import { LangDictionary } from '../reducers/language/interfaces';
-
-import { Card, Grid, Icon, SemanticICONS, SemanticCOLORS, Statistic, Segment, Menu, Label, Tab, Button, Container } from 'semantic-ui-react';
-import { groupBy, sumBy } from 'lodash';
+import { getSearchResult, getSearchFilter, getLanguage } from '../reducers/index';
+import { SemanticICONS, Statistic, Grid, Segment, SemanticCOLORS, Icon, Menu, Tab, Card } from 'semantic-ui-react';
+import { filterMapItems, FilterMap } from '../actions/model';
+import { TopClient } from './topClientView/index';
 import { CustomPieChart } from './chart/CustomCharts';
-
-import { ClientFilters, SearchFilter, FilterMap, MemuItemModel, memuItems, filterMapItems } from '../actions/model';
-import { ClientsView } from './clientsView/ClientsView';
-import { AlertsView } from './alertsView/AlertsView';
-import { ClientFilter } from './shared/ClientFilter';
-
-import { AdvancedGrid, OverflowColumn, OverflowItem } from './shared/GridOverflow';
+import { OverflowItem, AdvancedGrid, OverflowColumn } from './shared/GridOverflow';
 import { ManagerView } from './managerView/managerView';
-import { GeoItalyClientsChart } from './alertsView/GeoItalyClientsChart';
-import { ItalyMap } from './italymaps/ItalyMap';
+import { AlertsView } from './alertsView/AlertsView';
 import { formatAum } from '../_db/utils';
-import { TopClient } from './topClientView';
+import { ClientFilter } from './shared/ClientFilter';
+import { ItalyMap } from './italymaps/ItalyMap';
+
 
 const sprintf = require("sprintf-js").sprintf;
 
@@ -237,13 +230,13 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                         <Tab menu={{ pointing: true, secondary: true }} panes={panes} style={{ height: '95%' }} />
                     </Card>
                     <Segment style={{ margin: 0 }}>
-                    <ClientFilter
-                        searchPlaceholder={lang.ENTER_FILTER_TEXT}
-                        data={filter}
-                        filterMaps={['Regions', 'Agents', 'Aum', 'Segment']}
-                        filterValue={data.parms}
-                        onChange={this.handleOnChangeFilter}
-                    />
+                        <ClientFilter
+                            searchPlaceholder={lang.ENTER_FILTER_TEXT}
+                            data={filter}
+                            filterMaps={['Regions', 'Agents', 'Aum', 'Segment']}
+                            filterValue={data.parms}
+                            onChange={this.handleOnChangeFilter}
+                        />
                     </Segment>
                 </AdvancedGrid>
             </AdvancedGrid >
