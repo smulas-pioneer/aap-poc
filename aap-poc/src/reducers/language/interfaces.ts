@@ -19,7 +19,7 @@ export interface LangDictionary {
     DB_CLIENTS_ALERTS: string,
     DB_INTERVIEWS: string,
     DB_INTERVIEWS_PENDING: string,
-    DB_REBALANCING: string,
+    DB_PROPOSAL_ACCEPTED_NOT_EXECUTED: string,
     DB_CLIENT_FEEDBACK: string,
     DB_CLIENT_ACCEPTED_PROPOSALS: string,
     DB_PERC_DETAIL: string,
@@ -93,8 +93,8 @@ export interface LangDictionary {
     PORTFOLIO_VIEWS: string,
     CLIENT_EVENT_HISTORY: string,
 
-    PROPOSAL_VALIDATION: { 
-        title: string, message: string 
+    PROPOSAL_VALIDATION: {
+        title: string, message: string
     },
     HISTORY: {
         clientEventHistory: string,
@@ -102,8 +102,8 @@ export interface LangDictionary {
         proposals: string,
         interviews: string
     },
-    ALERT: { 
-        name: string, sentence: string 
+    ALERT: {
+        name: string, sentence: string
     },
     ALERTS: {
         riskAdequacyAlert: { name: string, sentence: string },

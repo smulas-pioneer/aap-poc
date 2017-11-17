@@ -100,7 +100,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
             <Grid.Column>
                 <Segment style={{ height: 562 }}>
-                    <WidgetTitle title={lang.REGION}/>
+                    <WidgetTitle title={lang.REGION} />
                     <ItalyMap lang={lang} clients={data} />
                 </Segment>
             </Grid.Column>
@@ -156,7 +156,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
         return (
             <Segment>
-                <WidgetTitle title={header}/>
+                <WidgetTitle title={header} />
                 <CustomPieChart width={500} height={500} data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
             </Segment>
         );
@@ -213,16 +213,16 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 <Segment style={{ margin: 0 }}>
                     <Grid columns={6} >
                         <Grid.Column textAlign="center" >
-                            {this.renderItem(`${info.length}`, lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
+                            {this.renderItem(info.length, lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
-                            {this.renderItem(`${formatAum(info.assetUnder)}`, lang.DB_ASSET_ADVISE, this.percDetail(15, ' 1', 'Y', 'NET CASHFLOWS'), undefined, 'green')}
+                            {this.renderItem(formatAum(info.assetUnder), lang.DB_ASSET_ADVISE, this.percDetail(15, ' 1', 'Y', 'NET CASHFLOWS'), undefined, 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
                             {this.renderItem(<span style={{ color: 'red' }}>{info.clientAlert}</span>, lang.DB_CLIENTS_ALERTS, this.alertsDetail(info.mifidAlert))}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
-                            {this.renderItem(`${info.interviews}`, lang.DB_INTERVIEWS, this.percDetail(undefined, '1', 'M'))}
+                            {this.renderItem(info.interviews, lang.DB_INTERVIEWS, this.percDetail(undefined, '1', 'M'))}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
                             {this.renderItem(undefined, lang.DB_CLIENT_FEEDBACK, this.percDetail(15, '1', 'Y'), 'smile', 'green')}
@@ -237,7 +237,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                         <Tab menu={{ pointing: true, secondary: true }} panes={panes} style={{ height: '95%' }} />
                     </Card>
                     <Segment style={{ margin: 0 }}>
-                        <WidgetTitle title={lang.FILTER}/>
+                        <WidgetTitle title={lang.FILTER} />
                         <ClientFilter
                             searchPlaceholder={lang.ENTER_FILTER_TEXT}
                             data={filter}
