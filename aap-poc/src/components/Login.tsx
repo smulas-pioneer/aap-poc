@@ -1,51 +1,61 @@
-import * as React from "react";
-import { Card, Image, Icon } from "semantic-ui-react";
-import { LoginType } from "../actions/index";
+import * as React from 'react';
+import { Grid, Header, Form, Segment, Input, Button, Message } from 'semantic-ui-react';
+import { LoginType } from '../actions/index';
 
-const agentImage = require('./agent.png');
-const managerImage = require('./manager.png');
-
-export const Login = ({ action }: { action: (lt: LoginType) => void }) => {
-    return (
-        <Card.Group itemsPerRow={2} textAlign='center' style={{ padding: 30 }} >
-            <Card onClick={() => action(LoginType.Manager)}>
-                <Image src={managerImage} />
-                <Card.Content>
-                    <Card.Header>
-                        Manager
-                </Card.Header>
-                    <Card.Meta>
-                        Login as manager
-                    </Card.Meta>
-                    <Card.Description>
-                        The manager is the head of a set of agents.
-                    </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                    <Icon name='user' />
-                    xxx agents
-                </Card.Content>
-            </Card>
-
-            <Card onClick={() => action(LoginType.Agent)}>
-                <Image src={agentImage} />
-                <Card.Content>
-                    <Card.Header>
-                        Agent
-                </Card.Header>
-                    <Card.Meta>
-                        Login as agent
-                    </Card.Meta>
-                    <Card.Description>
-                        An agent manage a set of clients.
-                </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                    <Icon name='user' />
-                    xxx clients
-                </Card.Content>
-            </Card>
-        </Card.Group>
-    );
+export interface LoginProps {
+    action: (lt: LoginType) => void;
 }
 
+interface LoginState {
+    user: string;
+    password: string;
+    error: boolean;
+}
+
+export class Login extends React.Component<LoginProps, LoginState>{
+
+    constructor(props: LoginProps) {
+        super(props);
+        this.state = {
+            user: '',
+            password: '',
+            error: false
+        }
+        this.onLogin = this.onLogin.bind(this);
+    }
+
+    onLogin() {
+        if (this.state.user.toLowerCase().trim() === 'advisor') this.props.action(LoginType.Advisor);
+        if (this.state.user.toLowerCase().trim() === 'manager') this.props.action(LoginType.Manager);
+        this.setState(prev => ({ error: true }));
+    }
+
+    checkError(user: string): boolean {
+        if (!user.length) return false;
+        return !'advisor'.startsWith(user.trim().toLowerCase()) && !'manager'.startsWith(user.trim().toLowerCase());
+    }
+
+    render() {
+        return (
+            <Grid style={{ height: '100vh' }} textAlign="center" verticalAlign="middle" >
+                <Grid.Column width={5}>
+                    <Header as="h2" content="Amundi Digital Advisory" />
+                    <Form size='large'>
+                        <Segment stacked secondary>
+                            <Form.Input autoFocus icon="user" iconPosition="left" placeholder='User' onChange={(e, d) => this.setState(prev => ({ error: this.checkError(d.value), user: d.value }))} />
+                            <Form.Input icon="lock" type="Password" iconPosition="left" placeholder='Password' onChange={(e, d) => this.setState(prev => ({ error: this.checkError(d.value), password: d.value }))} />
+                            <Button fluid color="blue" size="large" content="Login" onClick={this.onLogin} />
+                            <Message
+                                visible={this.state.error}
+                                error
+                                header='Wrong Credentials'
+                            >
+                                You can only sign up for an account <br />between "advisor" and "manager"
+                            </Message>
+                        </Segment>
+                    </Form>
+                </Grid.Column>
+            </Grid>
+        );
+    }
+}
