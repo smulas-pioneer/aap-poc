@@ -99,15 +99,16 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
 
     // render filter
     renderFilterGraphics(data: Client[]) {
-        const { filter = { Regions: {}, Alerts: {}, Aum: {} } } = this.props;
-        return (<Grid columns={2}>
-            <Grid.Column>
-                {this.renderFilterGraphItem(3, filterMapItems.Aum, filter.Aum)}
-            </Grid.Column>
-            <Grid.Column>
-                {this.renderFilterGraphItem(2, filterMapItems.Alerts, filter.Alerts)}
-            </Grid.Column>
-        </Grid>
+        const {  filter = { Alerts: {}, Aum: {} } } = this.props;
+        return (
+            <Grid columns={2}>
+                <Grid.Column>
+                    {this.renderFilterGraphItem(3, filterMapItems.Aum, filter.Aum)}
+                </Grid.Column>
+                <Grid.Column>
+                    {this.renderFilterGraphItem(2, filterMapItems.Alerts, filter.Alerts)}
+                </Grid.Column>
+            </Grid>
         )
     }
 

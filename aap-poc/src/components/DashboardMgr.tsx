@@ -96,24 +96,21 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
     // render filter
     renderFilterGraphics(data: Client[]) {
         const { lang, filter = { Aum: {} } } = this.props;
-        return (<Grid columns={2}>
-
-            <Grid.Column>
-                <Segment>
-                    <WidgetTitle title={'Key Figures Map'} />
-                    <ItalyMap lang={lang} clients={data} height="500px" />
-                </Segment>
-            </Grid.Column>
-
-            <Grid.Column>
-                {this.renderFilterGraphItem(1, filterMapItems.Aum, filter.Aum)}
-            </Grid.Column>
-
-            <Grid.Column width={16}>
-                <TopClient clients={data} lang={lang} />
-            </Grid.Column>
-
-        </Grid>
+        return (
+            <Grid columns={2}>
+                <Grid.Column>
+                    <Segment>
+                        <WidgetTitle title={'Key Figures Map'} />
+                        <ItalyMap lang={lang} clients={data} height="500px" />
+                    </Segment>
+                </Grid.Column>
+                <Grid.Column>
+                    {this.renderFilterGraphItem(1, filterMapItems.Aum, filter.Aum)}
+                </Grid.Column>
+                <Grid.Column width={16}>
+                    <TopClient clients={data} lang={lang} />
+                </Grid.Column>
+            </Grid>
         )
     }
 
