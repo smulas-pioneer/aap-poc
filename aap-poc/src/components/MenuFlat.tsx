@@ -84,11 +84,17 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
 
     onItemNavigate = (item: SpotlightSearchResultItem) => {
         if (isClient(item)) {
+            const clientRoute = `/clients/${item.id}`;
             this.toggleSpotlight(false);
-            this.props.history.push(`/clients/${item.id}`);
+            if (this.props.history.location.pathname !== clientRoute) {
+                this.props.history.push(clientRoute);
+            }
         } else if (isAgent(item)) {
+            const agentRoute = `/agents/${item.name}/clients`;
             this.toggleSpotlight(false);
-            this.props.history.push(`/agents/${item.name}/clients`);
+            if (this.props.history.location.pathname !== agentRoute) {
+                this.props.history.push(agentRoute);
+            }
         }
     }
 

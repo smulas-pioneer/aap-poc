@@ -10,6 +10,7 @@ import { AgentGeoPie } from "../agentView/AgentGeoPie";
 import { RadarGraph } from "../RadarGraph1";
 
 export const SpotlightResultItemPreview = ({ item, lang }: { item: SpotlightSearchResultItem, lang: LangDictionary }) => {
+    if (!item) return null;
     let preview = undefined;
     if (isClient(item)) {
         preview = <div> <ClientCard client={item} lang={lang} /> <RadarGraph data={item.radar} width={650} height={320} /> </div>

@@ -51,14 +51,6 @@ class SpotlightCompo extends conn.StatefulCompo<SpotlightState> {
         if (this.props.visible) this.props.spotlightSearch({ filter: '' });
     }
 
-    componentWillReceiveProps(next: SpotlightProps) {
-        if (this.props.visible != next.visible) {
-            this.setState(prevState => ({
-                visible: next.visible
-            }));
-        }
-    }
-
     handleSearchChange = (e: React.SyntheticEvent<HTMLInputElement>, v: InputOnChangeData) =>
         this.setState(prevState => ({ activePosition: 0, searchText: v.value }), () => this.onSearch());
 
@@ -85,13 +77,14 @@ class SpotlightCompo extends conn.StatefulCompo<SpotlightState> {
         const keys = Object.keys(this.props.data.items);
         let items: SpotlightSearchResultItem[] = [];
         keys.forEach(key => items.push(...(this.props.data.items[key] || [])));
-        return items[this.state.activePosition];
+
+        return keys.length ? items[this.state.activePosition] : undefined;
     }
 
     onKeyDown = (event: React.KeyboardEvent<any>) => {
         if (event.keyCode === 13) {
             const current = this.currentItem();
-            this.onItemNavigate(current);
+            if (current !== undefined) this.onItemNavigate(current);
         } else if (event.keyCode === 27) {
             this.onCancel();
         } else if (event.keyCode === 38) {
@@ -120,7 +113,12 @@ class SpotlightCompo extends conn.StatefulCompo<SpotlightState> {
     }
 
     onSecurityPushedClick = (index: number) => {
-        this.setState(prev => ({ onlyPushedSecurity: !prev.onlyPushedSecurity, activePosition: index }), () => this.onSearch());
+        this.setState(prev => (
+            {
+                onlyPushedSecurity: !prev.onlyPushedSecurity,
+                activePosition: index
+            }
+        ), () => this.onSearch());
     }
 
     renderCustomHeader = (key: string, index: number) => {
@@ -145,7 +143,6 @@ class SpotlightCompo extends conn.StatefulCompo<SpotlightState> {
         const emptyData = !data || !data.items || !Object.keys(data.items).length;
 
         let currentItem = undefined;
-        if (!emptyData) currentItem = data.items
 
         const searchBox = (
             <Input
@@ -185,12 +182,14 @@ class SpotlightCompo extends conn.StatefulCompo<SpotlightState> {
                                     lang={lang}
                                 />
                             </div>
-                            <div style={{ overflowY: 'scroll', padding: 0, height: 530 }}>
-                                <SpotlightResultItemPreview
-                                    item={this.currentItem()}
-                                    lang={lang}
-                                />
-                            </div>
+                            {!emptyData &&
+                                <div style={{ overflowY: 'scroll', padding: 0, height: 530 }}>
+                                    <SpotlightResultItemPreview
+                                        item={this.currentItem()!}
+                                        lang={lang}
+                                    />
+                                </div>
+                            }
                         </Modal.Content>
                 }
             </Modal>
