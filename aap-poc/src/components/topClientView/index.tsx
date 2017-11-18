@@ -93,7 +93,7 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
                     alerts: countWithAlerts,
                     aum: sumAum,
                     clients: countClients,
-                    interviews: sumInterviews,
+                    proposals: sumInterviews,
                     acceptedProposals: sumAcceptedProposals
                 }
             });

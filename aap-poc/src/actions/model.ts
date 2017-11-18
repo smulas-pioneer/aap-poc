@@ -17,7 +17,7 @@ export interface LabelValue<T> {
 export enum IndicatorOptionsType {
     clients = 0,
     aum,
-    interviews,
+    proposals,
     acceptedProposals,
     alerts
 }

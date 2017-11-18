@@ -124,7 +124,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
                 });
                 break;
             }
-            case IndicatorOptionsType.interviews: {
+            case IndicatorOptionsType.proposals: {
                 ItalyMap.AREA_MAP_INDEX.forEach(area => {
                     values[area] = sumBy(ds.filter(c => c.address.region === area), c => c.numOfInterviews);
                 });
@@ -224,7 +224,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
                 },
                 c: {
                     label: lang.MAP_OPTS_PROPOSALS,
-                    value: this.calculateAreaValues(clients, IndicatorOptionsType.interviews, region.key).areaValues.filter(a => a.key === region.key)[0].value
+                    value: this.calculateAreaValues(clients, IndicatorOptionsType.proposals, region.key).areaValues.filter(a => a.key === region.key)[0].value
                 },
                 d: {
                     label: lang.MAP_OPTS_PROPOSAL,

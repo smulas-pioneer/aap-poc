@@ -78,7 +78,7 @@ export const TopClientList = ({ clients, group, indicator, lang }: { clients: To
                                     }
                                     <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.clients)}>{client.totals.clients}</Table.Cell>
                                     <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.aum)}>{formatAum(client.totals.aum)}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.interviews)}>{client.totals.interviews}</Table.Cell>
+                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.proposals)}>{client.totals.proposals}</Table.Cell>
                                     <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.acceptedProposals)}>{client.totals.acceptedProposals}</Table.Cell>
                                     <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.alerts)}>{client.totals.alerts}</Table.Cell>
                                 </Table.Row>
