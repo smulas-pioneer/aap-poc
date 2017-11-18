@@ -158,7 +158,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
 
             let color: number[] | undefined = undefined;
 
-            if ((maxValue - minValue) === 0) {
+            if (value > 0 && (maxValue - minValue) === 0) {
                 color = this.colors[this.MAX_COLORS_LEN];
             } else if (value !== 0) {
                 color = this.colors[Math.ceil((value - minValue) / (maxValue - minValue) * this.MAX_COLORS_LEN)];
