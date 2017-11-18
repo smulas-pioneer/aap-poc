@@ -51,10 +51,10 @@ export const TopClientList = ({ clients, group, indicator, lang }: { clients: To
                                 <Table.HeaderCell width={2}>{lang.BRANCH}</Table.HeaderCell>
                             }
                             {group >= GroupTypes.Advisor &&
-                                <Table.HeaderCell width={3} >{lang.ADVISOR}</Table.HeaderCell>
+                                <Table.HeaderCell width={2} >{lang.ADVISOR}</Table.HeaderCell>
                             }
                             <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_CLIENTS}</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_AUM}</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="right" width={2}>{lang.MAP_OPTS_AUM}</Table.HeaderCell>
                             <Table.HeaderCell textAlign="right" width={2}>{lang.MAP_OPTS_PROPOSALS}</Table.HeaderCell>
                             <Table.HeaderCell textAlign="right" width={2}>{lang.MAP_OPTS_PROPOSAL}</Table.HeaderCell>
                             <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_ALERTS}</Table.HeaderCell>

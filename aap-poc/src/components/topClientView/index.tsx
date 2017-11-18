@@ -65,12 +65,15 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
             }
             case GroupTypes.City: {
                 grouped = groupBy(data, d => d.address.city);
+                break;
             }
             case GroupTypes.Branch: {
                 grouped = groupBy(data, d => d.branch);
+                break;
             }
             case GroupTypes.Advisor: {
                 grouped = groupBy(data, d => d.agent);
+                break;
             }
         }
 
