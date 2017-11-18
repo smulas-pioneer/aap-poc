@@ -373,7 +373,7 @@ const ClientAlert = (props: { radar: Radar, lang: LangDictionary }) => {
                     key: 'alertContent',
                     content: (
                         <Segment basic>
-                            Object.keys(lang.ALERTS).map((v, i) => alertsListItem(v, i))
+                            {Object.keys(lang.ALERTS).map((v, i) => alertsListItem(v, i))}
                         </Segment>
                     )
                 }
