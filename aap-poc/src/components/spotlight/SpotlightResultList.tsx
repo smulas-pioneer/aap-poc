@@ -42,7 +42,12 @@ export class SpotlightResultList extends React.Component<SpotlightResultListProp
             /* for now, do not check when really needed... just scroll smoothly */
             const element = ReactDOM.findDOMNode(instance);
             if (element) {
-                element.scrollIntoView({ block: 'center', behavior: 'auto' });
+                try {
+                    element.scrollIntoView({ block: 'center', behavior: 'auto' });
+                }
+                catch{
+                    element.scrollIntoView({ block: 'start', behavior: 'auto' });
+                 };
             }
         }
     }
