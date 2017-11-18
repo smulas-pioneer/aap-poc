@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Route, RouteComponentProps } from 'react-router';
 import { Segment } from 'semantic-ui-react';
 import { ClientsView } from './clientsView/ClientsView';
-import { ClientView } from './clientView/ClientView2';
+import { ClientView } from './clientView/ClientView3';
 
 import MenuFlat from './MenuFlat';
 import HomePage from './HomePage';
