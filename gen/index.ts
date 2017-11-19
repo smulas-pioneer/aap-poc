@@ -115,12 +115,23 @@ const strategyCreator = (): StrategyItem[] => {
     let tot = 0;
     let totModel = 0;
     let num = rnd(STRAGEGY_MIN_SECURITY_COUNT, STRATEGY_MAX_SECURITY_COUNT);
+    const cliType = rnd(0,10);
+    const qUbound = cliType <5 ? 6000 :
+                    cliType <6 ? 10000 :
+                    cliType <7 ? 30000 :
+                    cliType <8 ? 70000 : 100000
+
     return numArray(num).map(i => {
         const skipQ = i > (num - 2);
         const skipM = i > 2 && rnd(1, 7) < 3;
 
         const sec = i == 0 ? cash : securities[rnd(1, securities.length - 1)];
-        const quantity = skipQ ? 0 : Math.ceil(rnd(0, 100000));
+
+
+        //Client AUM
+
+
+        const quantity = skipQ ? 0 : Math.ceil(rnd(0, qUbound));
         const price = i == 0 ? 1 : rnd(0, 8000) / 100;
         const modelWeight = i == 0 ? 0 : skipM ? 0 : quantity * (1 + rnd(-50, 50) / 100);
 
@@ -266,8 +277,8 @@ const createPerformance = () => {
         { date: date.format('YYYY-MM-DD'), perf: 1 }
     ]
 
-    const min = rnd(-10, -140);
-    const max = rnd(10, 140);
+    const min = rnd(-10, -100);
+    const max = rnd(10, 170);
     numArray(50).forEach(i => {
         s = s + rnd(min, max) / 10000;
         date = date.add('days', 10);

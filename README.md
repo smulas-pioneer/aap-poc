@@ -59,9 +59,8 @@
 # Last Check-list
 - Include radar axes in fake radar simulaton
 - Performance contribution sec names instead of isin
-- better client ripartition (more retail less rich)
 
-
+- ~~better client ripartition (more retail less rich)~~
 - ~~hearts~~
 - ~~model~~
 - ~~Improve Unicredit suggestion.~~
