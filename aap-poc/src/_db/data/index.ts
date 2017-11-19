@@ -1,5 +1,6 @@
 import { securities as securityList } from '../common/securities';
 import { Security, StrategyItem, Client, AlertHistory, InterviewResult } from '../common/interfaces';
+import { Radar } from '../interfaces';
 
 export const group = <T>(data: T[], key: keyof (T)) => data.reduce(
     (p, c) => {
@@ -8,6 +9,9 @@ export const group = <T>(data: T[], key: keyof (T)) => data.reduce(
     },
     {} as { [id: string]: T }
 );
+
+let radars: { [id: string]:Radar};
+fetch('/radars.json').then(r => r.json()).then(p => radars = p);
 
 //PERFORMANCES
 let performances: { [isin: string]: { date: string, perf: number }[] };
@@ -46,4 +50,4 @@ let agents: string[];
 fetch('/agents.json').then(r => r.json()).then(p => agents = p);
 
 
-export { securities2 as securityList, clients as clientList, history, agents, strategies, performances, alertHistory, perfSummary };
+export {radars, securities2 as securityList, clients as clientList, history, agents, strategies, performances, alertHistory, perfSummary };

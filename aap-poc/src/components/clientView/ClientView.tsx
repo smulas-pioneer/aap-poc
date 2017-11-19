@@ -22,6 +22,7 @@ import { RiskReturnGraph } from './RiskReturnGraph';
 import { AdvancedGrid } from '../shared/GridOverflow';
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
 import { createRadarFromStrategy, suggestedPosition, currentPosition, modelPosition } from '../../_db/common/radarUtils';
+import {radars} from '../../_db/data';
 
 const conn = appConnector<{ id: string }>()(
     (s, p) => ({
@@ -71,7 +72,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         if (next.strategy.length > 0) {
             const sugg = suggestedPosition(next.strategy);
             const suggBreakdown = ce.getBreakdown(sugg);
-            const radar = createRadarFromStrategy(next.strategy);
+            const radar = createRadarFromStrategy(next.strategy, this.props.client!.id, radars );
 
             this.setState({
                 breakdown: suggBreakdown,

@@ -8,7 +8,7 @@ import * as faker from 'faker';
 import * as fs from 'fs';
 import { sumBy, maxBy, groupBy } from 'lodash';
 import * as moment from 'moment';
-import { getAllSecuirities, getAllPerformances, getAllStrategies } from './fakedata'
+import { getAllSecuirities, getAllPerformances, getAllStrategies, createFakeRadar } from './fakedata'
 var f = faker;
 f.locale = 'it';
 
@@ -302,12 +302,13 @@ const go = async () => {
         const performances2 = getAllPerformances();
         const secuirities = getAllSecuirities();
         const allPerf = { ...preformances, ...performances2 };
+        const radars = createFakeRadar();
         //Calculate Clients Radar and aum
 
         const strategies = { ...strategies1, ...strategies2 } as { [cli: string]: StrategyItem[] }
 
         clients.forEach(c => {
-            c.radar = createRadarFromStrategy(strategies[c.id]);
+            c.radar = createRadarFromStrategy(strategies[c.id],c.id,radars);
             c.aum = sumBy(strategies[c.id], v => v.currentAmount);
             c.size = c.aum > 20000000 ? '>20M' : c.aum > 10000000 ? '10-20M' : c.aum > 5000000 ? '5-10M' : c.aum > 1000000 ? '1-5M' : '<1M';
             c.segment = c.aum > 15000000 ? 'Private' : c.aum > 2000000 ? 'Mass Affluent' : 'Retail';
@@ -324,6 +325,8 @@ const go = async () => {
         });
 
         const alertHistory = alertHistoryCreator(moment().format('YYYY-MM-DD'), 100, clients);
+
+        dump('output/radars.json', radars);
 
         console.log(`created ${alertHistory.length} Alert History`);
         dump('output/securities2.json', secuirities);

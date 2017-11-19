@@ -3,6 +3,7 @@ import { sumBy, groupBy } from "lodash";
 import * as moment from 'moment';
 import * as math from 'mathjs';
 import { networkInterfaces } from "os";
+export const isFakeClient = (clientId: string) => ["0","1","2"].indexOf(clientId) >-1;
 
 export const numArray = (num: number) => {
     let ret: number[] = [];
@@ -27,7 +28,20 @@ export const getRAG = (act: number, limit: number, mifid: boolean): Alert => {
     return act > limit ? (mifid ? 'red' : 'orange') : 'green'
 }
 
-export const createRadarFromStrategy = (strategy: StrategyItem[]) => {
+export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: string,radars:any) => {
+    if ( isFakeClient(clientId)) {
+        console.log(strategy);
+        if (strategy.filter(f=>f.suggestionAccepted).length > 0) {
+            // Simulation...
+            console.log("retrning suggested radar for cli " + clientId);
+            return radars[clientId + "!"];
+        } else {
+            // Real portfolio
+            console.log("retrning actual radar for cli " + clientId);
+            return radars[clientId]
+        }
+    }
+
     const actual = currentPosition(strategy);
     const model = modelPosition(strategy);
     const sugg = suggestedPosition(strategy);

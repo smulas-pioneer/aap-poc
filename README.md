@@ -58,7 +58,7 @@
 
 # Last Check-list
 - ~~Antoine alert messages~~
-- Fake Radars
+- ~~Fake Radars~~
 - ~~scenario 3 to work~~
 - Last data from binh
 - new data with coherence between regions, branch and advisor
@@ -71,3 +71,6 @@
 - Prevent remove Risk adequacy axe
 - Models corrected
 - Horizon corrected
+- 200% on simulation to be fixed.
+- Alert text align left
+- Include radar axes in fake radar simulaton

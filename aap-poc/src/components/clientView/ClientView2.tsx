@@ -20,6 +20,7 @@ import { settings } from 'cluster';
 import { PerformanceContributionGraph } from './PerformanceContribution';
 import { createRadarFromStrategy, suggestedPosition, currentPosition, modelPosition } from '../../_db/common/radarUtils';
 import { WidgetTitle } from '../shared/WidgetTitle';
+import {radars} from '../../_db/data';
 
 const conn = appConnector<{ id: string }>()(
     (s, p) => ({
@@ -42,6 +43,7 @@ interface State {
     autoplay: boolean,
     currentTargetReturn?: number
 }
+
 
 class ClientViewCompo extends conn.StatefulCompo<State> {
     state = {
@@ -74,7 +76,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         if (next.strategy.length > 0) {
             const sugg = suggestedPosition(next.strategy);
             const suggBreakdown = ce.getBreakdown(sugg);
-            const radar = createRadarFromStrategy(next.strategy);
+            const radar = createRadarFromStrategy(next.strategy, this.props.client!.id,radars);
             this.setState({
                 breakdown: suggBreakdown,
                 strategy: next.strategy,
