@@ -57,23 +57,25 @@
 
 
 # Last Check-list
+- new data with coherence between regions, branch and advisor
+- Align performance period for fake data.
+- Enter always as the same advisor.
+- Improve Unicredit suggestion.
+- Prevent remove Risk adequacy axe
+- Horizon corrected
+- Alert text align left
+- Include radar axes in fake radar simulaton
+- Performance contribution sec names instead of isin
+- Risk return, bigger circles.
+
+
+- ~~Last data from binh~~
+- ~~Models corrected~~
 - ~~Antoine alert messages~~
 - ~~Fake Radars~~
 - ~~scenario 3 to work~~
-- Last data from binh
-- new data with coherence between regions, branch and advisor
 - ~~AUM to become AUA~~
 - ~~AUM filter to sort.~~
-- Align performance period for fake data.
-- Enter always as the same advisor.
 - ~~Fix holdings (case 1 display too many rows.)~~
-- Improve Unicredit suggestion.
-- Prevent remove Risk adequacy axe
-- Models corrected
-- Horizon corrected
 - ~~200% on simulation to be fixed~~.
-- Alert text align left
-- Include radar axes in fake radar simulaton
 - ~~Fix Quantity and Amount editing on holdings~~
-- Performance contribution sec names instead of isin
-- Risk return, bigger circles.

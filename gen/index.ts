@@ -71,7 +71,10 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
         size: '<1M',
         breaks: [],
         deltaAnalysis: faker.lorem.lines(1),
-        modelName: faker.company.catchPhraseAdjective(),
+        modelName: id == "0" ? "Defensive" :
+                   id == "1" ? "Balanced" :
+                   id == "2" ? "Defensive" :
+                   faker.company.catchPhraseAdjective(),
         decision: '',
         mifid: rnd(1, 40),
         numOfAcceptedProposal: 0,

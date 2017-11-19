@@ -3,7 +3,7 @@ import { sumBy, groupBy } from "lodash";
 import * as moment from 'moment';
 import * as math from 'mathjs';
 import { networkInterfaces } from "os";
-export const isFakeClient = (clientId: string) => ["0","1","2"].indexOf(clientId) >-1;
+export const isFakeClient = (clientId: string) => ["0", "1", "2"].indexOf(clientId) > -1;
 
 export const numArray = (num: number) => {
     let ret: number[] = [];
@@ -28,10 +28,10 @@ export const getRAG = (act: number, limit: number, mifid: boolean): Alert => {
     return act > limit ? (mifid ? 'red' : 'orange') : 'green'
 }
 
-export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: string,radars:any) => {
-    if ( isFakeClient(clientId)) {
+export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: string, radars: any) => {
+    if (isFakeClient(clientId)) {
         console.log(strategy);
-        if (strategy.filter(f=>f.suggestionAccepted).length > 0) {
+        if (strategy.filter(f => f.suggestionAccepted).length > 0) {
             // Simulation...
             console.log("retrning suggested radar for cli " + clientId);
             return radars[clientId + "!"];
@@ -103,9 +103,11 @@ export const suggestedPosition = (position: StrategyItem[]): PositionItem[] =>
     position.map(p => ({ security: p.security, radar: p.radar, weight: p.suggestionAccepted ? p.currentWeight + p.suggestedDelta : p.currentWeight }));
 
 export const suggestedPositionExCash = (position: StrategyItem[]): PositionItem[] =>
-    position.map(p => ({ security: p.security, radar: p.radar, weight: p.suggestionAccepted && !p.isCash ? p.currentWeight + p.suggestedDelta : p.currentWeight }));
+    position.map(p => {
+        return { security: p.security, radar: p.radar, weight: p.suggestionAccepted && !p.isCash ? p.currentWeight + p.suggestedDelta : p.currentWeight }
+    });
 
-    
+
 const radarToAlertHistory = (clients: Client[], date: string): AlertHistory2 => {
     const count = (color: string) => sumBy(
         clients.map(c => c.radar)

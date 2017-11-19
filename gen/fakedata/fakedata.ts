@@ -22,17 +22,17 @@ export const case_2_model = [
 
 
 export const case_2_initial = [
-    { Symbol: 'CASH_EUR', MacroAssetClass: 'CASH', AssetClass: 'CASH', AssetType: 'CASH', Name: 'CASH', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 1, SRRI: 1, Amont: 20000, Price: 1, Shares: 20000, },
+    { Symbol: 'CASH_EUR', MacroAssetClass: 'CASH', AssetClass: 'CASH', AssetType: 'CASH', Name: 'CASH', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 1, SRRI: 1, Amont: 80000, Price: 1, Shares: 80000, },
 ]
 
 export const case_2_proposed = [
-    { Symbol: 'CASH_EUR', MacroAssetClass: 'CASH', AssetClass: 'CASH', AssetType: 'CASH', Name: 'CASH', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 0, SRRI: 1, Amont: 0, Price: 1, Shares: 0, },
-    { Symbol: 'FR0010314401', MacroAssetClass: 'Funds', AssetClass: 'Equity', AssetType: 'Large Cap', Name: 'Amundi Actions Euro', Mstar_BCH: 'MSCI EMU NR USD', Mstar_SRRI: 6, WEIGHT: 0.1, SRRI: 0.6, Amont: 2000, Price: 66147, Shares: 0.0302356871815804, },
-    { Symbol: 'LU0119099819', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Corporate Bond', Name: 'Amundi Fds Bond Euro Corporate', Mstar_BCH: 'Barclays Euro Agg Corps TR EUR', Mstar_SRRI: 3, WEIGHT: 0.2, SRRI: 0.6, Amont: 4000, Price: 19.21, Shares: 208.224882873503, },
-    { Symbol: 'LU0281578517', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Government Bond', Name: 'Pioneer Fds Euro Bond', Mstar_BCH: 'Citi EMU GBI EUR', Mstar_SRRI: 3, WEIGHT: 0.2, SRRI: 0.6, Amont: 4000, Price: 9.18, Shares: 435.729847494553, },
-    { Symbol: 'LU0201576401', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Inflation Linked', Name: 'Amundi Fds Bond Euro Inflation', Mstar_BCH: 'Barclays Euro Infln Lkd TR EUR', Mstar_SRRI: 3, WEIGHT: 0.05, SRRI: 0.15, Amont: 1000, Price: 151.8, Shares: 6.58761528326746, },
-    { Symbol: 'LU0281579598', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'High Yield', Name: 'Pioneer Fds Euro High Yield', Mstar_BCH: 'BofAML European Ccy HY Constnd TR HEUR', Mstar_SRRI: 3, WEIGHT: 0.05, SRRI: 0.15, Amont: 1000, Price: 67.68, Shares: 14.7754137115839, },
-    { Symbol: 'LU0568620560', MacroAssetClass: 'Funds', AssetClass: 'Money Market', AssetType: 'Money Market', Name: 'Amundi Fds Cash EUR', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 0.4, SRRI: 0.4, Amont: 8000, Price: 100.87, Shares: 79.3100029741251, },
+    { Symbol: 'CASH_EUR', MacroAssetClass: 'CASH', AssetClass: 'CASH', AssetType: 'CASH', Name: 'CASH', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 0.75, SRRI: 1, Amont: 15000, Price: 1, Shares: 15000, },
+    { Symbol: 'FR0010314401', MacroAssetClass: 'Funds', AssetClass: 'Equity', AssetType: 'Large Cap', Name: 'Amundi Actions Euro', Mstar_BCH: 'MSCI EMU NR USD', Mstar_SRRI: 6, WEIGHT: 0.025, SRRI: 0.6, Amont: 2000, Price: 66147, Shares: 0.0302356871815804, },
+    { Symbol: 'LU0119099819', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Corporate Bond', Name: 'Amundi Fds Bond Euro Corporate', Mstar_BCH: 'Barclays Euro Agg Corps TR EUR', Mstar_SRRI: 3, WEIGHT: 0.0625, SRRI: 0.6, Amont: 5000, Price: 19.21, Shares: 2260.28, },
+    { Symbol: 'LU0281578517', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Government Bond', Name: 'Pioneer Fds Euro Bond', Mstar_BCH: 'Citi EMU GBI EUR', Mstar_SRRI: 3, WEIGHT: 0.0625, SRRI: 0.6, Amont: 5000, Price: 9.18, Shares: 544.66, },
+    { Symbol: 'LU0201576401', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Inflation Linked', Name: 'Amundi Fds Bond Euro Inflation', Mstar_BCH: 'Barclays Euro Infln Lkd TR EUR', Mstar_SRRI: 3, WEIGHT: 0.025, SRRI: 0.15, Amont: 2000, Price: 151.8, Shares: 13.18, },
+    { Symbol: 'LU0281579598', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'High Yield', Name: 'Pioneer Fds Euro High Yield', Mstar_BCH: 'BofAML European Ccy HY Constnd TR HEUR', Mstar_SRRI: 3, WEIGHT: 0.025, SRRI: 0.15, Amont: 2000, Price: 67.68, Shares: 29.55, },
+    { Symbol: 'LU0568620560', MacroAssetClass: 'Funds', AssetClass: 'Money Market', AssetType: 'Money Market', Name: 'Amundi Fds Cash EUR', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 0.05, SRRI: 0.4, Amont: 4000, Price: 100.87, Shares: 39.66, },
 ]
 
 
