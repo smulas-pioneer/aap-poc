@@ -26,6 +26,7 @@ export const case_2_initial = [
 ]
 
 export const case_2_proposed = [
+    { Symbol: 'CASH_EUR', MacroAssetClass: 'CASH', AssetClass: 'CASH', AssetType: 'CASH', Name: 'CASH', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 1, SRRI: 1, Amont: 0, Price: 1, Shares: 0, },
     { Symbol: 'FR0010314401', MacroAssetClass: 'Funds', AssetClass: 'Equity', AssetType: 'Large Cap', Name: 'Amundi Actions Euro', Mstar_BCH: 'MSCI EMU NR USD', Mstar_SRRI: 6, WEIGHT: 0.1, SRRI: 0.6, Amont: 2000, Price: 66147, Shares: 0.0302356871815804, },
     { Symbol: 'LU0119099819', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Corporate Bond', Name: 'Amundi Fds Bond Euro Corporate', Mstar_BCH: 'Barclays Euro Agg Corps TR EUR', Mstar_SRRI: 3, WEIGHT: 0.2, SRRI: 0.6, Amont: 4000, Price: 19.21, Shares: 208.224882873503, },
     { Symbol: 'LU0281578517', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Government Bond', Name: 'Pioneer Fds Euro Bond', Mstar_BCH: 'Citi EMU GBI EUR', Mstar_SRRI: 3, WEIGHT: 0.2, SRRI: 0.6, Amont: 4000, Price: 9.18, Shares: 435.729847494553, },
@@ -59,6 +60,7 @@ export const case_3_initial = [
 ]
 
 export const case_3_proposed = [
+    { Symbol: 'CASH_EUR', MacroAssetClass: 'CASH', AssetClass: 'CASH', AssetType: 'CASH', Name: 'CASH', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 1, SRRI: 1, Amont: 0, Price: 1, Shares: 0, },
     { Symbol: 'NL0011585146', MacroAssetClass: 'Equity', AssetClass: 'Equity', AssetType: 'Equity', Name: 'Ferrari', Mstar_BCH: '', Mstar_SRRI: 6, WEIGHT: 0.1, SRRI: 0.6, Amont: 10000, Price: 55.3, Shares: 180.831826401447, },
     { Symbol: 'FR0010314401', MacroAssetClass: 'Funds', AssetClass: 'Equity', AssetType: 'Large Cap', Name: 'Amundi Actions Euro', Mstar_BCH: 'MSCI EMU NR USD', Mstar_SRRI: 6, WEIGHT: 0.1, SRRI: 0.6, Amont: 10000, Price: 66147, Shares: 0.151178435907902, },
     { Symbol: 'LU0119099819', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Corporate Bond', Name: 'Amundi Fds Bond Euro Corporate', Mstar_BCH: 'Barclays Euro Agg Corps TR EUR', Mstar_SRRI: 3, WEIGHT: 0.2, SRRI: 0.6, Amont: 20000, Price: 19.21, Shares: 1041.12441436752, },

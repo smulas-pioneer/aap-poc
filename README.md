@@ -71,6 +71,7 @@
 - Prevent remove Risk adequacy axe
 - Models corrected
 - Horizon corrected
-- 200% on simulation to be fixed.
+- ~~200% on simulation to be fixed~~.
 - Alert text align left
 - Include radar axes in fake radar simulaton
+- Fix Quantity and Amount editing on holdings
