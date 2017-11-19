@@ -10,11 +10,11 @@ const Colors = [
     "#E6325E",
     "#3B7296",
     "#39B2B6",
-    "red",
-    "green",
-    "yellow",
-    "blue",
-    "orange"
+    "#ED00EE",
+    "#003F03",
+    '#D5D300',
+    '#DA98D2',
+    'aqua'
 ]
 
 interface PerformanceContributionProps {
@@ -36,25 +36,13 @@ export class PerformanceContributionGraph extends React.Component<PerformanceCon
 
     constructor(props: PerformanceContributionProps) {
         super(props);
-        /*
-        const gData = groupBy(props.data, d => d.year)
-        const data = Object.keys(gData).reduce((prev, curr) => {
-            prev.push(
-                gData[curr].reduce((p, c) => {
-                    p[c.id] = c.perf;
-                    return p;
-                })
-            );
-            return prev;
-        }, [] as any[]);
-*/
+
         let ids = {};
         this.props.data.forEach(d => {
             Object.keys(d).filter(k => k != 'year').forEach(i => {
                 ids[i] = true;
             });
         });
-
 
         this.state = {
             data: this.props.data,
@@ -63,15 +51,13 @@ export class PerformanceContributionGraph extends React.Component<PerformanceCon
     }
 
     render() {
-        const model = this.props.data.filter(p => p.id == 'Model');
-        const portfolio = this.props.data.filter(p => p.id == 'Portfolio');
-        const data = this.props.data.filter(p => p.id !== 'Model' && p.id !== 'Portfolio');
+        const data = this.props.data;
         return <ResponsiveContainer width="100%" height={this.props.height || 400}>
             <BarChart width={this.props.width || 500} height={this.props.height || 400} data={data}>
                 <XAxis dataKey="year" />
                 <YAxis />
                 <CartesianGrid strokeDasharray="3 3" />
-                <Tooltip />
+                <Tooltip formatter={(d: number) => perc(d) + '%'} />
                 <Legend />
                 {
                     this.state.ids.map((d, i) => <Bar key={i} dataKey={d} stackId="a" fill={Colors[i]} />)

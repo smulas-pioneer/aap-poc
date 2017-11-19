@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import * as math from 'mathjs';
 import { networkInterfaces } from "os";
 import { suggestedPositionExCash, currentPosition, suggestedPosition } from "./common/radarUtils";
+import { securityList } from "./data";
 
 
 export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean, forced?: StrategyItem[]): StrategyItem[] => {
@@ -128,13 +129,18 @@ export const getPerfContribution = (position: PositionItem[]) => {
     const perfCompo = getPerfContrib(keys);
 
     const gPerf = groupBy(perfCompo, g => g.date);
-    return Object.keys(gPerf).map(k => {
+    const ret =  Object.keys(gPerf).map(k => {
         const o = gPerf[k].reduce((pr, cu) => {
-            pr[cu.id] = cu.perf * weights[cu.id] * 100;
+            const secNameRes = securityList.find(sec=>sec.IsinCode == cu.id);
+            const secName = secNameRes ? secNameRes.SecurityName:cu.id;
+            pr[secName] = cu.perf * weights[cu.id] * 100;
             return pr;
         }, { year: parseInt(k) } as any);
         return o;
     });
+    console.log('ret',ret);
+    return ret;
+    // Replace isin code with security name.
 }
 
 
