@@ -17,6 +17,7 @@ interface Props {
     onChange: (items: StrategyItem[]) => void;
     onAddSecurity: (props: { securityId: string, clientId: string }) => void;
     onAddHistory?: (props: { clientId: string, notes: string }) => void;
+    onShowModel: () => void;
 }
 interface State {
     addingSecurity: boolean,
@@ -70,6 +71,7 @@ export class Holdings extends React.Component<Props, State> {
                     />
                 }
                 <Menu size='mini'>
+                    <Menu.Item onClick={this.props.onShowModel}  ><Icon name="table"/>Model</Menu.Item>
                     <Menu.Item ><Icon name="print" />Print</Menu.Item>
                     <Menu.Item ><Icon name="file pdf outline" />Export to Pdf</Menu.Item>
                     <Menu.Item onClick={() => this.setState({ addingSecurity: true })} >

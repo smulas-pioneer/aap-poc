@@ -41,7 +41,9 @@ interface State {
     strategy: StrategyItem[],
     axes: RadarStrategyParm,
     autoplay: boolean,
-    currentTargetReturn?: number
+    currentTargetReturn?: number,
+    showModel: boolean
+    
 }
 
 
@@ -60,7 +62,9 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
             concentration: false,
             overlap: false
         },
-        autoplay: true
+        autoplay: true,
+        showModel:false
+        
     } as State
 
     componentDidMount() {
@@ -209,6 +213,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     }]
             }
         };
+        
 
         return { ...graphFixed, ...graphBreakDown };
     }
@@ -243,6 +248,8 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                             onChange={this.handleOnChange}
                             onAddSecurity={this.props.addSecurity}
                             onAddHistory={this.props.addHistory}
+                            onShowModel={()=>this.setState({showModel:true})}
+                            
                         />
                         <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} />
                     </Segment>

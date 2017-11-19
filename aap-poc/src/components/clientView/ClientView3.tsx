@@ -7,7 +7,7 @@ import { Client, Breakdown, Radar, StrategyItem, RadarStrategyParm, InterviewRes
 import * as ce from '../../_db/coreEngine';
 import { sumBy } from 'lodash';
 
-import { Grid, Segment, Statistic, Card, Button, Table, SemanticICONS, Icon, Feed, Form, Label, Tab, Accordion, Header, SemanticCOLORS, List, Menu } from 'semantic-ui-react';
+import { Grid, Segment, Statistic, Card, Button, Table, SemanticICONS, Icon, Feed, Form, Label, Tab, Accordion, Header, SemanticCOLORS, List, Menu, Transition } from 'semantic-ui-react';
 import { RadarGraph } from '../RadarGraph';
 import { Holdings } from './Holdings';
 import { PerformanceChart } from '../securityView/PerformanceChart';
@@ -20,7 +20,8 @@ import { settings } from 'cluster';
 import { PerformanceContributionGraph } from './PerformanceContribution';
 import { createRadarFromStrategy, suggestedPosition, currentPosition, modelPosition } from '../../_db/common/radarUtils';
 import { WidgetTitle } from '../shared/WidgetTitle';
-import {radars} from '../../_db/data';
+import { radars } from '../../_db/data';
+import { Model } from './Model';
 
 const conn = appConnector<{ id: string }>()(
     (s, p) => ({
@@ -39,7 +40,8 @@ interface State {
     radar?: Radar,
     axes: RadarStrategyParm,
     autoplay: boolean,
-    currentTargetReturn?: number
+    currentTargetReturn?: number,
+    showModel: boolean
 }
 
 class ClientViewCompo extends conn.StatefulCompo<State> {
@@ -55,7 +57,8 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
             concentration: false,
             overlap: false
         },
-        autoplay: true
+        autoplay: true,
+        showModel: false
     } as State
 
     componentDidMount() {
@@ -71,7 +74,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         if (next.strategy.length > 0) {
             const sugg = suggestedPosition(next.strategy);
             const suggBreakdown = ce.getBreakdown(sugg);
-            const radar = createRadarFromStrategy(next.strategy, next.id,radars);
+            const radar = createRadarFromStrategy(next.strategy, next.id, radars);
             this.setState({
                 breakdown: suggBreakdown,
                 strategy: next.strategy,
@@ -225,13 +228,18 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     : <div />}
                 <AdvancedGrid gridTemplateColumns="auto 40%">
                     <Segment style={{ margin: 0 }}>
-                        <WidgetTitle title={lang.PORTFOLIO_HOLDINGS} />
-                        <Holdings
-                            clientId={client.id} lang={lang} holdings={strategy}
-                            onChange={this.handleOnChange}
-                            onAddSecurity={this.props.addSecurity}
-                            onAddHistory={this.props.addHistory}
-                        />
+                        <WidgetTitle title={this.state.showModel ? lang.MODEL : lang.PORTFOLIO_HOLDINGS} />
+                            {this.state.showModel && <Model
+                                clientId={client.id} lang={lang} holdings={strategy}
+                                onShowHoldings={() => this.setState({ showModel: false })}
+                            />}
+                            {!this.state.showModel && <Holdings
+                                clientId={client.id} lang={lang} holdings={strategy}
+                                onChange={this.handleOnChange}
+                                onAddSecurity={this.props.addSecurity}
+                                onAddHistory={this.props.addHistory}
+                                onShowModel={() => this.setState({ showModel: true })}
+                            />}
                         <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} />
                     </Segment>
                     <Segment style={{ margin: 0 }}>
@@ -309,9 +317,9 @@ const ClientAlert = (props: { radar: Radar, lang: LangDictionary }) => {
 
         return value !== 'green'
             ? (<List.Item key={key}  >
-                <List.Content style={{ marginBottom: '6px'}}>
+                <List.Content style={{ marginBottom: '6px' }}>
                     <Statistic size="mini" color={value}  >
-                        <Statistic.Value style={{textAlign:'left'}}  >
+                        <Statistic.Value style={{ textAlign: 'left' }}  >
                             <b>{alert.name}</b> : <small>{alert.sentence}</small>
                         </Statistic.Value>
                     </Statistic>
@@ -341,7 +349,7 @@ const ClientAlert = (props: { radar: Radar, lang: LangDictionary }) => {
                     content: (
                         <Segment basic>
                             {Object.keys(lang.ALERTS).map((v, i) => alertsListItem(v, i))}
-                        </Segment>                     
+                        </Segment>
                     )
                 }
             }
@@ -432,7 +440,7 @@ class ClientViews extends React.Component<ClientViewProps, { activeIndex?: numbe
         this.handleTabChange = this.handleTabChange.bind(this);
     }
 
-    handleTabChange(e:any, { activeIndex }:{activeIndex:number}) {
+    handleTabChange(e: any, { activeIndex }: { activeIndex: number }) {
         this.setState({ activeIndex });
     }
     handleBtnChange(activeIndex: number) {

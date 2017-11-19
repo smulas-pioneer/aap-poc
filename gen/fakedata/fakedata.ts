@@ -7,8 +7,7 @@ export const pushed = [
 ]
 
 export const fav = [
-    'LU0145482039',
-    'LU1191877379'
+    'NL0011585146'
 ]
 
 export const case_2_model = [

@@ -193,7 +193,6 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
         isCash: p.Symbol == 'CASH_EUR',
         fee: 1,
         newSecurity: false,
-        clientFavorites: FD.fav.indexOf(p.Symbol) > -1
     }));
 
     const gData = groupBy([...suggSecs, ...modelSecs, ...posSecs], g => g.security.IsinCode);
@@ -214,7 +213,8 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
             suggestionAccepted: false,
             isCash: items[0].isCash,
             fee: 1,
-            newSecurity: false
+            newSecurity: false,
+            clientFavorites: FD.fav.indexOf(k) > -1            
         }
     });
 }
