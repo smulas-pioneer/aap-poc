@@ -25,9 +25,16 @@ export class Login extends React.Component<LoginProps, LoginState>{
     }
 
     onLogin() {
-        if (this.state.user.toLowerCase().trim() === 'advisor') this.props.action(LoginType.Advisor);
-        if (this.state.user.toLowerCase().trim() === 'manager') this.props.action(LoginType.Manager);
-        this.setState(prev => ({ error: true }));
+        const { user } = this.state;
+        const { action } = this.props;
+        if (user.toLowerCase().trim() === 'advisor') {
+            action(LoginType.Advisor);
+        }
+        else if (user.toLowerCase().trim() === 'manager') {
+            action(LoginType.Manager);
+        } else {
+            this.setState(prev => ({ error: true }));
+        }
     }
 
     checkError(): void {
@@ -44,11 +51,11 @@ export class Login extends React.Component<LoginProps, LoginState>{
             <Grid style={{ height: '100vh' }} textAlign="center" verticalAlign="middle" >
                 <Grid.Column width={5}>
                     <Header as="h2" style={{ color: '#005483', fontFamily: 'HelveticaNeue' }} content="Advisory Platform" />
-                    <Form size='large'>
+                    <Form size='large' onSubmit={this.onLogin}>
                         <Segment stacked secondary>
                             <Form.Input autoFocus icon="user" defaultValue={this.state.user} iconPosition="left" placeholder='User' onChange={(e, d) => this.setState(prev => ({ user: d.value }), this.checkError)} />
                             <Form.Input icon="lock" type="Password" iconPosition="left" placeholder='Password' onChange={(e, d) => this.setState(prev => ({ password: d.value }), this.checkError)} />
-                            <Button fluid color="blue" size="large" content="Login" onClick={this.onLogin} />
+                            <Button fluid color="blue" size="large" content="Login" />
                             <Message visible={this.state.error} error>
                                 <Header content="Wrong Credentials" size="tiny" />
                                 You can only sign up for an account <br />
