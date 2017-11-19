@@ -68,9 +68,9 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
         const currentRenderAllFilters = renderAllFilters[searchprop] || false;
 
         let current = values && Object.keys(values).sort((a, b) => {
-            if (b.startsWith('<1')) return 1;
-            if (b.startsWith('>20')) return -1;
-            if (a.startsWith('10-')) return 1;
+            if (a.startsWith('<1')) return -1;
+            if (a.startsWith('>20')) return 1;
+//            if (a.startsWith('10-')) return 1;
             if (a < b) return -1;
             if (a > b) return 1;
             return 0;

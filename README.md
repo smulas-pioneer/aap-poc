@@ -63,7 +63,7 @@
 - Last data from binh
 - new data with coherence between regions, branch and advisor
 - ~~AUM to become AUA~~
-- AUM filter to sort.
+- ~~AUM filter to sort.~~
 - Align performance period for fake data.
 - Enter always as the same advisor.
 - ~~Fix holdings (case 1 display too many rows.)~~
