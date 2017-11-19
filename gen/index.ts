@@ -1,4 +1,4 @@
-import { Portfolio, Holding, Client, Radar, InterviewResult, StrategyItem, AlertHistory, TimeHorizon } from './common/interfaces';
+import { Portfolio, Holding, Client, Radar, InterviewResult, StrategyItem, AlertHistory, TimeHorizon, TimeHorizonMonths } from './common/interfaces';
 import { securities, cash } from './common/securities';
 import { createRadarFromStrategy, isFakeClient } from './common/radarUtils';
 //import * as ce from './_db/coreEngine';
@@ -46,7 +46,6 @@ const portfolioCreator = (id: string, name: string): Portfolio => {
     }
 }
 
-const THOR: TimeHorizon[] = ['SHORT', 'MEDIUM', 'LONG'];
 
 const clientCreator = (id: string, models: Portfolio[], agents: string[]): Client => {
     const name = faker.name.firstName();
@@ -86,7 +85,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
         numOfRejectedProposal: 0,
         numOfInterviews: 0,
         segment: 'Retail',
-        timeHorizon: THOR[rnd(0, 2)],
+        timeHorizon: Object.keys(TimeHorizonMonths)[rnd(0, 2)] as TimeHorizon,
         branch: agent.branch.branchName,
         sales: 0,
         aua: 0// sumBy(cli.holdings, v => v.amount) || 0 //faker.random.number({ min: 0, max: 100000000 }),

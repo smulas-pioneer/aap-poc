@@ -57,14 +57,14 @@
 
 
 # Last Check-list
-- Improve Unicredit suggestion.
 - Include radar axes in fake radar simulaton
 - Performance contribution sec names instead of isin
 - Align performance period for fake data.
-- Horizon corrected
 - better client ripartition (more retail less rich)
+- Improve Unicredit suggestion.
 
-
+- ~~Performance dates~~
+- ~~Horizon corrected~~
 - ~~Enter always as the same advisor.~~
 - ~~new data with coherence between regions, branch and advisor~~
 - ~~Prevent remove Risk adequacy axe~~
