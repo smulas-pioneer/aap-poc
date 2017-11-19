@@ -17,10 +17,14 @@ const rnd = (min: number, max: number) => Math.floor(Math.random() * (max - min)
 
 
 const dump = (file: string, data: any) => fs.writeFileSync(`./build/${file}`, JSON.stringify(data, null, 2));
+const italyRegions = ['Nord Ovest', 'Lombardia', 'Nord Est', 'Centro Nord', 'Centro', 'Sud', 'Sicilia'];
 
 const MODEL_COUNT = 10;
-const CLIENT_COUNT = 1500;
-const AGENT_COUNT = 23;
+const CLIENT_COUNT = 3000;
+const MAX_CITIES_X_REGION = 4;
+const MAX_BRANCH_X_CITY = 3;
+const MAX_AGENT_X_BRENCH = 10;
+
 const STRAGEGY_MIN_SECURITY_COUNT = 4;
 const STRATEGY_MAX_SECURITY_COUNT = 8;
 
@@ -48,19 +52,20 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
     const name = faker.name.firstName();
     const lastName = faker.name.lastName();
     const modelIx = Math.ceil(Math.random() * (MODEL_COUNT - 1));
-    const italyRegions = ['Nord Ovest', 'Lombardia', 'Nord Est', 'Centro Nord', 'Centro', 'Sud', 'Sicilia'];
-    const regionRandom = rnd(0, italyRegions.length);
+
+    const agentName = agents[rnd(0, agents.length - 1)];
+    const agent = agentDictionary[agentName];
     return {
         id,
         name: `${name} ${lastName}`,
         modelId: models[modelIx].id,
         radar: null,
-        agent: agents[rnd(0, agents.length - 1)],
+        agent: agentName,
         lastInterviewDate: '2017-01-01',
         lastAdvicedate: '2017-01-01',
         address: {
-            city: faker.address.city(),
-            region: italyRegions[regionRandom],
+            city: agent.branch.city.cityName,
+            region: agent.branch.city.region,
             zipCode: faker.address.zipCode(),
             streetAddress: faker.address.streetAddress(true),
             latitude: faker.address.latitude(),
@@ -72,9 +77,9 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
         breaks: [],
         deltaAnalysis: faker.lorem.lines(1),
         modelName: id == "0" ? "Defensive" :
-                   id == "1" ? "Balanced" :
-                   id == "2" ? "Defensive" :
-                   faker.company.catchPhraseAdjective(),
+            id == "1" ? "Balanced" :
+                id == "2" ? "Defensive" :
+                    faker.company.catchPhraseAdjective(),
         decision: '',
         mifid: rnd(1, 40),
         numOfAcceptedProposal: 0,
@@ -82,7 +87,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
         numOfInterviews: 0,
         segment: 'Retail',
         timeHorizon: THOR[rnd(0, 2)],
-        branch: 'AG' + (10000 + rnd(1, 100)).toString(),
+        branch: agent.branch.branchName,
         sales: 0,
         aua: 0// sumBy(cli.holdings, v => v.amount) || 0 //faker.random.number({ min: 0, max: 100000000 }),
 
@@ -213,10 +218,47 @@ const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResul
 
     } as { [clientId: string]: InterviewResult[] });
 }
-export const agents = numArray(AGENT_COUNT).map(i => faker.name.findName());
+
+const createAgents = () => {
+    let bc = 1;
+    let clientId = 0;
+    let ret = {} as any;
+    italyRegions.forEach(region => {
+        const cities = numArray(rnd(1, MAX_CITIES_X_REGION)).map(i => {
+            return {
+                cityName: faker.address.city(),
+                region
+            }
+        });
+        cities.forEach(city => {
+            const branches = numArray(rnd(1, MAX_BRANCH_X_CITY)).map(i => {
+                return {
+                    brenchName: 'AG' + (1000 + bc++).toString(),
+                    city
+                }
+            });
+            branches.forEach(branch => {
+                numArray(rnd(1, MAX_AGENT_X_BRENCH)).forEach(i => {
+                    const ag =  {
+                        agentName: faker.name.findName(),
+                        branch
+                    }
+                    ret[ag.agentName] = ag;
+                });
+            });
+        });
+    });
+    return ret;
+}
+
+const agentDictionary = createAgents();
+const agents = Object.keys(agentDictionary);
+// START BY CREATING AGENTS
+//export const agents = numArray(AGENT_COUNT).map(i => faker.name.findName());
+
+
 export const createModels = () => numArray(MODEL_COUNT).map(i => portfolioCreator(i.toString(), faker.commerce.productName()));
 export const clientsCreator = (models: Portfolio[]) => numArray(CLIENT_COUNT).map(i => clientCreator(i.toString(), models, agents));
-
 
 const createPerformance = () => {
     let s = 1;
@@ -311,7 +353,7 @@ const go = async () => {
         const strategies = { ...strategies1, ...strategies2 } as { [cli: string]: StrategyItem[] }
 
         clients.forEach(c => {
-            c.radar = createRadarFromStrategy(strategies[c.id],c.id,radars);
+            c.radar = createRadarFromStrategy(strategies[c.id], c.id, radars);
             c.aua = sumBy(strategies[c.id], v => v.currentAmount);
             c.size = c.aua > 20000000 ? '>20M' : c.aua > 10000000 ? '10-20M' : c.aua > 5000000 ? '5-10M' : c.aua > 1000000 ? '1-5M' : '<1M';
             c.segment = c.aua > 15000000 ? 'Private' : c.aua > 2000000 ? 'Mass Affluent' : 'Retail';

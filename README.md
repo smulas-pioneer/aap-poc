@@ -57,15 +57,16 @@
 
 
 # Last Check-list
-- new data with coherence between regions, branch and advisor
-- Align performance period for fake data.
 - Enter always as the same advisor.
 - Improve Unicredit suggestion.
-- Horizon corrected
 - Include radar axes in fake radar simulaton
 - Performance contribution sec names instead of isin
+- Align performance period for fake data.
+- Horizon corrected
+- better client ripartition (more retail less rich)
 
 
+- ~~new data with coherence between regions, branch and advisor~~
 - ~~Prevent remove Risk adequacy axe~~
 - ~~Alert text align left~~
 - ~~Last data from binh~~
