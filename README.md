@@ -74,4 +74,6 @@
 - ~~200% on simulation to be fixed~~.
 - Alert text align left
 - Include radar axes in fake radar simulaton
-- Fix Quantity and Amount editing on holdings
+- ~~Fix Quantity and Amount editing on holdings~~
+- Performance contribution sec names instead of isin
+- Risk return, bigger circles.

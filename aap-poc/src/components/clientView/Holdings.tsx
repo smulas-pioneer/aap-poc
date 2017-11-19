@@ -51,7 +51,7 @@ export class Holdings extends React.Component<Props, State> {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
         });
-
+        const tot = sumBy(holdings, t => t.currentAmount);
         const accepted = holdings.slice(1).filter(a => a.suggestionAccepted).length;
         const proposed = holdings.slice(1).filter(a => a.suggestedDelta != 0).length;
         const proposeAllColor = accepted == 0 ? 'grey' : accepted == proposed ? 'green' : 'orange';
@@ -122,8 +122,8 @@ export class Holdings extends React.Component<Props, State> {
                                 const show = t.currentQuantity != 0;
                                 const suggWeight = finalWeight[i].weight;
                                 const factor = this.state.mode == 'Weight' ? 1
-                                    : this.state.mode == 'Quantity' ? t.currentQuantity / t.currentWeight / 100
-                                        : t.currentAmount / t.currentWeight / 100;
+                                    : this.state.mode == 'Quantity' ? tot / t.currentPrice / 100
+                                        : tot / 100;
                                 return (!t.newSecurity && t.currentQuantity == 0 && t.suggestedDelta == 0) ? null :
                                        <Table.Row key={i}>
                                         <Table.Cell>
@@ -150,7 +150,7 @@ export class Holdings extends React.Component<Props, State> {
                             <Table.HeaderCell>{lang.TOTAL}</Table.HeaderCell>
                             <Table.HeaderCell></Table.HeaderCell>
                             <Table.HeaderCell textAlign="right"></Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right">{fmt.format(sumBy(holdings, t => t.currentAmount))}</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="right">{fmt.format(tot)}</Table.HeaderCell>
                             <Table.HeaderCell textAlign="right">{fmt.format(sumBy(holdings, t => t.currentWeight) * 100)}</Table.HeaderCell>
                             <Table.HeaderCell textAlign="right"></Table.HeaderCell>
                             <Table.HeaderCell textAlign="right">{fmt.format(sumBy(finalWeight, t => t.weight) * 100)}</Table.HeaderCell>
