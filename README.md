@@ -32,8 +32,8 @@
 - ~~S Target return on performance Widget~~
 
 # Priority 0 
-- M New Fake data.
-- M Special simulation for Target Fake Client
+- ~~M New Fake data.~~
+- ~~M Special simulation for Target Fake Client~~
 
 # Priority 1
 
@@ -59,7 +59,7 @@
 # Last Check-list
 - Include radar axes in fake radar simulaton
 - Performance contribution sec names instead of isin
-
+- hearts
 - better client ripartition (more retail less rich)
 
 - ~~Improve Unicredit suggestion.~~
