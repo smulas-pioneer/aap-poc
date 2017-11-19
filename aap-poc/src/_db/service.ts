@@ -6,7 +6,7 @@ import { SpotlightSearchParms, SpotlightContext, Holding, StrategyItem, Intervie
 import * as ce from './coreEngine';
 import { intersection } from 'lodash';
 import * as moment from 'moment';
-import { getRandomRadar } from './common/radarUtils';
+import { getRandomRadar, isFakeClient } from './common/radarUtils';
 import { promisify } from 'util';
 
 export const patchHoldings = (holdings: Model.Holding[], transactions: Model.Transaction[]): Promise<Model.Holding[]> => {
@@ -135,7 +135,7 @@ export const getStrategy = (clientId: string) => {
 }
 
 export const getSuggestion = (args: { id:string, position: Model.StrategyItem[], axes: Model.RadarStrategyParm, calculateFromAxes: boolean }) => {
-    if (args.id=="0" || args.id=="1" || args.id == "2"){
+    if (isFakeClient( args.id)){
         const ret = strategies[args.id];
         return Promise.resolve(ce.getSuggestion(args.position, args.axes, args.calculateFromAxes,ret));
     } 

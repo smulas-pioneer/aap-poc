@@ -12,12 +12,15 @@ import { suggestedPositionExCash, currentPosition, suggestedPosition } from "./c
 export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean, forced?: StrategyItem[]): StrategyItem[] => {
 
     if (calculateFromAxes) {
-        if ( forced) return forced;
+        console.log('calculate from axes')
+        if (forced) return forced;
         return solve(position, axes);
     } else {
-        const w = forced 
-            ? suggestedPosition(forced)
-            : suggestedPositionExCash(position);
+        console.log('no calculation from axes')
+        let newPos = forced 
+            ? forced.map(p => ({ ...p, suggestionAccepted: position.find(r => r.security.IsinCode === p.security.IsinCode)!.suggestionAccepted }))
+            : position;
+        const w = suggestedPositionExCash(newPos)
         const delta = sumBy(w, s => s.weight) - 1;
         return [{ ...position[0], suggestedDelta: -delta, suggestionAccepted: delta != 0 }].concat(position.slice(1));
     }

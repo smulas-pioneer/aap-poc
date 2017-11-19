@@ -1,5 +1,5 @@
 import { Security, PerformanceItem, StrategyItem, Radar, RadarItem } from '../common/interfaces';
-import { uniqBy, groupBy, sumBy } from 'lodash';
+import { uniqBy, groupBy, sumBy, maxBy } from 'lodash';
 import * as FD from './fakedata';
 import * as P1 from './fds_c2_c';
 import * as P2 from './fds_c3_c';
@@ -168,7 +168,7 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
         radar: getRandomRadar(),
         currentWeight: 0,
         currentQuantity: 0,
-        currentPrice: 0,
+        currentPrice: p.Price,
         currentAmount: 0,
         modelWeight: 0,
         suggestedDelta: p.WEIGHT,
@@ -205,7 +205,7 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
             radar: items[0].radar,
             currentWeight: weight,
             currentQuantity: sumBy(items, w => w.currentQuantity || 0),
-            currentPrice: items[0].currentPrice,
+            currentPrice: maxBy(items,w=>w.currentPrice).currentPrice,//items[0].currentPrice,
             currentAmount: sumBy(items, w => w.currentAmount || 0),
             modelWeight: sumBy(items, w => w.modelWeight || 0),
             suggestedDelta: suggDelta - weight,
