@@ -59,11 +59,15 @@
 # Last Check-list
 - ~~Antoine alert messages~~
 - Fake Radars
-- scenario 3 to work
+- ~~scenario 3 to work~~
 - Last data from binh
 - new data with coherence between regions, branch and advisor
 - AUM to become AUA
 - AUM filter to sort.
 - Align performance period for fake data.
 - Enter always as the same advisor.
-- Fix holdings (case 1 display too many rows.)
+- ~~Fix holdings (case 1 display too many rows.)~~
+- Improve Unicredit suggestion.
+- Prevent remove Risk adequacy axe
+- Models corrected
+- Horizon corrected

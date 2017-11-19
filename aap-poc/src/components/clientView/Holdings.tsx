@@ -124,8 +124,8 @@ export class Holdings extends React.Component<Props, State> {
                                 const factor = this.state.mode == 'Weight' ? 1
                                     : this.state.mode == 'Quantity' ? t.currentQuantity / t.currentWeight / 100
                                         : t.currentAmount / t.currentWeight / 100;
-                                //return (!t.newSecurity && t.currentQuantity == 0 && t.suggestedDelta == 0) ? null :
-                                return    <Table.Row key={i}>
+                                return (!t.newSecurity && t.currentQuantity == 0 && t.suggestedDelta == 0) ? null :
+                                       <Table.Row key={i}>
                                         <Table.Cell>
                                             {t.security.blacklisted && <Icon size="large" color="black" name='thumbs down' />}
                                             {t.security.pushed && <Icon size="large"  color="green" name='thumbs up' />}
