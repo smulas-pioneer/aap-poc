@@ -182,7 +182,7 @@ export const calculateProjection = (data: { date: string, perf: number }[], days
         max: startValue,
     });
     for (let i = 0; i < days; i++) {
-        date = date.add('days', 1);
+        date = date.add('days', 10);
         perf += r.gradient;
         newData.push({
             date: moment(date).format('YYYY-MM-DD'),

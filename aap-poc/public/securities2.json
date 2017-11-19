@@ -33,7 +33,7 @@
     "Maturity": null,
     "SRRI": 0.9,
     "Price": 19.21,
-    "pushed": false
+    "pushed": true
   },
   {
     "IsinCode": "LU0281578517",
@@ -51,7 +51,7 @@
     "Maturity": null,
     "SRRI": 0.9,
     "Price": 9.18,
-    "pushed": false
+    "pushed": true
   },
   {
     "IsinCode": "LU0201576401",
@@ -69,7 +69,7 @@
     "Maturity": null,
     "SRRI": 0.15,
     "Price": 151.8,
-    "pushed": false
+    "pushed": true
   },
   {
     "IsinCode": "LU0281579598",
@@ -87,7 +87,7 @@
     "Maturity": null,
     "SRRI": 0.15,
     "Price": 67.68,
-    "pushed": false
+    "pushed": true
   },
   {
     "IsinCode": "LU0568620560",
@@ -105,7 +105,7 @@
     "Maturity": null,
     "SRRI": 0.1,
     "Price": 100.87,
-    "pushed": false
+    "pushed": true
   },
   {
     "IsinCode": "NL0011585146",
@@ -303,7 +303,7 @@
     "Maturity": null,
     "SRRI": 0.6,
     "Price": 131.89,
-    "pushed": false
+    "pushed": true
   },
   {
     "IsinCode": "LU0533595319",
@@ -321,7 +321,7 @@
     "Maturity": null,
     "SRRI": 0.9,
     "Price": 19.21,
-    "pushed": false
+    "pushed": true
   },
   {
     "IsinCode": "FR0000989501",
@@ -357,7 +357,7 @@
     "Maturity": null,
     "SRRI": 0.15,
     "Price": 67.68,
-    "pushed": false
+    "pushed": true
   },
   {
     "IsinCode": "FR0011006360",
@@ -375,6 +375,6 @@
     "Maturity": null,
     "SRRI": 0.1,
     "Price": 100.87,
-    "pushed": false
+    "pushed": true
   }
 ]

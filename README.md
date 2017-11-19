@@ -59,10 +59,11 @@
 # Last Check-list
 - Include radar axes in fake radar simulaton
 - Performance contribution sec names instead of isin
-- Align performance period for fake data.
+
 - better client ripartition (more retail less rich)
 - Improve Unicredit suggestion.
 
+- ~~Align performance period for fake data.~~
 - ~~Performance dates~~
 - ~~Horizon corrected~~
 - ~~Enter always as the same advisor.~~

@@ -33,12 +33,14 @@ export interface Client {
 export type ClientSegment = 'Private' | 'Mass Affluent' | 'Retail';
 export type TimeHorizon = '18 Months' | '3 Years' | '4 Years' | '5 Years' | 'More than 5 Years'
 
+
+const K = 10;
 export const TimeHorizonMonths  = {
-    '18 Months': 18,
-    '3 Years': 36,
-    '4 Years': 48,
-    '5 Years': 60,
-    'More than 5 Years': 100
+    '18 Months': 18* K ,
+    '3 Years': 36* K,
+    '4 Years': 48* K,
+    '5 Years': 60* K,
+    'More than 5 Years': 100* K
 }
 
 export interface Address {

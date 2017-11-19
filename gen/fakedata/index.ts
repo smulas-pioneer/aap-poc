@@ -29,8 +29,10 @@ const mapSecurity = (p: any) => {
         Maturity: null,
         SRRI: p.SRRI,
         Price: p.Price,
-        pushed: FD.pushed.indexOf(p.Symbol) > -1,
-    } as Security;
+        pushed: FD.pushed.indexOf(p.Symbol) > -1 || 
+                p.Name.toLowerCase().indexOf("amundi") > -1 ||
+                p.Name.toLowerCase().indexOf("pioneer") > -1 
+            } as Security;
 }
 
 const mapSecurities = (pos: any[]): Security[] => {

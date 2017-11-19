@@ -10,7 +10,7 @@ export const group = <T>(data: T[], key: keyof (T)) => data.reduce(
     {} as { [id: string]: T }
 );
 
-let radars: { [id: string]:Radar};
+let radars: { [id: string]: Radar };
 fetch('/radars.json').then(r => r.json()).then(p => radars = p);
 
 //PERFORMANCES
@@ -23,8 +23,14 @@ fetch('/perfSummary.json').then(r => r.json()).then(p => perfSummary = p);
 //SECURITIES
 let securities2: Security[];
 fetch('/securities2.json').then(r => r.json()).then(p => {
-    securities2 = securityList.map(p => ({ ...p, blacklisted: p.Rating == "BBB" && p.Sector == "Utilities" }))
-        .concat(p);
+    securities2 =
+        securityList.map(p => ({ ...p, blacklisted: p.Rating == "BBB" && p.Sector == "Utilities" }))
+            .concat(p)
+            .map(r => ({
+                ...r, pushed:
+                    r.SecurityName.toLowerCase().indexOf("amundi") > -1 ||
+                    r.SecurityName.toLowerCase().indexOf("pioneer") > -1
+            }))
 });
 
 //SECURITIES
@@ -50,4 +56,4 @@ let agents: string[];
 fetch('/agents.json').then(r => r.json()).then(p => agents = p);
 
 
-export {radars, securities2 as securityList, clients as clientList, history, agents, strategies, performances, alertHistory, perfSummary };
+export { radars, securities2 as securityList, clients as clientList, history, agents, strategies, performances, alertHistory, perfSummary };

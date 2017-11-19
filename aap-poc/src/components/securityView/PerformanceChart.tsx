@@ -64,7 +64,7 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
         const targetReturn = this.returnFor95(props.clientTimeHorizon || '18 Months');
         this.state = {
             data: reg.data,
-            period: 'All',
+            period: 'YTD',
             targetReturn: targetReturn.toString(),
             timeHorizon: props.clientTimeHorizon || '18 Months',
             probability: 95,
@@ -147,9 +147,10 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
         const perf = actualData && fmt.format(100 * (actualData[actualData.length - 1].perf! - initalPerf));
         const primary = actualData && actualData[actualData.length - 1].perf! > 0;
         const minDate = data && moment(data[0].date).format(lang.DATE_FORMAT);
-        const maxDate = data && moment(data[data.length - 1].date).format(lang.DATE_FORMAT);
 
-
+        const displayedData = data.filter((d, i) =>actualData && d.date < "2018-03" );
+        const maxDate = displayedData && moment(displayedData[displayedData.length - 1].date).format(lang.DATE_FORMAT);
+        
         return <div>
 
             {advancedView && <Menu secondary >
@@ -169,7 +170,7 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
                         <Dropdown text={`${lang.TIME_HORIZON}: ${this.state.timeHorizon}`} pointing='left' className='link item'>
                             <Dropdown.Menu>
                                 {Object.keys(TimeHorizonMonths).map((th: TimeHorizon, iTh) => {
-                                   return  <Dropdown.Item key={iTh} onClick={() => this.handleChangeTimeHorizon(th)} >{th}</Dropdown.Item>
+                                    return <Dropdown.Item key={iTh} onClick={() => this.handleChangeTimeHorizon(th)} >{th}</Dropdown.Item>
                                 })}
                             </Dropdown.Menu>
                         </Dropdown>
@@ -185,7 +186,7 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
             </Menu>}
 
             <ResponsiveContainer width="100%" height={actualHeight}>
-                <LineChart width={width || 500} height={actualHeight} data={data}
+                <LineChart width={width || 500} height={actualHeight} data={displayedData}
                     margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
                     <XAxis dataKey="date" tickFormatter={() => ""} interval={10} />
                     <YAxis tickFormatter={(d: number) => perc(d)} domain={['auto', 'auto']} />
