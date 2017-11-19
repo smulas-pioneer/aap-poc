@@ -1,6 +1,6 @@
 import { Portfolio, Holding, Client, Radar, InterviewResult, StrategyItem, AlertHistory, TimeHorizon } from './common/interfaces';
 import { securities, cash } from './common/securities';
-import { createRadarFromStrategy } from './common/radarUtils';
+import { createRadarFromStrategy, isFakeClient } from './common/radarUtils';
 //import * as ce from './_db/coreEngine';
 
 import * as faker from 'faker';
@@ -53,7 +53,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
     const lastName = faker.name.lastName();
     const modelIx = Math.ceil(Math.random() * (MODEL_COUNT - 1));
 
-    const agentName = agents[rnd(0, agents.length - 1)];
+    const agentName = isFakeClient(id) ? agents[0]  :agents[rnd(0, agents.length - 1)];
     const agent = agentDictionary[agentName];
     return {
         id,

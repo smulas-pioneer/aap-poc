@@ -18,7 +18,7 @@ export const loginSuccess = createAction<UserInfo>('LOGIN_SUCCESS');
 
 export const login = createPromiseAction('LOGIN', (lt: LoginType) => {
     const getValidAgent = (): string => {
-        const rndAge = Math.floor((Math.random() * agents.length)) + 1;
+        const rndAge = 0;// Math.floor((Math.random() * agents.length)) + 1;
         const agent = agents[rndAge];
         if (!agent || !clientList.some(c => c.agent === agent)) return getValidAgent();
         return agent;

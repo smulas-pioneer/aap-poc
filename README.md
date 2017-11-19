@@ -57,7 +57,6 @@
 
 
 # Last Check-list
-- Enter always as the same advisor.
 - Improve Unicredit suggestion.
 - Include radar axes in fake radar simulaton
 - Performance contribution sec names instead of isin
@@ -66,6 +65,7 @@
 - better client ripartition (more retail less rich)
 
 
+- ~~Enter always as the same advisor.~~
 - ~~new data with coherence between regions, branch and advisor~~
 - ~~Prevent remove Risk adequacy axe~~
 - ~~Alert text align left~~
