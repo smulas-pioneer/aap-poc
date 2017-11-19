@@ -61,8 +61,8 @@
 - Performance contribution sec names instead of isin
 
 - better client ripartition (more retail less rich)
-- Improve Unicredit suggestion.
 
+- ~~Improve Unicredit suggestion.~~
 - ~~Align performance period for fake data.~~
 - ~~Performance dates~~
 - ~~Horizon corrected~~

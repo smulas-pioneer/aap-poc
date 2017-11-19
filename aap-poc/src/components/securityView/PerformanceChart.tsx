@@ -147,8 +147,8 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
         const perf = actualData && fmt.format(100 * (actualData[actualData.length - 1].perf! - initalPerf));
         const primary = actualData && actualData[actualData.length - 1].perf! > 0;
         const minDate = data && moment(data[0].date).format(lang.DATE_FORMAT);
-
-        const displayedData = data.filter((d, i) =>actualData && d.date < "2018-03" );
+        
+        const displayedData = data.filter((d, i) => d.date < "2018-03" );
         const maxDate = displayedData && moment(displayedData[displayedData.length - 1].date).format(lang.DATE_FORMAT);
         
         return <div>
