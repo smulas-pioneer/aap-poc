@@ -50,7 +50,7 @@ class ManagerViewCompo extends conn.StatefulCompo<{ searchParms: SearchParms }> 
         const { searchParms } = this.state;
 
         if (!agentView) return <div />
-        let filterMaps: FilterMapTypes[] = ['Regions', 'Agents', 'Alerts', 'Aum'];
+        let filterMaps: FilterMapTypes[] = ['Regions', 'Agents', 'Alerts', 'Aua'];
 
         return <AdvancedGrid gridTemplateRows="min-content auto">
             {showTitle &&

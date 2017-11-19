@@ -62,7 +62,7 @@
 - ~~scenario 3 to work~~
 - Last data from binh
 - new data with coherence between regions, branch and advisor
-- AUM to become AUA
+- ~~AUM to become AUA~~
 - AUM filter to sort.
 - Align performance period for fake data.
 - Enter always as the same advisor.

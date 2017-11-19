@@ -19,7 +19,7 @@ import { groupBy, Dictionary, countBy, sumBy, uniqBy } from 'lodash';
 import { LangDictionary } from '../../reducers/language/interfaces';
 import { MapOptions } from './MapOptions';
 import { Client } from '../../_db/interfaces';
-import { rnd, formatAum } from '../../_db/utils';
+import { rnd, formatAua } from '../../_db/utils';
 import { SingleAreaLegend } from './SingleAreaLegend';
 import { ClientCard } from '../clientsView/ClientCard';
 import { getMapOptionTypeCaption } from '../../commonUtils';
@@ -112,9 +112,9 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
                 ItalyMap.AREA_MAP_INDEX.forEach(area => values[area] = countByRegion[area]);
                 break;
             }
-            case IndicatorOptionsType.aum: {
+            case IndicatorOptionsType.aua: {
                 ItalyMap.AREA_MAP_INDEX.forEach(area => {
-                    values[area] = sumBy(ds.filter(c => c.address.region === area), c => c.aum);
+                    values[area] = sumBy(ds.filter(c => c.address.region === area), c => c.aua);
                 });
                 break;
             }
@@ -193,7 +193,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
 
     getTooltipText(area: string, option: IndicatorOptionsType, value: number) {
         let formattedValue = value.toString();
-        if (option === IndicatorOptionsType.aum) formattedValue = formatAum(value);
+        if (option === IndicatorOptionsType.aua) formattedValue = formatAua(value);
         let ret = `<h4>${area}</h4><hr/><p>${getMapOptionTypeCaption(option, this.props.lang)}: ${formattedValue}</p>`;
         return ret;
     }
@@ -219,8 +219,8 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
                     value: this.calculateAreaValues(clients, IndicatorOptionsType.clients, region.key).areaValues.filter(a => a.key === region.key)[0].value
                 },
                 b: {
-                    label: lang.MAP_OPTS_AUM,
-                    value: formatAum(this.calculateAreaValues(clients, IndicatorOptionsType.aum, region.key).areaValues.filter(a => a.key === region.key)[0].value)
+                    label: lang.MAP_OPTS_AUA,
+                    value: formatAua(this.calculateAreaValues(clients, IndicatorOptionsType.aua, region.key).areaValues.filter(a => a.key === region.key)[0].value)
                 },
                 c: {
                     label: lang.MAP_OPTS_PROPOSALS,

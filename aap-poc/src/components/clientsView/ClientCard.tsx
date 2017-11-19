@@ -10,11 +10,11 @@ const fmt = (num: number) => {
     return (Math.ceil(num / 1000) / 10).toString() + "H";
 }
 
-const stats = (aum: number, region: string) => (
+const stats = (aua: number, region: string) => (
     <Statistic.Group size="mini">
         <Statistic>
-            <Statistic.Value><Icon name='euro' /> {fmt(aum)}</Statistic.Value>
-            <Statistic.Label>AUM</Statistic.Label>
+            <Statistic.Value><Icon name='euro' /> {fmt(aua)}</Statistic.Value>
+            <Statistic.Label>AUA</Statistic.Label>
         </Statistic>
         <Statistic>
             <Statistic.Value> <Icon name='globe' /> {region}</Statistic.Value>
@@ -51,7 +51,7 @@ export const ClientCard = ({ client, onBrowse = () => { }, lang }: { client: Cli
                                         {client.name}
                                     </Link>
                                 </Header>
-                                {stats(client.aum, client.address.region)}
+                                {stats(client.aua, client.address.region)}
                             </Table.Cell>
                             <Table.Cell className="client-card-right" singleLine>
                                 {sgmt("id badge", client.agent)}

@@ -16,7 +16,7 @@ export interface LabelValue<T> {
 
 export enum IndicatorOptionsType {
     clients = 0,
-    aum,
+    aua,
     proposals,
     acceptedProposals,
     alerts
@@ -48,7 +48,7 @@ export const memuItems: MemuItemModel[] = [
     { langProps: 'NEWS_INSIGHTS', linkTo: undefined, color: 'grey', icon: 'newspaper', innewline: true }
 ]
 
-export type FilterMapTypes = 'Regions' | 'Alerts' | 'Agents' | 'Aum' | 'AlertType' | 'Segment';
+export type FilterMapTypes = 'Regions' | 'Alerts' | 'Agents' | 'Aua' | 'AlertType' | 'Segment';
 
 export interface FilterMap {
     prop: string;
@@ -75,10 +75,10 @@ export const filterMapItems: {[key in FilterMapTypes]: FilterMap } = {
         searchprop: 'agents',
         render: { header: 'Agents', icon: 'address book outline', label: undefined, max: 5 }
     },
-    Aum: {
+    Aua: {
         prop: 'size',
         searchprop: 'size',
-        render: { header: 'AUM', icon: 'money', label: undefined }
+        render: { header: 'AUA', icon: 'money', label: undefined }
     },
     AlertType: {
         prop: 'breaks',
@@ -100,7 +100,7 @@ export interface ClientFilters {
     Regions: SearchFilter;
     Alerts: SearchFilter;
     Agents: SearchFilter;
-    Aum: SearchFilter;
+    Aua: SearchFilter;
     AlertType: SearchFilter;
     Segment: SearchFilter;
 }

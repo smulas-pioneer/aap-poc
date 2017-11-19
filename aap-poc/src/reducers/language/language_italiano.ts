@@ -59,7 +59,7 @@ export const Italiano: LanguageState = {
         CENTER: 'Centro',
         SOUTH: 'Sud',
         MAP_OPTS_CLIENTS: "Clienti",
-        MAP_OPTS_AUM: "AUM",
+        MAP_OPTS_AUA: "AUA",
         MAP_OPTS_PROPOSALS: "Proposte",
         MAP_OPTS_PROPOSAL: "Proposte acc.",
         MAP_OPTS_ALERTS: "Avvisi",

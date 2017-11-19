@@ -10,7 +10,7 @@ import { CustomPieChart } from './chart/CustomCharts';
 import { OverflowItem, AdvancedGrid, OverflowColumn } from './shared/GridOverflow';
 import { ManagerView } from './managerView/managerView';
 import { AlertsView } from './alertsView/AlertsView';
-import { formatAum } from '../_db/utils';
+import { formatAua } from '../_db/utils';
 import { ClientFilter } from './shared/ClientFilter';
 import { ItalyMap } from './italymaps/ItalyMap';
 import { WidgetTitle } from './shared/WidgetTitle';
@@ -95,7 +95,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
     // render filter
     renderFilterGraphics(data: Client[]) {
-        const { lang, filter = { Aum: {} } } = this.props;
+        const { lang, filter = { Aua: {} } } = this.props;
         return (
             <Grid columns={2}>
                 <Grid.Column>
@@ -105,7 +105,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                     </Segment>
                 </Grid.Column>
                 <Grid.Column>
-                    {this.renderFilterGraphItem(1, filterMapItems.Aum, filter.Aum)}
+                    {this.renderFilterGraphItem(1, filterMapItems.Aua, filter.Aua)}
                 </Grid.Column>
                 <Grid.Column width={16}>
                     <TopClient clients={data} lang={lang} />
@@ -197,7 +197,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 ret.length += 1;
                 ret.acceptedProposals += v.numOfAcceptedProposal;
                 ret.totalProposals += v.numOfInterviews;
-                ret.assetUnder += v.aum;
+                ret.assetUnder += v.aua;
                 ret.clientAlert += v.radar.numOfAlerts > 0 ? 1 : 0;
                 ret.mifidAlert += v.radar.riskAdequacyAlert != 'green' ? 1 : 0;
                 return ret;
@@ -213,7 +213,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                             {this.renderItem(info.length, lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
-                            {this.renderItem(formatAum(info.assetUnder), lang.DB_ASSET_ADVISE, this.percDetail(15, ' 1', 'Y', 'NET CASHFLOWS'), undefined, 'green')}
+                            {this.renderItem(formatAua(info.assetUnder), lang.DB_ASSET_ADVISE, this.percDetail(15, ' 1', 'Y', 'NET CASHFLOWS'), undefined, 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
                             {this.renderItem(<span style={{ color: 'red' }}>{info.clientAlert}</span>, lang.DB_CLIENTS_ALERTS, this.alertsDetail(info.mifidAlert))}
@@ -238,7 +238,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                         <ClientFilter
                             searchPlaceholder={lang.ENTER_FILTER_TEXT}
                             data={filter}
-                            filterMaps={['Regions', 'Agents', 'Aum', 'Segment']}
+                            filterMaps={['Regions', 'Agents', 'Aua', 'Segment']}
                             filterValue={data.parms}
                             onChange={this.handleOnChangeFilter}
                         />

@@ -317,7 +317,7 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
             </Grid.Column>
             <Grid.Column width="4" textAlign="right">
                 <Statistic size="small" color={color}>
-                    <Statistic.Value>{`${fmt1.format(client.aum)} €`}</Statistic.Value>
+                    <Statistic.Value>{`${fmt1.format(client.aua)} €`}</Statistic.Value>
                 </Statistic>
             </Grid.Column>
         </Grid.Row>

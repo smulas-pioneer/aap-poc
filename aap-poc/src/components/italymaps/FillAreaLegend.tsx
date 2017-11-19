@@ -3,7 +3,7 @@ import { LangDictionary } from "../../reducers/language/interfaces";
 import { AreaValue } from './ItalyMap';
 
 import { Label } from 'semantic-ui-react';
-import { formatAum, } from '../../_db/utils';
+import { formatAua, } from '../../_db/utils';
 import { getMapOptionTypeCaption } from '../../commonUtils';
 import { IndicatorOptionsType, MapLegend } from '../../actions/model';
 import { Dictionary } from 'lodash';

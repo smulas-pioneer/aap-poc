@@ -9,7 +9,7 @@ export interface Client {
     email: string;
     phone: string;
     address: Address;
-    aum: number;
+    aua: number;
     radar: Radar;
 
     mifid: number;

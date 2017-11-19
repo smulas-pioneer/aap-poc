@@ -3,7 +3,7 @@ import { IndicatorOptionsType } from '../../actions/model';
 import { AreaValue } from './ItalyMap';
 import { groupBy } from 'lodash';
 import { LangDictionary } from '../../reducers/language/interfaces';
-import { formatAum } from '../../_db/utils';
+import { formatAua } from '../../_db/utils';
 import { Popup } from 'semantic-ui-react';
 import { getMapOptionTypeCaption } from '../../commonUtils';
 
@@ -29,11 +29,11 @@ export const ColorsLegend = ({ type, values, lang }: { type: IndicatorOptionsTyp
 
     let formattedMinValue = min.toString();
     let formattedMaxValue = max.toString();
-    const isAum = type === IndicatorOptionsType.aum;
+    const isAua = type === IndicatorOptionsType.aua;
 
-    if (isAum) {
-        formattedMinValue = formatAum(min);
-        formattedMaxValue = formatAum(max);
+    if (isAua) {
+        formattedMinValue = formatAua(min);
+        formattedMaxValue = formatAua(max);
     }
 
     const ret = <div style={{ margin: 0 }}>
@@ -46,7 +46,7 @@ export const ColorsLegend = ({ type, values, lang }: { type: IndicatorOptionsTyp
                     key={idx}
                     trigger={lbl}
                     wide='very'
-                    content={`${getMapOptionTypeCaption(type, lang)}: ${isAum ? formatAum(areaValues.value) : areaValues.value}`}
+                    content={`${getMapOptionTypeCaption(type, lang)}: ${isAua ? formatAua(areaValues.value) : areaValues.value}`}
                     header={areaValues.key}
                 />
                 return lbl;

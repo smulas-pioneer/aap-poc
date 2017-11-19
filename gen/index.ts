@@ -81,7 +81,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
         timeHorizon: THOR[rnd(0, 2)],
         branch: 'AG' + (10000 + rnd(1, 100)).toString(),
         sales: 0,
-        aum: 0// sumBy(cli.holdings, v => v.amount) || 0 //faker.random.number({ min: 0, max: 100000000 }),
+        aua: 0// sumBy(cli.holdings, v => v.amount) || 0 //faker.random.number({ min: 0, max: 100000000 }),
 
     }
 }
@@ -303,15 +303,15 @@ const go = async () => {
         const secuirities = getAllSecuirities();
         const allPerf = { ...preformances, ...performances2 };
         const radars = createFakeRadar();
-        //Calculate Clients Radar and aum
+        //Calculate Clients Radar and aua
 
         const strategies = { ...strategies1, ...strategies2 } as { [cli: string]: StrategyItem[] }
 
         clients.forEach(c => {
             c.radar = createRadarFromStrategy(strategies[c.id],c.id,radars);
-            c.aum = sumBy(strategies[c.id], v => v.currentAmount);
-            c.size = c.aum > 20000000 ? '>20M' : c.aum > 10000000 ? '10-20M' : c.aum > 5000000 ? '5-10M' : c.aum > 1000000 ? '1-5M' : '<1M';
-            c.segment = c.aum > 15000000 ? 'Private' : c.aum > 2000000 ? 'Mass Affluent' : 'Retail';
+            c.aua = sumBy(strategies[c.id], v => v.currentAmount);
+            c.size = c.aua > 20000000 ? '>20M' : c.aua > 10000000 ? '10-20M' : c.aua > 5000000 ? '5-10M' : c.aua > 1000000 ? '1-5M' : '<1M';
+            c.segment = c.aua > 15000000 ? 'Private' : c.aua > 2000000 ? 'Mass Affluent' : 'Retail';
             c.breaks = Object.keys(c.radar).filter(k => k.endsWith("Alert")).filter(k => c.radar[k] !== "green").map(k => k.replace('Alert', ''));
             c.lastInterviewDate = histories[c.id][0].date;
             const acc = histories[c.id].filter(p => p.status == 'ACCEPTED');
@@ -320,7 +320,7 @@ const go = async () => {
             c.numOfInterviews = histories[c.id].length;
             c.numOfAcceptedProposal = histories[c.id].filter(p => p.status == 'ACCEPTED').length;
             c.numOfRejectedProposal = histories[c.id].filter(p => p.status == 'REJECTED').length;
-            c.sales = c.aum * rnd(-100, 100) / 1000;
+            c.sales = c.aua * rnd(-100, 100) / 1000;
 
         });
 

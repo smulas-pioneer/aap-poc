@@ -13,7 +13,7 @@ import { GeoItalyClientsChart } from './GeoItalyClientsChart';
 import { MenuPagination } from '../shared/MenuPagination';
 import { FilterMapTypes } from '../../actions/model';
 import { ItalyMapClientsChart } from './ItalyMapClientsChart';
-import { formatAum } from '../../_db/utils';
+import { formatAua } from '../../_db/utils';
 
 const conn = appConnector<{ uid: string, hideGraphs?: boolean, manager?: boolean, showTitle?: boolean, showFilter?: boolean }>()(
     (s, p) => ({
@@ -112,7 +112,7 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
                                             </Link>
                                         </Table.Cell>
                                         {manager && <Table.Cell>{client.agent}</Table.Cell>}
-                                        <Table.Cell>{formatAum(client.aum)}</Table.Cell>
+                                        <Table.Cell>{formatAua(client.aua)}</Table.Cell>
                                         <Table.Cell>{client.lastInterviewDate}</Table.Cell>
                                         <Table.Cell>{client.decision}</Table.Cell>
                                         <Table.Cell>{client.modelName}</Table.Cell>
@@ -191,7 +191,7 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
 
         if (!data || !data.result) return <div />
 
-        let filterMapsValues: FilterMapTypes[] = ['Regions', 'Alerts', 'Agents', 'AlertType', 'Aum', 'Segment'];
+        let filterMapsValues: FilterMapTypes[] = ['Regions', 'Alerts', 'Agents', 'AlertType', 'Aua', 'Segment'];
         if (!manager) filterMapsValues.splice(2, 1);
 
         return <div>

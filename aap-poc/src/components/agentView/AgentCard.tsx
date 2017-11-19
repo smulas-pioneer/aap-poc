@@ -31,12 +31,12 @@ const numberOfAlerts = (clients: Client[]) => {
 }
 
 const stats = (clients: Client[]) => {
-    const aum = sumBy(clients, c => c.aum);
+    const aua = sumBy(clients, c => c.aua);
     return (
         <Statistic.Group size="mini" style={{ fontSize: '8px' }}>
             <Statistic>
-                <Statistic.Value><Icon name='euro' /> {fmt(aum)}</Statistic.Value>
-                <Statistic.Label>AUM</Statistic.Label>
+                <Statistic.Value><Icon name='euro' /> {fmt(aua)}</Statistic.Value>
+                <Statistic.Label>AUA</Statistic.Label>
             </Statistic>
         </Statistic.Group>
     )

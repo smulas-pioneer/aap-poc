@@ -72,7 +72,7 @@ export interface LangDictionary {
     CENTER: string,
     SOUTH: string,
     MAP_OPTS_CLIENTS: string,
-    MAP_OPTS_AUM: string,
+    MAP_OPTS_AUA: string,
     MAP_OPTS_PROPOSALS: string,
     MAP_OPTS_PROPOSAL: string,
     MAP_OPTS_ALERTS: string,

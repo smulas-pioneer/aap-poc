@@ -72,7 +72,7 @@ export const English: LanguageState = {
         CENTER: 'Center',
         SOUTH: 'South',
         MAP_OPTS_CLIENTS: "Clients",
-        MAP_OPTS_AUM: "AUM",
+        MAP_OPTS_AUA: "AUA",
         MAP_OPTS_PROPOSALS: "Proposals",
         MAP_OPTS_PROPOSAL: "Accep. proposals",
         MAP_OPTS_ALERTS: "Alerts",

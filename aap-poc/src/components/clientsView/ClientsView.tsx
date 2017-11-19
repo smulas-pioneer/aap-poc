@@ -58,7 +58,7 @@ class ClientsViewCompo extends conn.StatefulCompo<{ searchParms: SearchParms }> 
         const { searchParms } = this.state;
 
         if (!data) return <div />
-        let filterMaps: FilterMapTypes[] = ['Regions', 'Alerts', 'Aum'];
+        let filterMaps: FilterMapTypes[] = ['Regions', 'Alerts', 'Aua'];
 
         return <AdvancedGrid gridTemplateRows="min-content auto">
             {showTitle &&

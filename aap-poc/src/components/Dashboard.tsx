@@ -17,7 +17,7 @@ import { ClientFilter } from './shared/ClientFilter';
 
 import { AdvancedGrid, OverflowColumn, OverflowItem } from './shared/GridOverflow';
 import { WidgetTitle } from './shared/WidgetTitle';
-import { formatAum } from '../_db/utils';
+import { formatAua } from '../_db/utils';
 
 const sprintf = require("sprintf-js").sprintf;
 
@@ -99,11 +99,11 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
 
     // render filter
     renderFilterGraphics(data: Client[]) {
-        const {  filter = { Alerts: {}, Aum: {} } } = this.props;
+        const {  filter = { Alerts: {}, Aua: {} } } = this.props;
         return (
             <Grid columns={2}>
                 <Grid.Column>
-                    {this.renderFilterGraphItem(3, filterMapItems.Aum, filter.Aum)}
+                    {this.renderFilterGraphItem(3, filterMapItems.Aua, filter.Aua)}
                 </Grid.Column>
                 <Grid.Column>
                     {this.renderFilterGraphItem(2, filterMapItems.Alerts, filter.Alerts)}
@@ -196,7 +196,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                 ret.acceptedProposals += v.numOfAcceptedProposal;
                 ret.totalProposals += v.numOfInterviews;
                 ret.rejectedProposals += v.numOfRejectedProposal;
-                ret.assetUnder += v.aum;
+                ret.assetUnder += v.aua;
                 ret.clientAlert += v.radar.numOfAlerts > 0 ? 1 : 0;
                 ret.mifidAlert += v.radar.riskAdequacyAlert != 'green' ? 1 : 0;
                 return ret;
@@ -211,7 +211,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                             {this.renderItem(info.length, lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
-                            {this.renderItem(formatAum(info.assetUnder), lang.DB_ASSET_ADVISE, this.percDetail(15, ' 1', 'Y', 'NET CASHFLOWS'), undefined, 'green')}
+                            {this.renderItem(formatAua(info.assetUnder), lang.DB_ASSET_ADVISE, this.percDetail(15, ' 1', 'Y', 'NET CASHFLOWS'), undefined, 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
                             {this.renderItem(<span style={{ color: 'red' }}>{info.clientAlert}</span>, lang.DB_CLIENTS_ALERTS, this.alertsDetail(info.mifidAlert))}
@@ -243,7 +243,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                             <ClientFilter
                                 searchPlaceholder={lang.ENTER_FILTER_TEXT}
                                 data={filter}
-                                filterMaps={['Regions', 'Alerts', 'Aum', 'Segment']}
+                                filterMaps={['Regions', 'Alerts', 'Aua', 'Segment']}
                                 filterValue={data.parms}
                                 onChange={this.handleOnChangeFilter}
                             />

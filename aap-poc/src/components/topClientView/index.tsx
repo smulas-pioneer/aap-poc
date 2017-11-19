@@ -78,7 +78,7 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
         }
 
         for (let key in grouped) {
-            const sumAum = sumBy(grouped[key], c => c.aum);
+            const sumAua = sumBy(grouped[key], c => c.aua);
             const countClients = grouped[key].length;
             const sumInterviews = sumBy(grouped[key], c => c.numOfInterviews);
             const sumAcceptedProposals = sumBy(grouped[key], c => c.numOfAcceptedProposal);
@@ -91,7 +91,7 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
                 advisor: first.agent,
                 totals: {
                     alerts: countWithAlerts,
-                    aum: sumAum,
+                    aua: sumAua,
                     clients: countClients,
                     proposals: sumInterviews,
                     acceptedProposals: sumAcceptedProposals

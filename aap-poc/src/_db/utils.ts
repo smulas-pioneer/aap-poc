@@ -29,9 +29,9 @@ export function isSecurity(item: SpotlightSearchResultItem): item is Security {
     return (item as Security).SecurityName !== undefined;
 }
 
-export function formatAum(aum: number | undefined) {
-    if (aum === undefined) return '';
-    const ret = Math.floor(aum / 1000000);
+export function formatAua(aua: number | undefined) {
+    if (aua === undefined) return '';
+    const ret = Math.floor(aua / 1000000);
     return `${ret} M€`;
 }
 
