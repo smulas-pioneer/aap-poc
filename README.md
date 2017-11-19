@@ -38,14 +38,14 @@
 # Priority 1
 
 - ~~M Client view new desing~~
-- M Validate Interview and change status to ongoing
+- ~~M Validate Interview and change status to ongoing~~
 
 # Priority 2
 - ~~C Zoom on geo graph.~~
-- M New Widget for Manager to show top performer 
+- ~~M New Widget for Manager to show top performer~~ 
 
 # Priority 3
-- M Performance Contribution Widget - Simone
+- ~~M Performance Contribution Widget - Simone~~
 
 # DONE
 - ~~Labels on Risk-Return Widget~~
@@ -54,3 +54,16 @@
 
 # ISSUE
 - Manager Agents filter "MY ALERTS"
+
+
+# Last Check-list
+- ~~Antoine alert messages~~
+- Fake Radars
+- scenario 3 to work
+- Last data from binh
+- new data with coherence between regions, branch and advisor
+- AUM to become AUA
+- AUM filter to sort.
+- Align performance period for fake data.
+- Enter always as the same advisor.
+- Fix holdings (case 1 display too many rows.)
