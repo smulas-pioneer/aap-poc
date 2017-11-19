@@ -30,14 +30,11 @@ export const getRAG = (act: number, limit: number, mifid: boolean): Alert => {
 
 export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: string, radars: any) => {
     if (isFakeClient(clientId)) {
-        console.log(strategy);
         if (strategy.filter(f => f.suggestionAccepted).length > 0) {
             // Simulation...
-            console.log("retrning suggested radar for cli " + clientId);
             return radars[clientId + "!"];
         } else {
             // Real portfolio
-            console.log("retrning actual radar for cli " + clientId);
             return radars[clientId]
         }
     }

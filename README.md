@@ -10,13 +10,14 @@
 - M pusheable search engine
 - M Fold and unfold Financial advisor in My Alerts 
 - M new History timeline
+- S Dates on  Alert graph
 
 # Simple RD
 
 - ~~S Client segment. 'Private, Mass Affluent, Retail'~~
 - ~~S Advisor type (city, branch)~~
-- S Dates on  Alert graph
 - ~~S History panel and commands.. (fake)~~
+
 - S Switch button to show labels on risk-return
 - S AllWidgets Page
 
@@ -24,7 +25,7 @@
 - ~~S Add Button to add Financial instrument~~
 - ~~S Add Germany~~ 
 - ~~S Push Commercial information at financial info.~~
-- S Change Delta analysis to numbers.
+- ~~S Change Delta analysis to numbers.~~
 - ~~S Start client view with all strategies selected~~
 - ~~S Unicredit and Client strong view on Client page~~
 - ~~S Show expected return based on the portfolio time-horizon (and probability)~~

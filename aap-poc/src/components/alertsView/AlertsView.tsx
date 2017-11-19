@@ -98,8 +98,7 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
                                 <Table.HeaderCell width={2}>{lang.DECISION}</Table.HeaderCell>
                                 <Table.HeaderCell>{lang.MODEL}</Table.HeaderCell>
                                 <Table.HeaderCell width={1}>{lang.MIFID}</Table.HeaderCell>
-                                <Table.HeaderCell width={3}>{lang.DELTA_ANALYSIS}</Table.HeaderCell>
-                                <Table.HeaderCell width={2}>{lang.STATUS}</Table.HeaderCell>
+                                <Table.HeaderCell width={5}>{lang.DELTA_ANALYSIS}</Table.HeaderCell>
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
@@ -128,16 +127,7 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
                                             />
 
                                         </Table.Cell>
-                                        <Table.Cell>
-                                            <Popup
-                                                key={clIndex}
-                                                trigger={<span> {this.renderBreaks(client)}</span>}
-                                                wide='very'
-                                                content={this.renderBreaks(client)}
-                                                header={lang.STATUS}
-                                            />
 
-                                        </Table.Cell>
                                     </Table.Row>
                                 )
                             }

@@ -13,11 +13,9 @@ import { securityList } from "./data";
 export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean, forced?: StrategyItem[]): StrategyItem[] => {
 
     if (calculateFromAxes) {
-        console.log('calculate from axes')
         if (forced) return forced;
         return solve(position, axes);
     } else {
-        console.log('no calculation from axes')
         let newPos = forced 
             ? forced.map(p => ({ ...p, suggestionAccepted: position.find(r => r.security.IsinCode === p.security.IsinCode)!.suggestionAccepted }))
             : position;
@@ -138,7 +136,6 @@ export const getPerfContribution = (position: PositionItem[]) => {
         }, { year: parseInt(k) } as any);
         return o;
     });
-    console.log('ret',ret);
     return ret;
     // Replace isin code with security name.
 }

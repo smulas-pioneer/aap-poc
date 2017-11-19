@@ -14,7 +14,7 @@ f.locale = 'it';
 
 const log = console.log;
 const rnd = (min: number, max: number) => Math.floor(Math.random() * (max - min)) + min;
-
+const fmt = (num: number) => Math.ceil(num*10)/10 
 
 const dump = (file: string, data: any) => fs.writeFileSync(`./build/${file}`, JSON.stringify(data, null, 2));
 const italyRegions = ['Nord Ovest', 'Lombardia', 'Nord Est', 'Centro Nord', 'Centro', 'Sud', 'Sicilia'];
@@ -344,6 +344,17 @@ const perfSummaryAll = (perf: { [id: string]: { date: string, perf: number }[] }
     }, {} as { [id: string]: { date: string, perf: number }[] });
     return ret;
 }
+const deltaAnalysis = (radar:Radar) => {
+    let ret = ""
+    ret += radar.concentrationAlert =='green' ? "" : " concentration: +" + fmt(radar.actual.concentration - radar.limits.concentration).toString() 
+    ret += radar.consistencyAlert =='green' ? "" : " consistency: +" + fmt(radar.actual.consistency - radar.limits.consistency).toString() 
+    ret += radar.efficencyAlert =='green' ? "" : " efficency: +" + fmt(radar.actual.efficency - radar.limits.efficency).toString() 
+    ret += radar.overlapAlert =='green' ? "" : " overlap: +" + fmt(radar.actual.overlap - radar.limits.overlap).toString() 
+    ret += radar.riskAdequacyAlert =='green' ? "" : " adequacy: +" + fmt(radar.actual.riskAdequacy - radar.limits.riskAdequacy).toString() 
+    ret += radar.riskAnalysisAlert =='green' ? "" : " risk analysis: +" + fmt(radar.actual.riskAnalysis - radar.limits.riskAnalysis).toString() 
+    return ret;
+}
+
 const go = async () => {
     try {
         if (!fs.existsSync('build/output')) fs.mkdirSync('build/output');
@@ -376,7 +387,7 @@ const go = async () => {
             c.numOfAcceptedProposal = histories[c.id].filter(p => p.status == 'ACCEPTED').length;
             c.numOfRejectedProposal = histories[c.id].filter(p => p.status == 'REJECTED').length;
             c.sales = c.aua * rnd(-100, 100) / 1000;
-
+            c.deltaAnalysis = deltaAnalysis(c.radar);
         });
 
         const alertHistory = alertHistoryCreator(moment().format('YYYY-MM-DD'), 100, clients);
