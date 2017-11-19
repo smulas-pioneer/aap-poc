@@ -37,8 +37,8 @@ return <ResponsiveContainer width="100%" height={this.props.height || 400}>
                 <YAxis type="number" tickFormatter={(d: number) => perc(d)} unit="%" dataKey={'devSt'} name='devSt'  range={['auto','auto']}  />
                 <CartesianGrid />
                 <Legend/>
-                <Scatter name='Constituents' data={data} fill={Colors.GRAY} shape="circle" />
-                <Scatter name='Portfolio' data={portfolio} fill={Colors.ORANGE} shape="circle" />
+                <Scatter name='Constituents' data={data} fill={Colors.GRAY} shape="circle" size={200}  />
+                <Scatter name='Portfolio' data={portfolio} fill={Colors.ORANGE} shape="cross" />
                 <Scatter name='Model' data={model} fill={Colors.GREEN} shape="circle" />
                 <Tooltip cursor={{ strokeDasharray: '3 3' }} content={renderTooltip}/>
             </ScatterChart>

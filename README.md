@@ -61,13 +61,12 @@
 - Align performance period for fake data.
 - Enter always as the same advisor.
 - Improve Unicredit suggestion.
-- Prevent remove Risk adequacy axe
 - Horizon corrected
 - Include radar axes in fake radar simulaton
 - Performance contribution sec names instead of isin
-- Risk return, bigger circles.
 
 
+- ~~Prevent remove Risk adequacy axe~~
 - ~~Alert text align left~~
 - ~~Last data from binh~~
 - ~~Models corrected~~
@@ -79,3 +78,6 @@
 - ~~Fix holdings (case 1 display too many rows.)~~
 - ~~200% on simulation to be fixed~~.
 - ~~Fix Quantity and Amount editing on holdings~~
+
+# to investigate
+- Risk return, bigger circles.
