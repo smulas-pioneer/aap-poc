@@ -308,11 +308,11 @@ const ClientAlert = (props: { radar: Radar, lang: LangDictionary }) => {
         const value = radar[prop];
 
         return value !== 'green'
-            ? (<List.Item key={key} >
-                <List.Content style={{ marginBottom: '6px' }}>
-                    <Statistic size="mini" color={value}>
-                        <Statistic.Value>
-                            {` ${alert.name} : ${alert.sentence}`}
+            ? (<List.Item key={key}  >
+                <List.Content style={{ marginBottom: '6px'}}>
+                    <Statistic size="mini" color={value}  >
+                        <Statistic.Value style={{textAlign:'left'}}  >
+                            <b>{alert.name}</b> : <small>{alert.sentence}</small>
                         </Statistic.Value>
                     </Statistic>
 
@@ -341,7 +341,7 @@ const ClientAlert = (props: { radar: Radar, lang: LangDictionary }) => {
                     content: (
                         <Segment basic>
                             {Object.keys(lang.ALERTS).map((v, i) => alertsListItem(v, i))}
-                        </Segment>
+                        </Segment>                     
                     )
                 }
             }

@@ -63,12 +63,12 @@
 - Improve Unicredit suggestion.
 - Prevent remove Risk adequacy axe
 - Horizon corrected
-- Alert text align left
 - Include radar axes in fake radar simulaton
 - Performance contribution sec names instead of isin
 - Risk return, bigger circles.
 
 
+- ~~Alert text align left~~
 - ~~Last data from binh~~
 - ~~Models corrected~~
 - ~~Antoine alert messages~~
