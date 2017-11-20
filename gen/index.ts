@@ -93,7 +93,10 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
         numOfRejectedProposal: 0,
         numOfInterviews: 0,
         segment: 'Retail',
-        timeHorizon: Object.keys(TimeHorizonMonths)[rnd(0, 2)] as TimeHorizon,
+        timeHorizon: id == "0" ? '18 Months' :
+            id == "1" ? '3 Years' :
+                id == "2" ? '5 Years' :
+                    Object.keys(TimeHorizonMonths)[rnd(0, 2)] as TimeHorizon,
         branch: agent.branch.branchName,
         sales: 0,
         aua: 0// sumBy(cli.holdings, v => v.amount) || 0 //faker.random.number({ min: 0, max: 100000000 }),
@@ -224,19 +227,19 @@ const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResul
         const n = rnd(4, 12);
         prev[curr.id] = numArray(n).map(i => {
             const r = rnd(1, 100);
-            const status =  r < 30 ? 'REJECTED' : 'ACCEPTED';
+            const status = r < 30 ? 'REJECTED' : 'ACCEPTED';
             return {
                 date: moment(faker.date.past()).format('YYYY-MM-DD'),
                 status,
                 notes: faker.lorem.lines(1)
             } as InterviewResult;
         }).sort((a, b) => a.date.localeCompare(b.date));
-        
+
         // LAst one is accepted for fake client and possibly ongoing for others. 
         if (isFakeClient(curr.id)) {
-            prev[curr.id][prev[curr.id].length -1].status = 'ACCEPTED';
+            prev[curr.id][prev[curr.id].length - 1].status = 'ACCEPTED';
         } else {
-            prev[curr.id][prev[curr.id].length -1].status = rnd(1,10) < 3 ? 'ONGOING': prev[curr.id][0].status;
+            prev[curr.id][prev[curr.id].length - 1].status = rnd(1, 10) < 3 ? 'ONGOING' : prev[curr.id][0].status;
         }
         return prev;
     }, {

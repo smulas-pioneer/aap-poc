@@ -443,7 +443,11 @@ class ClientViews extends React.Component<ClientViewProps, { activeIndex?: numbe
         this.handleBtnChange = this.handleBtnChange.bind(this);
         this.handleTabChange = this.handleTabChange.bind(this);
     }
-
+    componentDidMount () {
+        setTimeout(() => {
+            this.setState({activeIndex:3});
+        }, 1000);
+    }
     handleTabChange(e: any, { activeIndex }: { activeIndex: number }) {
         this.setState({ activeIndex });
     }

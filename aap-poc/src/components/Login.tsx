@@ -50,7 +50,7 @@ export class Login extends React.Component<LoginProps, LoginState>{
         return (
             <Grid style={{ height: '100vh' }} textAlign="center" verticalAlign="middle" >
                 <Grid.Column width={5}>
-                    <Header as="h2" style={{ color: '#005483', fontFamily: 'HelveticaNeue' }} content="Advisory Platform" />
+                    <Header as="h2" style={{ color: '#005483', fontFamily: 'Helvetica' }} content="Advisory Platform" />
                     <Form size='large' onSubmit={this.onLogin}>
                         <Segment stacked secondary>
                             <Form.Input autoFocus icon="user" defaultValue={this.state.user} iconPosition="left" placeholder='User' onChange={(e, d) => this.setState(prev => ({ user: d.value }), this.checkError)} />
