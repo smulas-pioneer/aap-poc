@@ -31,7 +31,7 @@ const MODEL_COUNT = 10;
 const CLIENT_COUNT = 3000;
 const MAX_CITIES_X_REGION = 4;
 const MAX_BRANCH_X_CITY = 3;
-const MAX_AGENT_X_BRENCH = 10;
+const MAX_AGENT_X_BRANCH = 4;
 
 const STRAGEGY_MIN_SECURITY_COUNT = 4;
 const STRATEGY_MAX_SECURITY_COUNT = 8;
@@ -257,7 +257,7 @@ const createAgents = () => {
                 }
             });
             branches.forEach(branch => {
-                numArray(rnd(1, MAX_AGENT_X_BRENCH)).forEach(i => {
+                numArray(rnd(1, MAX_AGENT_X_BRANCH)).forEach(i => {
                     const ag = {
                         agentName: faker.name.findName(),
                         branch
