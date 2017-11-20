@@ -123,11 +123,11 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
         let graphs = {
             Performance: {
-                title: 'PERFORMANCE',
+                title: 'Performance',
                 icon: 'line graph',
                 charts: radar && [
                     {
-                        title: 'PERFORMANCE',
+                        title: 'Performance',
                         chart: <PerformanceChart key={0}
                             data={ce.getPositionPerformance(suggestedPosition(strategy))}
                             actualData={ce.getPositionPerformance(currentPosition(strategy))}
@@ -141,11 +141,11 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     }]
             },
             RiskReturn: {
-                title: 'RISK RETURN',
+                title: 'Risk Return',
                 icon: 'area graph',
                 charts: radar && [
                     {
-                        title: 'RISK RETURN',
+                        title: 'Risk Return',
                         chart: <RiskReturnGraph key={1}
                             data={ce.getRiskReturn(suggestedPosition(strategy), modelPosition(strategy), 'All')}
                             width={700}
@@ -154,11 +154,11 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     }]
             },
             PerfContr: {
-                title: 'PERF. CONTR.',
+                title: 'Perf. Contr.',
                 icon: 'bar graph',
                 charts: radar && [
                     {
-                        title: 'PERF. CONTR.',
+                        title: 'Perf. Contr.',
                         chart: <PerformanceContributionGraph key={2}
                             data={ce.getPerfContribution(suggestedPosition(strategy))}
                             width={700}
@@ -170,7 +170,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
         graphs = breakdown && breakdown.reduce((memo, val, i) => {
             let prop = val.attributeName;
-            let title = val.attributeName.toUpperCase();
+            let title = val.attributeName;
 
             if (prop === 'MacroAssetClass') {
                 title = "MACRO";
@@ -185,7 +185,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
             const chartView = (prop === "AssetClass" ? 'pie' : prop === 'Bond Indicators' ? 'pie' : 'composed');
 
             const element = (memo[prop] || {
-                title: prop.toUpperCase(),
+                title: prop,
                 icon: chartView === "pie" ? 'pie graph' : 'bar graph',
                 charts: []
             });
@@ -378,7 +378,7 @@ const ClientHistory = (props: { history: InterviewResult[], lang: LangDictionary
         if (allow) {
             memo.push({
                 menuItem: <Menu.Item key={i}>{lang.HISTORY[key]}</Menu.Item>,
-                render: () => <Tab.Pane as={OverflowItem} style={{ padding: '5px 15px' }} content={<HistoryViewTimelineEvent lang={lang} history={history} />} />
+                render: () => <Tab.Pane as={OverflowItem} style={{ padding: '5px 8px' }} content={<HistoryViewTimelineEvent lang={lang} history={history} />} />
             });
         }
         return memo;
@@ -454,7 +454,7 @@ class ClientViews extends React.Component<ClientViewProps, { activeIndex?: numbe
         const panes = graphs.reduce((memo, item, ix) => {
             memo.push({
                 menuItem: item.charts && item.charts.length ? <Menu.Item key={ix} name={item.title} icon={item.icon} /> : undefined,
-                render: () => <Tab.Pane style={{ padding: '5px 15px' }}
+                render: () => <Tab.Pane as="div" style={{ padding: '5px 8px' }}
                     content={
                         <Grid columns="equal" >
                             {item.charts && item.charts.map((v: any, j: number) => <Grid.Column key={j} textAlign="center">{v.title !== item.title ? v.title : ''}{v.chart}</Grid.Column>)}
