@@ -22,7 +22,7 @@ const mapSecurity = (p: any) => {
         MacroAssetClass: p.AssetType,
         MicroAssetClass: p.MacroAssetClass,
         Sector: null,
-        Currency: 'Eur',
+        Currency: 'Euro',
         Rating: null,
         Country: null,
         Region: null,

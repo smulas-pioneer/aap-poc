@@ -54,7 +54,7 @@
 
 
 # ISSUE
-- Manager Agents filter "MY ALERTS"
+- ~~Manager Agents filter "MY ALERTS"~~
 
 
 # Last Check-list
@@ -85,3 +85,10 @@
 
 # to investigate
 - Risk return, bigger circles.
+- Weight editor issue
+- Branch error.
+- Model title, 100%
+
+# Proposal
+- Example 2: Propose to keep ferrari at 20.
+- Replace Heart with something better.
