@@ -319,9 +319,10 @@ const ClientAlert = (props: { radar: Radar, lang: LangDictionary }) => {
         return value !== 'green'
             ? (<List.Item key={key}  >
                 <List.Content style={{ marginBottom: '6px' }}>
-                    <h3 style={{ color: value === "orange" ? "darkorange" : value }}>
-                        <b>{alert.name.toUpperCase()}</b> : {alert.sentence}
-                    </h3>
+                    {/*<h3 style={{ color: value === "orange" ? "darkorange" : value }}>*/}
+                    <p style={{ color: "black", fontSize:"20px"}}>
+                        <b style={{ color: value === "orange" ? "darkorange" : value }}>{alert.name.toUpperCase()}</b> : {alert.sentence}
+                    </p>
                     {/* <Statistic size="mini" color={value}  >
                         <Statistic.Value as="p" style={{ textAlign: 'left' }}  >
                             
