@@ -99,7 +99,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
 
     // render filter
     renderFilterGraphics(data: Client[]) {
-        const {  filter = { Alerts: {}, Aua: {} } } = this.props;
+        const { filter = { Alerts: {}, Aua: {} } } = this.props;
         return (
             <Grid columns={2}>
                 <Grid.Column>
@@ -204,7 +204,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
             { length: 0, assetUnder: 0, clientAlert: 0, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0, rejectedProposals: 0 });
 
         return (
-            <AdvancedGrid gridTemplateRows="140px auto"  >
+            <AdvancedGrid gridTemplateRows="140px auto">
                 <Segment style={{ margin: 0 }}>
                     <Grid columns={5} >
                         <Grid.Column textAlign="center">
