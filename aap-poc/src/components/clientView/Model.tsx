@@ -37,7 +37,7 @@ export class Model extends React.Component<Props, State> {
         return (
             <div >
                 <Menu size='mini'>
-                    <Menu.Item onClick={this.props.onShowHoldings}  ><Icon name="table"/>Model</Menu.Item>
+                    <Menu.Item onClick={this.props.onShowHoldings}  ><Icon name="table"/>Portfolio</Menu.Item>
                     <Menu.Item ><Icon name="print" />Print</Menu.Item>
                     <Menu.Item ><Icon name="file pdf outline" />Export to Pdf</Menu.Item>
                 </Menu>
@@ -72,7 +72,7 @@ export class Model extends React.Component<Props, State> {
                             <Table.HeaderCell></Table.HeaderCell>
                             <Table.HeaderCell>{lang.TOTAL}</Table.HeaderCell>
                             <Table.HeaderCell></Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right">{fmt.format(tot)}</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="right">{fmt.format(tot*100)}</Table.HeaderCell>
                         </Table.Row>
                     </Table.Footer>
                 </Table>

@@ -233,21 +233,21 @@ import { radar3 } from './radar_c3';
 import { radar4 } from './radar_c4';
 
 const scale = (value:number, min: number,max: number) => {
-    if ( max > min) {
+    if ( max >= min) {
         return 2 + 7 * (max - value) / (max-min) * .9 
     } else {
-        return 2 + 7 * (min - value) / (min-max) * .9
+        return scale(max-value, max,min);
     }
 }
 
 const createRadarItem = (x: any): RadarItem => {
     return {
         riskAdequacy: scale( x.adequacy,0,100),
-        efficency: scale(x.efficency,0,3),
+        efficency: scale(x.efficency,3,0),
         consistency: scale(x.consistency,0,100),
-        riskAnalysis: scale(x.riskAnalysis,0,100),
-        concentration: scale(x.concentration,0,100),
-        overlap: scale(x.overlap,0,100),
+        riskAnalysis: scale(x.riskAnalysis,0,200),
+        concentration: scale(x.concentration,0,200),
+        overlap: scale(x.overlap,0,200),
     }
 }
 

@@ -13,7 +13,7 @@ export enum LoginType {
 }
 
 export const logoutSuccess = createAction('LOGOUT');
-export const logout = createPromiseAction('LOGOUT_SUCCESS', () => Promise.resolve<true>(true), logoutSuccess);
+export const logout = createPromiseAction('LOGOUT_SUCCESS', () => Promise.resolve(true), logoutSuccess);
 export const loginSuccess = createAction<UserInfo>('LOGIN_SUCCESS');
 
 export const login = createPromiseAction('LOGIN', (lt: LoginType) => {

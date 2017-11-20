@@ -5,7 +5,7 @@ import { getClient, getSuggestions, getClientSuccess, addSecurity, addHistory } 
 import { LangDictionary } from '../../reducers/language/interfaces';
 import { Client, Breakdown, Radar, StrategyItem, RadarStrategyParm, InterviewResult, TimeHorizonMonths, TimeHorizon } from '../../_db/interfaces';
 import * as ce from '../../_db/coreEngine';
-import { sumBy } from 'lodash';
+import { sumBy, startCase, camelCase } from 'lodash';
 
 import { Grid, Segment, Statistic, Card, Button, Table, SemanticICONS, Icon, Feed, Form, Label, Tab, Accordion, Header, SemanticCOLORS, List, Menu, Transition } from 'semantic-ui-react';
 import { RadarGraph } from '../RadarGraph';
@@ -22,6 +22,7 @@ import { createRadarFromStrategy, suggestedPosition, currentPosition, modelPosit
 import { WidgetTitle } from '../shared/WidgetTitle';
 import { radars } from '../../_db/data';
 import { Model } from './Model';
+import { ColorsLegend } from '../italymaps/ColorsLegend';
 
 const conn = appConnector<{ id: string }>()(
     (s, p) => ({
@@ -318,12 +319,14 @@ const ClientAlert = (props: { radar: Radar, lang: LangDictionary }) => {
         return value !== 'green'
             ? (<List.Item key={key}  >
                 <List.Content style={{ marginBottom: '6px' }}>
-                    <Statistic size="mini" color={value}  >
-                        <Statistic.Value style={{ textAlign: 'left' }}  >
-                            <b>{alert.name}</b> : <small>{alert.sentence}</small>
+                    <h3 style={{ color: value === "orange" ? "darkorange" : value }}>
+                        <b>{alert.name.toUpperCase()}</b> : {alert.sentence}
+                    </h3>
+                    {/* <Statistic size="mini" color={value}  >
+                        <Statistic.Value as="p" style={{ textAlign: 'left' }}  >
+                            
                         </Statistic.Value>
-                    </Statistic>
-
+                    </Statistic> */}
                 </List.Content>
             </List.Item>)
             : null;
@@ -509,4 +512,3 @@ class ClientViews extends React.Component<ClientViewProps, { activeIndex?: numbe
         }
     }
 }
-
