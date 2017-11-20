@@ -8,7 +8,14 @@ import { CSSProperties } from "react";
 import { IndicatorOptionsType } from "../../actions/model";
 import { TopClientItem, GroupTypes } from "./index";
 
-export const TopClientList = ({ clients, group, indicator, lang }: { clients: TopClientItem[], group: GroupTypes, indicator: IndicatorOptionsType, lang: LangDictionary }) => {
+export interface TopClientListProps {
+    clients: TopClientItem[];
+    group: GroupTypes;
+    indicator: IndicatorOptionsType;
+    lang: LangDictionary;
+}
+
+export const TopClientList = ({ clients, group, indicator, lang }: TopClientListProps) => {
 
     const renderBreaks = (client: Client) => {
         return client.breaks.reduce((p, c) => p ? `${p}, ${startCase(c)}` : startCase(c), '');

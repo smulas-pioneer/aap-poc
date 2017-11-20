@@ -45,13 +45,11 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
     }
 
     componentWillReceiveProps(next: TopClientProps) {
-        var cl = this.calculateData(next.clients);
-        this.setState(prev => ({
-            currentData: cl
-        }));
+        const currentData = this.calculateData(next.clients);
+        this.setState(prev => ({ currentData }));
     }
 
-    calculateData(data: Client[], group?: GroupTypes, indicator?: IndicatorOptionsType) {
+    calculateData(clients: Client[], group?: GroupTypes, indicator?: IndicatorOptionsType) {
         let groupCheck = group !== undefined ? group : this.state.currentGroup;
         let indiCheck = indicator !== undefined ? indicator : this.state.currentIndicator;
 
@@ -60,19 +58,19 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
 
         switch (groupCheck) {
             case GroupTypes.Region: {
-                grouped = groupBy(data, d => d.address.region);
+                grouped = groupBy(clients, d => d.address.region);
                 break;
             }
             case GroupTypes.City: {
-                grouped = groupBy(data, d => d.address.city);
+                grouped = groupBy(clients, d => d.address.city);
                 break;
             }
             case GroupTypes.Branch: {
-                grouped = groupBy(data, d => d.branch);
+                grouped = groupBy(clients, d => d.branch);
                 break;
             }
             case GroupTypes.Advisor: {
-                grouped = groupBy(data, d => d.agent);
+                grouped = groupBy(clients, d => d.agent);
                 break;
             }
         }
