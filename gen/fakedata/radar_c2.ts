@@ -2,7 +2,7 @@ export const radar2 =  {
     model: {
         adequacy:30,
         efficency:1.52,
-        consistency:100,
+        consistency:20,
         riskAnalysis:100,
         overlap:100,
         concentration:100
@@ -10,14 +10,14 @@ export const radar2 =  {
     limit: {
         adequacy:30,
         efficency:1.52,
-        consistency:100,
+        consistency:20,
         riskAnalysis:100,
         overlap:100,
         concentration:100
     },
     client: {
         adequacy:0,
-        efficency:0,
+        efficency:2,
         consistency:0,
         riskAnalysis:100,
         overlap:100,
