@@ -121,21 +121,24 @@ const CustomizedShape = (props: any) => {
     const actualX = selected || alarmed ? (textAnchor == "start" ? x + 15 : x - 15) : x;
     const actualY = y + 5;
 
+    const selectable = onClickShape && value != 'riskAdequacy';
+    const selectableClass = selectable ? "selectable" : undefined;
     return (
-        <g onClick={() => onClickShape && value != 'riskAdequacy' &&  onClickShape(value)} className="selectable">
-            {selected ?
-                (
-                    <g>
-                        <Dot cx={x} cy={y} r={10} fill={color} />
-                        <path fill={'white'} transform={`translate(${x - 12},${y - 12})`} d="M7.105 13.473l1.422-1.423 1.901 1.902 4.81-6.952 1.657 1.148-6.26 8.852z" />
-                    </g>
-                ) : alarmed ?
+        <g onClick={() => selectable && onClickShape(value)} className={selectableClass} >
+            {
+                selected ?
                     (
-                        <path fill={color} transform={`translate(${x - 12},${y - 12})`} d="M17.8 14.7l1.7-4.7c1-2.8-.5-5.5-3.5-6.6s-5.9 0-6.9 2.8l-1.7 4.7c-.7 1.9-1 2.8-2.9 2.1l-.3 1 14.1 5.1.3-.9c-1.9-.7-1.5-1.6-.8-3.5zM12 19.8l-2.8-1c-.3.9.8 2.4 2.1 2.9s3.2.1 3.5-.9l-2.8-1z" />
-                    ) : null
+                        <g>
+                            <Dot cx={x} cy={y} r={10} fill={color} />
+                            <path fill={'white'} transform={`translate(${x - 12},${y - 12})`} d="M7.105 13.473l1.422-1.423 1.901 1.902 4.81-6.952 1.657 1.148-6.26 8.852z" />
+                        </g >
+                    ) : alarmed ?
+                        (
+                            <path fill={color} transform={`translate(${x - 12},${y - 12})`} d="M17.8 14.7l1.7-4.7c1-2.8-.5-5.5-3.5-6.6s-5.9 0-6.9 2.8l-1.7 4.7c-.7 1.9-1 2.8-2.9 2.1l-.3 1 14.1 5.1.3-.9c-1.9-.7-1.5-1.6-.8-3.5zM12 19.8l-2.8-1c-.3.9.8 2.4 2.1 2.9s3.2.1 3.5-.9l-2.8-1z" />
+                        ) : null
             }
 
             <Text {...props} x={actualX} y={actualY} >{`${names[value].name}`}</Text>
-        </g>
+        </g >
     );
 };
