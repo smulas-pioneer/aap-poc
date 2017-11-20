@@ -1,162 +1,162 @@
 {
   "0": {
     "guideLines": {
-      "riskAdequacy": 6.41,
-      "efficency": 11.491999999999999,
-      "consistency": 7.04,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 60,
+      "efficency": 100,
+      "consistency": 40,
+      "riskAnalysis": 100,
+      "concentration": 100,
+      "overlap": 100
     },
     "actual": {
-      "riskAdequacy": 8.3,
-      "efficency": 12.5,
-      "consistency": 8.3,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 10,
+      "efficency": 133,
+      "consistency": 80,
+      "riskAnalysis": 10,
+      "concentration": 10,
+      "overlap": 10
     },
     "limits": {
-      "riskAdequacy": 6.41,
-      "efficency": 11.491999999999999,
-      "consistency": 7.04,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 60,
+      "efficency": 100,
+      "consistency": 40,
+      "riskAnalysis": 100,
+      "concentration": 100,
+      "overlap": 100
     },
     "proposed": {
-      "riskAdequacy": 8.3,
-      "efficency": 12.5,
-      "consistency": 8.3,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 10,
+      "efficency": 133,
+      "consistency": 80,
+      "riskAnalysis": 10,
+      "concentration": 10,
+      "overlap": 10
     },
     "concentrationAlert": "green",
     "consistencyAlert": "orange",
     "efficencyAlert": "orange",
     "overlapAlert": "green",
-    "riskAdequacyAlert": "red",
+    "riskAdequacyAlert": "green",
     "riskAnalysisAlert": "green",
-    "numOfAlerts": 3,
-    "color": "red"
+    "numOfAlerts": 2,
+    "color": "orange"
   },
   "1": {
     "guideLines": {
-      "riskAdequacy": 6.41,
-      "efficency": 11.491999999999999,
-      "consistency": 7.04,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 160,
+      "efficency": 173,
+      "consistency": 100,
+      "riskAnalysis": 100,
+      "concentration": 100,
+      "overlap": 100
     },
     "actual": {
-      "riskAdequacy": 8.3,
-      "efficency": 12.5,
-      "consistency": 8.3,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 198,
+      "efficency": 145,
+      "consistency": 94,
+      "riskAnalysis": 130,
+      "concentration": 130,
+      "overlap": 50
     },
     "limits": {
-      "riskAdequacy": 6.41,
-      "efficency": 11.491999999999999,
-      "consistency": 7.04,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 160,
+      "efficency": 173,
+      "consistency": 100,
+      "riskAnalysis": 100,
+      "concentration": 100,
+      "overlap": 100
     },
     "proposed": {
-      "riskAdequacy": 8.3,
-      "efficency": 12.5,
-      "consistency": 8.3,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 198,
+      "efficency": 145,
+      "consistency": 94,
+      "riskAnalysis": 130,
+      "concentration": 130,
+      "overlap": 50
     },
-    "concentrationAlert": "green",
-    "consistencyAlert": "orange",
-    "efficencyAlert": "orange",
+    "concentrationAlert": "orange",
+    "consistencyAlert": "green",
+    "efficencyAlert": "green",
     "overlapAlert": "green",
     "riskAdequacyAlert": "red",
-    "riskAnalysisAlert": "green",
+    "riskAnalysisAlert": "orange",
     "numOfAlerts": 3,
     "color": "red"
   },
   "2": {
     "guideLines": {
-      "riskAdequacy": 6.41,
-      "efficency": 11.491999999999999,
-      "consistency": 7.04,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 60,
+      "efficency": 100,
+      "consistency": 40,
+      "riskAnalysis": 100,
+      "concentration": 100,
+      "overlap": 100
     },
     "actual": {
-      "riskAdequacy": 8.3,
-      "efficency": 12.5,
-      "consistency": 8.3,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 60,
+      "efficency": 70,
+      "consistency": 60,
+      "riskAnalysis": 100,
+      "concentration": 120,
+      "overlap": 100
     },
     "limits": {
-      "riskAdequacy": 6.41,
-      "efficency": 11.491999999999999,
-      "consistency": 7.04,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 60,
+      "efficency": 100,
+      "consistency": 40,
+      "riskAnalysis": 100,
+      "concentration": 100,
+      "overlap": 100
     },
     "proposed": {
-      "riskAdequacy": 8.3,
-      "efficency": 12.5,
-      "consistency": 8.3,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 60,
+      "efficency": 70,
+      "consistency": 60,
+      "riskAnalysis": 100,
+      "concentration": 120,
+      "overlap": 100
     },
-    "concentrationAlert": "green",
+    "concentrationAlert": "orange",
     "consistencyAlert": "orange",
-    "efficencyAlert": "orange",
+    "efficencyAlert": "green",
     "overlapAlert": "green",
-    "riskAdequacyAlert": "red",
+    "riskAdequacyAlert": "green",
     "riskAnalysisAlert": "green",
-    "numOfAlerts": 3,
-    "color": "red"
+    "numOfAlerts": 2,
+    "color": "orange"
   },
   "0!": {
     "guideLines": {
-      "riskAdequacy": 6.41,
-      "efficency": 11.491999999999999,
-      "consistency": 7.04,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 60,
+      "efficency": 100,
+      "consistency": 40,
+      "riskAnalysis": 100,
+      "concentration": 100,
+      "overlap": 100
     },
     "actual": {
-      "riskAdequacy": 8.3,
-      "efficency": 12.5,
-      "consistency": 8.3,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 10,
+      "efficency": 133,
+      "consistency": 80,
+      "riskAnalysis": 10,
+      "concentration": 10,
+      "overlap": 10
     },
     "limits": {
-      "riskAdequacy": 6.41,
-      "efficency": 11.491999999999999,
-      "consistency": 7.04,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 60,
+      "efficency": 100,
+      "consistency": 40,
+      "riskAnalysis": 100,
+      "concentration": 100,
+      "overlap": 100
     },
     "proposed": {
-      "riskAdequacy": 5.56706,
-      "efficency": 10.841,
-      "consistency": 6.8825,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 60,
+      "efficency": 81,
+      "consistency": 35,
+      "riskAnalysis": 90,
+      "concentration": 70,
+      "overlap": 80
     },
     "concentrationAlert": "green",
     "consistencyAlert": "green",
@@ -169,36 +169,36 @@
   },
   "1!": {
     "guideLines": {
-      "riskAdequacy": 6.41,
-      "efficency": 11.491999999999999,
-      "consistency": 7.04,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 160,
+      "efficency": 173,
+      "consistency": 100,
+      "riskAnalysis": 100,
+      "concentration": 100,
+      "overlap": 100
     },
     "actual": {
-      "riskAdequacy": 8.3,
-      "efficency": 12.5,
-      "consistency": 8.3,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 198,
+      "efficency": 145,
+      "consistency": 94,
+      "riskAnalysis": 130,
+      "concentration": 130,
+      "overlap": 50
     },
     "limits": {
-      "riskAdequacy": 6.41,
-      "efficency": 11.491999999999999,
-      "consistency": 7.04,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 160,
+      "efficency": 173,
+      "consistency": 100,
+      "riskAnalysis": 100,
+      "concentration": 100,
+      "overlap": 100
     },
     "proposed": {
-      "riskAdequacy": 5.56706,
-      "efficency": 10.841,
-      "consistency": 6.8825,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 155,
+      "efficency": 160,
+      "consistency": 84,
+      "riskAnalysis": 90,
+      "concentration": 100,
+      "overlap": 100
     },
     "concentrationAlert": "green",
     "consistencyAlert": "green",
@@ -211,36 +211,36 @@
   },
   "2!": {
     "guideLines": {
-      "riskAdequacy": 6.41,
-      "efficency": 11.491999999999999,
-      "consistency": 7.04,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 60,
+      "efficency": 100,
+      "consistency": 40,
+      "riskAnalysis": 100,
+      "concentration": 100,
+      "overlap": 100
     },
     "actual": {
-      "riskAdequacy": 8.3,
-      "efficency": 12.5,
-      "consistency": 8.3,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 60,
+      "efficency": 70,
+      "consistency": 60,
+      "riskAnalysis": 100,
+      "concentration": 120,
+      "overlap": 100
     },
     "limits": {
-      "riskAdequacy": 6.41,
-      "efficency": 11.491999999999999,
-      "consistency": 7.04,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 60,
+      "efficency": 100,
+      "consistency": 40,
+      "riskAnalysis": 100,
+      "concentration": 100,
+      "overlap": 100
     },
     "proposed": {
-      "riskAdequacy": 5.56706,
-      "efficency": 10.841,
-      "consistency": 6.8825,
-      "riskAnalysis": 5.15,
-      "concentration": 5.15,
-      "overlap": 5.15
+      "riskAdequacy": 60,
+      "efficency": 90,
+      "consistency": 40,
+      "riskAnalysis": 100,
+      "concentration": 100,
+      "overlap": 100
     },
     "concentrationAlert": "green",
     "consistencyAlert": "green",

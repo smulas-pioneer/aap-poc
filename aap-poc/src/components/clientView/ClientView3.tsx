@@ -442,11 +442,12 @@ class ClientViews extends React.Component<ClientViewProps, { activeIndex?: numbe
         this.state = { activeIndex: 0 };
         this.handleBtnChange = this.handleBtnChange.bind(this);
         this.handleTabChange = this.handleTabChange.bind(this);
-    }
-    componentDidMount () {
+
         setTimeout(() => {
             this.setState({activeIndex:3});
-        }, 1000);
+          }, 1000);
+      }
+    componentDidMount () {
     }
     handleTabChange(e: any, { activeIndex }: { activeIndex: number }) {
         this.setState({ activeIndex });
@@ -466,14 +467,15 @@ class ClientViews extends React.Component<ClientViewProps, { activeIndex?: numbe
                         </Grid>
                     } />
             });
-
+            
             return memo;
         }, [] = [] as any[]);
-
+        
         return (
             <div>
                 <WidgetTitle title={lang.PORTFOLIO_VIEWS} />
                 <Tab menu={{ pointing: true, secondary: true }} panes={panes} activeIndex={activeIndex} onTabChange={this.handleTabChange} style={{ height: '95%' }} />
+             
             </div>
         );
     }

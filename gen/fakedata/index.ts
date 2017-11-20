@@ -228,9 +228,7 @@ export const getAllStrategies = () => {
     return x;
 }
 
-import { radar2 } from './radar_c2';
-import { radar3 } from './radar_c3';
-import { radar4 } from './radar_c4';
+import { radar2,radar3,radar4 } from './matthieu_radar.1';
 
 const scale = (value:number, min: number,max: number) => {
     if ( max >= min) {
@@ -242,21 +240,21 @@ const scale = (value:number, min: number,max: number) => {
 
 const createRadarItem = (x: any): RadarItem => {
     return {
-        riskAdequacy: scale( x.adequacy,0,100),
-        efficency: scale(x.efficency,3,0),
-        consistency: scale(x.consistency,0,100),
-        riskAnalysis: scale(x.riskAnalysis,0,200),
-        concentration: scale(x.concentration,0,200),
-        overlap: scale(x.overlap,0,200),
+        riskAdequacy:x.adequacy,// scale( x.adequacy,0,200),
+        efficency: x.efficency, // scale(x.efficency,200,0),
+        consistency:x.consistency,// scale(x.consistency,0,200),
+        riskAnalysis: x.riskAnalysis,// scale(x.riskAnalysis,0,200),
+        concentration: x.concentration,// scale(x.concentration,0,200),
+        overlap:x.overlap// scale(x.overlap,0,200),
     }
 }
 
 const createRadar = (radar: any, suggested: boolean): Radar => {
     return createRadarSync(
-        createRadarItem(radar2.model),
-        createRadarItem(radar2.client),
-        createRadarItem(radar2.limit),
-        createRadarItem(suggested ? radar2.proposed : radar2.client)
+        createRadarItem(radar.model),
+        createRadarItem(radar.client),
+        createRadarItem(radar.model),
+        createRadarItem(suggested ? radar.proposed : radar.client)
     );
 }
 

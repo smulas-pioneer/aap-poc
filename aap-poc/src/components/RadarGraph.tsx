@@ -39,6 +39,7 @@ export const RadarGraph = (props: {
     }
 
     const data = [
+
         {
             subject: 'consistency',
             filter: 'consistency',
@@ -48,15 +49,7 @@ export const RadarGraph = (props: {
             proposed: d.proposed.consistency,
             fullMark: 6
         },
-        {
-            subject: 'concentration',
-            filter: 'concentration',
-            actual: d.actual.concentration,
-            limits: d.limits.concentration,
-            guideLines: d.guideLines.concentration,
-            proposed: d.proposed.concentration,
-            fullMark: 6
-        },
+
         {
             subject: 'efficency',
             filter: 'efficency',
@@ -64,6 +57,15 @@ export const RadarGraph = (props: {
             limits: d.limits.efficency,
             guideLines: d.guideLines.efficency,
             proposed: d.proposed.efficency,
+            fullMark: 6
+        },
+        {
+            subject: 'riskAdequacy',
+            filter: 'riskAdequacy',
+            actual: d.actual.riskAdequacy,
+            limits: d.limits.riskAdequacy,
+            guideLines: d.guideLines.riskAdequacy,
+            proposed: d.proposed.riskAdequacy,
             fullMark: 6
         },
         {
@@ -76,12 +78,12 @@ export const RadarGraph = (props: {
             fullMark: 6
         },
         {
-            subject: 'riskAdequacy',
-            filter: 'riskAdequacy',
-            actual: d.actual.riskAdequacy,
-            limits: d.limits.riskAdequacy,
-            guideLines: d.guideLines.riskAdequacy,
-            proposed: d.proposed.riskAdequacy,
+            subject: 'concentration',
+            filter: 'concentration',
+            actual: d.actual.concentration,
+            limits: d.limits.concentration,
+            guideLines: d.guideLines.concentration,
+            proposed: d.proposed.concentration,
             fullMark: 6
         },
         {
