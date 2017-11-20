@@ -90,5 +90,5 @@
 - Model title, 100%
 
 # Proposal
-- Example 2: Propose to keep ferrari at 20.
+- ~~Example 2: Propose to keep ferrari at 20.~~
 - Replace Heart with something better.
