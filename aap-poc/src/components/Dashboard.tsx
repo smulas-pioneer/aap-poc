@@ -204,7 +204,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
             { length: 0, assetUnder: 0, clientAlert: 0, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0, rejectedProposals: 0 });
 
         return (
-            <AdvancedGrid gridTemplateRows="140px auto">
+            <AdvancedGrid className="grid-header-fix">
                 <Segment style={{ margin: 0 }}>
                     <Grid columns={5} >
                         <Grid.Column textAlign="center">
@@ -227,7 +227,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                         </Grid.Column>
                     </Grid>
                 </Segment>
-                <AdvancedGrid gridTemplateColumns="auto 250px">
+                <AdvancedGrid className="grid-filter-right">
                     <Card as={OverflowColumn} fluid>
                         <Tab menu={{ pointing: true, secondary: true }} panes={panes} style={{ height: '95%' }} />
                     </Card>

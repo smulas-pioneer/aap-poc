@@ -1,59 +1,88 @@
-.ui.dimmer{
-background-color: rgba(0,0,0,.55) !important;
+.ui.dimmer {
+    background-color: rgba(0, 0, 0, .55) !important;
 }
-.grid-overflow {
+
+
+/* grid-advanced */
+
+.grid-advanced {
+    margin: 0;
     display: grid;
     height: 100%;
-    grid-template-columns: 1fr fit-content(30%) ;
+    grid-column-gap: 0.5em;
+    grid-row-gap: 0.5em;
     grid-template-rows: fit-content(100%);
-    grid-column-gap: 1em;
+    grid-template-columns: fit-content(100%);
 }
 
-.grid-overflow .column-overflow {
-   overflow: hidden;
-   max-height: 100%;
+.grid-advanced.grid-header-fix {
+    grid-template-rows: 140px auto;
 }
 
-.grid-overflow .column-overflow > * {
-    height: 100%;
- }
- 
-.grid-overflow .column-overflow .overflow {
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: 95%;
+.grid-advanced.grid-header-min {
+    grid-template-rows: min-content auto;
 }
 
-.custom-filter.menu > .item {
+.grid-advanced.grid-filter-right {
+    grid-template-columns: auto 250px;
+}
+
+
+/* client-view */
+
+.grid-advanced.grid-client-view-main {
+    grid-template-rows: repeat(2, min-content) 200px fit-content();
+}
+
+.grid-advanced.grid-client-view-sub {
+    grid-template-columns: auto 40%;
+}
+
+.grid-advanced.grid-client-view-sub2 {
+    grid-template-columns: 60% auto;
+}
+
+
+/*custom filter*/
+
+.custom-filter.menu>.item {
     padding-right: 0 !important;
-    padding-left :0 !important;
+    padding-left: 0 !important;
 }
+
 .ui.pointing.secondary.menu .item {
     padding-right: 10px !important;
-    padding-left : 10px !important;
+    padding-left: 10px !important;
 }
+
+
 /****************************************************/
 
 .card.colorred {
     border-left: 10px solid #db2828!important;
     box-shadow: 0 0 0 1px #db2828!important;
 }
+
 .card.colorblue {
     border-left: 10px solid #2185d0!important;
     box-shadow: 0 0 0 1px #2185d0!important;
 }
+
 .card.colorteal {
     border-left: 10px solid #00b5ad!important;
     box-shadow: 0 0 0 1px #00b5ad!important;
 }
+
 .card.coloryellow {
     border-left: 10px solid #fbbd08!important;
     box-shadow: 0 0 0 1px #fbbd08!important;
 }
+
 .card.colorgrey {
     border-left: 10px solid #767676!important;
     box-shadow: 0 0 0 1px #767676!important;
 }
+
 
 /****************************************************/
 
@@ -82,6 +111,7 @@ background-color: rgba(0,0,0,.55) !important;
     font-size: 1.3em !important;
 }
 
+
 /*****************************************/
 
 .ui.cards>.card.client-card {
@@ -90,6 +120,7 @@ background-color: rgba(0,0,0,.55) !important;
 
 
 /*****************************************/
+
 .menuIcon .icons {
     text-align: 'center'
 }
@@ -110,48 +141,23 @@ html {
     background: #f8f5f5
 }
 
-.vertical-timeline::before {
-    background: gray !important;
-    border: 1px solid black;
-}
-.vertical-timeline-element::after{
-    border: 1px solid gray !important;
-}
 
-.vertical-timeline-element-icon .svg {
-    display: block;
-    width: 24px;
-    height: 24px;
-    position: relative;
-    left: 50%;
-    top: 50%;
-    margin-left: -12px;
-    margin-top: -12px;
-    font-size: 2em;
-}
-
-.vertical-timeline-element-content {
-    position: relative;
-    margin-left: 60px;
-    border: 1px solid gray;
-    border-radius: .25em;
-    padding: 1em;
-    box-shadow: 0 3px 0 black !important;
-}
-
-svg .area:not(.unselectable), svg g.selectable {
+svg .area:not(.unselectable),
+svg g.selectable {
     cursor: pointer;
 }
 
-svg .regions .area:not(.unselectable):hover > path {
+svg .regions .area:not(.unselectable):hover>path {
     fill: darkkhaki !important;
 }
 
-svg .boundaries > path{
+svg .boundaries>path {
     stroke: gray;
 }
 
+
 /** Top Client List */
-.topClientDropOption > div[role="alert"] {
+
+.topClientDropOption>div[role="alert"] {
     text-decoration: underline;
 }

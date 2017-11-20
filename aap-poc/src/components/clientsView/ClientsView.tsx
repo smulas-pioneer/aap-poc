@@ -60,7 +60,7 @@ class ClientsViewCompo extends conn.StatefulCompo<{ searchParms: SearchParms }> 
         if (!data) return <div />
         let filterMaps: FilterMapTypes[] = ['Regions', 'Alerts', 'Aua'];
 
-        return <AdvancedGrid gridTemplateRows="min-content auto">
+        return <AdvancedGrid className="grid-header-min">
             {showTitle &&
                 <Segment basic>
                     <Header as='h3'>
@@ -76,7 +76,7 @@ class ClientsViewCompo extends conn.StatefulCompo<{ searchParms: SearchParms }> 
                 </Segment>}
 
             {showFilter
-                ? <AdvancedGrid gridTemplateColumns="auto 250px">
+                ? <AdvancedGrid className="grid-filter-right">
                     <Card as={OverflowColumn} fluid>
                         <Segment as={OverflowItem}>
                             <ClientList data={data.result} lang={lang} />
