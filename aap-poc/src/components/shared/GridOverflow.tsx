@@ -25,7 +25,7 @@ export interface GridOverflowProps {
 }
 
 export const AdvancedGrid = (props: any & GridOverflowProps) => {
-    const { gridTemplateColumns = '100%', gridTemplateRows = '100%', ...otherprops } = props;
+    const { gridTemplateColumns = 'fit-content(100%)', gridTemplateRows = 'fit-content(100%)', ...otherprops } = props;
 
     const newprops = {
         ...otherprops,
