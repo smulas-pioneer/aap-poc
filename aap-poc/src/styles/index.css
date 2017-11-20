@@ -28,7 +28,11 @@ background-color: rgba(0,0,0,.55) !important;
     padding-right: 0 !important;
     padding-left :0 !important;
 }
-
+.ui.pointing.secondary.menu .item {
+    padding-right: 10px !important;
+    padding-left : 10px !important;
+    text-transform: uppercase;
+}
 /****************************************************/
 
 .card.colorred {

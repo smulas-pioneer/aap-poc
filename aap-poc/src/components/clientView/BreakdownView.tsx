@@ -35,7 +35,8 @@ export class BreakdownView extends React.Component<Props, State> {
         }
 
         const data = breakdown.data.map(curr => {
-            return { key: curr.value, description: curr.value, weight: curr.weight * 100, fillColor: undefined }
+            const newweight= curr.weight * 100;
+            return { key: curr.value, description: curr.value, weight: newweight > 100 ? 100 : newweight, fillColor: undefined }
         });
 
         return chartView === 'pie'
