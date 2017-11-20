@@ -8,6 +8,7 @@ import IconButton from "./IconButton/index";
 import { isArray } from "util";
 import { PeerCertificate } from "tls";
 import { WidgetTitle } from "./WidgetTitle";
+import { startsWith } from "lodash";
 
 export type FilterMapDefinition = {[k in FilterMapTypes]?: { clearAll?: boolean } | undefined };
 
@@ -68,9 +69,9 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
         const currentRenderAllFilters = renderAllFilters[searchprop] || false;
 
         let current = values && Object.keys(values).sort((a, b) => {
-            if (a.startsWith('<1')) return -1;
-            if (a.startsWith('>20')) return 1;
-//            if (a.startsWith('10-')) return 1;
+            if (startsWith(a, '<1')) return -1;
+            if (startsWith(a, '>20')) return 1;
+            //            if (startsWith(a, '10-')) return 1;
             if (a < b) return -1;
             if (a > b) return 1;
             return 0;

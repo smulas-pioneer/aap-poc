@@ -1,5 +1,5 @@
 import { PositionItem, RadarItem, StrategyItem, RadarStrategyParm, Breakdown, Alert, Radar, PerformancePeriod, Client, AlertHistory2, TimeHorizon } from "./interfaces";
-import { sumBy, groupBy } from "lodash";
+import { sumBy, groupBy, endsWith } from "lodash";
 import * as moment from 'moment';
 import * as math from 'mathjs';
 import { networkInterfaces } from "os";
@@ -109,7 +109,7 @@ const radarToAlertHistory = (clients: Client[], date: string): AlertHistory2 => 
     const count = (color: string) => sumBy(
         clients.map(c => c.radar)
             .map(radar => Object.keys(radar)
-                .filter(k => k.endsWith('Alert'))
+                .filter(k => endsWith(k, 'Alert'))
                 .filter(k => radar[k] == color).length)
         , v => v);
 
