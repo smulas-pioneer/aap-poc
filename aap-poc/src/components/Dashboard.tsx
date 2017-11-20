@@ -243,7 +243,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                             <ClientFilter
                                 searchPlaceholder={lang.ENTER_FILTER_TEXT}
                                 data={filter}
-                                filterMaps={['Regions', 'Alerts', 'Aua', 'Segment']}
+                                filterMaps={['Alerts', 'Aua', 'Segment']}
                                 filterValue={data.parms}
                                 onChange={this.handleOnChangeFilter}
                             />
