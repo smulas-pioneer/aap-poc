@@ -72,10 +72,10 @@ export const RadarGraph = (props: { data: RadarModel, width: number, height: num
                     data={data} outerRadius={radius}
                 >
                     <Legend height={1} verticalAlign="bottom" />
-                    <Radar name="Guidelines" dataKey="guideLines" stroke="blue" fill="# 00f" fillOpacity={0} />
-                    <Radar name="Limits" dataKey="limits" stroke="red" fill="#D10505" fillOpacity={0} />
-                    <Radar name="Actuals" dataKey="actual" stroke="orange" fill="#ff8c00" fillOpacity={0.4} dot />
-                    <Radar name="Proposed" dataKey="proposed" stroke="green" fill="#32cd32" fillOpacity={0.2} dot />
+                {/*<Radar name="Limits" dataKey="limits" stroke="blue" fill="#D10505" fillOpacity={0} />*/}
+                <Radar name="Actuals" dataKey="actual" stroke="orange" fill="#ff8c00" fillOpacity={0.4} dot />
+                <Radar name="Guidelines" dataKey="guideLines" stroke="red" strokeWidth={2} fill="# 00f" fillOpacity={0} />
+                <Radar name="Proposed" dataKey="proposed" stroke="green" fill="#32cd32" fillOpacity={0.2} dot />
                     <PolarGrid />
                     <PolarAngleAxis dataKey="subject" />
                     {/* <PolarRadiusAxis angle={30} domain={[0, 6]} /> */}

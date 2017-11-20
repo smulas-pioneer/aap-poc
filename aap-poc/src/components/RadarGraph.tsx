@@ -97,11 +97,11 @@ export const RadarGraph = (props: {
 
     return (
         <ResponsiveContainer width="100%" height={props.responsiveHeight || props.height} >
-            <RadarChart cx='50%' cy='50%' width={props.width} height={props.height} data={data} outerRadius={'85%'} isAnimationActive >
+            <RadarChart cx='50%' cy='50%' width={props.width} height={props.height} data={data} outerRadius={'85%'} isAnimationActive startWithAnimation >
                 <Legend height={1} verticalAlign="bottom" />
-                <Radar name="Guidelines" dataKey="guideLines" stroke="red" fill="# 00f" fillOpacity={0} />
                 {/*<Radar name="Limits" dataKey="limits" stroke="blue" fill="#D10505" fillOpacity={0} />*/}
                 <Radar name="Actuals" dataKey="actual" stroke="orange" fill="#ff8c00" fillOpacity={0.4} dot />
+                <Radar name="Guidelines" dataKey="guideLines" stroke="red" strokeWidth={2} fill="# 00f" fillOpacity={0} />
                 <Radar name="Proposed" dataKey="proposed" stroke="green" fill="#32cd32" fillOpacity={0.2} dot />
                 <PolarGrid />
                 <PolarAngleAxis dataKey="subject" tick={<CustomizedShape axes={props.axes} names={alertNames} colors={alertColors} onClickShape={props.onClickShape} />} />
