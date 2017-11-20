@@ -14,11 +14,19 @@ f.locale = 'it';
 
 const log = console.log;
 const rnd = (min: number, max: number) => Math.floor(Math.random() * (max - min)) + min;
-const fmt = (num: number) => Math.ceil(num*10)/10 
+const fmt = (num: number) => Math.ceil(num * 10) / 10
 
 const dump = (file: string, data: any) => fs.writeFileSync(`./build/${file}`, JSON.stringify(data, null, 2));
 const italyRegions = ['Nord Ovest', 'Lombardia', 'Nord Est', 'Centro Nord', 'Centro', 'Sud', 'Sicilia'];
-
+const italyRegionsRate = {
+    'Nord Ovest': 4,
+    'Lombardia': 10,
+    'Nord Est': 8,
+    'Centro Nord': 6,
+    'Centro': 9,
+    'Sud': 6,
+    'Sicilia': 5
+}
 const MODEL_COUNT = 10;
 const CLIENT_COUNT = 3000;
 const MAX_CITIES_X_REGION = 4;
@@ -52,7 +60,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
     const lastName = faker.name.lastName();
     const modelIx = Math.ceil(Math.random() * (MODEL_COUNT - 1));
 
-    const agentName = isFakeClient(id) ? agents[0]  :agents[rnd(0, agents.length - 1)];
+    const agentName = isFakeClient(id) ? agents[0] : agents[rnd(0, agents.length - 1)];
     const agent = agentDictionary[agentName];
     return {
         id,
@@ -115,11 +123,11 @@ const strategyCreator = (): StrategyItem[] => {
     let tot = 0;
     let totModel = 0;
     let num = rnd(STRAGEGY_MIN_SECURITY_COUNT, STRATEGY_MAX_SECURITY_COUNT);
-    const cliType = rnd(0,10);
-    const qUbound = cliType <5 ? 6000 :
-                    cliType <6 ? 10000 :
-                    cliType <7 ? 30000 :
-                    cliType <8 ? 70000 : 100000
+    const cliType = rnd(0, 10);
+    const qUbound = cliType < 5 ? 6000 :
+        cliType < 6 ? 10000 :
+            cliType < 7 ? 30000 :
+                cliType < 8 ? 70000 : 100000
 
     return numArray(num).map(i => {
         const skipQ = i > (num - 2);
@@ -234,7 +242,8 @@ const createAgents = () => {
     let clientId = 0;
     let ret = {} as any;
     italyRegions.forEach(region => {
-        const cities = numArray(rnd(1, MAX_CITIES_X_REGION)).map(i => {
+        const max = italyRegionsRate[region];
+        const cities = numArray(max).map(i => {
             return {
                 cityName: faker.address.city(),
                 region
@@ -243,13 +252,13 @@ const createAgents = () => {
         cities.forEach(city => {
             const branches = numArray(rnd(1, MAX_BRANCH_X_CITY)).map(i => {
                 return {
-                    brenchName: 'AG' + (1000 + bc++).toString(),
+                    branchName: 'AG' + (1000 + bc++).toString(),
                     city
                 }
             });
             branches.forEach(branch => {
                 numArray(rnd(1, MAX_AGENT_X_BRENCH)).forEach(i => {
-                    const ag =  {
+                    const ag = {
                         agentName: faker.name.findName(),
                         branch
                     }
@@ -344,14 +353,14 @@ const perfSummaryAll = (perf: { [id: string]: { date: string, perf: number }[] }
     }, {} as { [id: string]: { date: string, perf: number }[] });
     return ret;
 }
-const deltaAnalysis = (radar:Radar) => {
+const deltaAnalysis = (radar: Radar) => {
     let ret = ""
-    ret += radar.concentrationAlert =='green' ? "" : " concentration: +" + fmt(radar.actual.concentration - radar.limits.concentration).toString() 
-    ret += radar.consistencyAlert =='green' ? "" : " consistency: +" + fmt(radar.actual.consistency - radar.limits.consistency).toString() 
-    ret += radar.efficencyAlert =='green' ? "" : " efficency: +" + fmt(radar.actual.efficency - radar.limits.efficency).toString() 
-    ret += radar.overlapAlert =='green' ? "" : " overlap: +" + fmt(radar.actual.overlap - radar.limits.overlap).toString() 
-    ret += radar.riskAdequacyAlert =='green' ? "" : " adequacy: +" + fmt(radar.actual.riskAdequacy - radar.limits.riskAdequacy).toString() 
-    ret += radar.riskAnalysisAlert =='green' ? "" : " risk analysis: +" + fmt(radar.actual.riskAnalysis - radar.limits.riskAnalysis).toString() 
+    ret += radar.concentrationAlert == 'green' ? "" : " concentration: +" + fmt(radar.actual.concentration - radar.limits.concentration).toString()
+    ret += radar.consistencyAlert == 'green' ? "" : " consistency: +" + fmt(radar.actual.consistency - radar.limits.consistency).toString()
+    ret += radar.efficencyAlert == 'green' ? "" : " efficency: +" + fmt(radar.actual.efficency - radar.limits.efficency).toString()
+    ret += radar.overlapAlert == 'green' ? "" : " overlap: +" + fmt(radar.actual.overlap - radar.limits.overlap).toString()
+    ret += radar.riskAdequacyAlert == 'green' ? "" : " adequacy: +" + fmt(radar.actual.riskAdequacy - radar.limits.riskAdequacy).toString()
+    ret += radar.riskAnalysisAlert == 'green' ? "" : " risk analysis: +" + fmt(radar.actual.riskAnalysis - radar.limits.riskAnalysis).toString()
     return ret;
 }
 
