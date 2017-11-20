@@ -57,7 +57,7 @@ export class Holdings extends React.Component<Props, State> {
         const proposed = holdings.slice(1).filter(a => a.suggestedDelta != 0).length;
         const proposeAllColor = accepted == 0 ? 'grey' : accepted == proposed ? 'green' : 'orange';
         const acceptAll = !(accepted == proposed);
-        const isValid = holdings.filter(h => (h.currentWeight + h.suggestedDelta) < 0 || (h.currentWeight + h.suggestedDelta) > 1).length == 0;
+        const isValid = finalWeight.filter(h => h.weight <-0.001 || h.weight > 1).length == 0;
         return (
             <div >
                 {
@@ -141,7 +141,7 @@ export class Holdings extends React.Component<Props, State> {
                                         <Table.Cell textAlign="left">
                                             <HoldingWeigthControl factor={factor} data={t} onChange={(item) => this.handleItemChanged(item, i)} />
                                         </Table.Cell>
-                                        <Table.Cell error={suggWeight < 0 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt.format(suggWeight * 100)}</Table.Cell>
+                                        <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt.format(suggWeight * 100)}</Table.Cell>
                                     </Table.Row>
                             })
                         }

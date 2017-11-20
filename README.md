@@ -84,10 +84,10 @@
 - ~~Fix Quantity and Amount editing on holdings~~
 
 # to investigate
-- Risk return, bigger circles.
+- ~~Risk return, bigger circles.~~
 - Weight editor issue
-- Branch error.
-- Model title, 100%
+- ~~Branch error.~~
+- ~~Model title, 100%~~
 
 # Proposal
 - ~~Example 2: Propose to keep ferrari at 20.~~

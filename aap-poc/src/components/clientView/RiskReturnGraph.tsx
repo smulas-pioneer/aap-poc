@@ -43,8 +43,8 @@ export class RiskReturnGraph extends React.Component<RiskReturnChartProps, RiskR
                     <CartesianGrid />
                     <Legend />
                     <Scatter name='Constituents' data={data} fill={Colors.GRAY} shape={renderScatter('circle', scatterShapeCustom)} />
-                    <Scatter name='Portfolio' data={portfolio} fill={Colors.ORANGE} shape={renderScatter('circle', scatterShapeCustom)} />
-                    <Scatter name='Model' data={model} fill={Colors.GREEN} shape={renderScatter('circle', scatterShapeCustom) } />
+                    <Scatter name='Portfolio' data={portfolio} fill={Colors.ORANGE} shape={renderScatter('circle', scatterShapeCustom,11)} />
+                    <Scatter name='Model' data={model} fill={Colors.GREEN} shape={renderScatter('circle', scatterShapeCustom,8)} />
                     <Tooltip cursor={{ strokeDasharray: '3 3' }} content={renderTooltip} />
                 </ScatterChart>
             </ResponsiveContainer>
@@ -53,12 +53,12 @@ export class RiskReturnGraph extends React.Component<RiskReturnChartProps, RiskR
     }
 }
 
-const renderScatter = (shapeform: string, viewText: boolean) => (props: any) => {
+const renderScatter = (shapeform: string, viewText: boolean,radius?:number) => (props: any) => {
     const { cx, cy, fill, payload: { perf, devSt, id } } = props;
     if (id) {
         return (
             <g>
-                <Dot cx={cx} cy={cy} r={7} fill={fill} />
+                <Dot cx={cx} cy={cy} r={radius ||7} fill={fill} />
                 {viewText &&
                     <g transform={`translate(${cx},${cy})`} >
                         <text x={10} y={0} dy={4} textAnchor="left">{`${id}`}</text>
