@@ -216,7 +216,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         const graphs = this.calculateGraphs();
 
         return (
-            <AdvancedGrid gridTemplateRows="min-content min-content 200px fit-content()" style={{ marginBottom: '10px' }}>
+            <AdvancedGrid className="grid-client-view-main" style={{ marginBottom: '10px' }}>
                 <Segment style={{ margin: 0 }} >
                     <WidgetTitle title={lang.PERSONAL_INFORMATION} />
                     <ClientCard client={client} lang={lang} color={'blue'} />
@@ -227,7 +227,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         <ClientAlert radar={client.radar} lang={lang} />
                     </Segment>
                     : <div />}
-                <AdvancedGrid gridTemplateColumns="auto 40%">
+                <AdvancedGrid className="grid-client-view-sub">
                     <Segment style={{ margin: 0 }}>
                         <WidgetTitle title={this.state.showModel ? lang.MODEL : lang.PORTFOLIO_HOLDINGS} />
                         {this.state.showModel && <Model
@@ -248,7 +248,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         {radar && <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} />}
                     </Segment>
                 </AdvancedGrid>
-                <AdvancedGrid gridTemplateColumns="60% auto">
+                <AdvancedGrid className="grid-client-view-sub2">
                     <Segment style={{ margin: 0 }}>
                         <ClientViews graphs={graphs} lang={lang} mode='tab' />
                     </Segment>

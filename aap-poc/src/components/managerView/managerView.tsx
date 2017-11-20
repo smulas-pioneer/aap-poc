@@ -9,6 +9,7 @@ import { AgentList } from '../agentView/AgentList';
 
 import { ClientFilter } from '../shared/ClientFilter';
 import { AdvancedGrid, OverflowColumn, OverflowItem } from '../shared/GridOverflow';
+import { WidgetTitle } from '../shared/WidgetTitle';
 
 const conn = appConnector<{ uid: string, showFilter?: boolean, showTitle?: boolean }>()(
     (s, p) => ({
@@ -52,7 +53,7 @@ class ManagerViewCompo extends conn.StatefulCompo<{ searchParms: SearchParms }> 
         if (!agentView) return <div />
         let filterMaps: FilterMapTypes[] = ['Regions', 'Agents', 'Alerts', 'Aua'];
 
-        return <AdvancedGrid gridTemplateRows="min-content auto">
+        return <AdvancedGrid className="grid-header-min">
             {showTitle &&
                 <Segment basic>
                     <Header as='h3'>
@@ -65,13 +66,14 @@ class ManagerViewCompo extends conn.StatefulCompo<{ searchParms: SearchParms }> 
                 </Segment>}
 
             {showFilter
-                ? <AdvancedGrid gridTemplateColumns="1fr fit-content(30%)">
+                ? <AdvancedGrid className="grid-filter-right">
                     <Card as={OverflowColumn} fluid>
                         <Segment as={OverflowItem}>
                             <AgentList data={agentView.result} lang={lang} />
                         </Segment>
                     </Card>
-                    <Card style={{ margin: 0 }} >
+                    <Segment style={{ margin: 0 }}>
+                        <WidgetTitle title={lang.FILTER} />
                         <ClientFilter
                             freeFilterText={false}
                             searchPlaceholder={lang.ENTER_FILTER_TEXT}
@@ -80,7 +82,7 @@ class ManagerViewCompo extends conn.StatefulCompo<{ searchParms: SearchParms }> 
                             filterValue={searchParms}
                             onChange={this.handleOnChangeFilter}
                         />
-                    </Card>
+                    </Segment>
                 </AdvancedGrid>
                 : <AgentList data={agentView.result} lang={lang} />
             }

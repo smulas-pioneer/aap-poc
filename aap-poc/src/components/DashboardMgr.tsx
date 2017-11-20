@@ -206,7 +206,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
 
         return (
-            <AdvancedGrid gridTemplateRows="140px auto" >
+            <AdvancedGrid className="grid-header-fix" >
                 <Segment style={{ margin: 0 }}>
                     <Grid columns={5} >
                         <Grid.Column textAlign="center" >
@@ -229,7 +229,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                         </Grid.Column>
                     </Grid>
                 </Segment>
-                <AdvancedGrid gridTemplateColumns="auto 250px">
+                <AdvancedGrid className="grid-filter-right">
                     <Card as={OverflowColumn} fluid>
                         <Tab menu={{ pointing: true, secondary: true }} panes={panes} style={{ height: '95%' }} />
                     </Card>
