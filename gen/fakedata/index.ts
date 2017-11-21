@@ -19,7 +19,7 @@ const mapSecurity = (p: any) => {
         AssetId: p.Symbol,
         IsFund: '0',
         Kilovar: null,
-        MacroAssetClass: p.MacroAssetClass,
+        MacroAssetClass: p.AssetClass,
         MicroAssetClass: p.AssetType,
         Sector: null,
         Currency: 'Euro',
@@ -39,8 +39,6 @@ const mapSecurities = (pos: any[]): Security[] => {
     //const pos = FD.case_4_proposed;
     return pos.filter(p => p.Symbol != 'CASH_EUR').map(mapSecurity);
 }
-
-
 
 const mapStrategy = (pos: any[], mod: any[]): StrategyItem[] => {
 
