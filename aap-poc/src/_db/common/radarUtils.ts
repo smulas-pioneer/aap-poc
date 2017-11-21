@@ -81,12 +81,12 @@ export const createRadarSync = (guideLines: RadarItem,
 
 export const getRadarLimitSync = (radarItem: RadarItem): RadarItem => {
     return {
-        concentration: radarItem.concentration + 0.8,//rnd(1, 20) / 10,
-        efficency: radarItem.efficency + 0.8,// rnd(1, 20) / 10,
-        consistency: radarItem.consistency + 0.8,// + rnd(1, 20) / 10,
-        overlap: radarItem.overlap + 0.8,// + rnd(1, 20) / 10,
-        riskAdequacy: radarItem.riskAdequacy + 0.8,// + rnd(1, 20) / 10,
-        riskAnalysis: radarItem.riskAnalysis + 0.8,// + rnd(1, 20) / 10
+        concentration: radarItem.concentration ,//rnd(1, 20) / 10,
+        efficency: radarItem.efficency ,// rnd(1, 20) / 10,
+        consistency: radarItem.consistency ,// + rnd(1, 20) / 10,
+        overlap: radarItem.overlap ,// + rnd(1, 20) / 10,
+        riskAdequacy: radarItem.riskAdequacy ,// + rnd(1, 20) / 10,
+        riskAnalysis: radarItem.riskAnalysis,// + rnd(1, 20) / 10
     }
 };
 
