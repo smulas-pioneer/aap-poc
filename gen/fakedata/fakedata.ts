@@ -80,7 +80,7 @@ export const case_4_model = [
 ]
 
 export const case_4_initial = [
-    { Symbol: 'CASH_EUR', MacroAssetClass: 'CASH', AssetClass: 'CASH', AssetType: 'CASH', Name: 'CASH', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 0.3, SRRI: 1, Amont: 0, Price: 1, Shares: 60000, },
+    { Symbol: 'CASH_EUR', MacroAssetClass: 'CASH', AssetClass: 'CASH', AssetType: 'CASH', Name: 'CASH', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 0.3, SRRI: 1, Amont: 60000, Price: 1, Shares: 60000, },
     { Symbol: 'FR0010314401', MacroAssetClass: 'Funds', AssetClass: 'Equity', AssetType: 'Large Cap', Name: 'Amundi Actions Euro', Mstar_BCH: 'MSCI EMU NR USD', Mstar_SRRI: 6, WEIGHT: 0.2, SRRI: 1.2, Amont: 40000, Price: 66147, Shares: 0.604713743631608, },
     { Symbol: 'LU0119099819', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Corporate Bond', Name: 'Amundi Fds Bond Euro Corporate', Mstar_BCH: 'Barclays Euro Agg Corps TR EUR', Mstar_SRRI: 3, WEIGHT: 0.15, SRRI: 0.9, Amont: 30000, Price: 19.21, Shares: 1561.68662, },
     { Symbol: 'LU0281578517', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Government Bond', Name: 'Pioneer Fds Euro Bond', Mstar_BCH: 'Citi EMU GBI EUR', Mstar_SRRI: 3, WEIGHT: 0.15, SRRI: 0.9, Amont: 30000, Price: 131.89, Shares: 227.462279, },
