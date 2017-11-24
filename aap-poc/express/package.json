@@ -1,0 +1,13 @@
+{
+    "name": "aap-poc",
+    "version": "1.0.0",
+    "description": "aap poc on docker",
+    "author": "simone.mulas@gmail.com",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "dependencies": {
+      "express": "^4.16.1"
+    }
+  }
