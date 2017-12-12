@@ -1,6 +1,6 @@
 {
   "name": "aap-poc",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "homepage": ".",
   "private": true,
   "dependencies": {
