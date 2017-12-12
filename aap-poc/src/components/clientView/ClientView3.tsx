@@ -216,7 +216,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         if (!client || history.length === 0) return <div />
 
         const graphs = this.calculateGraphs();
-/*
+
         if (radar) {
             console.log("BEFORE");
             console.log(strategy.map(r => `${r.security.IsinCode}; ${r.currentWeight}`).join('\n'));
@@ -228,7 +228,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
             p = radar.proposed;
             console.log(Object.keys(p).map(k => `${k};${p[k]}`).join('\n'));
         }
-        */
+       
         return (
             <AdvancedGrid className="grid-client-view-main" style={{ marginBottom: '10px' }}>
                 <Segment style={{ margin: 0 }} >
