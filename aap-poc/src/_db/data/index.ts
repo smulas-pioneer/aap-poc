@@ -1,6 +1,7 @@
 import { securities as securityList } from '../common/securities';
 import { Security, StrategyItem, Client, AlertHistory, InterviewResult } from '../common/interfaces';
 import { Radar } from '../interfaces';
+import { updateStrategies } from '../fakedata1';
 
 export const group = <T>(data: T[], key: keyof (T)) => data.reduce(
     (p, c) => {
@@ -41,7 +42,10 @@ fetch('/clients.json').then(r => r.json()).then(p => {
 
 //STRATEGIES
 let strategies: { [isin: string]: StrategyItem[] };
-fetch('/strategy.json').then(r => r.json()).then(p => strategies = p);
+fetch('/strategy.json').then(r => r.json()).then(p => {
+    strategies = p
+    updateStrategies();
+});
 
 //ALERT HISTORY
 let alertHistory: AlertHistory[];

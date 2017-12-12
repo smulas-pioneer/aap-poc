@@ -67,6 +67,8 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
             this.search();
             setTimeout(() => {
                 this.selectAllAxes();
+                // Accept All Suggestions on Enter.
+                this.handleOnChange(this.state.strategy.map(s=>({...s, suggestionAccepted:true})));
             }, 500);
         }
     }
@@ -214,7 +216,19 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         if (!client || history.length === 0) return <div />
 
         const graphs = this.calculateGraphs();
+/*
+        if (radar) {
+            console.log("BEFORE");
+            console.log(strategy.map(r => `${r.security.IsinCode}; ${r.currentWeight}`).join('\n'));
+            let p = radar.actual;
+            console.log(Object.keys(p).map(k => `${k};${p[k]}`).join('\n'));
 
+            console.log("AFTER");
+            console.log(strategy.map(r => `${r.security.IsinCode}; ${r.currentWeight + r.suggestedDelta}`).join('\n'));
+            p = radar.proposed;
+            console.log(Object.keys(p).map(k => `${k};${p[k]}`).join('\n'));
+        }
+        */
         return (
             <AdvancedGrid className="grid-client-view-main" style={{ marginBottom: '10px' }}>
                 <Segment style={{ margin: 0 }} >
@@ -235,7 +249,9 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                             onShowHoldings={() => this.setState({ showModel: false })}
                         />}
                         {!this.state.showModel && <Holdings
-                            clientId={client.id} lang={lang} holdings={strategy}
+                            clientId={client.id} 
+                            lang={lang} 
+                            holdings={strategy}
                             onChange={this.handleOnChange}
                             onAddSecurity={this.props.addSecurity}
                             onAddHistory={this.props.addHistory}
@@ -320,7 +336,7 @@ const ClientAlert = (props: { radar: Radar, lang: LangDictionary }) => {
             ? (<List.Item key={key}  >
                 <List.Content style={{ marginBottom: '6px' }}>
                     {/*<h3 style={{ color: value === "orange" ? "darkorange" : value }}>*/}
-                    <p style={{ color: "black", fontSize:"20px"}}>
+                    <p style={{ color: "black", fontSize: "20px" }}>
                         <b style={{ color: value === "orange" ? "darkorange" : value }}>{alert.name.toUpperCase()}</b> : {alert.sentence}
                     </p>
                     {/* <Statistic size="mini" color={value}  >
@@ -444,10 +460,10 @@ class ClientViews extends React.Component<ClientViewProps, { activeIndex?: numbe
         this.handleTabChange = this.handleTabChange.bind(this);
 
         setTimeout(() => {
-            this.setState({activeIndex:3});
-          }, 1000);
-      }
-    componentDidMount () {
+            this.setState({ activeIndex: 3 });
+        }, 1000);
+    }
+    componentDidMount() {
     }
     handleTabChange(e: any, { activeIndex }: { activeIndex: number }) {
         this.setState({ activeIndex });
@@ -467,15 +483,15 @@ class ClientViews extends React.Component<ClientViewProps, { activeIndex?: numbe
                         </Grid>
                     } />
             });
-            
+
             return memo;
         }, [] = [] as any[]);
-        
+
         return (
             <div>
                 <WidgetTitle title={lang.PORTFOLIO_VIEWS} />
                 <Tab menu={{ pointing: true, secondary: true }} panes={panes} activeIndex={activeIndex} onTabChange={this.handleTabChange} style={{ height: '95%' }} />
-             
+
             </div>
         );
     }

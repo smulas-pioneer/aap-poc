@@ -3,6 +3,7 @@ import { sumBy, groupBy, endsWith } from "lodash";
 import * as moment from 'moment';
 import * as math from 'mathjs';
 import { networkInterfaces } from "os";
+
 export const isFakeClient = (clientId: string) => ["0", "1", "2"].indexOf(clientId) > -1;
 
 export const numArray = (num: number) => {
@@ -29,14 +30,17 @@ export const getRAG = (act: number, limit: number, mifid: boolean): Alert => {
 }
 
 export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: string, radars: any) => {
+    let r = null;
     if (isFakeClient(clientId)) {
+        
         if (strategy.filter(f => f.suggestionAccepted).length > 0) {
             // Simulation...
-            return radars[clientId + "!"];
+            r=radars[clientId + "!"];
         } else {
             // Real portfolio
-            return radars[clientId]
+            r=radars[clientId]
         }
+        
     }
 
     const actual = currentPosition(strategy);
@@ -44,8 +48,8 @@ export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: stri
     const sugg = suggestedPosition(strategy);
 
     const radarActual = avgRadar(actual);
-    const radarModel = avgRadar(model);
-    const radarLimit = getRadarLimitSync(radarModel);
+    const radarModel = r ? r.guideLines : avgRadar(model);
+    const radarLimit =r ? r.guideLines : getRadarLimitSync(radarModel);
     const radarSugg = avgRadar(sugg);
 
     return createRadarSync(radarModel, radarActual, radarLimit, radarSugg);
@@ -81,11 +85,11 @@ export const createRadarSync = (guideLines: RadarItem,
 
 export const getRadarLimitSync = (radarItem: RadarItem): RadarItem => {
     return {
-        concentration: radarItem.concentration ,//rnd(1, 20) / 10,
-        efficency: radarItem.efficency ,// rnd(1, 20) / 10,
-        consistency: radarItem.consistency ,// + rnd(1, 20) / 10,
-        overlap: radarItem.overlap ,// + rnd(1, 20) / 10,
-        riskAdequacy: radarItem.riskAdequacy ,// + rnd(1, 20) / 10,
+        concentration: radarItem.concentration,//rnd(1, 20) / 10,
+        efficency: radarItem.efficency,// rnd(1, 20) / 10,
+        consistency: radarItem.consistency,// + rnd(1, 20) / 10,
+        overlap: radarItem.overlap,// + rnd(1, 20) / 10,
+        riskAdequacy: radarItem.riskAdequacy,// + rnd(1, 20) / 10,
         riskAnalysis: radarItem.riskAnalysis,// + rnd(1, 20) / 10
     }
 };
