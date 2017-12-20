@@ -61,6 +61,7 @@ export const case_3_initial = [
 export const case_3_proposed = [
     { Symbol: 'CASH_EUR', MacroAssetClass: 'CASH', AssetClass: 'CASH', AssetType: 'CASH', Name: 'CASH', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 0, SRRI: 1, Amont: 0, Price: 1, Shares: 0, },
     { Symbol: 'NL0011585146', MacroAssetClass: 'Equity', AssetClass: 'Equity', AssetType: 'Equity', Name: 'Ferrari', Mstar_BCH: '', Mstar_SRRI: 6, WEIGHT: 0.05, SRRI: 0.6, Amont: 10000, Price: 55.3, Shares: 180.831826401447, },
+    { Symbol: 'IE0007472990', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Government Bond', Name: 'Vanguard Euro Government Bond Index', Mstar_BCH: '', Mstar_SRRI: 3, WEIGHT: 0, SRRI: 1.05, Amont: 0, Price: 222.98, Shares: 0, },
     { Symbol: 'FR0010314401', MacroAssetClass: 'Funds', AssetClass: 'Equity', AssetType: 'Large Cap', Name: 'Amundi Actions Euro', Mstar_BCH: 'MSCI EMU NR USD', Mstar_SRRI: 6, WEIGHT: 0.15, SRRI: 0.6, Amont: 10000, Price: 66147, Shares: 0.151178435907902, },
     { Symbol: 'LU0119099819', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Corporate Bond', Name: 'Amundi Fds Bond Euro Corporate', Mstar_BCH: 'Barclays Euro Agg Corps TR EUR', Mstar_SRRI: 3, WEIGHT: 0.2, SRRI: 0.6, Amont: 20000, Price: 19.21, Shares: 1041.12441436752, },
     { Symbol: 'LU0518421895', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Government Bond', Name: 'Amundi Fds Bond Euro Government', Mstar_BCH: 'Citi EMU GBI EUR', Mstar_SRRI: 3, WEIGHT: 0.4, SRRI: 1.2, Amont: 40000, Price: 131.89, Shares: 303.28303889605, },

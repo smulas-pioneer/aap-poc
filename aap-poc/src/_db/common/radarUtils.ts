@@ -26,7 +26,7 @@ export const avgRadar = (position: PositionItem[]): RadarItem => {
 }
 
 export const getRAG = (act: number, limit: number, mifid: boolean): Alert => {
-    return act > limit ? (mifid ? 'red' : 'orange') : 'green'
+    return act > (limit+1) ? (mifid ? 'red' : 'orange') : 'green'
 }
 
 export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: string, radars: any) => {
