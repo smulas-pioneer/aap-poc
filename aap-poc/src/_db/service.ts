@@ -45,6 +45,7 @@ export const searchClient = (parms: Model.SearchParms, visibility?: string[]): P
         .filter(c => arrayContains(parms.regions, c.address.region))
         .filter(c => arrayContains(parms.size, c.size))
         .filter(c => arrayContains(parms.segments, c.segment))
+        .filter(c => arrayContains(parms.branch, c.branch))
         .map(c => ({ ...c, holdings: [] }));
 
     return Promise.resolve({

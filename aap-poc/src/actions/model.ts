@@ -3,6 +3,7 @@ import { LangDictionary } from '../reducers/language/interfaces';
 import { Client, SearchParms } from '../_db/interfaces';
 import { isArray, startCase, Dictionary } from 'lodash';
 import { MouseEventHandler } from 'react';
+import { ClientFilter } from '../components/shared/ClientFilter';
 
 export interface MapLegend<T> {
     title: string,
@@ -48,7 +49,7 @@ export const memuItems: MemuItemModel[] = [
     { langProps: 'NEWS_INSIGHTS', linkTo: undefined, color: 'grey', icon: 'newspaper', innewline: true }
 ]
 
-export type FilterMapTypes = 'Regions' | 'Alerts' | 'Agents' | 'Aua' | 'AlertType' | 'Segment';
+export type FilterMapTypes = 'Regions' | 'Alerts' | 'Agents' | 'Aua' | 'AlertType' | 'Segment' | 'Branch';
 
 export interface FilterMap {
     prop: string;
@@ -89,6 +90,11 @@ export const filterMapItems: {[key in FilterMapTypes]: FilterMap } = {
         prop: 'segment',
         searchprop: 'segments',
         render: { header: 'Segment', icon: 'id badge', label: undefined }
+    },
+    Branch: {
+        prop: 'branch',
+        searchprop: 'branch',
+        render: { header: 'Branch', icon: 'id badge', label: undefined , max:5}
     }
 }
 
@@ -103,9 +109,10 @@ export interface ClientFilters {
     Aua: SearchFilter;
     AlertType: SearchFilter;
     Segment: SearchFilter;
+    Branch: SearchFilter;
 }
 export const createFilterAdv = (data: Client[], searchParms?: SearchParms | undefined, from?: ClientFilters | undefined) => {
-
+    
     const isChecked = (array?: any[], value?: any) => {
         if (!array || !array.length) return false;
         const a = array.find(v => v === value.toString());

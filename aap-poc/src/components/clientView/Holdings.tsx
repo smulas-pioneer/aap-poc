@@ -9,6 +9,7 @@ import { Spotlight } from '../spotlight';
 import { ConfirmDialog } from '../shared/ConfirmDialog';
 import { suggestedPosition } from '../../_db/common/radarUtils';
 import { OverflowItem } from '../shared/GridOverflow';
+import { strategies } from '../../_db/data/index';
 
 interface Props {
     holdings: StrategyItem[],
@@ -57,7 +58,7 @@ export class Holdings extends React.Component<Props, State> {
         const proposed = holdings.slice(1).filter(a => a.suggestedDelta != 0).length;
         const proposeAllColor = accepted == 0 ? 'grey' : accepted == proposed ? 'green' : 'orange';
         const acceptAll = !(accepted == proposed);
-        const isValid = finalWeight.filter(h => h.weight <-0.001 || h.weight > 1).length == 0;
+        const isValid = finalWeight.filter(h => h.weight < -0.001 || h.weight > 1).length == 0;
         return (
             <div >
                 {
@@ -71,7 +72,7 @@ export class Holdings extends React.Component<Props, State> {
                     />
                 }
                 <Menu size='mini'>
-                    <Menu.Item onClick={this.props.onShowModel}  ><Icon name="table"/>Model</Menu.Item>
+                    <Menu.Item onClick={this.props.onShowModel}  ><Icon name="table" />Model</Menu.Item>
                     <Menu.Item ><Icon name="print" />Print</Menu.Item>
                     <Menu.Item ><Icon name="file pdf outline" />Export to Pdf</Menu.Item>
                     <Menu.Item onClick={() => this.setState({ addingSecurity: true })} >
@@ -90,7 +91,7 @@ export class Holdings extends React.Component<Props, State> {
                                     trigger={<Menu.Item position="right" disabled={!isValid}><Icon name="send" />Send</Menu.Item>}
                                     style={{ border: '2px solid green' }}
                                     onConfirm={() => this.props.onAddHistory!({ clientId: this.props.clientId, notes: lang.PROPOSAL_VALIDATION.title })} >
-                                    <h4>{lang.PROPOSAL_VALIDATION.message}</h4>
+                                    <OrderList data={holdings} lang={lang} />
                                 </ConfirmDialog>
                             ) : <Menu.Item position="right" disabled={!isValid}><Icon name="send" />Send</Menu.Item>
                         }
@@ -99,7 +100,7 @@ export class Holdings extends React.Component<Props, State> {
                 <Table compact size="small">
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell style={{width:'10px'}} ></Table.HeaderCell>
+                            <Table.HeaderCell style={{ width: '10px' }} ></Table.HeaderCell>
                             <Table.HeaderCell >{lang.SECURITY_NAME}</Table.HeaderCell>
                             <Table.HeaderCell width={2}>{lang.ASSET_CLASS}</Table.HeaderCell>
                             <Table.HeaderCell width={2} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
@@ -118,7 +119,7 @@ export class Holdings extends React.Component<Props, State> {
                             <Table.HeaderCell width={2} textAlign="right">{lang.FINAL_WEIGHT}</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
-                    <Table.Body style={{overflow:'visible'}}>
+                    <Table.Body style={{ overflow: 'visible' }}>
                         {
                             holdings.map((t, i) => {
                                 const show = t.currentQuantity != 0;
@@ -127,11 +128,11 @@ export class Holdings extends React.Component<Props, State> {
                                     : this.state.mode == 'Quantity' ? tot / t.currentPrice / 100
                                         : tot / 100;
                                 return (!t.newSecurity && t.currentQuantity == 0 && t.suggestedDelta == 0) ? null :
-                                       <Table.Row key={i}>
+                                    <Table.Row key={i}>
                                         <Table.Cell>
                                             {t.security.blacklisted && <Icon size="large" color="black" name='thumbs down' />}
-                                            {t.security.pushed && <Icon size="large"  color="green" name='thumbs up' />}
-                                            {t.clientFavorites && <Icon size="large"  color="red" name='heart' />}
+                                            {t.security.pushed && <Icon size="large" color="green" name='thumbs up' />}
+                                            {t.clientFavorites && <Icon size="large" color="red" name='heart' />}
                                         </Table.Cell>
                                         <Table.Cell>{t.security.SecurityName}</Table.Cell>
                                         <Table.Cell>{t.security.MacroAssetClass}</Table.Cell>
@@ -168,4 +169,38 @@ const createEmptyRow = (i: number) => {
     return <Table.Row key={i}>
         {numArray(8).map(j => <Table.Cell key={j} style={{ color: 'white' }}>...</Table.Cell>)}
     </Table.Row>
+}
+
+const OrderList = (props: { data: StrategyItem[], lang: LangDictionary }) => {
+    const { data, lang } = props;
+    const tot = sumBy(data, t => t.currentAmount);
+
+    const fmt = new Intl.NumberFormat(lang.NUMBER_FORMAT, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
+    return <Segment>
+        <h4>Orders.</h4>
+        <Table compact size="small">
+            <Table.Header>
+                <Table.Row>
+                    <Table.HeaderCell >{lang.ISIN}</Table.HeaderCell>
+                    <Table.HeaderCell >{lang.SECURITY_NAME}</Table.HeaderCell>
+                    <Table.HeaderCell >Operation</Table.HeaderCell>
+                    <Table.HeaderCell width={2} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
+                    <Table.HeaderCell width={2} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
+                </Table.Row>
+            </Table.Header>
+            {data.filter(i => i.suggestedDelta != 0 && !i.isCash).map((item, ix) => {
+                return <Table.Row key={ix}>
+                    <Table.Cell >{item.security.IsinCode} </Table.Cell>
+                    <Table.Cell >{item.security.SecurityName} </Table.Cell>
+                    <Table.Cell >{item.suggestedDelta > 0 ? 'BUY' : 'SELL'} </Table.Cell>
+                    <Table.Cell >{fmt.format(item.suggestedDelta * tot/ item.currentPrice)} </Table.Cell>
+                    <Table.Cell >{fmt.format(item.suggestedDelta * tot)} </Table.Cell>
+                </Table.Row>
+            })}
+
+        </Table>
+    </Segment>
 }
