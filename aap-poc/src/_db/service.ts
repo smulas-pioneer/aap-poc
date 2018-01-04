@@ -135,11 +135,11 @@ export const getStrategy = (clientId: string) => {
     );
 }
 
-export const getSuggestion = (args: { id:string, position: Model.StrategyItem[], axes: Model.RadarStrategyParm, calculateFromAxes: boolean }) => {
-    if (isFakeClient( args.id)){
+export const getSuggestion = (args: { id: string, position: Model.StrategyItem[], axes: Model.RadarStrategyParm, calculateFromAxes: boolean }) => {
+    if (isFakeClient(args.id)) {
         const ret = strategies[args.id];
-        return Promise.resolve(ce.getSuggestion(args.position, args.axes, args.calculateFromAxes,ret));
-    } 
+        return Promise.resolve(ce.getSuggestion(args.position, args.axes, args.calculateFromAxes, ret));
+    }
     return Promise.resolve(ce.getSuggestion(args.position, args.axes, args.calculateFromAxes));
 };
 
@@ -163,7 +163,10 @@ export const spotlightSearch = (parms: SpotlightSearchParms): Promise<Model.Spot
             age = getAgentViewsFromClients(clientList.filter(c => arrayContains(parms.agents, c.agent)).filter(c => c.agent.toLowerCase().indexOf(filter) !== -1));
         }
         if (hasFlag(cc, SpotlightContext.Security)) {
-            sec = securityList.filter((s, ix) => s.SecurityName.toLowerCase().indexOf(filter) !== -1 && ix != 0); // skip 0 cash
+            sec = securityList.filter((s, ix) => ix != 0 &&
+                (s.SecurityName.toLowerCase().indexOf(filter) !== -1 ||
+                    s.IsinCode.toLowerCase().indexOf(filter) !== -1)
+            ); // skip 0 cash
             if (onlyPushed) sec = sec.filter(sec => sec.pushed === true);
         }
     }
