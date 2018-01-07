@@ -11,8 +11,8 @@
     height: 100%;
     grid-column-gap: 0.5em;
     grid-row-gap: 0.5em;
-    grid-template-rows: fit-content(100%);
-    grid-template-columns: fit-content(100%);
+    /* grid-template-rows: fit-content(100%); */
+    /* grid-template-columns: fit-content(100%); */
 }
 
 .grid-advanced.grid-header-fix {
