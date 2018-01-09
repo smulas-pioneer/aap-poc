@@ -3,7 +3,7 @@ PRIORITY 1
 
  Complexity | Status | Description 
  ----- | --- | ---
- *  || Separator for thousands (depending on the Language)
+ *  |&#10003;| Separator for thousands (depending on the Language)
  *  || Proposal validation always available (button Show order List next to Simulate)
  *  || Export in excel for the order list (ex. Excel logo)
 *  || Add isin code next to security name on the main screen
