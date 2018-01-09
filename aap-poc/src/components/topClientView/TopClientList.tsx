@@ -3,7 +3,7 @@ import { Client } from "../../_db/interfaces";
 import { LangDictionary } from "../../reducers/language/interfaces";
 import { startCase } from "lodash";
 import { Segment, Table, Popup, Label } from "semantic-ui-react";
-import { formatAua } from "../../_db/utils";
+import { formatAua, formatNumber } from "../../_db/utils";
 import { CSSProperties } from "react";
 import { IndicatorOptionsType } from "../../actions/model";
 import { TopClientItem, GroupTypes } from "./index";
@@ -29,6 +29,7 @@ export const TopClientList = ({ clients, group, indicator, lang }: TopClientList
         }
         return ret;
     }
+    const fmt = formatNumber(lang.NUMBER_FORMAT);
 
     const cellStyle = (rowNumber: number, type: GroupTypes | IndicatorOptionsType, isGroup?: boolean) => {
         let ret: CSSProperties = {};
@@ -83,11 +84,11 @@ export const TopClientList = ({ clients, group, indicator, lang }: TopClientList
                                     {group >= GroupTypes.Advisor &&
                                         <Table.Cell style={cellStyle(clIndex, GroupTypes.Advisor, true)}>{client.advisor}</Table.Cell>
                                     }
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.clients)}>{client.totals.clients}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.aua)}>{formatAua(client.totals.aua)}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.proposals)}>{client.totals.proposals}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.acceptedProposals)}>{client.totals.acceptedProposals}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.alerts)}>{client.totals.alerts}</Table.Cell>
+                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.clients)}>{fmt(client.totals.clients)}</Table.Cell>
+                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.aua)}>{formatAua(client.totals.aua, fmt)}</Table.Cell>
+                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.proposals)}>{fmt(client.totals.proposals)}</Table.Cell>
+                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.acceptedProposals)}>{fmt(client.totals.acceptedProposals)}</Table.Cell>
+                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.alerts)}>{fmt(client.totals.alerts)}</Table.Cell>
                                 </Table.Row>
                             )
                         }

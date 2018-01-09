@@ -74,7 +74,7 @@ export const English: LanguageState = {
         MAP_OPTS_CLIENTS: "Clients",
         MAP_OPTS_AUA: "AUA",
         MAP_OPTS_PROPOSALS: "Proposals",
-        MAP_OPTS_PROPOSAL: "Accep. proposals",
+        MAP_OPTS_PROPOSAL: "Accept. proposals",
         MAP_OPTS_ALERTS: "Alerts",
         TIME_HORIZON: "Horizon",
         REGION: "Region",

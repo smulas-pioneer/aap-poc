@@ -17,7 +17,7 @@ import { ClientFilter } from './shared/ClientFilter';
 
 import { AdvancedGrid, OverflowColumn, OverflowItem } from './shared/GridOverflow';
 import { WidgetTitle } from './shared/WidgetTitle';
-import { formatAua } from '../_db/utils';
+import { formatAua, formatNumber } from '../_db/utils';
 
 const sprintf = require("sprintf-js").sprintf;
 
@@ -158,7 +158,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
     }
 
     // lang
-    alertsDetail = (numOfAlerts: number) => sprintf(this.props.lang.DB_ALERTS_DETAIL, numOfAlerts);
+    alertsDetail = (numOfAlerts: string) => sprintf(this.props.lang.DB_ALERTS_DETAIL, numOfAlerts);
     percDetail = (value: number | undefined, from: string, period: 'Y' | 'M' | 'D', info?: string) => sprintf(this.props.lang.DB_PERC_DETAIL, (value ? value + '% ' : ''), (info ? info + ' ' : ''), from, period == 'Y' ? this.props.lang.YEAR : period == 'M' ? this.props.lang.MONTH : this.props.lang.DAY);
 
     renderTabItem(langProps: string, icon: SemanticICONS, color: SemanticCOLORS) {
@@ -171,6 +171,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
     render() {
         const { uid, data, filter, lang } = this.props;
         const style = { padding: '5px 15px' }
+        const fmt = formatNumber(lang.NUMBER_FORMAT);
 
         if (!data) return null;
 
@@ -208,13 +209,13 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                 <Segment style={{ margin: 0 }}>
                     <Grid columns={5} >
                         <Grid.Column textAlign="center">
-                            {this.renderItem(info.length, lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
+                            {this.renderItem(fmt(info.length), lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
                             {this.renderItem(formatAua(info.assetUnder), lang.DB_ASSET_ADVISE, this.percDetail(15, ' 1', 'Y', 'NET CASHFLOWS'), undefined, 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
-                            {this.renderItem(<span style={{ color: 'red' }}>{info.clientAlert}</span>, lang.DB_CLIENTS_ALERTS, this.alertsDetail(info.mifidAlert))}
+                            {this.renderItem(<span style={{ color: 'red' }}>{fmt(info.clientAlert)}</span>, lang.DB_CLIENTS_ALERTS, this.alertsDetail(fmt(info.mifidAlert)))}
                         </Grid.Column>
                         {/* <Grid.Column textAlign="center">
                             {this.renderItem(info.interviews, lang.DB_INTERVIEWS, this.percDetail(undefined, '1', 'M'))}
@@ -223,7 +224,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                             {this.renderItem(undefined, lang.DB_CLIENT_FEEDBACK, this.percDetail(15, '1', 'Y'), 'smile', 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
-                            {this.renderItem(info.acceptedProposals, lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${info.totalProposals}`)}
+                            {this.renderItem(fmt(info.acceptedProposals), lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${fmt(info.totalProposals)}`)}
                         </Grid.Column>
                     </Grid>
                 </Segment>
@@ -233,10 +234,10 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                     </Card>
                     <Segment style={{ margin: 0 }}>
                         <Card fluid>
-                            {this.renderItem(info.totalProposals - (info.acceptedProposals + info.rejectedProposals), lang.DB_PENDING_PROPOSALS)}
+                            {this.renderItem(fmt(info.totalProposals - (info.acceptedProposals + info.rejectedProposals)), lang.DB_PENDING_PROPOSALS)}
                         </Card>
                         <Card fluid>
-                            {this.renderItem(info.rejectedProposals, lang.DB_PROPOSAL_ACCEPTED_NOT_EXECUTED)}
+                            {this.renderItem(fmt(info.rejectedProposals), lang.DB_PROPOSAL_ACCEPTED_NOT_EXECUTED)}
                         </Card>
                         <Segment>
                             <WidgetTitle title={lang.FILTER} />
