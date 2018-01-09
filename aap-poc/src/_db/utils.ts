@@ -29,13 +29,20 @@ export function isSecurity(item: SpotlightSearchResultItem): item is Security {
     return (item as Security).SecurityName !== undefined;
 }
 
-export function formatAua(aua: number | undefined) {
+export function formatAua(aua: number | undefined, fmt?: any) {
     if (aua === undefined) return '';
-    const ret = Math.floor(aua / 1000000);
+    let ret = Math.floor(aua / 1000000);
+    if (fmt) ret = fmt(ret);
     return `${ret} M€`;
 }
 
-
+export const formatNumber = (fmt: string) => (num: number | undefined, digits: number = 0, defaultRet: string = "") => {
+    if (!num) return defaultRet;
+    return new Intl.NumberFormat(fmt, {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits,
+    }).format(num);
+}
 export function getRegionsByClients(clients: Client[]) {
     const regions = groupBy(clients, c => c.address.region);
     const regComparer = ((a: { region: string }, b: { region: string }) => a.region.toLowerCase().indexOf('nor') === 0 ? -1 : a.region.localeCompare(b.region));

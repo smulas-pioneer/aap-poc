@@ -3,7 +3,7 @@ PRIORITY 1
 
  Complexity | Status | Description 
  ----- | --- | ---
- *  || Separator for thousands (depending on the Language)
+ * |Done| Separator for thousands (depending on the Language)
  *  || Proposal validation always available (button Show order List next to Simulate)
  *  || Export in excel for the order list (ex. Excel logo)
 *  || Add isin code next to security name on the main screen
@@ -11,9 +11,9 @@ PRIORITY 1
 *  || Open pdf after generation checkbox
 *  || add operation in holdings
 *  || axe design - grey when unselected, no check ; bell for alert if present, alerts are about actuals
-*  || Replace send with ‘Validate’
+*  |Done| Replace send with ‘Validate’
 *  || add ‘Select all’ beside Simulate
-*  || Better figures on AuA (My Alerts)
+*  |Done| Better figures on AuA (My Alerts)
 *  || In the list we have to include all the clients (not only the ones in alert)
 *  || sort capabilities in alert list 1k
 *  || In the order list you may three choices (yes, no, Later)

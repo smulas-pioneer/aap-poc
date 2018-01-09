@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Holding } from '../../_db/interfaces';
 import { Table } from 'semantic-ui-react';
 import { LangDictionary } from '../../reducers/language/interfaces';
+import { formatNumber } from '../../_db/utils';
 
 interface Props {
     holdings: Holding[],
@@ -15,10 +16,7 @@ export class Holdings extends React.Component<Props, State> {
 
     render() {
         const { holdings, lang } = this.props;
-        const fmt = new Intl.NumberFormat(lang.NUMBER_FORMAT, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        });
+        const fmt = formatNumber(lang.NUMBER_FORMAT);
         return (
             <Table compact >
                 <Table.Header>
@@ -38,9 +36,9 @@ export class Holdings extends React.Component<Props, State> {
                                 <Table.Cell>{t.securityId}</Table.Cell>
                                 <Table.Cell>{t.security!.SecurityName}</Table.Cell>
                                 <Table.Cell>{t.security!.MacroAssetClass}</Table.Cell>
-                                <Table.Cell textAlign="right">{fmt.format(t.quantity)}</Table.Cell>
-                                <Table.Cell textAlign="right">{fmt.format(t.amount)}</Table.Cell>
-                                <Table.Cell textAlign="right">{fmt.format(t.weight * 100)}%</Table.Cell>
+                                <Table.Cell textAlign="right">{fmt(t.quantity)}</Table.Cell>
+                                <Table.Cell textAlign="right">{fmt(t.amount)}</Table.Cell>
+                                <Table.Cell textAlign="right">{fmt(t.weight * 100, 0)}%</Table.Cell>
                             </Table.Row>
                         })
                     }

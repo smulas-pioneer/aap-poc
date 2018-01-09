@@ -13,7 +13,7 @@ import { GeoItalyClientsChart } from './GeoItalyClientsChart';
 import { MenuPagination } from '../shared/MenuPagination';
 import { FilterMapTypes } from '../../actions/model';
 import { ItalyMapClientsChart } from './ItalyMapClientsChart';
-import { formatAua } from '../../_db/utils';
+import { formatAua, formatNumber } from '../../_db/utils';
 
 const conn = appConnector<{ uid: string, hideGraphs?: boolean, manager?: boolean, showTitle?: boolean, showFilter?: boolean }>()(
     (s, p) => ({
@@ -79,6 +79,7 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
     renderTable() {
         const { lang, data, filter, manager, showFilter } = this.props;
         const { searchParms, pageIndex } = this.state;
+        const fmt = formatNumber(lang.NUMBER_FORMAT);
 
         if (!data) return null;
 
@@ -93,12 +94,12 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
                             <Table.Row>
                                 <Table.HeaderCell width={2}>{lang.CLIENT_NAME}</Table.HeaderCell>
                                 {manager && <Table.HeaderCell width={2}>{lang.MANAGED_BY}</Table.HeaderCell>}
-                                <Table.HeaderCell width={1}>{lang.AUA}</Table.HeaderCell>
-                                <Table.HeaderCell >{lang.LAST_INTERVIEW_DATE}</Table.HeaderCell>
+                                <Table.HeaderCell textAlign="right" width={2}>{lang.AUA}</Table.HeaderCell>
+                                <Table.HeaderCell width={2} >{lang.LAST_INTERVIEW_DATE}</Table.HeaderCell>
                                 <Table.HeaderCell width={2}>{lang.DECISION}</Table.HeaderCell>
                                 <Table.HeaderCell>{lang.MODEL}</Table.HeaderCell>
                                 <Table.HeaderCell width={1}>{lang.MIFID}</Table.HeaderCell>
-                                <Table.HeaderCell width={5}>{lang.DELTA_ANALYSIS}</Table.HeaderCell>
+                                <Table.HeaderCell width={4}>{lang.DELTA_ANALYSIS}</Table.HeaderCell>
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
@@ -111,7 +112,7 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
                                             </Link>
                                         </Table.Cell>
                                         {manager && <Table.Cell>{client.agent}</Table.Cell>}
-                                        <Table.Cell>{formatAua(client.aua)}</Table.Cell>
+                                        <Table.Cell textAlign="right" >{fmt(client.aua)}</Table.Cell>
                                         <Table.Cell>{client.lastInterviewDate}</Table.Cell>
                                         <Table.Cell>{client.decision}</Table.Cell>
                                         <Table.Cell>{client.modelName}</Table.Cell>

@@ -4,7 +4,7 @@ import { Table, Button, Segment, Menu, Icon, Dropdown } from 'semantic-ui-react'
 import { LangDictionary } from '../../reducers/language/interfaces';
 import { HoldingWeigthControl } from './HoldingWeightControl';
 import { sumBy } from 'lodash';
-import { numArray } from '../../_db/utils';
+import { numArray, formatNumber } from '../../_db/utils';
 import { Spotlight } from '../spotlight';
 import { ConfirmDialog } from '../shared/ConfirmDialog';
 import { suggestedPosition } from '../../_db/common/radarUtils';
@@ -49,10 +49,7 @@ export class Holdings extends React.Component<Props, State> {
     render() {
         const { holdings, lang } = this.props;
         const finalWeight = suggestedPosition(holdings);
-        const fmt = new Intl.NumberFormat(lang.NUMBER_FORMAT, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        });
+        const fmt = formatNumber(lang.NUMBER_FORMAT);
         const tot = sumBy(holdings, t => t.currentAmount);
         const accepted = holdings.slice(1).filter(a => a.suggestionAccepted).length;
         const proposed = holdings.slice(1).filter(a => a.suggestedDelta != 0).length;
@@ -88,12 +85,12 @@ export class Holdings extends React.Component<Props, State> {
                             ? (
                                 <ConfirmDialog
                                     title={lang.PROPOSAL_VALIDATION.title}
-                                    trigger={<Menu.Item position="right" disabled={!isValid}><Icon name="send" />Send</Menu.Item>}
+                                    trigger={<Menu.Item position="right" disabled={!isValid}><Icon name="send" />Validate</Menu.Item>}
                                     style={{ border: '2px solid green' }}
                                     onConfirm={() => this.props.onAddHistory!({ clientId: this.props.clientId, notes: lang.PROPOSAL_VALIDATION.title })} >
                                     <OrderList data={holdings} lang={lang} />
                                 </ConfirmDialog>
-                            ) : <Menu.Item position="right" disabled={!isValid}><Icon name="send" />Send</Menu.Item>
+                            ) : <Menu.Item position="right" disabled={!isValid}><Icon name="send" />Validate</Menu.Item>
                         }
                     </Menu.Menu>
                 </Menu>
@@ -136,13 +133,13 @@ export class Holdings extends React.Component<Props, State> {
                                         </Table.Cell>
                                         <Table.Cell>{t.security.SecurityName}</Table.Cell>
                                         <Table.Cell>{t.security.MacroAssetClass}</Table.Cell>
-                                        <Table.Cell textAlign="right">{show && fmt.format(t.currentQuantity)}</Table.Cell>
-                                        <Table.Cell textAlign="right">{show && fmt.format(t.currentAmount)}</Table.Cell>
-                                        <Table.Cell textAlign="right">{show && fmt.format(t.currentWeight * 100)} </Table.Cell>
+                                        <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
+                                        <Table.Cell textAlign="right">{show && fmt(t.currentAmount)}</Table.Cell>
+                                        <Table.Cell textAlign="right">{show && fmt(t.currentWeight * 100, 0)} </Table.Cell>
                                         <Table.Cell textAlign="left">
                                             <HoldingWeigthControl factor={factor} data={t} onChange={(item) => this.handleItemChanged(item, i)} />
                                         </Table.Cell>
-                                        <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt.format(suggWeight * 100)}</Table.Cell>
+                                        <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100)}</Table.Cell>
                                     </Table.Row>
                             })
                         }
@@ -153,10 +150,10 @@ export class Holdings extends React.Component<Props, State> {
                             <Table.HeaderCell>{lang.TOTAL}</Table.HeaderCell>
                             <Table.HeaderCell></Table.HeaderCell>
                             <Table.HeaderCell textAlign="right"></Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right">{fmt.format(tot)}</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right">{fmt.format(sumBy(holdings, t => t.currentWeight) * 100)}</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="right">{fmt(tot)}</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="right">{fmt(sumBy(holdings, t => t.currentWeight) * 100)}</Table.HeaderCell>
                             <Table.HeaderCell textAlign="right"></Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right">{fmt.format(sumBy(finalWeight, t => t.weight) * 100)}</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="right">{fmt(sumBy(finalWeight, t => t.weight) * 100)}</Table.HeaderCell>
                         </Table.Row>
                     </Table.Footer>
                 </Table>
@@ -196,7 +193,7 @@ const OrderList = (props: { data: StrategyItem[], lang: LangDictionary }) => {
                     <Table.Cell >{item.security.IsinCode} </Table.Cell>
                     <Table.Cell >{item.security.SecurityName} </Table.Cell>
                     <Table.Cell >{item.suggestedDelta > 0 ? 'BUY' : 'SELL'} </Table.Cell>
-                    <Table.Cell >{fmt.format(item.suggestedDelta * tot/ item.currentPrice)} </Table.Cell>
+                    <Table.Cell >{fmt.format(item.suggestedDelta * tot / item.currentPrice)} </Table.Cell>
                     <Table.Cell >{fmt.format(item.suggestedDelta * tot)} </Table.Cell>
                 </Table.Row>
             })}
