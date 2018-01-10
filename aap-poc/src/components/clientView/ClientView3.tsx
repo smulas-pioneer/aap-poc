@@ -260,7 +260,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} />
                     </Segment>
                     <Segment style={{ margin: 0 }}>
-                        <WidgetTitle title={lang.PORTFOLIO_MONITORING} />
+                        <WidgetTitle title={lang.PORTFOLIO_MONITORING}  shareButtons={['Email','Image','Pdf','Print']}/>
                         {radar && <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} />}
                     </Segment>
                 </AdvancedGrid>
