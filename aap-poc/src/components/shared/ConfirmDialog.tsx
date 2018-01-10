@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Confirm, Modal, Button, Icon } from 'semantic-ui-react';
 import { WidgetTitle } from './WidgetTitle';
+import { ShareButton } from '../Share';
 
 export interface ConfirmDialogProps {
     show?: boolean;
@@ -13,6 +14,8 @@ export interface ConfirmDialogProps {
     onCancel?: () => void;
     onConfirm?: () => void;
     style?: any;
+
+    shareButtons?: ShareButton[]
 }
 
 export interface ConfirmDialogState {
@@ -50,14 +53,14 @@ export class ConfirmDialog extends React.Component<ConfirmDialogProps, ConfirmDi
     }
 
     render() {
-        const { title, trigger, content, children, showOnlyCloseButton, cancelButton, confirmButton, onCancel, onConfirm, style } = this.props;
+        const { title, trigger, content, children, showOnlyCloseButton, cancelButton, confirmButton, onCancel, onConfirm, style ,shareButtons} = this.props;
         const { open } = this.state;
 
         let customTrigger = trigger && React.cloneElement(trigger, { onClick: this.show });
 
         return (
             <Modal trigger={customTrigger} open={open} onClose={this.handleCancel} dimmer={false} style={style}>
-                {title && <Modal.Header> <WidgetTitle title={title} /></Modal.Header>}
+                {title && <Modal.Header> <WidgetTitle title={title} shareButtons={shareButtons}/></Modal.Header>}
                 <Modal.Content image>
                     {content || children}
                 </Modal.Content>

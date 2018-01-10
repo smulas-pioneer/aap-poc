@@ -14,6 +14,7 @@ import { MenuPagination } from '../shared/MenuPagination';
 import { FilterMapTypes } from '../../actions/model';
 import { ItalyMapClientsChart } from './ItalyMapClientsChart';
 import { formatAua, formatNumber } from '../../_db/utils';
+import { WidgetTitle } from '../shared/WidgetTitle';
 
 const conn = appConnector<{ uid: string, hideGraphs?: boolean, manager?: boolean, showTitle?: boolean, showFilter?: boolean }>()(
     (s, p) => ({
@@ -89,6 +90,7 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
         return (
             <Segment.Group>
                 <Segment basic style={{ height: '54vh' }} >
+                    <WidgetTitle title={lang.MY_ALERTS} shareButtons={['Pdf','Excel','Copy']}/>
                     <Table celled compact striped fixed singleLine  >
                         <Table.Header fullWidth>
                             <Table.Row>

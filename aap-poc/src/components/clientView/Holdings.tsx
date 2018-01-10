@@ -71,8 +71,6 @@ export class Holdings extends React.Component<Props, State> {
                 }
                 <Menu size='mini'>
                     <Menu.Item onClick={this.props.onShowModel}  ><Icon name="table" />Model</Menu.Item>
-                    <Menu.Item ><Icon name="print" />Print</Menu.Item>
-                    <Menu.Item ><Icon name="file pdf outline" />Export to Pdf</Menu.Item>
                     <Menu.Item onClick={() => this.setState({ addingSecurity: true })} >
                         <Icon name="add" />
                         Add Security
@@ -81,6 +79,7 @@ export class Holdings extends React.Component<Props, State> {
 
                         <ConfirmDialog
                             title={lang.ORDER_LIST}
+                            shareButtons={['Excel','Copy','Pdf']}
                             showOnlyCloseButton
                             trigger={<Menu.Item position="right"><Icon name="list layout" />Show Order List</Menu.Item>}
                             style={{ border: '2px solid green' }}>
@@ -199,6 +198,7 @@ const OrderList = (props: { data: StrategyItem[], lang: LangDictionary }) => {
                     <Table.HeaderCell width={2} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
+            <Table.Body>
             {data.filter(i => i.suggestedDelta != 0 && !i.isCash).map((item, ix) => {
                 return <Table.Row key={ix}>
                     <Table.Cell >{item.security.IsinCode} </Table.Cell>
@@ -208,7 +208,7 @@ const OrderList = (props: { data: StrategyItem[], lang: LangDictionary }) => {
                     <Table.Cell textAlign="right">{fmt.format(item.suggestedDelta * tot)} </Table.Cell>
                 </Table.Row>
             })}
-
+            </Table.Body>
         </Table>
     </Segment>
 }

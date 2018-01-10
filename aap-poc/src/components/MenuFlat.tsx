@@ -11,6 +11,7 @@ import { UserInfo } from '../actions/model';
 import { LangDictionary } from '../reducers/language/interfaces';
 import { SpotlightSearchResultItem } from '../_db/interfaces';
 import { isClient, isAgent } from '../_db/utils';
+import { Share } from './Share';
 const userImage = require('./user.png');
 const logo2 = require('./logo2.png');
 
@@ -112,7 +113,6 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
                     onItemNavigate={this.onItemNavigate}
                     visible={spotlightVisible}
                 />
-
                 <Menu attached secondary >
 
                     <img style={{ width: '50px', height: '50px', padding: '4px' }} src={logo2} />
@@ -124,6 +124,10 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
                     {/*Model.memuItems.map((v: any, i: any) => this.renderItem(v, i, activeMenuItem))*/}
 
                     <Menu secondary compact floated='right' >
+                        <Menu.Item color="blue">
+                            <Share buttons={['Print','Pdf','Email']} pointing="top right"/> Share
+                        </Menu.Item>
+
                         {this.spotlightMenuItem()}
                         <Dropdown fluid item trigger={trigger} >
                             <Dropdown.Menu>

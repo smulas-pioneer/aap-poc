@@ -243,7 +243,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     : <div />}
                 <AdvancedGrid className="grid-client-view-sub">
                     <Segment style={{ margin: 0 }}>
-                        <WidgetTitle title={this.state.showModel ? lang.MODEL : lang.PORTFOLIO_HOLDINGS} />
+                        <WidgetTitle title={this.state.showModel ? lang.MODEL : lang.PORTFOLIO_HOLDINGS} shareButtons={['Excel','Pdf', 'Copy']} />
                         {this.state.showModel && <Model
                             clientId={client.id} lang={lang} holdings={strategy}
                             onShowHoldings={() => this.setState({ showModel: false })}
@@ -260,7 +260,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} />
                     </Segment>
                     <Segment style={{ margin: 0 }}>
-                        <WidgetTitle title={lang.PORTFOLIO_MONITORING}  shareButtons={['Email','Image','Pdf','Print']}/>
+                        <WidgetTitle title={lang.PORTFOLIO_MONITORING}  shareButtons={['Image','Pdf','Copy']}/>
                         {radar && <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} />}
                     </Segment>
                 </AdvancedGrid>
@@ -489,7 +489,7 @@ class ClientViews extends React.Component<ClientViewProps, { activeIndex?: numbe
 
         return (
             <div>
-                <WidgetTitle title={lang.PORTFOLIO_VIEWS} />
+                <WidgetTitle title={lang.PORTFOLIO_VIEWS} shareButtons={['Image','Copy']} />
                 <Tab menu={{ pointing: true, secondary: true }} panes={panes} activeIndex={activeIndex} onTabChange={this.handleTabChange} style={{ height: '95%' }} />
 
             </div>

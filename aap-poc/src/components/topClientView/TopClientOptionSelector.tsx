@@ -3,6 +3,7 @@ import { Dropdown, DropdownItemProps, Segment, Grid } from "semantic-ui-react";
 import { GroupType, GroupTypes } from "./index";
 import { IndicatorOptionsType } from "../../actions/model";
 import { startCase } from "lodash";
+import { Share } from "../Share";
 
 export interface TopClientOptionSelection {
     Group?: GroupTypes;
@@ -64,6 +65,7 @@ export const TopClientOptionSelector = ({ group, indicator, onChange }: TopClien
                         {renderOptions(curIndicator, IndicatorOptionsType, onIndicatorChange)}
                     </Dropdown.Menu>
                 </Dropdown>
+                <Share buttons={['Excel','Pdf','Copy']}/>
             </h2>
         </Segment >
     );
