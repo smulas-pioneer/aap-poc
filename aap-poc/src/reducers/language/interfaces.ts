@@ -99,6 +99,7 @@ export interface LangDictionary {
     PROPOSAL_VALIDATION: {
         title: string, message: string
     },
+    ORDER_LIST: string,
     HISTORY: {
         clientEventHistory: string,
         transactions: string,

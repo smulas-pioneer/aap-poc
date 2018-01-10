@@ -90,7 +90,7 @@ export const English: LanguageState = {
         PORTFOLIO_MONITORING: 'Portfolio Monitoring',
         PORTFOLIO_VIEWS: 'Portfolio Views',
         CLIENT_EVENT_HISTORY: 'Client Event History',
-
+        ORDER_LIST: 'Order List',
         PROPOSAL_VALIDATION: { title: 'Proposal validation', message: 'Please validate the proposal for generating the document' },
         HISTORY: {
             clientEventHistory: 'All events',

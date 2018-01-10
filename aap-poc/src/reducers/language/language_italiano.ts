@@ -79,7 +79,7 @@ export const Italiano: LanguageState = {
         PORTFOLIO_MONITORING: 'Monitor del portafoglio',
         PORTFOLIO_VIEWS: 'Viste del portafoglio',
         CLIENT_EVENT_HISTORY: 'Eventi del cliente',
-
+        ORDER_LIST: 'Lista ordini',
         PROPOSAL_VALIDATION: { title: 'Validazione della proposta', message: 'Prego validare la proposta per generare il documento' },
         HISTORY: {
             clientEventHistory: 'Tutti',

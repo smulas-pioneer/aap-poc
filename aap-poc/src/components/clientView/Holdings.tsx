@@ -10,6 +10,7 @@ import { ConfirmDialog } from '../shared/ConfirmDialog';
 import { suggestedPosition } from '../../_db/common/radarUtils';
 import { OverflowItem } from '../shared/GridOverflow';
 import { strategies } from '../../_db/data/index';
+import { WidgetTitle } from '../shared/WidgetTitle';
 
 interface Props {
     holdings: StrategyItem[],
@@ -77,6 +78,15 @@ export class Holdings extends React.Component<Props, State> {
                         Add Security
                     </Menu.Item>
                     <Menu.Menu position="right">
+
+                        <ConfirmDialog
+                            title={lang.ORDER_LIST}
+                            showOnlyCloseButton
+                            trigger={<Menu.Item position="right"><Icon name="list layout" />Show Order List</Menu.Item>}
+                            style={{ border: '2px solid green' }}>
+                            <OrderList data={holdings} lang={lang} />
+                        </ConfirmDialog>
+
                         <Menu.Item position="right" style={{ color: proposeAllColor }} onClick={() => this.handleAcceptAll(acceptAll)}>
                             <Icon name="check" />
                             Simulate
@@ -98,6 +108,7 @@ export class Holdings extends React.Component<Props, State> {
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell style={{ width: '10px' }} ></Table.HeaderCell>
+                            <Table.HeaderCell >{lang.ISIN}</Table.HeaderCell>
                             <Table.HeaderCell >{lang.SECURITY_NAME}</Table.HeaderCell>
                             <Table.HeaderCell width={2}>{lang.ASSET_CLASS}</Table.HeaderCell>
                             <Table.HeaderCell width={2} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
@@ -131,6 +142,7 @@ export class Holdings extends React.Component<Props, State> {
                                             {t.security.pushed && <Icon size="large" color="green" name='thumbs up' />}
                                             {t.clientFavorites && <Icon size="large" color="red" name='heart' />}
                                         </Table.Cell>
+                                        <Table.Cell>{t.security.IsinCode}</Table.Cell>
                                         <Table.Cell>{t.security.SecurityName}</Table.Cell>
                                         <Table.Cell>{t.security.MacroAssetClass}</Table.Cell>
                                         <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
@@ -157,7 +169,7 @@ export class Holdings extends React.Component<Props, State> {
                         </Table.Row>
                     </Table.Footer>
                 </Table>
-            </div>
+            </div >
         )
     }
 }
@@ -176,14 +188,13 @@ const OrderList = (props: { data: StrategyItem[], lang: LangDictionary }) => {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
     });
-    return <Segment>
-        <h4>Orders.</h4>
+    return <Segment attached  >
         <Table compact size="small">
             <Table.Header>
                 <Table.Row>
                     <Table.HeaderCell >{lang.ISIN}</Table.HeaderCell>
                     <Table.HeaderCell >{lang.SECURITY_NAME}</Table.HeaderCell>
-                    <Table.HeaderCell >Operation</Table.HeaderCell>
+                    <Table.HeaderCell textAlign="center" >Operation</Table.HeaderCell>
                     <Table.HeaderCell width={2} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
                     <Table.HeaderCell width={2} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
                 </Table.Row>
@@ -192,9 +203,9 @@ const OrderList = (props: { data: StrategyItem[], lang: LangDictionary }) => {
                 return <Table.Row key={ix}>
                     <Table.Cell >{item.security.IsinCode} </Table.Cell>
                     <Table.Cell >{item.security.SecurityName} </Table.Cell>
-                    <Table.Cell >{item.suggestedDelta > 0 ? 'BUY' : 'SELL'} </Table.Cell>
-                    <Table.Cell >{fmt.format(item.suggestedDelta * tot / item.currentPrice)} </Table.Cell>
-                    <Table.Cell >{fmt.format(item.suggestedDelta * tot)} </Table.Cell>
+                    <Table.Cell textAlign="center" >{item.suggestedDelta > 0 ? 'BUY' : 'SELL'} </Table.Cell>
+                    <Table.Cell textAlign="right" >{fmt.format(item.suggestedDelta * tot / item.currentPrice)} </Table.Cell>
+                    <Table.Cell textAlign="right">{fmt.format(item.suggestedDelta * tot)} </Table.Cell>
                 </Table.Row>
             })}
 

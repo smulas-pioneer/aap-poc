@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { Confirm, Modal, Button, Icon } from 'semantic-ui-react';
+import { WidgetTitle } from './WidgetTitle';
 
-export interface ConfirmDialogProps  {
+export interface ConfirmDialogProps {
     show?: boolean;
     title?: string;
     content?: JSX.Element;
     trigger?: JSX.Element;
     cancelButton?: string;
     confirmButton?: string;
+    showOnlyCloseButton?: boolean;
     onCancel?: () => void;
     onConfirm?: () => void;
     style?: any;
@@ -48,29 +50,37 @@ export class ConfirmDialog extends React.Component<ConfirmDialogProps, ConfirmDi
     }
 
     render() {
-        const { title, trigger, content, children, cancelButton, confirmButton, onCancel, onConfirm, style } = this.props;
+        const { title, trigger, content, children, showOnlyCloseButton, cancelButton, confirmButton, onCancel, onConfirm, style } = this.props;
         const { open } = this.state;
 
         let customTrigger = trigger && React.cloneElement(trigger, { onClick: this.show });
 
         return (
             <Modal trigger={customTrigger} open={open} onClose={this.handleCancel} dimmer={false} style={style}>
-                {title && <Modal.Header>{title}</Modal.Header>}
+                {title && <Modal.Header> <WidgetTitle title={title} /></Modal.Header>}
                 <Modal.Content image>
                     {content || children}
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button.Group fluid>
+                    {
+                        showOnlyCloseButton ?
+                            <Button color='blue' onClick={this.handleCancel}>
+                                <Icon name='checkmark' /> CLOSE
+                            </Button> :
 
-                        <Button color='green' onClick={this.handleConfirm}>
-                            <Icon name='checkmark' /> {confirmButton || 'YES'}
-                        </Button>
+                            <Button.Group fluid>
 
-                        <Button.Or />
-                        <Button color='red' onClick={this.handleCancel}>
-                            <Icon name='remove' /> {cancelButton || 'NO'}
-                        </Button>
-                    </Button.Group>
+                                <Button color='green' onClick={this.handleConfirm}>
+                                    <Icon name='checkmark' /> {confirmButton || 'YES'}
+                                </Button>
+                                <Button.Or />
+
+                                <Button color='red' onClick={this.handleCancel}>
+                                    <Icon name='remove' /> {cancelButton || 'NO'}
+                                </Button>
+
+                            </Button.Group>
+                    }
                 </Modal.Actions>
             </Modal>
         );
