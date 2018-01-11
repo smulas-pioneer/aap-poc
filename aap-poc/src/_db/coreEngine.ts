@@ -12,6 +12,7 @@ import { securityList } from "./data";
 
 export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean, forced?: StrategyItem[]): StrategyItem[] => {
 
+
     if (calculateFromAxes) {
         if (forced) return forced;
         return solve(position, axes);
@@ -23,9 +24,35 @@ export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm,
         const delta = sumBy(w, s => s.weight) - 1;
         return [{ ...position[0], suggestedDelta: -delta, suggestionAccepted: delta != 0 }].concat(position.slice(1));
     }
+/*
+
+    if (calculateFromAxes) {
+        if (forced) {
+            return acceptAll(fixCash(forced));
+        }
+        return solve(position, axes).map(s => ({ ...s, suggestionAccepted: true }));
+    } else {
+        let newPos = forced
+            ? (forced.map(p => ({ ...p, suggestionAccepted: position.find(r => r.security.IsinCode === p.security.IsinCode)!.suggestionAccepted })))
+            : position;
+        return fixCash(newPos);
+    }
+    */
 };
 
+const fixCash = (forced: StrategyItem[]) => {
+    const delta = sumBy(forced, f => (f.currentWeight + f.suggestedDelta)) - 1;
+    return forced.map(s => {
+        return s.isCash ? { ...s,  suggestedDelta: s.suggestedDelta - delta }
+            : { ...s }
+    });
+}
 
+const acceptAll = (forced: StrategyItem[]) => {
+    return forced.map(s => {
+        return { ...s, suggestionAccepted: true }
+    });
+}
 
 
 const getAttributeBreakDown = (attributeName: string, holdings: PositionItem[]): Breakdown => {
@@ -127,10 +154,10 @@ export const getPerfContribution = (position: PositionItem[]) => {
     const perfCompo = getPerfContrib(keys);
 
     const gPerf = groupBy(perfCompo, g => g.date);
-    const ret =  Object.keys(gPerf).map(k => {
+    const ret = Object.keys(gPerf).map(k => {
         const o = gPerf[k].reduce((pr, cu) => {
-            const secNameRes = securityList.find(sec=>sec.IsinCode == cu.id);
-            const secName = secNameRes ? secNameRes.SecurityName:cu.id;
+            const secNameRes = securityList.find(sec => sec.IsinCode == cu.id);
+            const secName = secNameRes ? secNameRes.SecurityName : cu.id;
             pr[secName] = cu.perf * weights[cu.id] * 100;
             return pr;
         }, { year: parseInt(k) } as any);

@@ -95,7 +95,7 @@ export const getAlertHistory = createPromiseAction('GET_ALERT_HISTORY', svc.getA
 
 export const getClient = createPromiseWithThunkAction('GET_CLIENT', svc.getClient, getClientSuccess, (d, s, r, p) => {
     if (r) {
-        d(getHistory(r.id))
+        d(getHistory(r.id))   
         d(getStrategy(r.id))
     }
 });
