@@ -161,3 +161,12 @@ svg .boundaries>path {
 .topClientDropOption>div[role="alert"] {
     text-decoration: underline;
 }
+
+
+.blink_me {
+    animation: blinker 1s linear infinite;
+  }
+  
+  @keyframes blinker {  
+    50% { opacity: 0; }
+  }
