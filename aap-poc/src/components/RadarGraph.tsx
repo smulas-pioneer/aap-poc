@@ -143,7 +143,7 @@ const CustomizedShape = (props: any) => {
                     ) : null
             }
 
-            <Text  {...props} x={actualX} y={actualY} fill={selected ? "black" : "whitesmoke"}>{`${names[value].name}`}</Text>
+            <Text  {...props} x={actualX} y={actualY} fill={selected ? "black" : "lightgrey"}>{`${names[value].name}`}</Text>
         </g >
     );
 };

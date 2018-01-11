@@ -11,11 +11,14 @@ import { securityList } from "./data";
 
 
 export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean, forced?: StrategyItem[]): StrategyItem[] => {
-
-
+    const k = getSuggestion1(position,axes,calculateFromAxes,forced);
+    console.log('Strategy', k);
+    return fixCash(k);
+}
+    const getSuggestion1 = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean, forced?: StrategyItem[]): StrategyItem[] => {
     if (calculateFromAxes) {
-        if (forced) return forced;
-        return solve(position, axes);
+        if (forced && axes.concentration && axes.consistency && axes.efficency && axes.overlap && axes.riskAdequacy && axes.riskAnalysis) return acceptAll(forced);
+        return acceptAll(solve(position, axes));
     } else {
         let newPos = forced 
             ? forced.map(p => ({ ...p, suggestionAccepted: position.find(r => r.security.IsinCode === p.security.IsinCode)!.suggestionAccepted }))
