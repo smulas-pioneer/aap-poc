@@ -96,7 +96,7 @@ export class ConfirmDialog extends React.Component<ConfirmDialogProps, ConfirmDi
                 <Modal.Header>
                     <Segment basic clearing style={{ padding: 0 }}>
                         <Button floated="right" size="tiny" basic negative circular icon="remove" onClick={this.handleCancel} />
-                        {title && <WidgetTitle title={title} shareButtons={shareButtons} />}
+                        {title && <WidgetTitle title={title} shareButtons={shareButtons} style={{ marginTop: 0 }} />}
                     </Segment>
                 </Modal.Header>
                 <Modal.Content image>
