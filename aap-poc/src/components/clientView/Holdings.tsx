@@ -11,6 +11,7 @@ import { suggestedPosition } from '../../_db/common/radarUtils';
 import { OverflowItem } from '../shared/GridOverflow';
 import { strategies } from '../../_db/data/index';
 import { WidgetTitle } from '../shared/WidgetTitle';
+import Checkbox from 'semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox';
 
 interface Props {
     holdings: StrategyItem[],
@@ -79,7 +80,7 @@ export class Holdings extends React.Component<Props, State> {
 
                         <ConfirmDialog
                             title={lang.ORDER_LIST}
-                            shareButtons={['Excel','Copy','Pdf']}
+                            shareButtons={['Excel', 'Copy', 'Pdf']}
                             showOnlyCloseButton
                             trigger={<Menu.Item position="right"><Icon name="list layout" />Show Order List</Menu.Item>}
                             style={{ border: '2px solid green' }}>
@@ -96,8 +97,16 @@ export class Holdings extends React.Component<Props, State> {
                                     title={lang.PROPOSAL_VALIDATION.title}
                                     trigger={<Menu.Item position="right" disabled={!isValid}><Icon name="send" />Validate</Menu.Item>}
                                     style={{ border: '2px solid green' }}
+                                    customButton={{ text: 'Later', icon: 'forward', color: 'blue' }}
                                     onConfirm={() => this.props.onAddHistory!({ clientId: this.props.clientId, notes: lang.PROPOSAL_VALIDATION.title })} >
-                                    <OrderList data={holdings} lang={lang} />
+
+                                    <div style={{ width: '100%' }}>
+                                        <OrderList data={holdings} lang={lang} />
+                                        <br />
+                                        <Checkbox defaultChecked label='Open pdf after generation' />
+                                    </div>
+                                    {/* <Checkbox defaultChecked={false} label='Open pdf after generation' /> */}
+
                                 </ConfirmDialog>
                             ) : <Menu.Item position="right" disabled={!isValid}><Icon name="send" />Validate</Menu.Item>
                         }
@@ -187,7 +196,7 @@ const OrderList = (props: { data: StrategyItem[], lang: LangDictionary }) => {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
     });
-    return <Segment attached  >
+    return <Segment attached>
         <Table compact size="small">
             <Table.Header>
                 <Table.Row>
@@ -199,15 +208,15 @@ const OrderList = (props: { data: StrategyItem[], lang: LangDictionary }) => {
                 </Table.Row>
             </Table.Header>
             <Table.Body>
-            {data.filter(i => i.suggestedDelta != 0 && !i.isCash).map((item, ix) => {
-                return <Table.Row key={ix}>
-                    <Table.Cell >{item.security.IsinCode} </Table.Cell>
-                    <Table.Cell >{item.security.SecurityName} </Table.Cell>
-                    <Table.Cell textAlign="center" >{item.suggestedDelta > 0 ? 'BUY' : 'SELL'} </Table.Cell>
-                    <Table.Cell textAlign="right" >{fmt.format(item.suggestedDelta * tot / item.currentPrice)} </Table.Cell>
-                    <Table.Cell textAlign="right">{fmt.format(item.suggestedDelta * tot)} </Table.Cell>
-                </Table.Row>
-            })}
+                {data.filter(i => i.suggestedDelta != 0 && !i.isCash).map((item, ix) => {
+                    return <Table.Row key={ix}>
+                        <Table.Cell >{item.security.IsinCode} </Table.Cell>
+                        <Table.Cell >{item.security.SecurityName} </Table.Cell>
+                        <Table.Cell textAlign="center" >{item.suggestedDelta > 0 ? 'BUY' : 'SELL'} </Table.Cell>
+                        <Table.Cell textAlign="right" >{fmt.format(item.suggestedDelta * tot / item.currentPrice)} </Table.Cell>
+                        <Table.Cell textAlign="right">{fmt.format(item.suggestedDelta * tot)} </Table.Cell>
+                    </Table.Row>
+                })}
             </Table.Body>
         </Table>
     </Segment>
