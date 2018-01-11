@@ -4,6 +4,7 @@ var { Radar, Legend, ResponsiveContainer, RadarChart, PolarAngleAxis, PolarGrid,
 import { Radar as RadarModel, RadarStrategyParm } from '../_db/interfaces';
 import { Segment, Icon } from 'semantic-ui-react';
 import { LangDictionary } from '../reducers/language/interfaces';
+import { getRAG } from '../_db/common/radarUtils';
 
 export const RadarGraph = (props: {
     data: RadarModel,
@@ -14,20 +15,28 @@ export const RadarGraph = (props: {
     responsiveHeight?: number | string,
     onClick?: () => void,
     onClickShape?: (subject: string) => void
+    alertsAbout: 'actual' | 'proposed'
 }) => {
 
     const { lang } = props;
 
     const d = props.data;
 
-    const alertColors = {
-        consistency: d.consistencyAlert,
-        overlap: d.overlapAlert,
-        efficency: d.efficencyAlert,
-        concentration: d.concentrationAlert,
-        riskAnalysis: d.riskAnalysisAlert,
-        riskAdequacy: d.riskAdequacyAlert
-    }
+    const alertColors = props.alertsAbout == 'actual'  ? {
+        consistency: getRAG(d.actual.consistency, d.limits.consistency,false),
+        overlap: getRAG(d.actual.overlap, d.limits.overlap,false),
+        efficency: getRAG(d.actual.efficency, d.limits.efficency,false),
+        concentration: getRAG(d.actual.concentration, d.limits.concentration,false),
+        riskAnalysis: getRAG(d.actual.riskAnalysis, d.limits.riskAnalysis,false),
+        riskAdequacy: getRAG(d.actual.riskAdequacy, d.limits.riskAdequacy,true)
+    } : {
+        consistency: getRAG(d.proposed.consistency, d.limits.consistency,false),
+        overlap: getRAG(d.proposed.overlap, d.limits.overlap,false),
+        efficency: getRAG(d.proposed.efficency, d.limits.efficency,false),
+        concentration: getRAG(d.proposed.concentration, d.limits.concentration,false),
+        riskAnalysis: getRAG(d.proposed.riskAnalysis, d.limits.riskAnalysis,false),
+        riskAdequacy: getRAG(d.proposed.riskAdequacy, d.limits.riskAdequacy,true)
+    };
 
     const alertNames = {
         consistency: lang.ALERTS.consistencyAlert,
@@ -128,19 +137,13 @@ const CustomizedShape = (props: any) => {
     return (
         <g onClick={() => selectable && onClickShape(value)} className={selectableClass} >
             {
-                selected ?
-                    (
-                        <g>
-                            <Dot cx={x} cy={y} r={10} fill={color} />
-                            <path fill={'white'} transform={`translate(${x - 12},${y - 12})`} d="M7.105 13.473l1.422-1.423 1.901 1.902 4.81-6.952 1.657 1.148-6.26 8.852z" />
-                        </g >
-                    ) : alarmed ?
+             alarmed ?
                         (
                             <path fill={color} transform={`translate(${x - 12},${y - 12})`} d="M17.8 14.7l1.7-4.7c1-2.8-.5-5.5-3.5-6.6s-5.9 0-6.9 2.8l-1.7 4.7c-.7 1.9-1 2.8-2.9 2.1l-.3 1 14.1 5.1.3-.9c-1.9-.7-1.5-1.6-.8-3.5zM12 19.8l-2.8-1c-.3.9.8 2.4 2.1 2.9s3.2.1 3.5-.9l-2.8-1z" />
                         ) : null
             }
 
-            <Text {...props} x={actualX} y={actualY} >{`${names[value].name}`}</Text>
+            <Text  {...props} x={actualX} y={actualY} fill={selected ? "black":"whitesmoke"}>{`${names[value].name}`}</Text>
         </g >
     );
 };

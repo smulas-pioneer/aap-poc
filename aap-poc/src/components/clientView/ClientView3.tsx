@@ -42,7 +42,8 @@ interface State {
     axes: RadarStrategyParm,
     autoplay: boolean,
     currentTargetReturn?: number,
-    showModel: boolean
+    showModel: boolean,
+    isInSimulationMode: boolean
 }
 
 class ClientViewCompo extends conn.StatefulCompo<State> {
@@ -59,7 +60,8 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
             overlap: false
         },
         autoplay: true,
-        showModel: false
+        showModel: false,
+        isInSimulationMode:false,
     } as State
 
     componentDidMount() {
@@ -211,7 +213,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
     render() {
         const { client, lang, history } = this.props;
-        const { radar, strategy, breakdown, axes } = this.state;
+        const { radar, strategy, breakdown, axes ,isInSimulationMode} = this.state;
 
         if (!client || history.length === 0) return <div />
 
@@ -261,7 +263,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     </Segment>
                     <Segment style={{ margin: 0 }}>
                         <WidgetTitle title={lang.PORTFOLIO_MONITORING}  shareButtons={['Image','Pdf','Copy']}/>
-                        {radar && <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} />}
+                        {radar && <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} alertsAbout={isInSimulationMode ?'proposed':'actual'} />}
                     </Segment>
                 </AdvancedGrid>
                 <AdvancedGrid className="grid-client-view-sub2">
