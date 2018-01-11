@@ -11,6 +11,7 @@ import { suggestedPosition } from '../../_db/common/radarUtils';
 import { OverflowItem } from '../shared/GridOverflow';
 import { strategies } from '../../_db/data/index';
 import { WidgetTitle } from '../shared/WidgetTitle';
+import Checkbox from 'semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox';
 
 interface Props {
     holdings: StrategyItem[],
@@ -111,8 +112,16 @@ export class Holdings extends React.Component<Props, State> {
                                     title={lang.PROPOSAL_VALIDATION.title}
                                     trigger={<Menu.Item position="right" disabled={!isValid || !isInSimulationMode}><Icon name="send" />Validate</Menu.Item>}
                                     style={{ border: '2px solid green' }}
+                                    customButton={{ text: 'Later', icon: 'forward', color: 'blue' }}
                                     onConfirm={() => this.props.onAddHistory!({ clientId: this.props.clientId, notes: lang.PROPOSAL_VALIDATION.title })} >
-                                    <OrderList data={holdings} lang={lang} />
+
+                                    <div style={{ width: '100%' }}>
+                                        <OrderList data={holdings} lang={lang} />
+                                        <br />
+                                        <Checkbox defaultChecked label='Open pdf after generation' />
+                                    </div>
+                                    {/* <Checkbox defaultChecked={false} label='Open pdf after generation' /> */}
+
                                 </ConfirmDialog>
                             ) : <Menu.Item position="right" disabled={!isValid || !isInSimulationMode}><Icon name="send" />Validate</Menu.Item>
                         }
@@ -209,7 +218,7 @@ const OrderList = (props: { data: StrategyItem[], lang: LangDictionary }) => {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
     });
-    return <Segment attached  >
+    return <Segment attached>
         <Table compact size="small">
             <Table.Header>
                 <Table.Row>
