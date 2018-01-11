@@ -1,5 +1,5 @@
 import * as React from 'react';
-var { Radar, Legend, ResponsiveContainer, RadarChart, PolarAngleAxis, PolarGrid, Dot, Text } = require('recharts');
+var { Radar, Legend, ResponsiveContainer, RadarChart, PolarAngleAxis, PolarRadiusAxis,PolarGrid, Dot, Text } = require('recharts');
 
 import { Radar as RadarModel, RadarStrategyParm } from '../_db/interfaces';
 import { Segment, Icon } from 'semantic-ui-react';
@@ -115,6 +115,7 @@ export const RadarGraph = (props: {
                 <Radar name="Guidelines" dataKey="guideLines" stroke="red" strokeWidth={2} fill="# 00f" fillOpacity={0} />
                 <Radar name="Proposed" dataKey="proposed" stroke="green" fill="#32cd32" fillOpacity={props.alertsAbout == 'proposed' ? 0.3 : 0.05} dot />
                 <PolarGrid />
+                <PolarRadiusAxis angle={30}/>
                 <PolarAngleAxis dataKey="subject" tick={<CustomizedShape axes={props.axes} names={alertNames} colors={alertColors} onClickShape={props.onClickShape} />} />
             </RadarChart>
         </ResponsiveContainer>
