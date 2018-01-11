@@ -61,7 +61,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         },
         autoplay: true,
         showModel: false,
-        isInSimulationMode:false,
+        isInSimulationMode: false,
     } as State
 
     componentDidMount() {
@@ -70,7 +70,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
             setTimeout(() => {
                 this.selectAllAxes();
                 // Accept All Suggestions on Enter.
-                this.handleOnChange(this.state.strategy.map(s=>({...s, suggestionAccepted:true})));
+                this.handleOnChange(this.state.strategy.map(s => ({ ...s, suggestionAccepted: true })));
             }, 500);
         }
     }
@@ -116,7 +116,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
     handleAxesChange = (key: string) => {
         const axes = { ...this.state.axes, [key]: !this.state.axes[key] };
-        this.setState({ axes }, () => {
+        this.setState({ axes, isInSimulationMode: false }, () => {
             this.props.getSuggestions({ id: this.props.client!.id, position: this.state.strategy, axes: axes, calculateFromAxes: true });
         })
     }
@@ -213,24 +213,24 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
     render() {
         const { client, lang, history } = this.props;
-        const { radar, strategy, breakdown, axes ,isInSimulationMode} = this.state;
+        const { radar, strategy, breakdown, axes, isInSimulationMode } = this.state;
 
         if (!client || history.length === 0) return <div />
 
         const graphs = this.calculateGraphs();
-/*
-        if (radar) {
-            console.log("BEFORE");
-            console.log(strategy.map(r => `${r.security.IsinCode}; ${r.currentWeight}`).join('\n'));
-            let p = radar.actual;
-            console.log(Object.keys(p).map(k => `${k};${p[k]}`).join('\n'));
-
-            console.log("AFTER");
-            console.log(strategy.map(r => `${r.security.IsinCode}; ${r.currentWeight + r.suggestedDelta}`).join('\n'));
-            p = radar.proposed;
-            console.log(Object.keys(p).map(k => `${k};${p[k]}`).join('\n'));
-        }
-  */     
+        /*
+                if (radar) {
+                    console.log("BEFORE");
+                    console.log(strategy.map(r => `${r.security.IsinCode}; ${r.currentWeight}`).join('\n'));
+                    let p = radar.actual;
+                    console.log(Object.keys(p).map(k => `${k};${p[k]}`).join('\n'));
+        
+                    console.log("AFTER");
+                    console.log(strategy.map(r => `${r.security.IsinCode}; ${r.currentWeight + r.suggestedDelta}`).join('\n'));
+                    p = radar.proposed;
+                    console.log(Object.keys(p).map(k => `${k};${p[k]}`).join('\n'));
+                }
+          */
         return (
             <AdvancedGrid className="grid-client-view-main" style={{ marginBottom: '10px' }}>
                 <Segment style={{ margin: 0 }} >
@@ -245,25 +245,29 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     : <div />}
                 <AdvancedGrid className="grid-client-view-sub">
                     <Segment style={{ margin: 0 }}>
-                        <WidgetTitle title={this.state.showModel ? lang.MODEL : lang.PORTFOLIO_HOLDINGS} shareButtons={['Excel','Pdf', 'Copy']} />
+                        <WidgetTitle title={this.state.showModel ? lang.MODEL : lang.PORTFOLIO_HOLDINGS} shareButtons={['Excel', 'Pdf', 'Copy']} />
                         {this.state.showModel && <Model
                             clientId={client.id} lang={lang} holdings={strategy}
                             onShowHoldings={() => this.setState({ showModel: false })}
                         />}
                         {!this.state.showModel && <Holdings
-                            clientId={client.id} 
-                            lang={lang} 
+                            clientId={client.id}
+                            lang={lang}
                             holdings={strategy}
                             onChange={this.handleOnChange}
                             onAddSecurity={this.props.addSecurity}
                             onAddHistory={this.props.addHistory}
                             onShowModel={() => this.setState({ showModel: true })}
+                            onToggleSimulation={(isInSimulationMode) => this.setState({ isInSimulationMode })}
+                            isInSimulationMode={isInSimulationMode}
                         />}
-                        <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} />
+                        <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={isInSimulationMode} />
                     </Segment>
                     <Segment style={{ margin: 0 }}>
-                        <WidgetTitle title={lang.PORTFOLIO_MONITORING}  shareButtons={['Image','Pdf','Copy']}/>
-                        {radar && <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} alertsAbout={isInSimulationMode ?'proposed':'actual'} />}
+                        <WidgetTitle title={lang.PORTFOLIO_MONITORING} shareButtons={['Image', 'Pdf', 'Copy']} />
+                        {radar && <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} alertsAbout={isInSimulationMode ? 'proposed' : 'actual'} />}
+                        <br />
+                        <p style={{ textAlign: 'center' }}>Alerts are about: <b>{isInSimulationMode ? 'Proposed' : 'Actuals'}</b> </p>
                     </Segment>
                 </AdvancedGrid>
                 <AdvancedGrid className="grid-client-view-sub2">
@@ -406,7 +410,7 @@ const ClientHistory = (props: { history: InterviewResult[], lang: LangDictionary
     return <Tab menu={{ pointing: true, secondary: true }} panes={panes} style={{ height: '95%' }} />
 }
 
-const Fees = (props: { strategy: StrategyItem[], lang: LangDictionary, targetReturn?: number, timeHorizon: TimeHorizon }) => {
+const Fees = (props: { strategy: StrategyItem[], lang: LangDictionary, targetReturn?: number, timeHorizon: TimeHorizon, isInSimulationMode: boolean }) => {
     const { lang, strategy } = props;
     const fmt = new Intl.NumberFormat(lang.NUMBER_FORMAT, {
         minimumFractionDigits: 0,
@@ -418,7 +422,7 @@ const Fees = (props: { strategy: StrategyItem[], lang: LangDictionary, targetRet
 
 
     return fees != 0 ? <Segment textAlign="center" floated="right">
-        <Segment basic compact style={{ padding: 0 }} >
+        {props.isInSimulationMode ? <Segment basic compact style={{ padding: 0 }} >
             <Statistic size="mini" color="blue">
                 <Statistic.Value>{lang.RESULTS}:</Statistic.Value>
             </Statistic>
@@ -445,6 +449,16 @@ const Fees = (props: { strategy: StrategyItem[], lang: LangDictionary, targetRet
                 <Statistic.Label>{lang.TIME_HORIZON}</Statistic.Label>
             </Statistic>}
         </Segment>
+            : <Segment basic compact style={{ padding: 0 }} >
+                <Statistic size="mini" color="blue">
+                    <Statistic.Value>{lang.RESULTS}:</Statistic.Value>
+                </Statistic>
+                <Statistic size="mini">
+                    <Statistic.Label>Press <b>Simulate</b></Statistic.Label>
+                    <Statistic.Label>to calculate Fees</Statistic.Label>
+
+                </Statistic></Segment>
+        }
     </Segment> : null
 }
 
@@ -491,7 +505,7 @@ class ClientViews extends React.Component<ClientViewProps, { activeIndex?: numbe
 
         return (
             <div>
-                <WidgetTitle title={lang.PORTFOLIO_VIEWS} shareButtons={['Image','Copy']} />
+                <WidgetTitle title={lang.PORTFOLIO_VIEWS} shareButtons={['Image', 'Copy']} />
                 <Tab menu={{ pointing: true, secondary: true }} panes={panes} activeIndex={activeIndex} onTabChange={this.handleTabChange} style={{ height: '95%' }} />
 
             </div>

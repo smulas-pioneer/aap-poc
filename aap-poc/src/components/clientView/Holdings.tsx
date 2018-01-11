@@ -20,10 +20,14 @@ interface Props {
     onAddSecurity: (props: { securityId: string, clientId: string }) => void;
     onAddHistory?: (props: { clientId: string, notes: string }) => void;
     onShowModel: () => void;
+    onToggleSimulation: (value: boolean) => void
+    isInSimulationMode: boolean
+
 }
 interface State {
     addingSecurity: boolean,
-    mode: 'Weight' | 'Quantity' | 'Amount'
+    mode: 'Weight' | 'Quantity' | 'Amount',
+
 }
 
 export class Holdings extends React.Component<Props, State> {
@@ -35,6 +39,7 @@ export class Holdings extends React.Component<Props, State> {
     handleItemChanged = (item: StrategyItem, ix: number) => {
         let s = [...this.props.holdings];
         s[ix] = item;
+        this.props.onToggleSimulation(false);
         this.props.onChange(s);
     }
 
@@ -47,8 +52,12 @@ export class Holdings extends React.Component<Props, State> {
         this.props.onChange(s);
     }
 
+    handleOnToggleSimulation = () => {
+      this.props.onToggleSimulation(!this.props.isInSimulationMode);
+    }
+
     render() {
-        const { holdings, lang } = this.props;
+        const { holdings, lang ,isInSimulationMode} = this.props;
         const finalWeight = suggestedPosition(holdings);
         const fmt = formatNumber(lang.NUMBER_FORMAT);
         const tot = sumBy(holdings, t => t.currentAmount);
@@ -79,7 +88,7 @@ export class Holdings extends React.Component<Props, State> {
 
                         <ConfirmDialog
                             title={lang.ORDER_LIST}
-                            shareButtons={['Excel','Copy','Pdf']}
+                            shareButtons={['Excel', 'Copy', 'Pdf']}
                             showOnlyCloseButton
                             trigger={<Menu.Item position="right"><Icon name="list layout" />Show Order List</Menu.Item>}
                             style={{ border: '2px solid green' }}>
@@ -88,18 +97,24 @@ export class Holdings extends React.Component<Props, State> {
 
                         <Menu.Item position="right" style={{ color: proposeAllColor }} onClick={() => this.handleAcceptAll(acceptAll)}>
                             <Icon name="check" />
-                            Simulate
+                            Select All
                         </Menu.Item>
+
+                        <Menu.Item className={!isInSimulationMode ? 'blink_me' : ''} position="right" style={{ backgroundColor: isInSimulationMode ? 'lightyellow' : 'white' }} onClick={this.handleOnToggleSimulation} >
+                            <Icon name="tv" />
+                            {isInSimulationMode ? 'Exit Simulation' : 'Simulate'}
+                        </Menu.Item>
+
                         {this.props.onAddHistory
                             ? (
                                 <ConfirmDialog
                                     title={lang.PROPOSAL_VALIDATION.title}
-                                    trigger={<Menu.Item position="right" disabled={!isValid}><Icon name="send" />Validate</Menu.Item>}
+                                    trigger={<Menu.Item position="right" disabled={!isValid || !isInSimulationMode}><Icon name="send" />Validate</Menu.Item>}
                                     style={{ border: '2px solid green' }}
                                     onConfirm={() => this.props.onAddHistory!({ clientId: this.props.clientId, notes: lang.PROPOSAL_VALIDATION.title })} >
                                     <OrderList data={holdings} lang={lang} />
                                 </ConfirmDialog>
-                            ) : <Menu.Item position="right" disabled={!isValid}><Icon name="send" />Validate</Menu.Item>
+                            ) : <Menu.Item position="right" disabled={!isValid || !isInSimulationMode}><Icon name="send" />Validate</Menu.Item>
                         }
                     </Menu.Menu>
                 </Menu>
@@ -130,7 +145,7 @@ export class Holdings extends React.Component<Props, State> {
                         {
                             holdings.map((t, i) => {
                                 const show = t.currentQuantity != 0;
-                                const suggWeight = finalWeight[i].weight;
+                                const suggWeight = finalWeight[i].weight
                                 const factor = this.state.mode == 'Weight' ? 1
                                     : this.state.mode == 'Quantity' ? tot / t.currentPrice / 100
                                         : tot / 100;
@@ -150,7 +165,11 @@ export class Holdings extends React.Component<Props, State> {
                                         <Table.Cell textAlign="left">
                                             <HoldingWeigthControl factor={factor} data={t} onChange={(item) => this.handleItemChanged(item, i)} />
                                         </Table.Cell>
-                                        <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100)}</Table.Cell>
+
+                                        {isInSimulationMode &&
+                                            <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100)}</Table.Cell>
+                                        }
+
                                     </Table.Row>
                             })
                         }
@@ -164,7 +183,10 @@ export class Holdings extends React.Component<Props, State> {
                             <Table.HeaderCell textAlign="right">{fmt(tot)}</Table.HeaderCell>
                             <Table.HeaderCell textAlign="right">{fmt(sumBy(holdings, t => t.currentWeight) * 100)}</Table.HeaderCell>
                             <Table.HeaderCell textAlign="right"></Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right">{fmt(sumBy(finalWeight, t => t.weight) * 100)}</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="right"></Table.HeaderCell>
+
+                            <Table.HeaderCell textAlign="right">{isInSimulationMode && fmt(sumBy(finalWeight, t => t.weight) * 100)}</Table.HeaderCell>
+
                         </Table.Row>
                     </Table.Footer>
                 </Table>
@@ -199,15 +221,15 @@ const OrderList = (props: { data: StrategyItem[], lang: LangDictionary }) => {
                 </Table.Row>
             </Table.Header>
             <Table.Body>
-            {data.filter(i => i.suggestedDelta != 0 && !i.isCash).map((item, ix) => {
-                return <Table.Row key={ix}>
-                    <Table.Cell >{item.security.IsinCode} </Table.Cell>
-                    <Table.Cell >{item.security.SecurityName} </Table.Cell>
-                    <Table.Cell textAlign="center" >{item.suggestedDelta > 0 ? 'BUY' : 'SELL'} </Table.Cell>
-                    <Table.Cell textAlign="right" >{fmt.format(item.suggestedDelta * tot / item.currentPrice)} </Table.Cell>
-                    <Table.Cell textAlign="right">{fmt.format(item.suggestedDelta * tot)} </Table.Cell>
-                </Table.Row>
-            })}
+                {data.filter(i => i.suggestedDelta != 0 && !i.isCash).map((item, ix) => {
+                    return <Table.Row key={ix}>
+                        <Table.Cell >{item.security.IsinCode} </Table.Cell>
+                        <Table.Cell >{item.security.SecurityName} </Table.Cell>
+                        <Table.Cell textAlign="center" >{item.suggestedDelta > 0 ? 'BUY' : 'SELL'} </Table.Cell>
+                        <Table.Cell textAlign="right" >{fmt.format(item.suggestedDelta * tot / item.currentPrice)} </Table.Cell>
+                        <Table.Cell textAlign="right">{fmt.format(item.suggestedDelta * tot)} </Table.Cell>
+                    </Table.Row>
+                })}
             </Table.Body>
         </Table>
     </Segment>
