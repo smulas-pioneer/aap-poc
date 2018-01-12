@@ -191,13 +191,13 @@ const KAPPA = [
 ]
 
 export const getRandomRadar = () => {
-    const max = rnd(10, 70);
+    const max = rnd(10, 200);
     return {
-        concentration: rnd(10, max) / 10,
-        efficency: rnd(10, max) / 10,
-        consistency: rnd(10, max) / 10,
-        overlap: rnd(10, max) / 10,
-        riskAdequacy: rnd(10, max) / 10,
-        riskAnalysis: rnd(10, max) / 10
+        concentration: rnd(10, max) ,
+        efficency: rnd(10, max) ,
+        consistency: rnd(10, max) ,
+        overlap: rnd(10, max) ,
+        riskAdequacy: rnd(10, max) ,
+        riskAnalysis: rnd(10, max) 
     };
 };

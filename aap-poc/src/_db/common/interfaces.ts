@@ -237,6 +237,8 @@ export interface StrategyItem {
     currentAmount: number;
     modelWeight: number;
     suggestedDelta: number;
+
+    editingDelta?: number;
     suggestionAccepted: boolean;
     isCash: boolean;
     warning?: Warning;

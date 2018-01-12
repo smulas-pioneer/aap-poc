@@ -12,7 +12,6 @@ import { securityList } from "./data";
 
 export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean, forced?: StrategyItem[]): StrategyItem[] => {
     const k = getSuggestion1(position,axes,calculateFromAxes,forced);
-    console.log('Strategy', k);
     return fixCash(k);
 }
     const getSuggestion1 = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean, forced?: StrategyItem[]): StrategyItem[] => {
@@ -27,33 +26,20 @@ export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm,
         const delta = sumBy(w, s => s.weight) - 1;
         return [{ ...position[0], suggestedDelta: -delta, suggestionAccepted: delta != 0 }].concat(position.slice(1));
     }
-/*
 
-    if (calculateFromAxes) {
-        if (forced) {
-            return acceptAll(fixCash(forced));
-        }
-        return solve(position, axes).map(s => ({ ...s, suggestionAccepted: true }));
-    } else {
-        let newPos = forced
-            ? (forced.map(p => ({ ...p, suggestionAccepted: position.find(r => r.security.IsinCode === p.security.IsinCode)!.suggestionAccepted })))
-            : position;
-        return fixCash(newPos);
-    }
-    */
 };
 
-const fixCash = (forced: StrategyItem[]) => {
-    const delta = sumBy(forced, f => (f.currentWeight + f.suggestedDelta)) - 1;
-    return forced.map(s => {
-        return s.isCash ? { ...s,  suggestedDelta: s.suggestedDelta - delta }
+const fixCash = (strategy: StrategyItem[]) => {
+    const delta = sumBy(strategy, f => ( f.currentWeight + (f.suggestionAccepted ? f.suggestedDelta : 0))) - 1;
+    return strategy.map(s => {
+        return s.isCash ? { ...s,  suggestedDelta: s.suggestedDelta - delta, suggestionAccepted:true }
             : { ...s }
     });
 }
 
 const acceptAll = (forced: StrategyItem[]) => {
     return forced.map(s => {
-        return { ...s, suggestionAccepted: true }
+        return { ...s,  suggestionAccepted: s.suggestedDelta != 0 ? true:false }
     });
 }
 

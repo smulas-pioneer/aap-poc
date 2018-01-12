@@ -39,7 +39,7 @@
 }
 
 .grid-advanced.grid-client-view-sub2 {
-    grid-template-columns:  auto 40%;
+    grid-template-columns:  100%;
 }
 
 

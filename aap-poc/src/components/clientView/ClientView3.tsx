@@ -43,7 +43,8 @@ interface State {
     autoplay: boolean,
     currentTargetReturn?: number,
     showModel: boolean,
-    isInSimulationMode: boolean
+    somethingIsChanged: boolean
+    //isInSimulationMode: boolean
 }
 
 class ClientViewCompo extends conn.StatefulCompo<State> {
@@ -61,7 +62,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         },
         autoplay: true,
         showModel: false,
-        isInSimulationMode: false,
+        somethingIsChanged: false
     } as State
 
     componentDidMount() {
@@ -70,7 +71,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
             setTimeout(() => {
                 this.selectAllAxes();
                 // Accept All Suggestions on Enter.
-                this.handleOnChange(this.state.strategy.map(s => ({ ...s, suggestionAccepted: true })));
+                this.handleOnChange(this.state.strategy.map(s => ({ ...s, suggestionAccepted: s.suggestedDelta != 0 ? true : false })));
             }, 500);
         }
     }
@@ -111,14 +112,20 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
     }
 
     handleOnChange = (strategy: StrategyItem[]) => {
-        this.props.getSuggestions({ id: this.props.client!.id, position: strategy, axes: this.state.axes, calculateFromAxes: false });
+        this.setState({ somethingIsChanged: false }, () => {
+            this.props.getSuggestions({ id: this.props.client!.id, position: strategy, axes: this.state.axes, calculateFromAxes: false });
+        });
     }
 
     handleAxesChange = (key: string) => {
         const axes = { ...this.state.axes, [key]: !this.state.axes[key] };
-        this.setState({ axes, isInSimulationMode: false }, () => {
+        this.setState({ axes, somethingIsChanged: true }, () => {
             this.props.getSuggestions({ id: this.props.client!.id, position: this.state.strategy, axes: axes, calculateFromAxes: true });
         })
+    }
+
+    handleSomethingIsChanged = (value: boolean) => {
+        this.setState({ somethingIsChanged: value });
     }
 
     calculateGraphs = () => {
@@ -213,24 +220,11 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
     render() {
         const { client, lang, history } = this.props;
-        const { radar, strategy, breakdown, axes, isInSimulationMode } = this.state;
+        const { radar, strategy, breakdown, axes, somethingIsChanged } = this.state;
 
         if (!client || history.length === 0) return <div />
 
         const graphs = this.calculateGraphs();
-        /*
-                if (radar) {
-                    console.log("BEFORE");
-                    console.log(strategy.map(r => `${r.security.IsinCode}; ${r.currentWeight}`).join('\n'));
-                    let p = radar.actual;
-                    console.log(Object.keys(p).map(k => `${k};${p[k]}`).join('\n'));
-        
-                    console.log("AFTER");
-                    console.log(strategy.map(r => `${r.security.IsinCode}; ${r.currentWeight + r.suggestedDelta}`).join('\n'));
-                    p = radar.proposed;
-                    console.log(Object.keys(p).map(k => `${k};${p[k]}`).join('\n'));
-                }
-          */
         return (
             <AdvancedGrid className="grid-client-view-main" style={{ marginBottom: '10px' }}>
                 <Segment style={{ margin: 0 }} >
@@ -258,26 +252,28 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                             onAddSecurity={this.props.addSecurity}
                             onAddHistory={this.props.addHistory}
                             onShowModel={() => this.setState({ showModel: true })}
-                            onToggleSimulation={(isInSimulationMode) => this.setState({ isInSimulationMode })}
-                            isInSimulationMode={isInSimulationMode}
+                            onSomethingChanged={this.handleSomethingIsChanged}
                         />}
-                        <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={isInSimulationMode} />
+                        <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={!somethingIsChanged} />
                     </Segment>
                     <Segment style={{ margin: 0 }}>
                         <WidgetTitle title={lang.PORTFOLIO_MONITORING} shareButtons={['Image', 'Pdf', 'Copy']} />
-                        {radar && <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} alertsAbout={isInSimulationMode ? 'proposed' : 'actual'} />}
+                        {radar && <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} alertsAbout={ 'actual'} />}
                         <br />
-                        <p style={{ textAlign: 'center' }}>Alerts are about: <b>{isInSimulationMode ? 'Proposed' : 'Actuals'}</b> </p>
+                        <p style={{ textAlign: 'center' }}>Alerts are about: <b>{somethingIsChanged ? 'Proposal' : 'Actuals'}</b> </p>
                     </Segment>
                 </AdvancedGrid>
+
                 <AdvancedGrid className="grid-client-view-sub2">
                     <Segment style={{ margin: 0 }}>
                         <ClientViews graphs={graphs} lang={lang} mode='tab' />
                     </Segment>
+                    {/*}
                     <Segment style={{ margin: 0 }} as={OverflowColumn}>
                         <WidgetTitle title={lang.CLIENT_EVENT_HISTORY} />
                         <ClientHistory lang={lang} history={history} />
                     </Segment>
+                        */}
                 </AdvancedGrid>
             </AdvancedGrid>
         )

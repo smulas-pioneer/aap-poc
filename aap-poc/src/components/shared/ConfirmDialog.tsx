@@ -70,8 +70,8 @@ export class ConfirmDialog extends React.Component<ConfirmDialogProps, ConfirmDi
         const { customButton } = this.props;
         if (customButton) {
             return [
-                <Button.Or />,
-                <Button color={customButton.color} onClick={this.handleCustom}>
+                <Button.Or key={1}/>,
+                <Button key={2} color={customButton.color} onClick={this.handleCustom}>
                     <Icon name={customButton.icon} />{customButton.text}
                 </Button>
             ];

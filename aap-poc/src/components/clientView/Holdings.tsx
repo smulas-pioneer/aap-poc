@@ -21,50 +21,82 @@ interface Props {
     onAddSecurity: (props: { securityId: string, clientId: string }) => void;
     onAddHistory?: (props: { clientId: string, notes: string }) => void;
     onShowModel: () => void;
-    onToggleSimulation: (value: boolean) => void
-    isInSimulationMode: boolean
+    onSomethingChanged: (value: boolean) => void;
 
 }
 interface State {
     addingSecurity: boolean,
     mode: 'Weight' | 'Quantity' | 'Amount',
 
+    holdings: StrategyItem[],
+    changedIsin: string[]
+
 }
 
 export class Holdings extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
-        this.state = { addingSecurity: false, mode: 'Weight' }
+        this.state = { addingSecurity: false, mode: 'Weight', holdings: props.holdings, changedIsin: [] }
     }
 
+    componentWillReceiveProps(next: Props) {
+        if (JSON.stringify(next.holdings) != JSON.stringify(this.props.holdings)) {
+            console.log('replacing the holdings state');
+            this.setState({ holdings: next.holdings, changedIsin: [] })
+        }
+    }
     handleItemChanged = (item: StrategyItem, ix: number) => {
-        let s = [...this.props.holdings];
-        s[ix] = item;
-        this.props.onToggleSimulation(false);
-        this.props.onChange(s);
+        let holdings = [...this.state.holdings];
+        holdings[ix] = item;
+        const originalValue = this.props.holdings.find(i => i.security.IsinCode == item.security.IsinCode);
+        const changed = originalValue == undefined || originalValue.suggestedDelta != item.suggestedDelta || originalValue.suggestionAccepted != item.suggestionAccepted;
+        const changedIsin = changed
+            ? this.state.changedIsin.filter(p => p != item.security.IsinCode).concat(item.security.IsinCode)
+            : this.state.changedIsin.filter(p => p != item.security.IsinCode)
+
+        this.setState({
+            holdings,
+            changedIsin
+        }, () => {
+            this.props.onSomethingChanged(changedIsin.length >0);
+        });
+
     }
 
     handleAcceptAll = (accept: boolean) => {
-        let s = this.props.holdings.map(h => (
+        let holdings = this.state.holdings.map(h => (
             {
                 ...h,
-                suggestionAccepted: h.suggestedDelta != 0 ? accept : false
+                suggestionAccepted: h.suggestedDelta != 0 ? accept : false,
             }));
-        this.props.onChange(s);
+        const changedIsin = holdings.filter(i => {
+            const pr = this.props.holdings.find(h => h.security.IsinCode == i.security.IsinCode);
+            return pr == undefined || pr.suggestedDelta != i.suggestedDelta || pr.suggestionAccepted != i.suggestionAccepted;
+        }).map(h => h.security.IsinCode);
+        this.setState({
+            holdings,
+            changedIsin
+        }, () => {
+            this.props.onSomethingChanged(changedIsin.length >0);
+        })
     }
 
-    handleOnToggleSimulation = () => {
-      this.props.onToggleSimulation(!this.props.isInSimulationMode);
+    handleOnSimulate = () => {
+        this.props.onChange(this.state.holdings);
+        //this.props.onToggleSimulation(!this.props.isInSimulationMode);
     }
 
     render() {
-        const { holdings, lang ,isInSimulationMode} = this.props;
+        const { lang } = this.props;
+        const { holdings } = this.state;
         const finalWeight = suggestedPosition(holdings);
         const fmt = formatNumber(lang.NUMBER_FORMAT);
         const tot = sumBy(holdings, t => t.currentAmount);
         const accepted = holdings.slice(1).filter(a => a.suggestionAccepted).length;
         const proposed = holdings.slice(1).filter(a => a.suggestedDelta != 0).length;
-        const proposeAllColor = accepted == 0 ? 'grey' : accepted == proposed ? 'green' : 'orange';
+        const canSelectAll = accepted != proposed;
+
+        const somethingIsChanged = this.state.changedIsin.length == 0;
         const acceptAll = !(accepted == proposed);
         const isValid = finalWeight.filter(h => h.weight < -0.001 || h.weight > 1).length == 0;
         return (
@@ -96,21 +128,21 @@ export class Holdings extends React.Component<Props, State> {
                             <OrderList data={holdings} lang={lang} />
                         </ConfirmDialog>
 
-                        <Menu.Item position="right" style={{ color: proposeAllColor }} onClick={() => this.handleAcceptAll(acceptAll)}>
+                        <Menu.Item position="right" style={{ color: 'black' }} onClick={() => this.handleAcceptAll(acceptAll)}>
                             <Icon name="check" />
-                            Select All
+                            {canSelectAll ? 'Select All' : 'UnSelect All'}
                         </Menu.Item>
 
-                        <Menu.Item className={!isInSimulationMode ? 'blink_me' : ''} position="right" style={{ backgroundColor: isInSimulationMode ? 'lightyellow' : 'white' }} onClick={this.handleOnToggleSimulation} >
+                        <Menu.Item position="right" disabled={somethingIsChanged} onClick={this.handleOnSimulate} >
                             <Icon name="tv" />
-                            {isInSimulationMode ? 'Exit Simulation' : 'Simulate'}
+                            Simulate
                         </Menu.Item>
 
                         {this.props.onAddHistory
                             ? (
                                 <ConfirmDialog
                                     title={lang.PROPOSAL_VALIDATION.title}
-                                    trigger={<Menu.Item position="right" disabled={!isValid || !isInSimulationMode}><Icon name="send" />Validate</Menu.Item>}
+                                    trigger={<Menu.Item position="right" disabled={!isValid || !somethingIsChanged}><Icon name="send" />Validate</Menu.Item>}
                                     style={{ border: '2px solid green' }}
                                     customButton={{ text: 'Later', icon: 'forward', color: 'blue' }}
                                     onConfirm={() => this.props.onAddHistory!({ clientId: this.props.clientId, notes: lang.PROPOSAL_VALIDATION.title })} >
@@ -123,7 +155,7 @@ export class Holdings extends React.Component<Props, State> {
                                     {/* <Checkbox defaultChecked={false} label='Open pdf after generation' /> */}
 
                                 </ConfirmDialog>
-                            ) : <Menu.Item position="right" disabled={!isValid || !isInSimulationMode}><Icon name="send" />Validate</Menu.Item>
+                            ) : <Menu.Item position="right" disabled={!isValid || !somethingIsChanged}><Icon name="send" />Validate</Menu.Item>
                         }
                     </Menu.Menu>
                 </Menu>
@@ -171,14 +203,12 @@ export class Holdings extends React.Component<Props, State> {
                                         <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
                                         <Table.Cell textAlign="right">{show && fmt(t.currentAmount)}</Table.Cell>
                                         <Table.Cell textAlign="right">{show && fmt(t.currentWeight * 100, 0)} </Table.Cell>
-                                        <Table.Cell textAlign="left">
+                                        <Table.Cell textAlign="left" warning={i != 0 && this.state.changedIsin.indexOf(t.security.IsinCode) > -1}>
                                             <HoldingWeigthControl factor={factor} data={t} onChange={(item) => this.handleItemChanged(item, i)} />
                                         </Table.Cell>
-
-                                        {isInSimulationMode &&
+                                        {somethingIsChanged &&
                                             <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100)}</Table.Cell>
                                         }
-
                                     </Table.Row>
                             })
                         }
@@ -194,7 +224,7 @@ export class Holdings extends React.Component<Props, State> {
                             <Table.HeaderCell textAlign="right"></Table.HeaderCell>
                             <Table.HeaderCell textAlign="right"></Table.HeaderCell>
 
-                            <Table.HeaderCell textAlign="right">{isInSimulationMode && fmt(sumBy(finalWeight, t => t.weight) * 100)}</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="right">{somethingIsChanged && fmt(sumBy(finalWeight, t => t.weight) * 100)}</Table.HeaderCell>
 
                         </Table.Row>
                     </Table.Footer>

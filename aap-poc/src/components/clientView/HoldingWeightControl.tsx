@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { StrategyItem } from '../../_db/interfaces';
 import { Input } from 'semantic-ui-react';
+import { setTimeout } from 'timers';
 
 interface EditCellState {
     item: StrategyItem,
@@ -50,6 +51,7 @@ export class HoldingWeigthControl extends React.Component<EditCellProps, EditCel
 
     handleOnChange = (value: string) => {
         const item = { ...this.state.item, suggestedDelta: value == '' ? 0 : this.state.item.suggestedDelta }
+
         this.setState({ value, item }, () => {
             this.handleAccept(item.suggestionAccepted);
         });
@@ -57,15 +59,26 @@ export class HoldingWeigthControl extends React.Component<EditCellProps, EditCel
 
     render() {
         const { suggestedDelta, suggestionAccepted, isCash } = this.state.item;
-        const action = { icon: 'check', size: 'mini', disabled: isCash, positive: suggestionAccepted, primary: !suggestionAccepted, onClick: () => this.handleAccept(!suggestionAccepted) }
+        const action = {
+            icon: suggestionAccepted ? 'check' :undefined,
+            size: 'mini',
+            basic: true,
+            //color: suggestionAccepted ? 'black' : 'ligthgrey',
+            //disabled: isCash,
+            //positive: suggestionAccepted,
+           // primary: !suggestionAccepted,
+            onClick: () => this.handleAccept(!suggestionAccepted)
+        }
         const suggested = getValue(this.props.factor, this.props.data).toString();
         const showValue = suggestedDelta != 0 || (suggested !== this.state.value && this.state.value !== '');
         const showAction = showValue && this.state.value !== '';
 
-        return !isCash && <Input type="number" size="mini"
-            disabled={suggestionAccepted || isCash}
+        return !isCash && <Input
+            type="number"
+            size="mini"
+            style={{color: suggestionAccepted ? 'red' : 'ligthgrey'}}
             value={showValue ? this.state.value : ''}
-            onChange={(a, b) => this.handleOnChange(b.value)}
+            onChange={(a, b) => this.handleOnChange(b.value)}    
             action={showAction && action}
         />
     }
