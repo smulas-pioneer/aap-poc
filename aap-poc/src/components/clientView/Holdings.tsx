@@ -58,7 +58,7 @@ export class Holdings extends React.Component<Props, State> {
             holdings,
             changedIsin
         }, () => {
-            this.props.onSomethingChanged(changedIsin.length >0);
+            this.props.onSomethingChanged(changedIsin.filter(i=>i!='CASH').length >0);
         });
 
     }
@@ -77,7 +77,7 @@ export class Holdings extends React.Component<Props, State> {
             holdings,
             changedIsin
         }, () => {
-            this.props.onSomethingChanged(changedIsin.length >0);
+            this.props.onSomethingChanged(changedIsin.filter(i=>i!='CASH').length >0);
         })
     }
 
@@ -96,7 +96,7 @@ export class Holdings extends React.Component<Props, State> {
         const proposed = holdings.slice(1).filter(a => a.suggestedDelta != 0).length;
         const canSelectAll = accepted != proposed;
 
-        const somethingIsChanged = this.state.changedIsin.length == 0;
+        const somethingIsChanged = this.state.changedIsin.filter(i=>i!='CASH').length == 0;
         const acceptAll = !(accepted == proposed);
         const isValid = finalWeight.filter(h => h.weight < -0.001 || h.weight > 1).length == 0;
         return (

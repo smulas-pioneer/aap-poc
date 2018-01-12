@@ -417,7 +417,7 @@ const Fees = (props: { strategy: StrategyItem[], lang: LangDictionary, targetRet
     const amount = sumBy(strategy, s => s.currentAmount);
 
 
-    return fees != 0 ? <Segment textAlign="center" floated="right">
+    return  <Segment textAlign="center" floated="right">
         {props.isInSimulationMode ? <Segment basic compact style={{ padding: 0 }} >
             <Statistic size="mini" color="blue">
                 <Statistic.Value>{lang.RESULTS}:</Statistic.Value>
@@ -455,7 +455,7 @@ const Fees = (props: { strategy: StrategyItem[], lang: LangDictionary, targetRet
 
                 </Statistic></Segment>
         }
-    </Segment> : null
+    </Segment>
 }
 
 interface ClientViewProps {
