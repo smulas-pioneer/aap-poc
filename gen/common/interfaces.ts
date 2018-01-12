@@ -180,6 +180,7 @@ export type Size = '<1M' | '1-5M' | '5-10M' | '10-20M' | '>20M';
 export interface SearchParms {
     filter: string;
     agents?: string[];
+    branch?: string[];
     alerts?: number[];
     alertTypes?: string[];
     onlyWithAlerts?: boolean;
@@ -236,6 +237,8 @@ export interface StrategyItem {
     currentAmount: number;
     modelWeight: number;
     suggestedDelta: number;
+
+    editingDelta?: number;
     suggestionAccepted: boolean;
     isCash: boolean;
     warning?: Warning;

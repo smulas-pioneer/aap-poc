@@ -1,6 +1,6 @@
 import { Portfolio, Holding, Client, Radar, InterviewResult, StrategyItem, AlertHistory, TimeHorizon, TimeHorizonMonths } from './common/interfaces';
 import { securities, cash } from './common/securities';
-import { createRadarFromStrategy, isFakeClient } from './common/radarUtils';
+import { createRadarFromStrategy, isFakeClient, getRandomRadar } from './common/radarUtils';
 //import * as ce from './_db/coreEngine';
 
 import * as faker from 'faker';
@@ -104,6 +104,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
     }
 }
 
+/*
 export const getRandomRadar = () => {
     const max = rnd(10, 70);
     return {
@@ -115,6 +116,7 @@ export const getRandomRadar = () => {
         riskAnalysis: rnd(10, max) / 10
     };
 };
+*/
 const clientStrategyCreator = (clients: Client[]) => {
     return clients.reduce((prev, curr) => {
         prev[curr.id] = strategyCreator();

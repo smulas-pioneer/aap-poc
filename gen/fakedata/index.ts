@@ -8,9 +8,8 @@ import * as P4 from './fds_c2_m';
 import * as P5 from './fds_c3_m';
 import * as P6 from './fds_c4_m';
 import * as P7 from './fds_c3_c_bis';
-import { getRandomRadar } from '../index';
 import { cash } from '../common/securities';
-import { modelPosition, createRadarSync } from '../common/radarUtils';
+import { modelPosition, createRadarSync, getRandomRadar } from '../common/radarUtils';
 
 const mapSecurity = (p: any) => {
     return {

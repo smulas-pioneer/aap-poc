@@ -16,14 +16,16 @@ export const numArray = (num: number) => {
 export const rnd = (min: number, max: number) => Math.floor(Math.random() * (max - min)) + min;
 export const avgRadar = (position: PositionItem[]): RadarItem => {
     return {
-        concentration: sumBy(position, p => p.radar.concentration * p.weight),
-        efficency: sumBy(position, p => p.radar.efficency * p.weight),
-        consistency: sumBy(position, p => p.radar.consistency * p.weight),
-        overlap: sumBy(position, p => p.radar.overlap * p.weight),
-        riskAdequacy: sumBy(position, p => p.radar.riskAdequacy * p.weight),
-        riskAnalysis: sumBy(position, p => p.radar.riskAnalysis * p.weight),
+        concentration: adjustRadarValue( sumBy(position, p => p.radar.concentration * p.weight)),
+        efficency:adjustRadarValue( sumBy(position, p => p.radar.efficency * p.weight)),
+        consistency: adjustRadarValue(sumBy(position, p => p.radar.consistency * p.weight)),
+        overlap: adjustRadarValue(sumBy(position, p => p.radar.overlap * p.weight)),
+        riskAdequacy: adjustRadarValue(sumBy(position, p => p.radar.riskAdequacy * p.weight)),
+        riskAnalysis: adjustRadarValue(sumBy(position, p => p.radar.riskAnalysis * p.weight)),
     }
 }
+
+export const adjustRadarValue= (value:number) => value < 10 ? value * 20 : value;
 
 export const getRAG = (act: number, limit: number, mifid: boolean): Alert => {
     return act > (limit+1) ? (mifid ? 'red' : 'orange') : 'green'

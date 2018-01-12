@@ -19,6 +19,7 @@ export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm,
         if (forced && axes.concentration && axes.consistency && axes.efficency && axes.overlap && axes.riskAdequacy && axes.riskAnalysis) return acceptAll(forced);
         return acceptAll(solve(position, axes));
     } else {
+
         let newPos = forced 
             ? forced.map(p => ({ ...p, suggestionAccepted: position.find(r => r.security.IsinCode === p.security.IsinCode)!.suggestionAccepted }))
             : position;

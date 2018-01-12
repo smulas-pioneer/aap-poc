@@ -260,7 +260,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         <WidgetTitle title={lang.PORTFOLIO_MONITORING} shareButtons={['Image', 'Pdf', 'Copy']} />
                         {radar && <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} alertsAbout={ 'actual'} />}
                         <br />
-                        <p style={{ textAlign: 'center' }}>Alerts are about: <b>{somethingIsChanged ? 'Proposal' : 'Actuals'}</b> </p>
+                        <p style={{ textAlign: 'center' }}>Alerts are about: <b>{'Actuals'}</b> </p>
                     </Segment>
                 </AdvancedGrid>
 
