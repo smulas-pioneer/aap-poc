@@ -7,9 +7,9 @@ import { Client, Breakdown, Radar, StrategyItem, RadarStrategyParm, InterviewRes
 import * as ce from '../../_db/coreEngine';
 import { sumBy, startCase, camelCase } from 'lodash';
 
-import { Grid, Segment, Statistic, Card, Button, Table, SemanticICONS, Icon, Feed, Form, Label, Tab, Accordion, Header, SemanticCOLORS, List, Menu, Transition } from 'semantic-ui-react';
+import { Grid, Segment, Statistic, Card, Button, Table, SemanticICONS, Icon, Feed, Form, Label, Tab, Accordion, Header, SemanticCOLORS, List, Menu, Transition, Checkbox } from 'semantic-ui-react';
 import { RadarGraph } from '../RadarGraph';
-import { Holdings } from './Holdings';
+import { Holdings, OrderList } from './Holdings';
 import { PerformanceChart } from '../securityView/PerformanceChart';
 import { RiskReturnGraph } from './RiskReturnGraph';
 import { BreakdownView } from './BreakdownView';
@@ -44,6 +44,7 @@ interface State {
     currentTargetReturn?: number,
     showModel: boolean,
     somethingIsChanged: boolean
+
     //isInSimulationMode: boolean
 }
 
@@ -62,7 +63,8 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         },
         autoplay: true,
         showModel: false,
-        somethingIsChanged: false
+        somethingIsChanged: false,
+        validationMode: false
     } as State
 
     componentDidMount() {
@@ -238,33 +240,39 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     </Segment>
                     : <div />}
                 <AdvancedGrid className="grid-client-view-sub">
-                    <Segment style={{ margin: 0 }}>
-                        <WidgetTitle title={this.state.showModel ? lang.MODEL : lang.PORTFOLIO_HOLDINGS} shareButtons={['Excel', 'Pdf', 'Copy']} />
-                        {this.state.showModel && <Model
-                            clientId={client.id} lang={lang} holdings={strategy}
-                            onShowHoldings={() => this.setState({ showModel: false })}
-                        />}
-                        {!this.state.showModel && <Holdings
-                            clientId={client.id}
-                            lang={lang}
-                            holdings={strategy}
-                            onChange={this.handleOnChange}
-                            onAddSecurity={this.props.addSecurity}
-                            onAddHistory={this.props.addHistory}
-                            onShowModel={() => this.setState({ showModel: true })}
-                            onSomethingChanged={this.handleSomethingIsChanged}
-                        />}
-                        <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={!somethingIsChanged} />
-                    </Segment>
+
+                   <Segment style={{ margin: 0 }}>
+                            <WidgetTitle title={this.state.showModel ? lang.MODEL : lang.PORTFOLIO_HOLDINGS} shareButtons={['Excel', 'Pdf', 'Copy']} />
+                            {this.state.showModel && <Model
+                                clientId={client.id} lang={lang} holdings={strategy}    
+                                onShowHoldings={() => this.setState({ showModel: false })}
+                            />}
+                            {!this.state.showModel && <Holdings
+                                clientId={client.id}
+                                lang={lang}
+                                holdings={strategy}
+                                onChange={this.handleOnChange}
+                                onAddSecurity={this.props.addSecurity}
+                                onAddHistory={this.props.addHistory}
+                                onShowModel={() => this.setState({ showModel: true })}
+                                onSomethingChanged={this.handleSomethingIsChanged}
+                                radar={this.state.radar}
+                                axes={this.state.axes}
+                            />}
+                            <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={!somethingIsChanged} />
+                        </Segment>
+                 
                     <Segment style={{ margin: 0 }}>
                         <WidgetTitle title={lang.PORTFOLIO_MONITORING} shareButtons={['Image', 'Pdf', 'Copy']} />
-                        {radar && <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} alertsAbout={ 'actual'} />}
+                        {radar && 
+                            <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} alertsAbout={'actual'} />
+                        }
                         <br />
-                        <p style={{ textAlign: 'center' }}>Alerts are about: <b>{'Actuals'}</b> </p>
+                        <p style={{ textAlign: 'center' }}>Alerts are about: <b>{'proposed' }</b> </p>
                     </Segment>
                 </AdvancedGrid>
 
-                <AdvancedGrid className="grid-client-view-sub2">
+             <AdvancedGrid className="grid-client-view-sub2">
                     <Segment style={{ margin: 0 }}>
                         <ClientViews graphs={graphs} lang={lang} mode='tab' />
                     </Segment>
@@ -417,7 +425,7 @@ const Fees = (props: { strategy: StrategyItem[], lang: LangDictionary, targetRet
     const amount = sumBy(strategy, s => s.currentAmount);
 
 
-    return  <Segment textAlign="center" floated="right">
+    return <Segment textAlign="center" floated="right">
         {props.isInSimulationMode ? <Segment basic compact style={{ padding: 0 }} >
             <Statistic size="mini" color="blue">
                 <Statistic.Value>{lang.RESULTS}:</Statistic.Value>

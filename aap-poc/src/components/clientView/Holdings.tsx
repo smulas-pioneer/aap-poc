@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StrategyItem, Security } from '../../_db/interfaces';
+import { StrategyItem, Security, Radar, RadarStrategyParm } from '../../_db/interfaces';
 import { Table, Button, Segment, Menu, Icon, Dropdown } from 'semantic-ui-react';
 import { LangDictionary } from '../../reducers/language/interfaces';
 import { HoldingWeigthControl } from './HoldingWeightControl';
@@ -12,6 +12,7 @@ import { OverflowItem } from '../shared/GridOverflow';
 import { strategies } from '../../_db/data/index';
 import { WidgetTitle } from '../shared/WidgetTitle';
 import Checkbox from 'semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox';
+import { RadarGraph } from '../RadarGraph';
 
 interface Props {
     holdings: StrategyItem[],
@@ -22,6 +23,8 @@ interface Props {
     onAddHistory?: (props: { clientId: string, notes: string }) => void;
     onShowModel: () => void;
     onSomethingChanged: (value: boolean) => void;
+    radar?: Radar,
+    axes: RadarStrategyParm,
 
 }
 interface State {
@@ -144,19 +147,24 @@ export class Holdings extends React.Component<Props, State> {
                                     title={lang.PROPOSAL_VALIDATION.title}
                                     trigger={<Menu.Item position="right" disabled={!isValid || !somethingIsChanged}><Icon name="send" />Validate</Menu.Item>}
                                     style={{ border: '2px solid green' }}
+                                    confirmButton="Accept"
+                                    cancelButton="Reject"
                                     customButton={{ text: 'Later', icon: 'forward', color: 'blue' }}
                                     onConfirm={() => this.props.onAddHistory!({ clientId: this.props.clientId, notes: lang.PROPOSAL_VALIDATION.title })} >
 
                                     <div style={{ width: '100%' }}>
                                         <OrderList data={holdings} lang={lang} />
+                                        <RadarGraph data={this.props.radar!} lang={lang} axes={this.props.axes} onClickShape={()=>{}} width={700} height={413} alertsAbout={'proposed' } />
+                     
                                         <br />
                                         <Checkbox defaultChecked label='Open pdf after generation' />
                                     </div>
-                                    {/* <Checkbox defaultChecked={false} label='Open pdf after generation' /> */}
 
                                 </ConfirmDialog>
                             ) : <Menu.Item position="right" disabled={!isValid || !somethingIsChanged}><Icon name="send" />Validate</Menu.Item>
                         }
+
+
                     </Menu.Menu>
                 </Menu>
                 <Table compact size="small">
@@ -240,7 +248,7 @@ const createEmptyRow = (i: number) => {
     </Table.Row>
 }
 
-const OrderList = (props: { data: StrategyItem[], lang: LangDictionary }) => {
+export const OrderList = (props: { data: StrategyItem[], lang: LangDictionary }) => {
     const { data, lang } = props;
     const tot = sumBy(data, t => t.currentAmount);
 
