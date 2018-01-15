@@ -15,12 +15,11 @@ interface HistoryViewProps {
     history: InterviewResult[]
     lang: LangDictionary
 }
-
-const colors: { [id: string]: 'green' | '#db2828' | 'olive' } = {
+const colors: { [id: string]: 'green' | '#db2828' | 'olive' | '#2185CB'} = {
     ACCEPTED: 'green',
     REJECTED: '#db2828',
     ONGOING: 'olive',
-    ONHOLD:'olive'
+    ONHOLD:'#2185CB'
 }
 
 const icons: { [id: string]: 'alarm' | 'check' | 'wait' } = {
