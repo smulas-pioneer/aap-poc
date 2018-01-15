@@ -12,7 +12,8 @@ import { LangDictionary } from '../reducers/language/interfaces';
 import { SpotlightSearchResultItem } from '../_db/interfaces';
 import { isClient, isAgent } from '../_db/utils';
 import { Share } from './Share';
-const userImage = require('./user.png');
+const advisorAvatar = require('./advisorAvatar.png');
+const managerAvatar = require('./managerAvatar.png');
 const logo2 = require('./logo2.png');
 
 export interface MenuFlatProps {
@@ -79,7 +80,7 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
 
     userOptionsTrigger = (user: UserInfo, lang: LangDictionary) => (
         <span>
-            <Image avatar src={userImage} />{lang.WELCOME}, {user.firstName}
+            <Image avatar src={user.isManager ? managerAvatar : advisorAvatar} />{lang.WELCOME}, {user.firstName}
         </span>
     );
 
@@ -113,22 +114,25 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
                     onItemNavigate={this.onItemNavigate}
                     visible={spotlightVisible}
                 />
+
                 <Menu attached secondary >
 
                     <img style={{ width: '50px', height: '50px', padding: '4px' }} src={logo2} />
 
-                    <Menu.Item color="blue" as={Link} to="/" replace>
+                    <Menu.Item as={Link} to="/" replace>
                         <h2 style={{ color: '#005483', fontFamily: 'Helvetica' }} >Advisory Platform</h2>
                     </Menu.Item>
 
                     {/*Model.memuItems.map((v: any, i: any) => this.renderItem(v, i, activeMenuItem))*/}
 
                     <Menu secondary compact floated='right' >
-                        <Menu.Item color="blue">
-                            <Share buttons={['Print','Pdf','Email']} pointing="top right"/> Share
+
+                        <Menu.Item as="a" >
+                            <Share text='Share' buttons={['Print', 'Pdf', 'Email']} pointing="top right" />
                         </Menu.Item>
 
                         {this.spotlightMenuItem()}
+
                         <Dropdown fluid item trigger={trigger} >
                             <Dropdown.Menu>
                                 <Dropdown.Divider />

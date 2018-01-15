@@ -151,7 +151,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
 
         return (
             <Segment>
-                <WidgetTitle title={header} shareButtons={['Image','Copy']}/>
+                <WidgetTitle title={header} shareButtons={['Image', 'Copy']} />
                 <CustomPieChart width={500} height={500} data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
             </Segment>
         );
@@ -244,7 +244,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                             <ClientFilter
                                 searchPlaceholder={lang.ENTER_FILTER_TEXT}
                                 data={filter}
-                                filterMaps={['Alerts', 'Aua']}
+                                filterMaps={['AlertType', 'Aua']}
                                 filterValue={data.parms}
                                 onChange={this.handleOnChangeFilter}
                             />
