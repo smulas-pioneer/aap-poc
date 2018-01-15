@@ -88,7 +88,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
             id == "1" ? "Balanced" :
                 id == "2" ? "Defensive" :
                     faker.company.catchPhraseAdjective(),
-        decision: '',clientStatus:'',
+        decision: '', clientStatus: '',
         mifid: rnd(1, 40),
         numOfAcceptedProposal: 0,
         numOfRejectedProposal: 0,
@@ -240,10 +240,10 @@ const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResul
 
         // LAst one is accepted for fake client and possibly ongoing for others. 
         if (isFakeClient(curr.id)) {
-            prev[curr.id][0].status = 'ACCEPTED';
+            prev[curr.id][prev[curr.id].length-1].status = 'ACCEPTED';
         } else {
             const nr = rnd(1, 10);
-            prev[curr.id][0].status = nr < 3 ? 'ONGOING' : (nr < 6 ? 'ONHOLD' : prev[curr.id][0].status)
+            prev[curr.id][prev[curr.id].length-1].status = nr < 3 ? 'ONGOING' : (nr < 6 ? 'ONHOLD' : prev[curr.id][0].status)
         }
         return prev;
     }, {
@@ -407,10 +407,12 @@ const go = async () => {
             c.segment = c.aua > 15000000 ? 'Private' : c.aua > 5000000 ? 'Wealth Management' : c.aua > 2000000 ? 'Mass Affluent' : 'Retail';
             c.breaks = Object.keys(c.radar).filter(k => k.endsWith("Alert")).filter(k => c.radar[k] !== "green").map(k => k.replace('Alert', ''));
 
-            c.lastInterviewDate = histories[c.id][0].date;
             const acc = histories[c.id].filter(p => p.status == 'ACCEPTED');
             c.lastAdvicedate = acc.length > 0 ? acc[0].date : '';
-            c.decision = histories[c.id][0].status;
+
+            const hist = histories[c.id][histories[c.id].length - 1];
+            c.lastInterviewDate = hist.date;
+            c.decision = hist.status;
             c.clientStatus = c.decision;
             //  
             const dtAlert = rnd(moment(c.lastInterviewDate).unix(), moment().unix());
