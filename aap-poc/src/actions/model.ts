@@ -102,7 +102,7 @@ export const filterMapItems: {[key in FilterMapTypes]: FilterMap } = {
         render: { header: 'Client Status', icon: 'adjust', label: (value: string) => startCase(camelCase(value)) }
     },
     ClientStatusDuration: {
-        prop: 'alertStatusAge',
+        prop: 'clientStatusDuration',
         searchprop: 'clientStatusDuration',
         render: { header: 'Client Status Duration', icon: 'time', label: undefined }
     }

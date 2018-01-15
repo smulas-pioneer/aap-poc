@@ -71,7 +71,8 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
         agent: agentName,
         lastInterviewDate: '2017-01-01',
         lastAdvicedate: '2017-01-01',
-        alertStatusAge: '2017-01-01',
+        clientStatusAge: '2017-01-01',
+        clientStatusDuration: '<1W',
         address: {
             city: agent.branch.city.cityName,
             region: agent.branch.city.region,
@@ -378,6 +379,12 @@ const deltaAnalysis = (radar: Radar) => {
     ret += radar.riskAnalysisAlert == 'green' ? "" : " risk analysis: +" + fmt(radar.actual.riskAnalysis - radar.limits.riskAnalysis).toString()
     return ret;
 }
+const getClientStatusDuration = (date:string) => {
+    if (moment(REFERENCE_DATE_TODAY).diff(moment(date),'weeks')<=1 ) return '<1W';
+    if (moment(REFERENCE_DATE_TODAY).diff(moment(date),'months')<=1 ) return '1W-1M';
+    if (moment(REFERENCE_DATE_TODAY).diff(moment(date),'months')<=6 ) return '1M-6M';
+    return '>6M'
+}
 
 const go = async () => {
     try {
@@ -417,8 +424,8 @@ const go = async () => {
             c.clientStatus = c.decision;
             //  
             const dtAlert = rnd(moment(c.lastInterviewDate).unix(), moment(REFERENCE_DATE_TODAY).unix());
-            c.alertStatusAge = moment.unix(dtAlert).format('YYYY-MM-DD');
-
+            c.clientStatusAge = moment.unix(dtAlert).format('YYYY-MM-DD');
+            c.clientStatusDuration = getClientStatusDuration(c.clientStatusAge );
             c.numOfInterviews = histories[c.id].length;
             c.numOfAcceptedProposal = histories[c.id].filter(p => p.status == 'ACCEPTED').length;
             c.numOfRejectedProposal = histories[c.id].filter(p => p.status == 'REJECTED').length;

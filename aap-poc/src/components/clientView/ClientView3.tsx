@@ -290,7 +290,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         <WidgetTitle title={lang.CLIENT_EVENT_HISTORY} />
                     </Modal.Header>
                     <Modal.Content>
-                        <ClientHistory lang={lang} history={history} />
+                        <ClientHistory lang={lang} history={history.filter((h,i)=>i<5)} />
                     </Modal.Content>
                 </Modal>}
 

@@ -1,4 +1,3 @@
-import { ClientState } from "../../reducers/client";
 
 export interface Client {
     id: string;
@@ -14,14 +13,15 @@ export interface Client {
     aua: number;
     radar: Radar;
     clientStatus: string;
-    alertStatusAge: string;
+    clientStatusAge: string;
+    clientStatusDuration: ClientStatusDuration;
+
     mifid: number;
     decision: string;
 
     deltaAnalysis: string;
     breaks: string[];
     size: Size;
-    clientStatusDuration: ClientStatusDuration;
 
     numOfInterviews: number,
     numOfAcceptedProposal: number;
@@ -182,7 +182,7 @@ export interface PerformanceItem {
 }
 export type Size = '<1M' | '1-5M' | '5-10M' | '10-20M' | '>20M';
 
-export type ClientStatusDuration = 'W' | '1M' | '6M' | '>6M';
+export type ClientStatusDuration = '<1W' | '1W-1M' | '1M-6M' | '>6M';
 
 export interface SearchParms {
     filter: string;
