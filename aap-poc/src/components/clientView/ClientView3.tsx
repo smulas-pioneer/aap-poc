@@ -7,7 +7,7 @@ import { Client, Breakdown, Radar, StrategyItem, RadarStrategyParm, InterviewRes
 import * as ce from '../../_db/coreEngine';
 import { sumBy, startCase, camelCase } from 'lodash';
 
-import { Grid, Segment, Statistic, Card, Button, Table, SemanticICONS, Icon, Feed, Form, Label, Tab, Accordion, Header, SemanticCOLORS, List, Menu, Transition, Checkbox, Modal } from 'semantic-ui-react';
+import { Grid, Segment, Statistic, Card, Button, Table, SemanticICONS, Icon, Feed, Form, Label, Tab, Accordion, Header, SemanticCOLORS, List, Menu, Transition, Checkbox, Modal, Loader, Dimmer } from 'semantic-ui-react';
 import { RadarGraph } from '../RadarGraph';
 import { Holdings, OrderList } from './Holdings';
 import { PerformanceChart } from '../securityView/PerformanceChart';
@@ -47,8 +47,9 @@ interface State {
     somethingIsChanged: boolean,
 
     viewHistory: boolean,
-
+    processing: string | undefined,
     //isInSimulationMode: boolean
+    firstSimulation: boolean,
 }
 
 class ClientViewCompo extends conn.StatefulCompo<State> {
@@ -68,7 +69,9 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         showModel: false,
         somethingIsChanged: false,
         validationMode: false,
-        viewHistory: false
+        viewHistory: false,
+        processing: undefined,
+        firstSimulation: true,
     } as State
 
     componentDidMount() {
@@ -118,17 +121,36 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
     }
 
     handleOnChange = (strategy: StrategyItem[]) => {
-        this.setState({ somethingIsChanged: false }, () => {
+        const cb = () => this.setState({ firstSimulation: false, processing: undefined, somethingIsChanged: false }, () => {
             this.props.getSuggestions({ id: this.props.client!.id, position: strategy, axes: this.state.axes, calculateFromAxes: false });
-        });
+        })
+        
+        if (this.state.firstSimulation) {
+            cb();
+        } else {
+            this.setState({ processing: 'New Simulation' }, () => setTimeout(cb, 500));
+        }
+
     }
+
 
     handleAxesChange = (key: string) => {
         const axes = { ...this.state.axes, [key]: !this.state.axes[key] };
-        this.setState({ axes, somethingIsChanged: true }, () => {
-            this.props.getSuggestions({ id: this.props.client!.id, position: this.state.strategy, axes: axes, calculateFromAxes: true });
-        })
+
+        this.setState({ processing: 'Requesting new Proposal' },
+            () => {
+                setTimeout(() => {
+                    this.setState({ axes, somethingIsChanged: true, processing: undefined }, () => {
+                        this.props.getSuggestions({ id: this.props.client!.id, position: this.state.strategy, axes: axes, calculateFromAxes: true });
+                    })
+                }, 1500);
+            }
+        )
+
+
     }
+
+
 
     handleSomethingIsChanged = (value: boolean) => {
         this.setState({ somethingIsChanged: value });
@@ -226,7 +248,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
     render() {
         const { client, lang, history } = this.props;
-        const { radar, strategy, breakdown, axes, somethingIsChanged, viewHistory } = this.state;
+        const { radar, strategy, breakdown, axes, somethingIsChanged, viewHistory, processing } = this.state;
 
         if (!client || history.length === 0) return <div />
 
@@ -290,10 +312,14 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         <WidgetTitle title={lang.CLIENT_EVENT_HISTORY} />
                     </Modal.Header>
                     <Modal.Content>
-                        <ClientHistory lang={lang} history={history.filter((h,i)=>i<5)} />
+                        <ClientHistory lang={lang} history={history.filter((h, i) => i < 5)} />
                     </Modal.Content>
                 </Modal>}
+                {processing && <Dimmer active>
+                    <Loader size="huge">{processing}</Loader>
+                </Dimmer>}
 
+                }
             </AdvancedGrid>
         )
     }
