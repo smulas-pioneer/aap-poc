@@ -21,6 +21,7 @@ export interface Client {
     deltaAnalysis: string;
     breaks: string[];
     size: Size;
+    clientStatusDuration: ClientStatusDuration;
 
     numOfInterviews: number,
     numOfAcceptedProposal: number;
@@ -180,6 +181,9 @@ export interface PerformanceItem {
 
 }
 export type Size = '<1M' | '1-5M' | '5-10M' | '10-20M' | '>20M';
+
+export type ClientStatusDuration = 'W' | '1M' | '6M' | '>6M';
+
 export interface SearchParms {
     filter: string;
     agents?: string[];
@@ -191,6 +195,7 @@ export interface SearchParms {
     segments?: string[];
     size?: Size[];
     clientStatus?: string[];
+    clientStatusDuration?: ClientStatusDuration[];
     uid: string;
 }
 

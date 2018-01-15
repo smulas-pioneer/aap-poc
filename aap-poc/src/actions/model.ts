@@ -49,7 +49,7 @@ export const memuItems: MemuItemModel[] = [
     { langProps: 'NEWS_INSIGHTS', linkTo: undefined, color: 'grey', icon: 'newspaper', innewline: true }
 ]
 
-export type FilterMapTypes = 'Regions' | 'Alerts' | 'Agents' | 'Aua' | 'AlertType' | 'Segment' | 'Branch' | 'ClientStatus';
+export type FilterMapTypes = 'Regions' | 'Alerts' | 'Agents' | 'Aua' | 'AlertType' | 'Segment' | 'Branch' | 'ClientStatus' | 'ClientStatusDuration';
 
 export interface FilterMap {
     prop: string;
@@ -100,6 +100,11 @@ export const filterMapItems: {[key in FilterMapTypes]: FilterMap } = {
         prop: 'clientStatus',
         searchprop: 'clientStatus',
         render: { header: 'Client Status', icon: 'adjust', label: (value: string) => startCase(camelCase(value)) }
+    },
+    ClientStatusDuration: {
+        prop: 'alertStatusAge',
+        searchprop: 'clientStatusDuration',
+        render: { header: 'Client Status Duration', icon: 'time', label: undefined }
     }
 }
 
