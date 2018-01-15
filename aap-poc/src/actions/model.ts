@@ -74,7 +74,7 @@ export const filterMapItems: {[key in FilterMapTypes]: FilterMap } = {
     Agents: {
         prop: 'agent',
         searchprop: 'agents',
-        render: { header: 'Agents', icon: 'address book outline', label: undefined, max: 5 }
+        render: { header: 'Financial Advisors', icon: 'address book outline', label: undefined, max: 5 }
     },
     Aua: {
         prop: 'size',
@@ -84,7 +84,7 @@ export const filterMapItems: {[key in FilterMapTypes]: FilterMap } = {
     AlertType: {
         prop: 'breaks',
         searchprop: 'alertTypes',
-        render: { header: 'Alert Type', icon: 'warning', label: (value: string) => startCase(value) }
+        render: { header: 'Alert Type', icon: 'alarm outline', label: (value: string) => startCase(value) }
     },
     Segment: {
         prop: 'segment',
@@ -94,7 +94,7 @@ export const filterMapItems: {[key in FilterMapTypes]: FilterMap } = {
     Branch: {
         prop: 'branch',
         searchprop: 'branch',
-        render: { header: 'Branch', icon: 'id badge', label: undefined , max:5}
+        render: { header: 'Branch', icon: 'id badge', label: undefined, max: 5 }
     }
 }
 
@@ -112,7 +112,7 @@ export interface ClientFilters {
     Branch: SearchFilter;
 }
 export const createFilterAdv = (data: Client[], searchParms?: SearchParms | undefined, from?: ClientFilters | undefined) => {
-    
+
     const isChecked = (array?: any[], value?: any) => {
         if (!array || !array.length) return false;
         const a = array.find(v => v === value.toString());

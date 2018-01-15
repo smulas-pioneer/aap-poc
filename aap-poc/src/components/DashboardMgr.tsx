@@ -100,7 +100,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
             <Grid columns={2}>
                 <Grid.Column>
                     <Segment>
-                        <WidgetTitle title={'Key Figures Map'} shareButtons={['Image','Copy']} />
+                        <WidgetTitle title={'Key Figures Map'} shareButtons={['Image', 'Copy']} />
                         <ItalyMap lang={lang} clients={data} height="500px" />
                     </Segment>
                 </Grid.Column>
@@ -153,7 +153,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
         return (
             <Segment>
-                <WidgetTitle title={header} shareButtons={['Image','Copy']}/>
+                <WidgetTitle title={header} shareButtons={['Image', 'Copy']} />
                 <CustomPieChart width={500} height={500} data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
             </Segment>
         );
@@ -239,7 +239,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                         <ClientFilter
                             searchPlaceholder={lang.ENTER_FILTER_TEXT}
                             data={filter}
-                            filterMaps={['Regions', 'Agents', 'Aua', 'Segment', 'Branch']}
+                            filterMaps={['Regions', 'Branch', 'Agents', 'Aua', 'Segment']}
                             filterValue={data.parms}
                             onChange={this.handleOnChangeFilter}
                         />
