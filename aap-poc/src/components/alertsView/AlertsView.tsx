@@ -3,11 +3,11 @@ import { appConnector } from 'app-support';
 import { getSearchFilter, selectAlertHistory, getLanguage, getSearchResult } from '../../reducers/index';
 import { searchClient, getAlertHistory } from '../../actions/index';
 import { SearchParms, SearchResult, Client } from '../../_db/interfaces';
-import { Segment, Icon, Header, Grid, Table, Menu, Popup } from 'semantic-ui-react';
+import { Segment, Icon, Header, Grid, Table, Menu, Popup, SemanticWIDTHS } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { ClientFilter } from '../shared/ClientFilter';
 import { AlertsChart } from './AlertsChart';
-import { startCase } from 'lodash';
+import { startCase, sortBy, orderBy } from 'lodash';
 import { AlertsHistory } from './AlertsHistory';
 import { GeoItalyClientsChart } from './GeoItalyClientsChart';
 import { MenuPagination } from '../shared/MenuPagination';
@@ -30,6 +30,8 @@ const conn = appConnector<{ uid: string, hideGraphs?: boolean, manager?: boolean
 interface AlertsViewState {
     searchParms: SearchParms;
     pageIndex: number;
+    columnSort?: string;
+    sortDirection?: 'ascending' | 'descending';
 }
 
 class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
@@ -50,6 +52,8 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
         this.handleChangePage = this.handleChangePage.bind(this);
         this.renderGraphs = this.renderGraphs.bind(this);
         this.renderBreaks = this.renderBreaks.bind(this);
+        this.handleSort = this.handleSort.bind(this);
+        this.renderHeader = this.renderHeader.bind(this);
     }
 
     componentDidMount() {
@@ -72,32 +76,64 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
     }
 
     handleChangePage(pageIndex: number) { this.setState(prev => ({ pageIndex })); }
+
     renderBreaks(client: Client) {
         return client.breaks.reduce((p, c) => p ? `${p}, ${startCase(c)}` : startCase(c), '');
         // return startCase(client.breaks[0])
     };
 
+    handleSort(columnName: string) {
+        const { columnSort, sortDirection } = this.state;
+
+        if (columnSort !== columnName) {
+            this.setState(prev => ({
+                columnSort: columnName,
+                sortDirection: 'ascending',
+            }));
+            return;
+        }
+
+        this.setState(prev => {
+            if (prev.sortDirection === 'ascending') return ({ sortDirection: 'descending' });
+            if (prev.sortDirection === 'descending') return ({ sortDirection: undefined });
+            return ({ sortDirection: 'ascending' });
+        });
+    }
+
+    renderHeader(columnName: string, langKey: string, width?: SemanticWIDTHS, textAlign?: 'center' | 'left' | 'right') {
+        return (
+            <Table.HeaderCell
+                textAlign={textAlign}
+                sorted={this.state.columnSort === columnName ? this.state.sortDirection : undefined}
+                onClick={() => this.handleSort(columnName)}
+                width={width}>
+                {langKey}
+            </Table.HeaderCell>
+        );
+    }
+
     renderTable() {
         const { lang, data, filter, manager, showFilter } = this.props;
-        const { searchParms, pageIndex } = this.state;
+        const { searchParms, pageIndex, columnSort, sortDirection } = this.state;
         const fmt = formatNumber(lang.NUMBER_FORMAT);
 
         if (!data) return null;
-
+        const loSort = sortDirection === 'ascending' ? 'asc' : sortDirection ? 'desc' : false;
+        const result = loSort && columnSort ? orderBy(data.result, [columnSort], [loSort]) : data.result;
         const start = ((pageIndex - 1) * AlertsViewCompo.ALERT_PAGE_SIZE);
-        const resultPage = data.result.slice(start, start + AlertsViewCompo.ALERT_PAGE_SIZE);
+        const resultPage = result.slice(start, start + AlertsViewCompo.ALERT_PAGE_SIZE);
 
         return (
             <Segment.Group>
                 <Segment basic style={{ height: '54vh' }} >
-                    <WidgetTitle title={lang.MY_ALERTS} shareButtons={['Pdf','Excel','Copy']}/>
-                    <Table celled compact striped fixed singleLine  >
+                    <WidgetTitle title={lang.MY_ALERTS} shareButtons={['Pdf', 'Excel', 'Copy']} />
+                    <Table celled compact striped fixed singleLine sortable>
                         <Table.Header fullWidth>
                             <Table.Row>
-                                <Table.HeaderCell width={2}>{lang.CLIENT_NAME}</Table.HeaderCell>
+                                {this.renderHeader('name', lang.CLIENT_NAME, 2)}
                                 {manager && <Table.HeaderCell width={2}>{lang.MANAGED_BY}</Table.HeaderCell>}
-                                <Table.HeaderCell textAlign="right" width={2}>{lang.AUA}</Table.HeaderCell>
-                                <Table.HeaderCell width={2} >{lang.LAST_INTERVIEW_DATE}</Table.HeaderCell>
+                                {this.renderHeader('aua', lang.AUA, 2, 'right')}
+                                {this.renderHeader('lastInterviewDate', lang.LAST_INTERVIEW_DATE, 2)}
                                 <Table.HeaderCell width={2}>{lang.DECISION}</Table.HeaderCell>
                                 <Table.HeaderCell>{lang.MODEL}</Table.HeaderCell>
                                 <Table.HeaderCell width={1}>{lang.MIFID}</Table.HeaderCell>
