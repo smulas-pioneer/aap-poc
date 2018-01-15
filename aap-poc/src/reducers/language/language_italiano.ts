@@ -88,6 +88,8 @@ export const Italiano: LanguageState = {
             interviews: 'Interviste'
         },
         ALERT: { name: 'Avvisi', sentence: 'monitoring indicators breached' },
+        NO_ALERTS: 'Nessun allarme',
+
         ALERTS: {
             riskAdequacyAlert: { name: 'Rischio Adeguatezza', sentence: 'Il livello del rischio del portafoglio non è adeguato al profilo MIFID del cliente' },
             efficencyAlert: { name: 'Efficienza', sentence: `L'efficienza del portafoglio non è allineata al suo modello` },

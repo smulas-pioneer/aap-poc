@@ -70,6 +70,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
         agent: agentName,
         lastInterviewDate: '2017-01-01',
         lastAdvicedate: '2017-01-01',
+        alertStatusAge: '2017-01-01',
         address: {
             city: agent.branch.city.cityName,
             region: agent.branch.city.region,
@@ -229,7 +230,7 @@ const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResul
         const n = rnd(4, 12);
         prev[curr.id] = numArray(n).map(i => {
             const r = rnd(1, 100);
-            const status = r < 30 ? 'REJECTED' : 'ACCEPTED';
+            const status = r < 30 ? 'REJECTED' : r < 40 ? 'ONHOLD':'ACCEPTED';
             return {
                 date: moment(faker.date.past()).format('YYYY-MM-DD'),
                 status,
@@ -395,7 +396,11 @@ const go = async () => {
         const strategies = { ...strategies1, ...strategies2 } as { [cli: string]: StrategyItem[] }
 
         clients.forEach(c => {
-            c.radar = createRadarFromStrategy(strategies[c.id], c.id, radars);
+            if (isFakeClient(c.id)) {
+                c.radar = radars[c.id]
+            } else {
+                c.radar = createRadarFromStrategy(strategies[c.id], c.id, radars);
+            }
             c.aua = sumBy(strategies[c.id], v => v.currentAmount);
             c.size = c.aua > 20000000 ? '>20M' : c.aua > 10000000 ? '10-20M' : c.aua > 5000000 ? '5-10M' : c.aua > 1000000 ? '1-5M' : '<1M';
             c.segment = c.aua > 15000000 ? 'Private' :  c.aua > 5000000 ? 'Wealth Management': c.aua > 2000000 ? 'Mass Affluent' : 'Retail';
@@ -404,6 +409,11 @@ const go = async () => {
             const acc = histories[c.id].filter(p => p.status == 'ACCEPTED');
             c.lastAdvicedate = acc.length > 0 ? acc[0].date : '';
             c.decision = histories[c.id][0].status;
+
+            //  
+            const dtAlert= rnd(  moment(c.lastInterviewDate).unix(), moment().unix());
+            c.alertStatusAge = moment.unix(dtAlert).format('YYYY-MM-DD');
+
             c.numOfInterviews = histories[c.id].length;
             c.numOfAcceptedProposal = histories[c.id].filter(p => p.status == 'ACCEPTED').length;
             c.numOfRejectedProposal = histories[c.id].filter(p => p.status == 'REJECTED').length;

@@ -11,7 +11,7 @@ export interface Client {
     address: Address;
     aua: number;
     radar: Radar;
-
+    alertStatusAge: string;
     mifid: number;
     decision: string;
 

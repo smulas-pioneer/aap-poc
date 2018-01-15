@@ -11,7 +11,7 @@ export interface Client {
     address: Address;
     aua: number;
     radar: Radar;
-
+    alertStatusAge: string;
     mifid: number;
     decision: string;
 
@@ -203,7 +203,7 @@ export type AgentView = {
 
 export interface InterviewResult {
     date: string;
-    status: 'ACCEPTED' | 'REJECTED' | 'ONGOING';
+    status: 'ACCEPTED' | 'REJECTED' | 'ONGOING' | 'ONHOLD'
     notes: string;
 }
 

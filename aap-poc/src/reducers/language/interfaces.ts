@@ -87,7 +87,7 @@ export interface LangDictionary {
     TARGET_RESULT: string,
 
 
-
+    NO_ALERTS:string,
 
     //client view
     PERSONAL_INFORMATION: string,

@@ -23,6 +23,7 @@ import { WidgetTitle } from '../shared/WidgetTitle';
 import { radars } from '../../_db/data';
 import { Model } from './Model';
 import { ColorsLegend } from '../italymaps/ColorsLegend';
+import { ClientAlert } from './ClientAlert';
 
 const conn = appConnector<{ id: string }>()(
     (s, p) => ({
@@ -233,46 +234,43 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     <WidgetTitle title={lang.PERSONAL_INFORMATION} />
                     <ClientCard client={client} lang={lang} color={'blue'} />
                 </Segment>
-                {client.radar.numOfAlerts
-                    ?
-                    <Segment style={{ margin: 0 }}>
-                        <ClientAlert radar={client.radar} lang={lang} />
-                    </Segment>
-                    : <div />}
+                <Segment style={{ margin: 0 }}>
+                    <ClientAlert radar={client.radar}  client={client} lang={lang} />
+                </Segment>
                 <AdvancedGrid className="grid-client-view-sub">
 
-                   <Segment style={{ margin: 0 }}>
-                            <WidgetTitle title={this.state.showModel ? lang.MODEL : lang.PORTFOLIO_HOLDINGS} shareButtons={['Excel', 'Pdf', 'Copy']} />
-                            {this.state.showModel && <Model
-                                clientId={client.id} lang={lang} holdings={strategy}    
-                                onShowHoldings={() => this.setState({ showModel: false })}
-                            />}
-                            {!this.state.showModel && <Holdings
-                                clientId={client.id}
-                                lang={lang}
-                                holdings={strategy}
-                                onChange={this.handleOnChange}
-                                onAddSecurity={this.props.addSecurity}
-                                onAddHistory={this.props.addHistory}
-                                onShowModel={() => this.setState({ showModel: true })}
-                                onSomethingChanged={this.handleSomethingIsChanged}
-                                radar={this.state.radar}
-                                axes={this.state.axes}
-                            />}
-                            <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={!somethingIsChanged} />
-                        </Segment>
-                 
+                    <Segment style={{ margin: 0 }}>
+                        <WidgetTitle title={this.state.showModel ? lang.MODEL : lang.PORTFOLIO_HOLDINGS} shareButtons={['Excel', 'Pdf', 'Copy']} />
+                        {this.state.showModel && <Model
+                            clientId={client.id} lang={lang} holdings={strategy}
+                            onShowHoldings={() => this.setState({ showModel: false })}
+                        />}
+                        {!this.state.showModel && <Holdings
+                            clientId={client.id}
+                            lang={lang}
+                            holdings={strategy}
+                            onChange={this.handleOnChange}
+                            onAddSecurity={this.props.addSecurity}
+                            onAddHistory={this.props.addHistory}
+                            onShowModel={() => this.setState({ showModel: true })}
+                            onSomethingChanged={this.handleSomethingIsChanged}
+                            radar={this.state.radar}
+                            axes={this.state.axes}
+                        />}
+                        <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={!somethingIsChanged} />
+                    </Segment>
+
                     <Segment style={{ margin: 0 }}>
                         <WidgetTitle title={lang.PORTFOLIO_MONITORING} shareButtons={['Image', 'Pdf', 'Copy']} />
-                        {radar && 
+                        {radar &&
                             <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} alertsAbout={'actual'} />
                         }
                         <br />
-                        <p style={{ textAlign: 'center' }}>Alerts are about: <b>{'proposed' }</b> </p>
+                        <p style={{ textAlign: 'center' }}>Alerts are about: <b>{'proposed'}</b> </p>
                     </Segment>
                 </AdvancedGrid>
 
-             <AdvancedGrid className="grid-client-view-sub2">
+                <AdvancedGrid className="grid-client-view-sub2">
                     <Segment style={{ margin: 0 }}>
                         <ClientViews graphs={graphs} lang={lang} mode='tab' />
                     </Segment>
@@ -335,60 +333,6 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
     )
 }
 
-const ClientAlert = (props: { radar: Radar, lang: LangDictionary }) => {
-    const { radar, lang } = props;
-
-    const alertsListItem = (prop: string, key: any) => {
-        const alert = lang.ALERTS[prop];
-        const value = radar[prop];
-
-        return value !== 'green'
-            ? (<List.Item key={key}  >
-                <List.Content style={{ marginBottom: '6px' }}>
-                    {/*<h3 style={{ color: value === "orange" ? "darkorange" : value }}>*/}
-                    <p style={{ color: "black", fontSize: "20px" }}>
-                        <b style={{ color: value === "orange" ? "darkorange" : value }}>{alert.name.toUpperCase()}</b> : {alert.sentence}
-                    </p>
-                    {/* <Statistic size="mini" color={value}  >
-                        <Statistic.Value as="p" style={{ textAlign: 'left' }}  >
-                            
-                        </Statistic.Value>
-                    </Statistic> */}
-                </List.Content>
-            </List.Item>)
-            : null;
-    }
-
-    const title = (
-        <Segment basic as="span" >
-            <Icon name='alarm' circular inverted color={radar.numOfAlerts ? 'red' : 'green'} />
-            &nbsp;
-            <Header key="0" as='h2' style={{ display: 'initial' }} color="red">
-                <Header.Content style={{ marginTop: '4px' }}>{`${lang.ALERT.name}${radar.numOfAlerts ? ` : ${radar.numOfAlerts} ${lang.ALERT.sentence}` : ''}`}</Header.Content>
-            </Header>
-        </Segment>
-    )
-
-    if (radar.numOfAlerts) {
-        const accordion = [
-            {
-                key: 'Alert',
-                title: { key: 'alertTitle', content: title },
-                content: {
-                    key: 'alertContent',
-                    content: (
-                        <Segment basic>
-                            {Object.keys(lang.ALERTS).map((v, i) => alertsListItem(v, i))}
-                        </Segment>
-                    )
-                }
-            }
-        ]
-        return <Accordion defaultActiveIndex={undefined} panels={accordion} />;
-    } else {
-        return title;
-    }
-}
 
 const ClientHistory = (props: { history: InterviewResult[], lang: LangDictionary }) => {
     const { history, lang } = props;
