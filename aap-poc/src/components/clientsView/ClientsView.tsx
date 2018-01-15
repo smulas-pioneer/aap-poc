@@ -58,7 +58,7 @@ class ClientsViewCompo extends conn.StatefulCompo<{ searchParms: SearchParms }> 
         const { searchParms } = this.state;
 
         if (!data) return <div />
-        let filterMaps: FilterMapTypes[] = ['Regions', 'Alerts', 'Aua'];
+        let filterMaps: FilterMapTypes[] = ['Regions', 'AlertType', 'ClientStatus', 'Aua'];
 
         return <AdvancedGrid className="grid-header-min">
             {showTitle &&
@@ -82,7 +82,7 @@ class ClientsViewCompo extends conn.StatefulCompo<{ searchParms: SearchParms }> 
                             <ClientList data={data.result} lang={lang} />
                         </Segment>
                     </Card>
-                    <Segment style={{margin: 0}}>
+                    <Segment style={{ margin: 0 }}>
                         <WidgetTitle title={lang.FILTER} />
                         <ClientFilter
                             freeFilterText
