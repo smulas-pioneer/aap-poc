@@ -1,7 +1,7 @@
 import { Portfolio, Holding, Client, Radar, InterviewResult, StrategyItem, AlertHistory, TimeHorizon, TimeHorizonMonths } from './common/interfaces';
 import { securities, cash } from './common/securities';
 import { createRadarFromStrategy, isFakeClient, getRandomRadar } from './common/radarUtils';
-import {REFERENCE_DATE_TODAY} from './common/consts';
+import { REFERENCE_DATE_TODAY } from './common/consts';
 //import * as ce from './_db/coreEngine';
 
 import * as faker from 'faker';
@@ -242,10 +242,14 @@ const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResul
 
         // LAst one is accepted for fake client and possibly ongoing for others. 
         if (isFakeClient(curr.id)) {
-            prev[curr.id][prev[curr.id].length-1].status = 'ACCEPTED';
+            prev[curr.id][prev[curr.id].length - 1].status = 'ACCEPTED';
         } else {
             const nr = rnd(1, 10);
-            prev[curr.id][prev[curr.id].length-1].status = nr < 3 ? 'ONGOING' : (nr < 6 ? 'ONHOLD' : prev[curr.id][0].status)
+            prev[curr.id][prev[curr.id].length - 1].status = nr < 3 ? 'ONGOING' : (nr < 6 ? 'ONHOLD' : prev[curr.id][0].status)
+
+            if (prev[curr.id][prev[curr.id].length - 1].status == 'ONGOING') {
+                prev[curr.id][prev[curr.id].length - 1].date = moment(REFERENCE_DATE_TODAY).add(rnd(-1, -5), 'days').format('YYYY-MM-DD');
+            }
         }
         return prev;
     }, {
@@ -379,10 +383,10 @@ const deltaAnalysis = (radar: Radar) => {
     ret += radar.riskAnalysisAlert == 'green' ? "" : " risk analysis: +" + fmt(radar.actual.riskAnalysis - radar.limits.riskAnalysis).toString()
     return ret;
 }
-const getClientStatusDuration = (date:string) => {
-    if (moment(REFERENCE_DATE_TODAY).diff(moment(date),'weeks')<=1 ) return '<1W';
-    if (moment(REFERENCE_DATE_TODAY).diff(moment(date),'months')<=1 ) return '1W-1M';
-    if (moment(REFERENCE_DATE_TODAY).diff(moment(date),'months')<=6 ) return '1M-6M';
+const getClientStatusDuration = (date: string) => {
+    if (moment(REFERENCE_DATE_TODAY).diff(moment(date), 'weeks') <= 1) return '<1W';
+    if (moment(REFERENCE_DATE_TODAY).diff(moment(date), 'months') <= 1) return '1W-1M';
+    if (moment(REFERENCE_DATE_TODAY).diff(moment(date), 'months') <= 6) return '1M-6M';
     return '>6M'
 }
 
@@ -425,7 +429,7 @@ const go = async () => {
             //  
             const dtAlert = rnd(moment(c.lastInterviewDate).unix(), moment(REFERENCE_DATE_TODAY).unix());
             c.clientStatusAge = moment.unix(dtAlert).format('YYYY-MM-DD');
-            c.clientStatusDuration = getClientStatusDuration(c.clientStatusAge );
+            c.clientStatusDuration = getClientStatusDuration(c.clientStatusAge);
             c.numOfInterviews = histories[c.id].length;
             c.numOfAcceptedProposal = histories[c.id].filter(p => p.status == 'ACCEPTED').length;
             c.numOfRejectedProposal = histories[c.id].filter(p => p.status == 'REJECTED').length;
