@@ -112,7 +112,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
         )
     }
 
-    Colors = ["#F07D00", "#004F9F", "#E6325E", "#3B7296", "#39B2B6"]
+    Colors = ["#F07D00", "#004F9F", "#E6325E", "#3B7296", "#39B2B6", "#c8c802"]
 
     renderFilterGraphItem(key: number, map: FilterMap, values: any) {
         const { searchprop, render: { header, label } } = map;
@@ -244,7 +244,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                             <ClientFilter
                                 searchPlaceholder={lang.ENTER_FILTER_TEXT}
                                 data={filter}
-                                filterMaps={['AlertType', 'Aua']}
+                                filterMaps={['AlertType', 'ClientStatus', 'ClientStatusDuration', 'Aua']}
                                 filterValue={data.parms}
                                 onChange={this.handleOnChangeFilter}
                             />

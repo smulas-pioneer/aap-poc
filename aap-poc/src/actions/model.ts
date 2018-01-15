@@ -1,7 +1,7 @@
 import { SemanticICONS, SemanticCOLORS } from 'semantic-ui-react';
 import { LangDictionary } from '../reducers/language/interfaces';
 import { Client, SearchParms } from '../_db/interfaces';
-import { isArray, startCase, Dictionary } from 'lodash';
+import { isArray, startCase, Dictionary, camelCase } from 'lodash';
 import { MouseEventHandler } from 'react';
 import { ClientFilter } from '../components/shared/ClientFilter';
 
@@ -49,7 +49,7 @@ export const memuItems: MemuItemModel[] = [
     { langProps: 'NEWS_INSIGHTS', linkTo: undefined, color: 'grey', icon: 'newspaper', innewline: true }
 ]
 
-export type FilterMapTypes = 'Regions' | 'Alerts' | 'Agents' | 'Aua' | 'AlertType' | 'Segment' | 'Branch';
+export type FilterMapTypes = 'Regions' | 'Alerts' | 'Agents' | 'Aua' | 'AlertType' | 'Segment' | 'Branch' | 'ClientStatus' | 'ClientStatusDuration';
 
 export interface FilterMap {
     prop: string;
@@ -95,6 +95,16 @@ export const filterMapItems: {[key in FilterMapTypes]: FilterMap } = {
         prop: 'branch',
         searchprop: 'branch',
         render: { header: 'Branch', icon: 'id badge', label: undefined, max: 5 }
+    },
+    ClientStatus: {
+        prop: 'clientStatus',
+        searchprop: 'clientStatus',
+        render: { header: 'Client Status', icon: 'adjust', label: (value: string) => startCase(camelCase(value)) }
+    },
+    ClientStatusDuration: {
+        prop: 'alertStatusAge',
+        searchprop: 'clientStatusDuration',
+        render: { header: 'Client Status Duration', icon: 'time', label: undefined }
     }
 }
 
