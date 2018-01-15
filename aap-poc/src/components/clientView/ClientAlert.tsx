@@ -3,7 +3,7 @@ import { LangDictionary } from "../../reducers/language/interfaces";
 import { List, Segment, Header, Icon, Accordion } from "semantic-ui-react";
 import * as React from 'react';
 
-export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client: Client, onOpenHistory:()=>void }) => {
+export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client: Client, onOpenHistory: () => void }) => {
     const { radar, lang } = props;
 
     const alertsListItem = (prop: string, key: any) => {
@@ -27,27 +27,31 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
             : null;
     }
 
+    const alertTitle = radar.numOfAlerts == 0 ? lang.NO_ALERTS
+        : `${lang.ALERT.name}${radar.numOfAlerts ? ` : ${radar.numOfAlerts} ${lang.ALERT.sentence}` : ''}`
+
+    const actualTitle = props.client.decision == 'ONHOLD'
+        ? lang.ONHOLD + ' (' + alertTitle + ')'
+        : alertTitle
+
+    const alertColor = props.client.decision=='ONHOLD' ? 'blue': radar.numOfAlerts ? 'red' : 'green';
     const title = (
         <Segment basic as="span" >
-            <Icon name='alarm' circular inverted color={radar.numOfAlerts ? 'red' : 'green'} />
+            <Icon name='alarm' circular inverted color={alertColor} />
             &nbsp;
 
-            <Header key="0" as='h2' style={{ display: 'initial' }} color={radar.numOfAlerts ? 'red' : 'green'} >
-                {
-                    radar.numOfAlerts == 0
-                        ? <Header.Content style={{ marginTop: '4px' }}>{lang.NO_ALERTS}</Header.Content>
-                        : <Header.Content style={{ marginTop: '4px' }}>{`${lang.ALERT.name}${radar.numOfAlerts ? ` : ${radar.numOfAlerts} ${lang.ALERT.sentence}` : ''}`}</Header.Content>
-                }
-
+            <Header key="0" as='h2' style={{ display: 'initial' }} color={alertColor} >
+                <Header.Content style={{ marginTop: '4px' }}>{actualTitle}</Header.Content>
             </Header>
 
-            <Icon style={{ float: 'right' }} name='history' circular inverted color="black" onClick={(e:any)=>{e.stopPropagation(); props.onOpenHistory()}}/>
+            <Icon style={{ float: 'right', cursor: 'pointer' }} name='history' circular color="black" onClick={(e: any) => { e.stopPropagation(); props.onOpenHistory() }} />
 
             <Header floated="right" key="1" as='h2' style={{ display: 'initial' }} color="black">
-                <Header.Content style={{ marginTop: '4px' }}>
-                    {lang.STATUS} : {props.client.decision}
-                </Header.Content>
+                <Header.Subheader style={{ marginTop: '4px' }}>
+                    {lang.LAST_STATUS}: <b>{lang[props.client.decision]}</b> <small>({props.client.lastInterviewDate})</small>
+                </Header.Subheader>
             </Header>
+
         </Segment>
     )
 

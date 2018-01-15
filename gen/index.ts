@@ -230,7 +230,7 @@ const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResul
         const n = rnd(4, 12);
         prev[curr.id] = numArray(n).map(i => {
             const r = rnd(1, 100);
-            const status = r < 30 ? 'REJECTED' : r < 40 ? 'ONHOLD':'ACCEPTED';
+            const status = r < 30 ? 'REJECTED' : 'ACCEPTED';
             return {
                 date: moment(faker.date.past()).format('YYYY-MM-DD'),
                 status,
@@ -240,9 +240,10 @@ const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResul
 
         // LAst one is accepted for fake client and possibly ongoing for others. 
         if (isFakeClient(curr.id)) {
-            prev[curr.id][prev[curr.id].length - 1].status = 'ACCEPTED';
+            prev[curr.id][0].status = 'ACCEPTED';
         } else {
-            prev[curr.id][prev[curr.id].length - 1].status = rnd(1, 10) < 3 ? 'ONGOING' : prev[curr.id][0].status;
+            const nr = rnd(1, 10);
+            prev[curr.id][0].status = nr < 3 ? 'ONGOING' : (nr < 6 ? 'ONHOLD' : prev[curr.id][0].status)
         }
         return prev;
     }, {
@@ -403,15 +404,16 @@ const go = async () => {
             }
             c.aua = sumBy(strategies[c.id], v => v.currentAmount);
             c.size = c.aua > 20000000 ? '>20M' : c.aua > 10000000 ? '10-20M' : c.aua > 5000000 ? '5-10M' : c.aua > 1000000 ? '1-5M' : '<1M';
-            c.segment = c.aua > 15000000 ? 'Private' :  c.aua > 5000000 ? 'Wealth Management': c.aua > 2000000 ? 'Mass Affluent' : 'Retail';
+            c.segment = c.aua > 15000000 ? 'Private' : c.aua > 5000000 ? 'Wealth Management' : c.aua > 2000000 ? 'Mass Affluent' : 'Retail';
             c.breaks = Object.keys(c.radar).filter(k => k.endsWith("Alert")).filter(k => c.radar[k] !== "green").map(k => k.replace('Alert', ''));
+
             c.lastInterviewDate = histories[c.id][0].date;
             const acc = histories[c.id].filter(p => p.status == 'ACCEPTED');
             c.lastAdvicedate = acc.length > 0 ? acc[0].date : '';
             c.decision = histories[c.id][0].status;
 
             //  
-            const dtAlert= rnd(  moment(c.lastInterviewDate).unix(), moment().unix());
+            const dtAlert = rnd(moment(c.lastInterviewDate).unix(), moment().unix());
             c.alertStatusAge = moment.unix(dtAlert).format('YYYY-MM-DD');
 
             c.numOfInterviews = histories[c.id].length;

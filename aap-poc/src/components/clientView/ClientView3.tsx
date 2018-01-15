@@ -285,21 +285,13 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         */}
                 </AdvancedGrid>
                 {viewHistory && <Modal open>
-                    <Modal.Content>
+                    <Modal.Header>
+                        <Button floated="right" size="tiny" basic negative circular icon="remove" onClick={() => this.setState({ viewHistory: false })} />
                         <WidgetTitle title={lang.CLIENT_EVENT_HISTORY} />
+                    </Modal.Header>
+                    <Modal.Content>
                         <ClientHistory lang={lang} history={history} />
                     </Modal.Content>
-                    <Modal.Actions>
-                        <Button.Group fluid>
-
-                            <Button color='green' onClick={() => this.setState({ viewHistory: false })}>
-                                <Icon name='close' />
-                                Close
-                </Button>
-
-                        </Button.Group>
-
-                    </Modal.Actions>
                 </Modal>}
 
             </AdvancedGrid>

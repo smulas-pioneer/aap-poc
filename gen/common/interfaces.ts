@@ -203,7 +203,7 @@ export type AgentView = {
 
 export interface InterviewResult {
     date: string;
-    status: 'ACCEPTED' | 'REJECTED' | 'ONGOING';
+    status: 'ACCEPTED' | 'REJECTED' | 'ONGOING' | 'ONHOLD'
     notes: string;
 }
 

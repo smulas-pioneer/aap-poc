@@ -46,6 +46,7 @@ export interface LangDictionary {
     TOT_CLIENTS: string,
     DATE: string,
     STATUS: string,
+    LAST_STATUS:string,
     NOTES: string
     DATE_FORMAT: string
     AGENTS: string,

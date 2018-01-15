@@ -23,10 +23,11 @@ const stats = (aua: number, region: string) => (
     </Statistic.Group>
 )
 
-const numberOfAlerts = (data: Radar) => {
+const numberOfAlerts = ( client:Client) => {
+    const color = client.decision == 'ONHOLD' ? 'blue' : client.radar.color;
     return (
-        <Label corner color={data.color}>
-            <div style={{ marginLeft: 20, marginTop: 10 }}>{data.numOfAlerts || ''}
+        <Label corner color={color}>
+            <div style={{ marginLeft: 20, marginTop: 10 }}>{client.radar.numOfAlerts || ''}
             </div>
         </Label>
     )
@@ -45,7 +46,7 @@ export const ClientCard = ({ client, onBrowse = () => { }, lang }: { client: Cli
                     <Table.Body>
                         <Table.Row >
                             <Table.Cell className="client-card-left" width="7" >
-                                {numberOfAlerts(client.radar)}
+                                {numberOfAlerts(client)}
                                 <Header as="h3" style={{ margin: 0 }}>
                                     <Link to={`/clients/${client.id}`}>
                                         {client.name}
