@@ -1,0 +1,1 @@
+export const REFERENCE_DATE_TODAY='2017-11-22';

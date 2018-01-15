@@ -3,6 +3,7 @@ import { sumBy, groupBy, endsWith } from "lodash";
 import * as moment from 'moment';
 import * as math from 'mathjs';
 import { networkInterfaces } from "os";
+import { REFERENCE_DATE_TODAY } from "./consts";
 
 export const isFakeClient = (clientId: string) => ["0", "1", "2"].indexOf(clientId) > -1;
 
@@ -25,7 +26,7 @@ export const avgRadar = (position: PositionItem[]): RadarItem => {
     }
 }
 
-export const adjustRadarValue= (value:number) => value < 10 ? value * 20 : value;
+export const adjustRadarValue= (value:number) => value;// < 10 ? value * 20 : value;
 
 export const getRAG = (act: number, limit: number, mifid: boolean): Alert => {
     return act > (limit+1) ? (mifid ? 'red' : 'orange') : 'green'
@@ -141,7 +142,7 @@ const radarToAlertHistory = (clients: Client[], date: string): AlertHistory2 => 
 }
 
 export const calculateAlertHistory = (clients: Client[]): AlertHistory2[] => {
-    const curDate = moment();
+    const curDate = moment(REFERENCE_DATE_TODAY);
     let ret: AlertHistory2[] = [];
     ret.push(radarToAlertHistory(clients, curDate.format('YYYY-MM-DD')));
 

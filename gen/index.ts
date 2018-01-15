@@ -1,6 +1,7 @@
 import { Portfolio, Holding, Client, Radar, InterviewResult, StrategyItem, AlertHistory, TimeHorizon, TimeHorizonMonths } from './common/interfaces';
 import { securities, cash } from './common/securities';
 import { createRadarFromStrategy, isFakeClient, getRandomRadar } from './common/radarUtils';
+import {REFERENCE_DATE_TODAY} from './common/consts';
 //import * as ce from './_db/coreEngine';
 
 import * as faker from 'faker';
@@ -295,7 +296,7 @@ export const clientsCreator = (models: Portfolio[]) => numArray(CLIENT_COUNT).ma
 
 const createPerformance = () => {
     let s = 1;
-    let date = moment().subtract('days', 500);
+    let date = moment(REFERENCE_DATE_TODAY).subtract('days', 500);
     let ret = [
         { date: date.format('YYYY-MM-DD'), perf: 1 }
     ]
@@ -415,7 +416,7 @@ const go = async () => {
             c.decision = hist.status;
             c.clientStatus = c.decision;
             //  
-            const dtAlert = rnd(moment(c.lastInterviewDate).unix(), moment().unix());
+            const dtAlert = rnd(moment(c.lastInterviewDate).unix(), moment(REFERENCE_DATE_TODAY).unix());
             c.alertStatusAge = moment.unix(dtAlert).format('YYYY-MM-DD');
 
             c.numOfInterviews = histories[c.id].length;
@@ -425,7 +426,7 @@ const go = async () => {
             c.deltaAnalysis = deltaAnalysis(c.radar);
         });
 
-        const alertHistory = alertHistoryCreator(moment().format('YYYY-MM-DD'), 100, clients);
+        const alertHistory = alertHistoryCreator(moment(REFERENCE_DATE_TODAY).format('YYYY-MM-DD'), 100, clients);
 
         dump('output/radars.json', radars);
 

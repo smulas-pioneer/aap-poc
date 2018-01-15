@@ -8,6 +8,7 @@ import { intersection } from 'lodash';
 import * as moment from 'moment';
 import { getRandomRadar, isFakeClient } from './common/radarUtils';
 import { promisify } from 'util';
+import { REFERENCE_DATE_TODAY } from './common/consts';
 
 export const patchHoldings = (holdings: Model.Holding[], transactions: Model.Transaction[]): Promise<Model.Holding[]> => {
     return Promise.resolve([]);
@@ -225,7 +226,7 @@ export const addSecurity = ({ securityId, clientId }: { securityId: string, clie
 export const addHistory = ({ clientId, notes }: { clientId: string, notes: string }) => {
     const h: InterviewResult = {
         status: 'ONGOING',
-        date: moment().format(),
+        date: moment(REFERENCE_DATE_TODAY).format(),
         notes
     }
 

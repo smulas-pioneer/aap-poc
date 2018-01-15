@@ -58,6 +58,7 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
 
     constructor(props: PerformanceChartProps) {
         super(props)
+
         const reg = regression(props.advancedView || false, TimeHorizonMonths[props.clientTimeHorizon || '18 Months'], this.props.data, this.props.actualData || this.props.data);
         this.getProbabilityByTimeHorizon = reg.getProbabilityByTimeHorizon;
         this.returnFor95 = reg.returnFor95;
@@ -222,6 +223,8 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
 }
 
 const regression = (show: boolean, days: number, data: { date: string, perf: number }[], actualData: { date: string, perf: number }[]) => {
+    //if ( actualData.length==0) actualData = data;
+
     const d = data[0].perf;
     const newData = data.map(p => ({ ...p, perf: p.perf - d }));
     if (!show) return {
