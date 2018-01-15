@@ -7,7 +7,7 @@ import { Client, Breakdown, Radar, StrategyItem, RadarStrategyParm, InterviewRes
 import * as ce from '../../_db/coreEngine';
 import { sumBy, startCase, camelCase } from 'lodash';
 
-import { Grid, Segment, Statistic, Card, Button, Table, SemanticICONS, Icon, Feed, Form, Label, Tab, Accordion, Header, SemanticCOLORS, List, Menu, Transition, Checkbox } from 'semantic-ui-react';
+import { Grid, Segment, Statistic, Card, Button, Table, SemanticICONS, Icon, Feed, Form, Label, Tab, Accordion, Header, SemanticCOLORS, List, Menu, Transition, Checkbox, Modal } from 'semantic-ui-react';
 import { RadarGraph } from '../RadarGraph';
 import { Holdings, OrderList } from './Holdings';
 import { PerformanceChart } from '../securityView/PerformanceChart';
@@ -44,7 +44,9 @@ interface State {
     autoplay: boolean,
     currentTargetReturn?: number,
     showModel: boolean,
-    somethingIsChanged: boolean
+    somethingIsChanged: boolean,
+
+    viewHistory: boolean,
 
     //isInSimulationMode: boolean
 }
@@ -65,7 +67,8 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         autoplay: true,
         showModel: false,
         somethingIsChanged: false,
-        validationMode: false
+        validationMode: false,
+        viewHistory: false
     } as State
 
     componentDidMount() {
@@ -223,9 +226,10 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
     render() {
         const { client, lang, history } = this.props;
-        const { radar, strategy, breakdown, axes, somethingIsChanged } = this.state;
+        const { radar, strategy, breakdown, axes, somethingIsChanged, viewHistory } = this.state;
 
         if (!client || history.length === 0) return <div />
+
 
         const graphs = this.calculateGraphs();
         return (
@@ -235,10 +239,9 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     <ClientCard client={client} lang={lang} color={'blue'} />
                 </Segment>
                 <Segment style={{ margin: 0 }}>
-                    <ClientAlert radar={client.radar}  client={client} lang={lang} />
+                    <ClientAlert radar={client.radar} client={client} lang={lang} onOpenHistory={() => this.setState({ viewHistory: true })} />
                 </Segment>
                 <AdvancedGrid className="grid-client-view-sub">
-
                     <Segment style={{ margin: 0 }}>
                         <WidgetTitle title={this.state.showModel ? lang.MODEL : lang.PORTFOLIO_HOLDINGS} shareButtons={['Excel', 'Pdf', 'Copy']} />
                         {this.state.showModel && <Model
@@ -281,6 +284,24 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     </Segment>
                         */}
                 </AdvancedGrid>
+                {viewHistory && <Modal open>
+                    <Modal.Content>
+                        <WidgetTitle title={lang.CLIENT_EVENT_HISTORY} />
+                        <ClientHistory lang={lang} history={history} />
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button.Group fluid>
+
+                            <Button color='green' onClick={() => this.setState({ viewHistory: false })}>
+                                <Icon name='close' />
+                                Close
+                </Button>
+
+                        </Button.Group>
+
+                    </Modal.Actions>
+                </Modal>}
+
             </AdvancedGrid>
         )
     }

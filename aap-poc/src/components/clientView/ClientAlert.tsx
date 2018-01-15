@@ -3,7 +3,7 @@ import { LangDictionary } from "../../reducers/language/interfaces";
 import { List, Segment, Header, Icon, Accordion } from "semantic-ui-react";
 import * as React from 'react';
 
-export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client: Client }) => {
+export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client: Client, onOpenHistory:()=>void }) => {
     const { radar, lang } = props;
 
     const alertsListItem = (prop: string, key: any) => {
@@ -41,9 +41,9 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
 
             </Header>
 
-            <Icon style={{ float: 'right' }} name='history' circular inverted color="black" onClick={(e:any)=>{e.stopPropagation(); alert('hello')}}/>
+            <Icon style={{ float: 'right' }} name='history' circular inverted color="black" onClick={(e:any)=>{e.stopPropagation(); props.onOpenHistory()}}/>
 
-            <Header floated="right" key="0" as='h2' style={{ display: 'initial' }} color="black">
+            <Header floated="right" key="1" as='h2' style={{ display: 'initial' }} color="black">
                 <Header.Content style={{ marginTop: '4px' }}>
                     {lang.STATUS} : {props.client.decision}
                 </Header.Content>
