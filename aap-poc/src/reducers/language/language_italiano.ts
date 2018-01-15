@@ -45,6 +45,7 @@ export const Italiano: LanguageState = {
         ACCEPTED: 'Accettata',
         ONGOING: 'In corso',
         REJECTED: 'Rifiutata',
+        ONHOLD: 'In Attesa',
         PROPOSE: 'Proposta',
         MODEL: 'Modello',
         SHOW_ALL: 'Mostra tutto',

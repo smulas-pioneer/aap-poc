@@ -19,13 +19,15 @@ interface HistoryViewProps {
 const colors: { [id: string]: 'green' | '#db2828' | 'olive' } = {
     ACCEPTED: 'green',
     REJECTED: '#db2828',
-    ONGOING: 'olive'
+    ONGOING: 'olive',
+    ONHOLD:'olive'
 }
 
 const icons: { [id: string]: 'alarm' | 'check' | 'wait' } = {
     ACCEPTED: 'check',
     REJECTED: 'alarm',
-    ONGOING: 'wait'
+    ONGOING: 'wait',
+    ONHOLD:'wait'
 }
 
 // export const HistoryView = ({ history, lang }: HistoryViewProps) => {

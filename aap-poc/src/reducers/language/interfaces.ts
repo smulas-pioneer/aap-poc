@@ -53,6 +53,7 @@ export interface LangDictionary {
     ACCEPTED: string
     REJECTED: string
     ONGOING: string,
+    ONHOLD: string,
     PROPOSE: string,
     MODEL: string,
     SHOW_ALL: string,

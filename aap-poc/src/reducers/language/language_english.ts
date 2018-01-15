@@ -53,6 +53,7 @@ export const English: LanguageState = {
         DATE_FORMAT: 'MMM, DD YYYY',
         ACCEPTED: 'Accepted',
         ONGOING: 'Ongoing',
+        ONHOLD: 'On Hold',
         REJECTED: 'Rejected',
         PROPOSE: 'Proposal',
         MODEL: 'Model',
