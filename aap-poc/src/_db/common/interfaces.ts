@@ -1,3 +1,5 @@
+import { ClientState } from "../../reducers/client";
+
 export interface Client {
     id: string;
     name: string;
@@ -36,12 +38,12 @@ export type TimeHorizon = '18 Months' | '3 Years' | '4 Years' | '5 Years' | 'Mor
 
 
 const K = 10;
-export const TimeHorizonMonths  = {
-    '18 Months': 18* K ,
-    '3 Years': 36* K,
-    '4 Years': 48* K,
-    '5 Years': 60* K,
-    'More than 5 Years': 100* K
+export const TimeHorizonMonths = {
+    '18 Months': 18 * K,
+    '3 Years': 36 * K,
+    '4 Years': 48 * K,
+    '5 Years': 60 * K,
+    'More than 5 Years': 100 * K
 }
 
 export interface Address {
@@ -188,6 +190,7 @@ export interface SearchParms {
     regions?: string[];
     segments?: string[];
     size?: Size[];
+    clientStatus?: string[];
     uid: string;
 }
 

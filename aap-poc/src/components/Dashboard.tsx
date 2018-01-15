@@ -244,7 +244,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                             <ClientFilter
                                 searchPlaceholder={lang.ENTER_FILTER_TEXT}
                                 data={filter}
-                                filterMaps={['AlertType', 'Aua']}
+                                filterMaps={['AlertType', 'ClientStatus', 'Aua']}
                                 filterValue={data.parms}
                                 onChange={this.handleOnChangeFilter}
                             />
