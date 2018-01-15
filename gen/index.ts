@@ -88,7 +88,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
             id == "1" ? "Balanced" :
                 id == "2" ? "Defensive" :
                     faker.company.catchPhraseAdjective(),
-        decision: '',
+        decision: '',clientStatus:'',
         mifid: rnd(1, 40),
         numOfAcceptedProposal: 0,
         numOfRejectedProposal: 0,
@@ -411,7 +411,7 @@ const go = async () => {
             const acc = histories[c.id].filter(p => p.status == 'ACCEPTED');
             c.lastAdvicedate = acc.length > 0 ? acc[0].date : '';
             c.decision = histories[c.id][0].status;
-
+            c.clientStatus = c.decision;
             //  
             const dtAlert = rnd(moment(c.lastInterviewDate).unix(), moment().unix());
             c.alertStatusAge = moment.unix(dtAlert).format('YYYY-MM-DD');
