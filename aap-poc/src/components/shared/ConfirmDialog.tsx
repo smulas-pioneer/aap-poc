@@ -70,7 +70,7 @@ export class ConfirmDialog extends React.Component<ConfirmDialogProps, ConfirmDi
         const { customButton } = this.props;
         if (customButton) {
             return [
-                <Button.Or key={1}/>,
+                <Button.Or key={1} />,
                 <Button key={2} color={customButton.color} onClick={this.handleCustom}>
                     <Icon name={customButton.icon} />{customButton.text}
                 </Button>
@@ -87,6 +87,7 @@ export class ConfirmDialog extends React.Component<ConfirmDialogProps, ConfirmDi
 
         return (
             <Modal
+                closeOnDimmerClick={false}
                 trigger={customTrigger}
                 dimmer
                 style={style}
