@@ -311,7 +311,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         <Button floated="right" size="tiny" basic negative circular icon="remove" onClick={() => this.setState({ viewHistory: false })} />
                         <WidgetTitle title={lang.CLIENT_EVENT_HISTORY} />
                     </Modal.Header>
-                    <Modal.Content scrolling>
+                    <Modal.Content>
                         <ClientHistory lang={lang} history={history} />
                     </Modal.Content>
                 </Modal>}
@@ -388,7 +388,7 @@ const ClientHistory = (props: { history: InterviewResult[], lang: LangDictionary
         if (allow) {
             memo.push({
                 menuItem: <Menu.Item key={i}>{lang.HISTORY[key]}</Menu.Item>,
-                render: () => <Tab.Pane as={OverflowItem} style={{ padding: '5px 8px' }} content={<HistoryViewTimelineEvent lang={lang} history={history} />} />
+                render: () => <Tab.Pane as={OverflowItem} style={{ padding: '5px 8px' }} content={<HistoryViewTimelineEvent lang={lang} history={history} height={580} />} />
             });
         }
         return memo;

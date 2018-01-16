@@ -13,7 +13,8 @@ import 'react-vertical-timeline-component/style.min.css';
 
 interface HistoryViewProps {
     history: InterviewResult[]
-    lang: LangDictionary
+    lang: LangDictionary,
+    height?: number;
 }
 const colors: { [id: string]: 'green' | '#db2828' | 'olive' | '#2185CB' } = {
     ACCEPTED: 'green',
@@ -84,25 +85,27 @@ const icons: { [id: string]: 'alarm' | 'check' | 'wait' } = {
 //     )
 // }
 
-export const HistoryViewTimelineEvent = ({ history, lang }: HistoryViewProps) => {
+export const HistoryViewTimelineEvent = ({ history, lang, height }: HistoryViewProps) => {
     return (
-        <Timeline>
-            {history.reduce((memo, item, ix) => {
-                memo.unshift(
-                    <TimelineEvent key={ix}
-                        title=''
-                        createdAt={moment(item.date).format(lang.DATE_FORMAT)}
-                        icon={<Icon name={icons[item.status]} size="large" style={{ margin: 0 }} />}
-                        iconColor={colors[item.status]}
-                        container="card"
-                        cardHeaderStyle={{ backgroundColor: colors[item.status] }}
-                    >
-                        <h3>{item.notes}</h3>
-                        <p>{lang.STATUS}: {lang[item.status]} </p>
-                    </TimelineEvent>
-                );
-                return memo;
-            }, [] = [] as any)}
-        </Timeline>
+        <div style={{ overflowY: 'auto', overflowX: 'hidden', height }}>
+            <Timeline>
+                {history.reduce((memo, item, ix) => {
+                    memo.unshift(
+                        <TimelineEvent key={ix}
+                            title=''
+                            createdAt={moment(item.date).format(lang.DATE_FORMAT)}
+                            icon={<Icon name={icons[item.status]} size="large" style={{ margin: 0 }} />}
+                            iconColor={colors[item.status]}
+                            container="card"
+                            cardHeaderStyle={{ backgroundColor: colors[item.status] }}
+                        >
+                            <h3>{item.notes}</h3>
+                            <p>{lang.STATUS}: {lang[item.status]} </p>
+                        </TimelineEvent>
+                    );
+                    return memo;
+                }, [] = [] as any)}
+            </Timeline>
+        </div>
     )
 }
