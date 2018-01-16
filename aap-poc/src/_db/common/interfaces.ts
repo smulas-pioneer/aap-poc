@@ -220,12 +220,11 @@ export type ClientState = 'NO ALERT' | 'REGULATOR ALERT' | 'GUIDELINE ALERT' | '
 
 export const ClientStateColors = {
     'NO ALERT': 'green',
-    'REGULATOR ALERT': 'red',
+    'REGULATOR ALERT': '#db2828',
     'GUIDELINE ALERT': 'orange',
     'ON HOLD': 'blue',
     'PENDING PROPOSAL': 'blue',
     'PENDING EXECUTION': 'blue'
-
 }
 
 export enum SpotlightContext {

@@ -1,4 +1,4 @@
-import { InterviewResult } from "../../_db/interfaces";
+import { InterviewResult, ClientStateColors } from "../../_db/interfaces";
 import { LangDictionary } from "../../reducers/language/interfaces";
 import * as React from "react";
 import { Card, Table, Label, Icon } from "semantic-ui-react";
@@ -16,18 +16,25 @@ interface HistoryViewProps {
     lang: LangDictionary,
     height?: number;
 }
-const colors: { [id: string]: 'green' | '#db2828' | 'olive' | '#2185CB' } = {
+const colors: { [id: string]: 'green' | '#db2828' | 'olive' | '#2185CB' | 'blue' |'red' |'orange' } = {
     ACCEPTED: 'green',
     REJECTED: '#db2828',
     ONGOING: 'olive',
-    ONHOLD: '#2185CB'
+    ONHOLD: '#2185CB',
+    ...ClientStateColors as any
 }
 
 const icons: { [id: string]: 'alarm' | 'check' | 'wait' } = {
     ACCEPTED: 'check',
     REJECTED: 'alarm',
     ONGOING: 'wait',
-    ONHOLD: 'wait'
+    ONHOLD: 'wait',
+    'NO ALERT':'check',
+    'REGULATOR ALERT':'alarm',
+    'GUIDELINE ALERT':'alarm',
+    'ON HOLD':'wait',
+    'PENDING PROPOSAL':'wait',
+    'PENDING EXECUTION':'wait',
 }
 
 // export const HistoryView = ({ history, lang }: HistoryViewProps) => {

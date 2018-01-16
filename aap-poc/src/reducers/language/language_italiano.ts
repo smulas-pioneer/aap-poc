@@ -112,6 +112,13 @@ export const Italiano: LanguageState = {
         LAST_ADVICE_DATE: 'Ultima Proposta',
         LAST_INTERVIEW_DATE: 'Ultima Intervista',
         MY_BUSINNESS: 'Le mie Attività',
-        WELCOME: 'Benvenuto'
+        WELCOME: 'Benvenuto',
+        'NO ALERT':'No Alert',
+    'REGULATOR ALERT':'Regulator Alert',
+    'GUIDELINE ALERT':'Guideline Alert',
+    'ON HOLD':'On Hold',
+    'PENDING PROPOSAL': 'Pending Proposal',
+    'PENDING EXECUTION':'Pending Execution'
+    
     }
 };

@@ -109,6 +109,13 @@ export const English: LanguageState = {
             riskAnalysisAlert: { name: 'Risk Analysis', sentence: 'Client’s  portfolio risk analytics about credit exposure, currency, geographic area and / or economic sector are higher than the model portfolio recommendation' },
             concentrationAlert: { name: 'Concentration', sentence: 'Client’s portfolio instrument type is more concentrated than the relevant model portfolio' },
             overlapAlert: { name: 'Overlap', sentence: 'Client’s portfolio consistency with the banks monitored instrument lists is too low' }
-        }
+        },
+        'NO ALERT':'No Alert',
+    'REGULATOR ALERT':'Regulator Alert',
+    'GUIDELINE ALERT':'Guideline Alert',
+    'ON HOLD':'On Hold',
+    'PENDING PROPOSAL': 'Pending Proposal',
+    'PENDING EXECUTION':'Pending Execution'
+    
     }
 }

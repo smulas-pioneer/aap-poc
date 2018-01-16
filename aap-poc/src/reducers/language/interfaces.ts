@@ -118,7 +118,14 @@ export interface LangDictionary {
         riskAnalysisAlert: { name: string, sentence: string },
         concentrationAlert: { name: string, sentence: string },
         overlapAlert: { name: string, sentence: string }
-    }
+    },
+    'NO ALERT':string,
+    'REGULATOR ALERT':string,
+    'GUIDELINE ALERT':string,
+    'ON HOLD':string,
+    'PENDING PROPOSAL':string,
+    'PENDING EXECUTION':string,
+
 }
 
 export interface WithLang { lang: LangDictionary };
