@@ -7,12 +7,13 @@ import { sumBy } from 'lodash';
 import { numArray, formatNumber } from '../../_db/utils';
 import { Spotlight } from '../spotlight';
 import { ConfirmDialog } from '../shared/ConfirmDialog';
-import { suggestedPosition } from '../../_db/common/radarUtils';
+import { suggestedPosition, getRandomRadar } from '../../_db/common/radarUtils';
 import { OverflowItem } from '../shared/GridOverflow';
 import { strategies } from '../../_db/data/index';
 import { WidgetTitle } from '../shared/WidgetTitle';
 import Checkbox from 'semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox';
 import { RadarGraph } from '../RadarGraph';
+import { securities } from '../../_db/common/securities';
 
 interface Props {
     holdings: StrategyItem[],
@@ -89,6 +90,28 @@ export class Holdings extends React.Component<Props, State> {
         //this.props.onToggleSimulation(!this.props.isInSimulationMode);
     }
 
+    handleOnAddSecurity = (security:Security) => {
+        const h: StrategyItem = {
+            security,
+            currentAmount: 0,
+            currentPrice: 1,
+            currentQuantity: 0,
+            currentWeight: 0,
+            isCash: false,
+            fee: 0,
+            modelWeight: 0,
+            radar: getRandomRadar(),
+            suggestedDelta: 0,
+            suggestionAccepted: false,
+            newSecurity: true,
+        }
+
+        this.setState({
+            addingSecurity:false,
+            holdings:[...this.state.holdings,h]
+        })
+    }
+
     render() {
         const { lang } = this.props;
         const { holdings } = this.state;
@@ -107,7 +130,7 @@ export class Holdings extends React.Component<Props, State> {
                 {
                     this.state.addingSecurity && <Spotlight
                         onCancel={() => { this.setState({ addingSecurity: false }) }}
-                        onItemNavigate={i => this.setState({ addingSecurity: false }, () => this.props.onAddSecurity({ securityId: (i as Security).IsinCode, clientId: this.props.clientId }))}
+                        onItemNavigate={i =>this.handleOnAddSecurity(i as Security)}
                         searchText=""
                         context="Security"
                         limit={12}
