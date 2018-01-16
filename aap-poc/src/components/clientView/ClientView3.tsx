@@ -124,7 +124,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         const cb = () => this.setState({ firstSimulation: false, processing: undefined, somethingIsChanged: false }, () => {
             this.props.getSuggestions({ id: this.props.client!.id, position: strategy, axes: this.state.axes, calculateFromAxes: false });
         })
-        
+
         if (this.state.firstSimulation) {
             cb();
         } else {
@@ -312,7 +312,9 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         <WidgetTitle title={lang.CLIENT_EVENT_HISTORY} />
                     </Modal.Header>
                     <Modal.Content>
-                        <ClientHistory lang={lang} history={history.filter((h, i) => i < 5)} />
+                        <div style={{ overflowY: 'scroll', height: '600px' }}>
+                            <ClientHistory lang={lang} history={history} />
+                        </div>
                     </Modal.Content>
                 </Modal>}
                 {processing && <Dimmer active>
