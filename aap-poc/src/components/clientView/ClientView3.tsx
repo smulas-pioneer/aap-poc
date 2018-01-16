@@ -306,15 +306,15 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     </Segment>
                         */}
                 </AdvancedGrid>
-                {viewHistory && <Modal open>
+                {viewHistory && <Modal open closeOnDimmerClick={false} closeOnEscape onClose={() => this.setState({ viewHistory: false })}>
                     <Modal.Header>
                         <Button floated="right" size="tiny" basic negative circular icon="remove" onClick={() => this.setState({ viewHistory: false })} />
                         <WidgetTitle title={lang.CLIENT_EVENT_HISTORY} />
                     </Modal.Header>
-                    <Modal.Content>
-                        <div style={{ overflowY: 'scroll', height: '600px' }}>
-                            <ClientHistory lang={lang} history={history} />
-                        </div>
+                    <Modal.Content scrolling>
+                        {/* <div style={{ overflowY: 'scroll', height: '600px' }}> */}
+                        <ClientHistory lang={lang} history={history} />
+                        {/* </div>closeOnDimmerClick={false} */}
                     </Modal.Content>
                 </Modal>}
                 {processing && <Dimmer active>
