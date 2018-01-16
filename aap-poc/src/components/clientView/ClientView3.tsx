@@ -312,9 +312,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         <WidgetTitle title={lang.CLIENT_EVENT_HISTORY} />
                     </Modal.Header>
                     <Modal.Content scrolling>
-                        {/* <div style={{ overflowY: 'scroll', height: '600px' }}> */}
                         <ClientHistory lang={lang} history={history} />
-                        {/* </div>closeOnDimmerClick={false} */}
                     </Modal.Content>
                 </Modal>}
                 {processing && <Dimmer active>
