@@ -234,7 +234,7 @@ const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResul
             const r = rnd(1, 100);
             const status = r < 30 ? 'REJECTED' : 'ACCEPTED';
             return {
-                date: moment(faker.date.past()).format('YYYY-MM-DD'),
+                date: moment(faker.date.past(undefined, REFERENCE_DATE_TODAY)).format('YYYY-MM-DD'),
                 status,
                 notes: faker.lorem.lines(1)
             } as InterviewResult;

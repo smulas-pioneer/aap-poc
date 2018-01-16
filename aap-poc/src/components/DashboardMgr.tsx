@@ -114,7 +114,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         )
     }
 
-    private Colors = ["#F07D00", "#004F9F", "#E6325E", "#3B7296", "#39B2B6"];
+    Colors = ["#F07D00", "#004F9F", "#E6325E", "#3B7296", "#39B2B6", "#c8c802", "#bd00bf"]
 
     renderFilterGraphItem(key: number, map: FilterMap, values: any) {
         const { searchprop, render: { header, label } } = map;
