@@ -1,4 +1,4 @@
-import { Client, Radar } from "../../_db/interfaces";
+import { Client, Radar, ClientStateColors } from "../../_db/interfaces";
 import { LangDictionary } from "../../reducers/language/interfaces";
 import * as React from "react";
 import { Icon, SemanticICONS, Card, Table, Header, Label, Statistic } from "semantic-ui-react";
@@ -24,9 +24,9 @@ const stats = (aua: number, region: string) => (
 )
 
 const numberOfAlerts = ( client:Client) => {
-    const color = client.decision == 'ONHOLD' ? 'blue' : client.radar.color;
+    const color = ClientStateColors[client.clientStatus];
     return (
-        <Label corner color={color}>
+        <Label corner color={color as any}>
             <div style={{ marginLeft: 20, marginTop: 10 }}>{client.radar.numOfAlerts || ''}
             </div>
         </Label>
@@ -55,7 +55,7 @@ export const ClientCard = ({ client, onBrowse = () => { }, lang }: { client: Cli
                                 {stats(client.aua, client.address.region)}
                             </Table.Cell>
                             <Table.Cell className="client-card-right" singleLine>
-                                {sgmt("id badge", client.agent)}
+                                {sgmt("id badge", client.clientStatus)}
                                 {sgmt("phone", client.phone)}
                                 {sgmt("mail outline", client.email)}
                             </Table.Cell>

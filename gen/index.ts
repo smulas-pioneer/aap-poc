@@ -1,4 +1,4 @@
-import { Portfolio, Holding, Client, Radar, InterviewResult, StrategyItem, AlertHistory, TimeHorizon, TimeHorizonMonths } from './common/interfaces';
+import { Portfolio, Holding, Client, Radar, InterviewResult, StrategyItem, AlertHistory, TimeHorizon, TimeHorizonMonths, ClientState } from './common/interfaces';
 import { securities, cash } from './common/securities';
 import { createRadarFromStrategy, isFakeClient, getRandomRadar } from './common/radarUtils';
 import { REFERENCE_DATE_TODAY } from './common/consts';
@@ -90,7 +90,8 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
             id == "1" ? "Balanced" :
                 id == "2" ? "Defensive" :
                     faker.company.catchPhraseAdjective(),
-        decision: '', clientStatus: '',
+        decision: '',
+        clientStatus: 'NO ALERT',
         mifid: rnd(1, 40),
         numOfAcceptedProposal: 0,
         numOfRejectedProposal: 0,
@@ -250,7 +251,7 @@ const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResul
             prev[curr.id][prev[curr.id].length - 1].status = 'ACCEPTED';
         } else {
             const nr = rnd(1, 10);
-            prev[curr.id][prev[curr.id].length - 1].status = nr < 3 ? 'ONGOING' : (nr < 6 ? 'ONHOLD' : prev[curr.id][0].status)
+            prev[curr.id][prev[curr.id].length - 1].status = nr < 3 ? 'ONGOING' : (nr < 6 ? 'ON HOLD' : prev[curr.id][0].status)
 
             if (prev[curr.id][prev[curr.id].length - 1].status == 'ONGOING') {
                 prev[curr.id][prev[curr.id].length - 1].date = moment(REFERENCE_DATE_TODAY).add(rnd(-1, -5), 'days').format('YYYY-MM-DD');
@@ -395,13 +396,34 @@ const getClientStatusDuration = (date: string) => {
     return '>6M'
 }
 
+const getClientState = (decision: string, radar: Radar): ClientState => {
+    //decisopm ='ACCEPTED' | 'REJECTED' | 'ONGOING' | 'ONHOLD'
+    //state =  'NO ALERT' | 'REGULATOR ALERT' | 'GUIDELINE ALERT' | 'ON HOLD' | 'PENDING PROPOSAL' | 'PENDING EXECUTION'
+    switch (decision) {
+        case 'ACCEPTED':
+        case 'REJECTED': {
+            if (radar.riskAdequacyAlert !== 'green') return 'REGULATOR ALERT';
+            if (radar.numOfAlerts > 0) return 'GUIDELINE ALERT';
+            return 'NO ALERT';
+        }
+        case 'ONGOING': {
+            return rnd(1, 2) == 1 ? 'PENDING PROPOSAL' : 'PENDING EXECUTION';
+        }
+        default:
+        case 'ONHOLD': {
+            return 'ON HOLD';
+        }
+
+    }
+}
+
 const go = async () => {
     try {
         if (!fs.existsSync('build/output')) fs.mkdirSync('build/output');
 
         const models = createModels();
         const clients = clientsCreator(models);
-        const histories = historyCreator(clients);
+        let histories = historyCreator(clients);
         const strategies1 = clientStrategyCreator(clients);
         const strategies2 = getAllStrategies();
         const preformances = createAllSecuritiesPerformance();
@@ -430,10 +452,18 @@ const go = async () => {
             const hist = histories[c.id][histories[c.id].length - 1];
             c.lastInterviewDate = hist.date;
             c.decision = hist.status;
-            c.clientStatus = c.decision;
-            //  
+            c.clientStatus = getClientState(c.decision, c.radar);
+
             const dtAlert = rnd(moment(c.lastInterviewDate).unix(), moment(REFERENCE_DATE_TODAY).unix());
             c.clientStatusAge = moment.unix(dtAlert).format('YYYY-MM-DD');
+
+            // Add Current State in History
+            histories[c.id].push({
+                date: c.clientStatusAge,
+                status: c.clientStatus,
+                notes: faker.lorem.lines(1)
+            });
+
             c.clientStatusDuration = getClientStatusDuration(c.clientStatusAge);
             c.numOfInterviews = histories[c.id].length;
             c.numOfAcceptedProposal = histories[c.id].filter(p => p.status == 'ACCEPTED').length;

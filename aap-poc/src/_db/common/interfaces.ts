@@ -12,7 +12,7 @@ export interface Client {
     address: Address;
     aua: number;
     radar: Radar;
-    clientStatus: string;
+    clientStatus: ClientState;
     clientStatusAge: string;
     clientStatusDuration: ClientStatusDuration;
 
@@ -212,8 +212,20 @@ export type AgentView = {
 
 export interface InterviewResult {
     date: string;
-    status: 'ACCEPTED' | 'REJECTED' | 'ONGOING' | 'ONHOLD'
+    status: 'ACCEPTED' | 'REJECTED' | 'ONGOING' | 'ON HOLD' | ClientState 
     notes: string;
+}
+
+export type ClientState = 'NO ALERT' | 'REGULATOR ALERT' | 'GUIDELINE ALERT' | 'ON HOLD' | 'PENDING PROPOSAL' | 'PENDING EXECUTION'
+
+export const ClientStateColors = {
+    'NO ALERT': 'green',
+    'REGULATOR ALERT': 'red',
+    'GUIDELINE ALERT': 'orange',
+    'ON HOLD': 'blue',
+    'PENDING PROPOSAL': 'blue',
+    'PENDING EXECUTION': 'blue'
+
 }
 
 export enum SpotlightContext {

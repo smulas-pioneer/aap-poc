@@ -30,7 +30,7 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
     const alertTitle = radar.numOfAlerts == 0 ? lang.NO_ALERTS
         : `${lang.ALERT.name}${radar.numOfAlerts ? ` : ${radar.numOfAlerts} ${lang.ALERT.sentence}` : ''}`
 
-    const actualTitle = props.client.decision == 'ONHOLD'
+    const actualTitle = props.client.clientStatus == 'ON HOLD'
         ? lang.ONHOLD + ' (' + alertTitle + ')'
         : alertTitle
 
@@ -48,7 +48,7 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
 
             <Header floated="right" key="1" as='h2' style={{ display: 'initial' }} color="black">
                 <Header.Subheader style={{ marginTop: '4px' }}>
-                    {lang.LAST_STATUS}: <b>{lang[props.client.decision]}</b> <small>({props.client.lastInterviewDate})</small>
+                    {lang.LAST_STATUS}: <b>{lang[props.client.clientStatus]}</b> <small>({props.client.clientStatusAge})</small>
                 </Header.Subheader>
             </Header>
 
