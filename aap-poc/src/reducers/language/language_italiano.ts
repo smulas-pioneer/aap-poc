@@ -118,7 +118,12 @@ export const Italiano: LanguageState = {
     'GUIDELINE ALERT':'Guideline Alert',
     'ON HOLD':'On Hold',
     'PENDING PROPOSAL': 'Pending Proposal',
-    'PENDING EXECUTION':'Pending Execution'
-    
-    }
+    'PENDING EXECUTION':'Pending Execution',
+    RISKPROFILE: 'Profilo di rischio',
+    REGULATORY_INDICATOR: 'Regulatory Indicator',
+
+    ABOVE_GUIDELINES: 'Sopra le linee guida',
+    BELOW_GUIDELINES: 'Sotto le linee guidas',
+    STATUS_DATE: 'Status Date',
+}
 };

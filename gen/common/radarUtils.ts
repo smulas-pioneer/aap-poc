@@ -17,8 +17,8 @@ export const numArray = (num: number) => {
 export const rnd = (min: number, max: number) => Math.floor(Math.random() * (max - min)) + min;
 export const avgRadar = (position: PositionItem[]): RadarItem => {
     return {
-        concentration: adjustRadarValue( sumBy(position, p => p.radar.concentration * p.weight)),
-        efficency:adjustRadarValue( sumBy(position, p => p.radar.efficency * p.weight)),
+        concentration: adjustRadarValue(sumBy(position, p => p.radar.concentration * p.weight)),
+        efficency: adjustRadarValue(sumBy(position, p => p.radar.efficency * p.weight)),
         consistency: adjustRadarValue(sumBy(position, p => p.radar.consistency * p.weight)),
         overlap: adjustRadarValue(sumBy(position, p => p.radar.overlap * p.weight)),
         riskAdequacy: adjustRadarValue(sumBy(position, p => p.radar.riskAdequacy * p.weight)),
@@ -26,24 +26,24 @@ export const avgRadar = (position: PositionItem[]): RadarItem => {
     }
 }
 
-export const adjustRadarValue= (value:number) => value;// < 10 ? value * 20 : value;
+export const adjustRadarValue = (value: number) => value;// < 10 ? value * 20 : value;
 
 export const getRAG = (act: number, limit: number, mifid: boolean): Alert => {
-    return act > (limit+1) ? (mifid ? 'red' : 'orange') : 'green'
+    return act > (limit + 1) ? (mifid ? 'red' : 'orange') : 'green'
 }
 
 export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: string, radars: any) => {
     let r = null;
     if (isFakeClient(clientId)) {
-        
+
         if (strategy.filter(f => f.suggestionAccepted).length > 0) {
             // Simulation...
-            r=radars[clientId + "!"];
+            r = radars[clientId + "!"];
         } else {
             // Real portfolio
-            r=radars[clientId]
+            r = radars[clientId]
         }
-        
+
     }
 
     const actual = currentPosition(strategy);
@@ -52,7 +52,7 @@ export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: stri
 
     const radarActual = avgRadar(actual);
     const radarModel = r ? r.guideLines : avgRadar(model);
-    const radarLimit =r ? r.guideLines : getRadarLimitSync(radarModel);
+    const radarLimit = r ? r.guideLines : getRadarLimitSync(radarModel);
     const radarSugg = avgRadar(sugg);
 
     return createRadarSync(radarModel, radarActual, radarLimit, radarSugg);
@@ -82,7 +82,30 @@ export const createRadarSync = (guideLines: RadarItem,
     const numOfAlerts = reds + oranges;
     const color = numOfAlerts == 0 ? 'green' : reds == 0 ? 'orange' : 'red';
 
-    return { ...data, numOfAlerts, color };
+    const regulatoryIndicator = reds == 0 ? 0 : (actual.riskAdequacy / guideLines.riskAdequacy - 1) * 100;
+
+    const aboveGuidelines = oranges == 0 ? 0 :
+        (
+            (actual.concentration < guideLines.concentration ? 0 : actual.concentration / guideLines.concentration - 1) +
+            (actual.consistency < guideLines.consistency ? 0 : actual.consistency / guideLines.consistency - 1) +
+            (actual.efficency < guideLines.efficency ? 0 : actual.efficency / guideLines.efficency - 1) +
+            (actual.overlap < guideLines.overlap ? 0 : actual.overlap / guideLines.overlap - 1) +
+            (actual.riskAnalysis < guideLines.riskAnalysis ? 0 : actual.riskAnalysis / guideLines.riskAnalysis - 1)
+        ) * 100 / 5;
+
+    const belowGuidelines = oranges == 0 ? 0 :
+        (
+            (actual.concentration > guideLines.concentration ? 0 : guideLines.concentration / actual.concentration - 1) +
+            (actual.consistency > guideLines.consistency ? 0 : guideLines.consistency / actual.consistency - 1) +
+            (actual.efficency > guideLines.efficency ? 0 : guideLines.efficency / actual.efficency - 1) +
+            (actual.overlap > guideLines.overlap ? 0 : guideLines.overlap / actual.overlap - 1) +
+            (actual.riskAnalysis > guideLines.riskAnalysis ? 0 : guideLines.riskAnalysis / actual.riskAnalysis - 1)
+        ) * 100 / 5;
+
+    return { ...data, numOfAlerts, color, 
+                belowGuidelines: math.ceil(belowGuidelines), 
+                aboveGuidelines: math.ceil(aboveGuidelines),
+                 regulatoryIndicator:math.ceil(regulatoryIndicator) };
 
 }
 
@@ -196,11 +219,11 @@ const KAPPA = [
 export const getRandomRadar = () => {
     const max = rnd(10, 200);
     return {
-        concentration: rnd(10, max) ,
-        efficency: rnd(10, max) ,
-        consistency: rnd(10, max) ,
-        overlap: rnd(10, max) ,
-        riskAdequacy: rnd(10, max) ,
-        riskAnalysis: rnd(10, max) 
+        concentration: rnd(10, max),
+        efficency: rnd(10, max),
+        consistency: rnd(10, max),
+        overlap: rnd(10, max),
+        riskAdequacy: rnd(10, max),
+        riskAnalysis: rnd(10, max)
     };
 };

@@ -46,7 +46,7 @@ export interface LangDictionary {
     TOT_CLIENTS: string,
     DATE: string,
     STATUS: string,
-    LAST_STATUS:string,
+    LAST_STATUS: string,
     NOTES: string
     DATE_FORMAT: string
     AGENTS: string,
@@ -89,7 +89,7 @@ export interface LangDictionary {
     TARGET_RESULT: string,
 
 
-    NO_ALERTS:string,
+    NO_ALERTS: string,
 
     //client view
     PERSONAL_INFORMATION: string,
@@ -119,13 +119,19 @@ export interface LangDictionary {
         concentrationAlert: { name: string, sentence: string },
         overlapAlert: { name: string, sentence: string }
     },
-    'NO ALERT':string,
-    'REGULATOR ALERT':string,
-    'GUIDELINE ALERT':string,
-    'ON HOLD':string,
-    'PENDING PROPOSAL':string,
-    'PENDING EXECUTION':string,
+    'NO ALERT': string,
+    'REGULATOR ALERT': string,
+    'GUIDELINE ALERT': string,
+    'ON HOLD': string,
+    'PENDING PROPOSAL': string,
+    'PENDING EXECUTION': string,
 
+    RISKPROFILE: string,
+    REGULATORY_INDICATOR: string,
+
+    ABOVE_GUIDELINES: string,
+    BELOW_GUIDELINES: string,
+    STATUS_DATE: string
 }
 
 export interface WithLang { lang: LangDictionary };

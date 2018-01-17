@@ -139,7 +139,11 @@ export interface Radar {
     concentrationAlert: Alert;
     overlapAlert: Alert;
     numOfAlerts: number;
-    color: 'green' | 'yellow' | 'orange' | 'red'
+    color: 'green' | 'yellow' | 'orange' | 'red';
+
+    regulatoryIndicator: number,
+    aboveGuidelines: number,
+    belowGuidelines: number
 }
 
 export interface RadarItem {

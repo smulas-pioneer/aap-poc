@@ -133,11 +133,13 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
                                 {this.renderHeader('name', lang.CLIENT_NAME, 2)}
                                 {manager && <Table.HeaderCell width={2}>{lang.MANAGED_BY}</Table.HeaderCell>}
                                 {this.renderHeader('aua', lang.AUA, 2, 'right')}
-                                {this.renderHeader('lastInterviewDate', lang.LAST_INTERVIEW_DATE, 2)}
-                                <Table.HeaderCell width={2}>{lang.DECISION}</Table.HeaderCell>
-                                <Table.HeaderCell>{lang.MODEL}</Table.HeaderCell>
-                                <Table.HeaderCell width={1}>{lang.MIFID}</Table.HeaderCell>
-                                <Table.HeaderCell width={4}>{lang.DELTA_ANALYSIS}</Table.HeaderCell>
+                                {this.renderHeader('lastInterviewDate', lang.LAST_INTERVIEW_DATE, 1)}
+                                {this.renderHeader('clientStatus', lang.STATUS, 2)}
+                                {this.renderHeader('clientStatusAge', lang.STATUS_DATE, 1)}
+                                {this.renderHeader('modelName', lang.RISKPROFILE, 2)}
+                                {this.renderHeader('radar.regulatoryIndicator', lang.REGULATORY_INDICATOR, 2)}
+                                {this.renderHeader('radar.aboveGuidelines', lang.ABOVE_GUIDELINES, 2)}
+                                {this.renderHeader('radar.belowGuidelines', lang.BELOW_GUIDELINES, 2)}
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
@@ -152,10 +154,13 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
                                         {manager && <Table.Cell>{client.agent}</Table.Cell>}
                                         <Table.Cell textAlign="right" >{fmt(client.aua)}</Table.Cell>
                                         <Table.Cell>{client.lastInterviewDate}</Table.Cell>
-                                        <Table.Cell>{client.decision}</Table.Cell>
+                                        <Table.Cell>{client.clientStatus}</Table.Cell>
+                                        <Table.Cell>{client.clientStatusAge}</Table.Cell>
                                         <Table.Cell>{client.modelName}</Table.Cell>
-                                        <Table.Cell>{client.mifid}</Table.Cell>
-
+                                        <Table.Cell>{client.radar.regulatoryIndicator}</Table.Cell>
+                                        <Table.Cell>{client.radar.aboveGuidelines}</Table.Cell>
+                                        <Table.Cell>{client.radar.belowGuidelines}</Table.Cell>
+ 
                                         <Table.Cell>
                                             <Popup
                                                 key={clIndex}

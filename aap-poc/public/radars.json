@@ -39,7 +39,10 @@
     "riskAdequacyAlert": "green",
     "riskAnalysisAlert": "green",
     "numOfAlerts": 2,
-    "color": "orange"
+    "color": "orange",
+    "belowGuidelines": 540,
+    "aboveGuidelines": 27,
+    "regulatoryIndicator": 0
   },
   "1": {
     "guideLines": {
@@ -81,7 +84,10 @@
     "riskAdequacyAlert": "red",
     "riskAnalysisAlert": "orange",
     "numOfAlerts": 3,
-    "color": "red"
+    "color": "red",
+    "belowGuidelines": 26,
+    "aboveGuidelines": 13,
+    "regulatoryIndicator": 24
   },
   "2": {
     "guideLines": {
@@ -123,7 +129,10 @@
     "riskAdequacyAlert": "green",
     "riskAnalysisAlert": "green",
     "numOfAlerts": 2,
-    "color": "orange"
+    "color": "orange",
+    "belowGuidelines": 9,
+    "aboveGuidelines": 14,
+    "regulatoryIndicator": 0
   },
   "0!": {
     "guideLines": {
@@ -165,7 +174,10 @@
     "riskAdequacyAlert": "green",
     "riskAnalysisAlert": "green",
     "numOfAlerts": 0,
-    "color": "green"
+    "color": "green",
+    "belowGuidelines": 0,
+    "aboveGuidelines": 0,
+    "regulatoryIndicator": 0
   },
   "1!": {
     "guideLines": {
@@ -207,7 +219,10 @@
     "riskAdequacyAlert": "green",
     "riskAnalysisAlert": "green",
     "numOfAlerts": 0,
-    "color": "green"
+    "color": "green",
+    "belowGuidelines": 0,
+    "aboveGuidelines": 0,
+    "regulatoryIndicator": 0
   },
   "2!": {
     "guideLines": {
@@ -249,6 +264,9 @@
     "riskAdequacyAlert": "green",
     "riskAnalysisAlert": "green",
     "numOfAlerts": 0,
-    "color": "green"
+    "color": "green",
+    "belowGuidelines": 0,
+    "aboveGuidelines": 0,
+    "regulatoryIndicator": 0
   }
 }

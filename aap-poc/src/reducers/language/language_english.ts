@@ -115,7 +115,13 @@ export const English: LanguageState = {
     'GUIDELINE ALERT':'Guideline Alert',
     'ON HOLD':'On Hold',
     'PENDING PROPOSAL': 'Pending Proposal',
-    'PENDING EXECUTION':'Pending Execution'
-    
+    'PENDING EXECUTION':'Pending Execution',
+    RISKPROFILE: 'Risk Profile',
+    REGULATORY_INDICATOR: 'Regulatory Indicator',
+
+    ABOVE_GUIDELINES: 'Above Guidelines',
+    BELOW_GUIDELINES: 'Below Guidelines',
+    STATUS_DATE: 'Status Date',
+
     }
 }
