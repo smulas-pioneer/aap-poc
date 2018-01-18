@@ -103,6 +103,10 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
                     Object.keys(TimeHorizonMonths)[rnd(0, 2)] as TimeHorizon,
         branch: agent.branch.branchName,
         sales: 0,
+        ongoingFees:0,
+        upfrontFees:0,
+        budget:0,
+        turnover:rnd (0,100),
         aua: 0// sumBy(cli.holdings, v => v.amount) || 0 //faker.random.number({ min: 0, max: 100000000 }),
 
     }
@@ -442,6 +446,9 @@ const go = async () => {
                 c.radar = createRadarFromStrategy(strategies[c.id], c.id, radars);
             }
             c.aua = sumBy(strategies[c.id], v => v.currentAmount);
+            c.ongoingFees = c.aua * rnd (1,20) /1000;
+            c.upfrontFees = c.aua *rnd (0,10) /1000;
+            c.budget = c.aua * rnd(0,30) /1000;
             c.size = c.aua > 20000000 ? '>20M' : c.aua > 10000000 ? '10-20M' : c.aua > 5000000 ? '5-10M' : c.aua > 1000000 ? '1-5M' : '<1M';
             c.segment = c.aua > 15000000 ? 'Private' : c.aua > 5000000 ? 'Wealth Management' : c.aua > 2000000 ? 'Mass Affluent' : 'Retail';
             c.breaks = Object.keys(c.radar).filter(k => k.endsWith("Alert")).filter(k => c.radar[k] !== "green").map(k => k.replace('Alert', ''));

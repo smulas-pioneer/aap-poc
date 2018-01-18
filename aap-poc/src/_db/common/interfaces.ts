@@ -32,6 +32,11 @@ export interface Client {
     branch: string;
     sales: number;
 
+    ongoingFees:number;
+    upfrontFees:number;
+    budget:  number;
+    turnover: number;
+
 }
 
 export type ClientSegment = 'Private' | 'Mass Affluent' | 'Retail' | 'Wealth Management'
