@@ -156,10 +156,10 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
                                         <Table.Cell>{client.lastInterviewDate}</Table.Cell>
                                         <Table.Cell>{client.clientStatus}</Table.Cell>
                                         <Table.Cell>{client.clientStatusAge}</Table.Cell>
-                                        <Table.Cell>{client.modelName}</Table.Cell>
-                                        <Table.Cell>{client.radar.regulatoryIndicator}</Table.Cell>
-                                        <Table.Cell>{client.radar.aboveGuidelines}</Table.Cell>
-                                        <Table.Cell>{client.radar.belowGuidelines}</Table.Cell>
+                                        <Table.Cell>{client.clientRiskProfile}</Table.Cell>
+                                        <Table.Cell>{client.regulatoryIndicator==0 ? '' :client.regulatoryIndicator}</Table.Cell>
+                                        <Table.Cell>{client.aboveGuidelines==0 ? '' :client.aboveGuidelines}</Table.Cell>
+                                        <Table.Cell>{client.belowGuidelines==0 ? '' :client.belowGuidelines}</Table.Cell>
  
                                         <Table.Cell>
                                             <Popup

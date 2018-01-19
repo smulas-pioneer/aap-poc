@@ -110,6 +110,9 @@ export const createRadarSync = (guideLines: RadarItem,
 }
 
 
+
+
+
 export const getRadarLimitSync = (radarItem: RadarItem): RadarItem => {
     return {
         concentration: radarItem.concentration,//rnd(1, 20) / 10,
