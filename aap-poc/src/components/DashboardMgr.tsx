@@ -261,8 +261,9 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                         </Grid.Column>
 
                         <Grid.Column textAlign="center">
-                            {this.renderItem(fmt(info.acceptedProposals), lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${fmt(info.totalProposals)}`)}
+                            {this.renderItem(fmt(info.acceptedProposals), lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${fmt(info.totalProposals)} (${Math.round(100 * (info.acceptedProposals / info.totalProposals)).toString() + '%)'}`)}
                         </Grid.Column>
+
                     </Grid>
                 </Segment>
                 <AdvancedGrid className="grid-filter-right">
