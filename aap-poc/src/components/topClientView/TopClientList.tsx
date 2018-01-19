@@ -71,6 +71,7 @@ export const TopClientList = ({ clients, group, indicator, lang }: TopClientList
                             <Table.HeaderCell textAlign="right" width={1}>{lang.ONGOING_FEES}</Table.HeaderCell>
                             <Table.HeaderCell textAlign="right" width={1}>{lang.BUDGET}</Table.HeaderCell>
                             <Table.HeaderCell textAlign="right" width={1}>%</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="right" width={1}>{lang.ALLOCATION}</Table.HeaderCell>
                             <Table.HeaderCell textAlign="right" width={1}>{lang.TURNOVER}</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
@@ -100,6 +101,7 @@ export const TopClientList = ({ clients, group, indicator, lang }: TopClientList
                                     <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.ongoingFees)}>{fmt(client.totals.ongoingFees)}</Table.Cell>
                                     <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.budget)}>{fmt(client.totals.budget)}</Table.Cell>
                                     <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.budgetAccomplished)}>{fmt(client.totals.budgetAccomplished)}</Table.Cell>
+                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.allocation)}>{fmt(client.totals.allocation)}</Table.Cell>                                    
                                     <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.turnover)}>{fmt(client.totals.turnover)}</Table.Cell>                                    
                                 </Table.Row>
                             )

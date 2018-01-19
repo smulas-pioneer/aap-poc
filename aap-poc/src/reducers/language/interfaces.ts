@@ -81,6 +81,7 @@ export interface LangDictionary {
     UPFRONT_FEES: string,
     ONGOING_FEES: string,
     BUDGET: string,
+    ALLOCATION: string,
     TURNOVER:string,
 
     TIME_HORIZON: string,
