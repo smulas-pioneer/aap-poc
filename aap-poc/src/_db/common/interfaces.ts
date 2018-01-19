@@ -43,7 +43,10 @@ export interface Client {
     belowGuidelines: number;
 
     allocationKPI: number;
-
+    productAppropriateness: number;
+    percentageOfDiscountFees: number;
+    project: string;
+    
 }
 
 export type ClientSegment = 'Private' | 'Mass Affluent' | 'Retail' | 'Wealth Management'
