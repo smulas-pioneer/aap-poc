@@ -297,7 +297,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
                 <AdvancedGrid className="grid-client-view-sub2">
                     <Segment style={{ margin: 0 }}>
-                        <ClientViews graphs={graphs} lang={lang} mode='tab' />
+                        <ClientViews graphs={graphs} lang={lang} mode='tab' defaultIndex={3} />
                     </Segment>
                     {/*}
                     <Segment style={{ margin: 0 }} as={OverflowColumn}>
@@ -453,18 +453,20 @@ interface ClientViewProps {
     graphs: any[],
     lang: LangDictionary,
     mode: 'tab' | 'buttons',
+    defaultIndex: number,
+    hideTitle?:boolean
 }
 
-class ClientViews extends React.Component<ClientViewProps, { activeIndex?: number }> {
+export class ClientViews extends React.Component<ClientViewProps, { activeIndex?: number }> {
     constructor(props: ClientViewProps) {
         super(props);
         this.state = { activeIndex: 0 };
         this.handleBtnChange = this.handleBtnChange.bind(this);
         this.handleTabChange = this.handleTabChange.bind(this);
 
-        setTimeout(() => {
-            this.setState({ activeIndex: 3 });
-        }, 1000);
+            setTimeout(() => {
+                this.setState({ activeIndex: props.defaultIndex });
+            }, 1000);
     }
     componentDidMount() {
     }
@@ -492,9 +494,8 @@ class ClientViews extends React.Component<ClientViewProps, { activeIndex?: numbe
 
         return (
             <div>
-                <WidgetTitle title={lang.PORTFOLIO_VIEWS} shareButtons={['Image', 'Copy']} />
+                {!this.props.hideTitle && <WidgetTitle title={lang.PORTFOLIO_VIEWS} shareButtons={['Image', 'Copy']} /> }
                 <Tab menu={{ pointing: true, secondary: true }} panes={panes} activeIndex={activeIndex} onTabChange={this.handleTabChange} style={{ height: '95%' }} />
-
             </div>
         );
     }

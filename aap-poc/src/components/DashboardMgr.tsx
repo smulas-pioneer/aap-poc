@@ -14,6 +14,8 @@ import { formatAua, formatNumber } from '../_db/utils';
 import { ClientFilter } from './shared/ClientFilter';
 import { ItalyMap } from './italymaps/ItalyMap';
 import { WidgetTitle } from './shared/WidgetTitle';
+import { ClientViews } from './clientView/ClientView3';
+import { BreakdownView } from './clientView/BreakdownView';
 
 const sprintf = require("sprintf-js").sprintf;
 
@@ -101,11 +103,14 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 <Grid.Column>
                     <Segment>
                         <WidgetTitle title={'Key Figures Map'} shareButtons={['Image', 'Copy']} />
-                        <ItalyMap lang={lang} clients={data} height="500px" />
+                        <ItalyMap lang={lang} clients={data} height="524px" />
                     </Segment>
                 </Grid.Column>
                 <Grid.Column>
-                    {this.renderFilterGraphItem(1, filterMapItems.Aua, filter.Aua)}
+                    <Segment>
+                    <ClientViews graphs={this.createGraphs()} lang={lang} mode="tab" defaultIndex={0} hideTitle />
+                    {/*this.renderFilterGraphItem(1, filterMapItems.Aua, filter.Aua)*/}
+                    </Segment>
                 </Grid.Column>
                 <Grid.Column width={16}>
                     <TopClient clients={data} lang={lang} />
@@ -153,7 +158,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
         return (
             <Segment>
-                <WidgetTitle title={header} shareButtons={['Image', 'Copy']} />
+               {/*} <WidgetTitle title={header} shareButtons={['Image', 'Copy']} />*/}
                 <CustomPieChart width={500} height={500} data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
             </Segment>
         );
@@ -168,6 +173,33 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
             <Icon name={icon} color={color} />
             {this.props.lang[langProps]}
         </Menu.Item>);
+    }
+
+    createGraphs() {
+        const { lang, filter = { Aua: {} } } = this.props;
+        let graphs = {
+            Performance: {
+                title: 'AUA',
+                icon: 'pie chart',
+                charts: [
+                    {
+                        title: 'AUA',
+                        chart: this.renderFilterGraphItem(1, filterMapItems.Aua, filter.Aua)
+                    }]
+            }
+        }
+
+        const bd = this.props.data!.breakdowns.map(b => {
+            return {
+                    title: b.attributeName,
+                    icon: 'line chart',
+                    charts: [
+                        {
+                            chart: <BreakdownView breakdown={b} width={500} height={500} />
+                        }]
+                }
+        });
+        return Object.keys(graphs).map((v) => graphs[v]).concat(bd);
     }
 
     render() {
@@ -193,7 +225,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         ]
 
         const info = data.result.reduce<
-        { length: number, assetUnder: number, clientAlert: number, mifidAlert: number, acceptedProposals: number, totalProposals: number, rejectedProposals: number, totalBudget:number, totRevenues:number }>(
+            { length: number, assetUnder: number, clientAlert: number, mifidAlert: number, acceptedProposals: number, totalProposals: number, rejectedProposals: number, totalBudget: number, totRevenues: number }>(
             (ret, v, i) => {
                 ret.length += 1;
                 ret.totalBudget += v.budget;

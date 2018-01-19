@@ -64,6 +64,10 @@ const getAttributeBreakDown = (attributeName: string, holdings: PositionItem[]):
     }
 }
 
+export const getBreakdowns = (clients:Client[])  => {
+        
+}
+
 export const getBreakdown = (holdings: PositionItem[]) => {
     const attributes = [
         'MacroAssetClass',

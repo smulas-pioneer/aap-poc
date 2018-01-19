@@ -184,6 +184,7 @@ export interface Breakdown {
     attributeName: string,
     data: Array<{ value: string, weight: number, bmk: number }>
     weight: number;
+    color?: string
 }
 
 export interface PerformanceStat {
@@ -222,6 +223,7 @@ export interface SearchResult {
     parms: SearchParms,
     result: Client[],
     radar?: Radar,
+    breakdowns: Breakdown[]
 }
 
 export type AgentView = {
@@ -234,7 +236,19 @@ export interface InterviewResult {
     status: 'ACCEPTED' | 'REJECTED' | 'ONGOING' | 'ON HOLD' | ClientState 
     notes: string;
 }
+export interface Aggregation {
+    MacroAssetClass:string,
+    MicroAssetClass:string,
+    Sector:string,
+    Currency:string,
 
+    Country: string,
+    Rating: string,
+    Maturity: string,
+    Region: string,
+    
+    weight:number
+}
 export type ClientState = 'NO ALERT' | 'REGULATOR ALERT' | 'GUIDELINE ALERT' | 'ON HOLD' | 'PENDING PROPOSAL' | 'PENDING EXECUTION'
 
 export const ClientStateColors = {

@@ -41,6 +41,6 @@ export class BreakdownView extends React.Component<Props, State> {
 
         return chartView === 'pie'
             ? <CustomPieChart data={data} dataKey='weight' nameKey="key" width={width} height={height} />
-            : <CustomComposedChart data={data} dataKey='weight' nameKey="key" width={width} height={height} />
+            : <CustomComposedChart data={data} dataKey='weight' nameKey="key" width={width} height={height} color={breakdown.color}/>
     }
 }
