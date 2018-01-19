@@ -226,7 +226,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                             {this.renderItem(fmt(info.totalBudget) + "€", lang.BUDGET, Math.round(100 * (info.totRevenues / info.totalBudget)).toString() + '% accomplished', undefined, 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
-                            {this.renderItem(fmt(info.acceptedProposals), lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${fmt(info.totalProposals)}`)}
+                            {this.renderItem(fmt(info.acceptedProposals), lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${fmt(info.totalProposals)} (${Math.round(100 * (info.acceptedProposals / info.totalProposals)).toString() + '%)'}`)}
                         </Grid.Column>
                     </Grid>
                 </Segment>

@@ -362,7 +362,7 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
             <Grid.Column width={16} style={{ margin: 0 }}>
                 <Grid columns="equal">
                     {renderColumns({ 'Client Id': client.id, 'Entry Date': client.lastAdvicedate, 'Segment': client.segment, 'Model': client.modelName })}
-                    {renderColumns({ 'Tel': client.phone, 'Email': client.email, 'Branch': client.branch, 'Percentage of discount fee': `${client.percentageOfDiscountFees} %` })}
+                    {renderColumns({ 'Tel': client.phone, 'Email': client.email, 'Branch': client.branch, 'Percentage of discount fee': `${client.percentageOfDiscountFees}%` })}
                     {renderColumns({ 'Address': client.address.streetAddress, 'ZIP Code': client.address.zipCode, 'City': client.address.city, 'Region': client.address.region })}
                     {renderColumns({ 'Risk Profile': client.clientRiskProfile, 'Project': client.project, [lang.TIME_HORIZON]: client.timeHorizon, 'Product Appropriateness': client.productAppropriateness }, true)}
                 </Grid>
