@@ -14,6 +14,8 @@ export interface SpotlightProps {
 
     context?: 'Client' | 'Agent' | 'Security';
 
+    macroAssetClass?:string;
+
     limit?: number;
     onCancel?: () => void;
     onItemNavigate?: (item: SpotlightSearchResultItem) => void;
@@ -59,7 +61,8 @@ class SpotlightCompo extends conn.StatefulCompo<SpotlightState> {
             filter: this.state.searchText || '',
             onlyPushedSecurity: this.state.onlyPushedSecurity,
             context: this.props.context,
-            limit: this.props.limit
+            limit: this.props.limit,
+            macroAssetClass:this.props.macroAssetClass
         });
 
     onCancel = () => this.props.onCancel && this.props.onCancel();

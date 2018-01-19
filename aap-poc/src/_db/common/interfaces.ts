@@ -279,6 +279,7 @@ export interface SpotlightSearchParms {
     agents?: string[];
     onlyPushedSecurity?: boolean;
     limit?: number;
+    macroAssetClass?:string;
 }
 
 export interface StrategyItem {

@@ -238,7 +238,9 @@ export const spotlightSearch = (parms: SpotlightSearchParms): Promise<Model.Spot
             age = getAgentViewsFromClients(clientList.filter(c => arrayContains(parms.agents, c.agent)).filter(c => c.agent.toLowerCase().indexOf(filter) !== -1));
         }
         if (hasFlag(cc, SpotlightContext.Security)) {
-            sec = securityList.filter((s, ix) => ix != 0 &&
+            sec = securityList.filter((s, ix) => ix != 0 
+                && (!parms.macroAssetClass || s.MacroAssetClass == parms.macroAssetClass)                
+                &&
                 (s.SecurityName.toLowerCase().indexOf(filter) !== -1 ||
                     s.IsinCode.toLowerCase().indexOf(filter) !== -1)
             ); // skip 0 cash

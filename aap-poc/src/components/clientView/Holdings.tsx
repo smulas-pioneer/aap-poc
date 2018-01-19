@@ -14,6 +14,7 @@ import { WidgetTitle } from '../shared/WidgetTitle';
 import Checkbox from 'semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox';
 import { RadarGraph } from '../RadarGraph';
 import { securities } from '../../_db/common/securities';
+import { currentId } from 'async_hooks';
 
 interface Props {
     holdings: StrategyItem[],
@@ -33,14 +34,16 @@ interface State {
     mode: 'Weight' | 'Quantity' | 'Amount',
 
     holdings: StrategyItem[],
-    changedIsin: string[]
+    changedIsin: string[],
+
+    changingSecurity: string | undefined;
 
 }
 
 export class Holdings extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
-        this.state = { addingSecurity: false, mode: 'Weight', holdings: props.holdings, changedIsin: [] }
+        this.state = { addingSecurity: false, mode: 'Weight', holdings: props.holdings, changedIsin: [], changingSecurity: undefined }
     }
 
     componentWillReceiveProps(next: Props) {
@@ -62,7 +65,7 @@ export class Holdings extends React.Component<Props, State> {
             holdings,
             changedIsin
         }, () => {
-            this.props.onSomethingChanged(changedIsin.filter(i=>i!='CASH').length >0);
+            this.props.onSomethingChanged(changedIsin.filter(i => i != 'CASH').length > 0);
         });
 
     }
@@ -81,7 +84,7 @@ export class Holdings extends React.Component<Props, State> {
             holdings,
             changedIsin
         }, () => {
-            this.props.onSomethingChanged(changedIsin.filter(i=>i!='CASH').length >0);
+            this.props.onSomethingChanged(changedIsin.filter(i => i != 'CASH').length > 0);
         })
     }
 
@@ -90,7 +93,31 @@ export class Holdings extends React.Component<Props, State> {
         //this.props.onToggleSimulation(!this.props.isInSimulationMode);
     }
 
-    handleOnAddSecurity = (security:Security) => {
+    handleChangeSecurity = (security: Security) => {
+        let holdings = this.state.holdings.map(h => {
+            return h.security.IsinCode !== this.state.changingSecurity ? h : {
+                security,
+                currentAmount: 0,
+                currentPrice: 1,
+                currentQuantity: 0,
+                currentWeight: 0,
+                isCash: false,
+                fee: 0,
+                modelWeight: 0,
+                radar: getRandomRadar(),
+                suggestedDelta: 0,
+                suggestionAccepted: false,
+                newSecurity: true,
+            }
+        });
+
+        this.setState({
+            changingSecurity: undefined,
+            holdings
+        })
+    }
+
+    handleOnAddSecurity = (security: Security) => {
         const h: StrategyItem = {
             security,
             currentAmount: 0,
@@ -107,8 +134,8 @@ export class Holdings extends React.Component<Props, State> {
         }
 
         this.setState({
-            addingSecurity:false,
-            holdings:[...this.state.holdings,h]
+            addingSecurity: false,
+            holdings: [...this.state.holdings, h]
         })
     }
 
@@ -122,7 +149,7 @@ export class Holdings extends React.Component<Props, State> {
         const proposed = holdings.slice(1).filter(a => a.suggestedDelta != 0).length;
         const canSelectAll = accepted != proposed;
 
-        const somethingIsChanged = this.state.changedIsin.filter(i=>i!='CASH').length == 0;
+        const somethingIsChanged = this.state.changedIsin.filter(i => i != 'CASH').length == 0;
         const acceptAll = !(accepted == proposed);
         const isValid = finalWeight.filter(h => h.weight < -0.001 || h.weight > 1).length == 0;
         return (
@@ -130,13 +157,26 @@ export class Holdings extends React.Component<Props, State> {
                 {
                     this.state.addingSecurity && <Spotlight
                         onCancel={() => { this.setState({ addingSecurity: false }) }}
-                        onItemNavigate={i =>this.handleOnAddSecurity(i as Security)}
+                        onItemNavigate={i => this.handleOnAddSecurity(i as Security)}
                         searchText=""
                         context="Security"
                         limit={12}
                         visible
                     />
                 }
+                {
+                    this.state.changingSecurity && <Spotlight
+                        onCancel={() => { this.setState({ addingSecurity: false }) }}
+                        onItemNavigate={i => this.handleChangeSecurity(i as Security)}
+                        searchText=""
+                        context="Security"
+                        limit={12}
+                        macroAssetClass={holdings.find(s => s.security.IsinCode == this.state.changingSecurity)!.security.MacroAssetClass}
+                        visible
+                    />
+                }
+
+
                 <Menu size='mini'>
                     <Menu.Item onClick={this.props.onShowModel}  ><Icon name="table" />Model</Menu.Item>
                     <Menu.Item onClick={() => this.setState({ addingSecurity: true })} >
@@ -177,8 +217,8 @@ export class Holdings extends React.Component<Props, State> {
 
                                     <div style={{ width: '100%' }}>
                                         <OrderList data={holdings} lang={lang} />
-                                        <RadarGraph data={this.props.radar!} lang={lang} axes={this.props.axes} onClickShape={()=>{}} width={700} height={413} alertsAbout={'proposed' } />
-                     
+                                        <RadarGraph data={this.props.radar!} lang={lang} axes={this.props.axes} onClickShape={() => { }} width={700} height={413} alertsAbout={'proposed'} />
+
                                         <br />
                                         <Checkbox defaultChecked label='Open pdf after generation' />
                                     </div>
@@ -228,8 +268,16 @@ export class Holdings extends React.Component<Props, State> {
                                             {t.security.pushed && <Icon size="large" color="green" name='thumbs up' />}
                                             {t.clientFavorites && <Icon size="large" color="red" name='heart' />}
                                         </Table.Cell>
-                                        <Table.Cell>{t.security.IsinCode}</Table.Cell>
-                                        <Table.Cell>{t.security.SecurityName}</Table.Cell>
+                                        <Table.Cell >{t.security.IsinCode} 
+                                        {/*
+                                        &nbsp;
+                                        {!t.isCash && <Icon onClick={
+                                                () => this.setState({ changingSecurity: t.security.IsinCode })
+                                            } name="exchange" />}
+                                        */}
+                                        </Table.Cell>
+                                        <Table.Cell>{t.security.SecurityName}
+                                        </Table.Cell>
                                         <Table.Cell>{t.security.MacroAssetClass}</Table.Cell>
                                         <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
                                         <Table.Cell textAlign="right">{show && fmt(t.currentAmount)}</Table.Cell>
