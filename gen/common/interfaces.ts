@@ -38,6 +38,11 @@ export interface Client {
     budget:  number;
     turnover: number;
 
+    regulatoryIndicator: number;
+    aboveGuidelines: number;
+    belowGuidelines: number;
+
+
 }
 
 export type ClientSegment = 'Private' | 'Mass Affluent' | 'Retail' | 'Wealth Management'
