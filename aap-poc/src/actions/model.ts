@@ -20,7 +20,11 @@ export enum IndicatorOptionsType {
     aua,
     proposals,
     acceptedProposals,
-    alerts
+    alerts,
+    upfrontFees,
+    ongoingFees,
+    budget,
+    turnover
 }
 export type IndicatorType = keyof typeof IndicatorOptionsType;
 

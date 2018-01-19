@@ -227,7 +227,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
                     value: this.calculateAreaValues(clients, IndicatorOptionsType.proposals, region.key).areaValues.filter(a => a.key === region.key)[0].value
                 },
                 d: {
-                    label: lang.MAP_OPTS_PROPOSAL,
+                    label: lang.MAP_OPTS_ACC_PROPOSAL,
                     value: this.calculateAreaValues(clients, IndicatorOptionsType.acceptedProposals, region.key).areaValues.filter(a => a.key === region.key)[0].value
                 },
                 e: {
