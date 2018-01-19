@@ -193,9 +193,11 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         ]
 
         const info = data.result.reduce<
-            { length: number, assetUnder: number, clientAlert: number, mifidAlert: number, acceptedProposals: number, totalProposals: number }>(
+        { length: number, assetUnder: number, clientAlert: number, mifidAlert: number, acceptedProposals: number, totalProposals: number, rejectedProposals: number, totalBudget:number, totRevenues:number }>(
             (ret, v, i) => {
                 ret.length += 1;
+                ret.totalBudget += v.budget;
+                ret.totRevenues += v.ongoingFees + v.upfrontFees;
                 ret.acceptedProposals += v.numOfAcceptedProposal;
                 ret.totalProposals += v.numOfInterviews;
                 ret.assetUnder += v.aua;
@@ -203,7 +205,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 ret.mifidAlert += v.radar.riskAdequacyAlert != 'green' ? 1 : 0;
                 return ret;
             },
-            { length: 0, assetUnder: 0, clientAlert: 0, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0 });
+            { length: 0, assetUnder: 0, clientAlert: 0, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0, rejectedProposals: 0, totalBudget: 0, totRevenues: 0 });
 
 
         return (
@@ -223,8 +225,9 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                             {this.renderItem(info.interviews, lang.DB_INTERVIEWS, this.percDetail(undefined, '1', 'M'))}
                         </Grid.Column> */}
                         <Grid.Column textAlign="center">
-                            {this.renderItem(undefined, lang.DB_CLIENT_FEEDBACK, this.percDetail(15, '1', 'Y'), 'smile', 'green')}
+                            {this.renderItem(fmt(info.totalBudget) + "€", lang.BUDGET, Math.round(100 * (info.totRevenues / info.totalBudget)).toString() + '% accomplished', undefined, 'green')}
                         </Grid.Column>
+
                         <Grid.Column textAlign="center">
                             {this.renderItem(fmt(info.acceptedProposals), lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${fmt(info.totalProposals)}`)}
                         </Grid.Column>

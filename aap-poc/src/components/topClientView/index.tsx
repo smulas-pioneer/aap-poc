@@ -100,7 +100,8 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
                     upfrontFees: sumUpfrontFees,
                     ongoingFees: sumOngoingFees,
                     budget: sumBudget,
-                    turnover: sumTurnover
+                    turnover: sumTurnover,
+                    budgetAccomplished: Math.round(100 * (sumUpfrontFees + sumOngoingFees) /  sumBudget)
                 }
             });
         }

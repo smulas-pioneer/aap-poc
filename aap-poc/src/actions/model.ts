@@ -24,6 +24,7 @@ export enum IndicatorOptionsType {
     upfrontFees,
     ongoingFees,
     budget,
+    budgetAccomplished,
     turnover
 }
 export type IndicatorType = keyof typeof IndicatorOptionsType;
