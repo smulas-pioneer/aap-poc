@@ -16,6 +16,7 @@ export interface Client {
     clientStatusAge: string;
     clientStatusDuration: ClientStatusDuration;
 
+    clientRiskProfile: string;
     mifid: number;
     decision: string;
 

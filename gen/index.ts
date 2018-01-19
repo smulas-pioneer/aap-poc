@@ -91,6 +91,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
                 id == "2" ? "Defensive" :
                     faker.company.catchPhraseAdjective(),
         decision: '',
+        clientRiskProfile: ['Medium','Low','High'][rnd(0,2)],
         clientStatus: 'NO ALERT',
         mifid: rnd(1, 40),
         numOfAcceptedProposal: 0,
