@@ -47,25 +47,30 @@ export const TopClientList = ({ clients, group, indicator, lang }: TopClientList
         <Segment.Group>
             <Segment basic style={{ height: '54vh' }} >
                 <Table compact fixed singleLine >
-                    <Table.Header fullWidth>
+                    <Table.Header fullWidth >
                         <Table.Row>
                             {group >= GroupTypes.Region &&
-                                <Table.HeaderCell width={2}>{lang.REGION}</Table.HeaderCell>
+                                <Table.HeaderCell width={1}>{lang.REGION}</Table.HeaderCell>
                             }
                             {group >= GroupTypes.City &&
                                 <Table.HeaderCell width={2}>{lang.CITY}</Table.HeaderCell>
                             }
                             {group >= GroupTypes.Branch &&
-                                <Table.HeaderCell width={2}>{lang.BRANCH}</Table.HeaderCell>
+                                <Table.HeaderCell width={1}>{lang.BRANCH}</Table.HeaderCell>
                             }
                             {group >= GroupTypes.Advisor &&
                                 <Table.HeaderCell width={2} >{lang.ADVISOR}</Table.HeaderCell>
                             }
                             <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_CLIENTS}</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right" width={2}>{lang.MAP_OPTS_AUA}</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right" width={2}>{lang.MAP_OPTS_PROPOSALS}</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right" width={2}>{lang.MAP_OPTS_PROPOSAL}</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_AUA}</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_PROPOSALS}</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_ACC_PROPOSAL}</Table.HeaderCell>
                             <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_ALERTS}</Table.HeaderCell>
+
+                            <Table.HeaderCell textAlign="right" width={1}>{lang.UPFRONT_FEES}</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="right" width={1}>{lang.ONGOING_FEES}</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="right" width={1}>{lang.BUDGET}</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="right" width={1}>{lang.TURNOVER}</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -89,6 +94,11 @@ export const TopClientList = ({ clients, group, indicator, lang }: TopClientList
                                     <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.proposals)}>{fmt(client.totals.proposals)}</Table.Cell>
                                     <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.acceptedProposals)}>{fmt(client.totals.acceptedProposals)}</Table.Cell>
                                     <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.alerts)}>{fmt(client.totals.alerts)}</Table.Cell>
+
+                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.upfrontFees)}>{fmt(client.totals.upfrontFees)}</Table.Cell>
+                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.ongoingFees)}>{fmt(client.totals.ongoingFees)}</Table.Cell>
+                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.budget)}>{fmt(client.totals.budget)}</Table.Cell>
+                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.turnover)}>{fmt(client.totals.turnover)}</Table.Cell>
                                 </Table.Row>
                             )
                         }

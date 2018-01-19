@@ -81,6 +81,10 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
             const sumInterviews = sumBy(grouped[key], c => c.numOfInterviews);
             const sumAcceptedProposals = sumBy(grouped[key], c => c.numOfAcceptedProposal);
             const countWithAlerts = grouped[key].filter(c => c.radar.numOfAlerts > 0).length;
+            const sumUpfrontFees = sumBy(grouped[key], c => c.upfrontFees);
+            const sumOngoingFees = sumBy(grouped[key], c => c.ongoingFees);
+            const sumBudget = sumBy(grouped[key], c => c.budget);
+            const sumTurnover = sumBy(grouped[key], c => c.turnover) / grouped[key].length;
             let first = grouped[key][0];
             recs.push({
                 region: first.address.region,
@@ -92,7 +96,11 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
                     aua: sumAua,
                     clients: countClients,
                     proposals: sumInterviews,
-                    acceptedProposals: sumAcceptedProposals
+                    acceptedProposals: sumAcceptedProposals,
+                    upfrontFees: sumUpfrontFees,
+                    ongoingFees: sumOngoingFees,
+                    budget: sumBudget,
+                    turnover: sumTurnover
                 }
             });
         }

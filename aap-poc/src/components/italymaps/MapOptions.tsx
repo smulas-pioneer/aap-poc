@@ -54,7 +54,7 @@ export class MapOptions extends React.Component<MapOptionsProps, MapOptionsState
             [IndicatorOptionsType.clients, lang.MAP_OPTS_CLIENTS],
             [IndicatorOptionsType.aua, lang.MAP_OPTS_AUA],
             [IndicatorOptionsType.proposals, lang.MAP_OPTS_PROPOSALS],
-            [IndicatorOptionsType.acceptedProposals, lang.MAP_OPTS_PROPOSAL],
+            [IndicatorOptionsType.acceptedProposals, lang.MAP_OPTS_ACC_PROPOSAL],
             [IndicatorOptionsType.alerts, lang.MAP_OPTS_ALERTS]
         ] as [[IndicatorOptionsType, string]];
 

@@ -76,8 +76,12 @@ export interface LangDictionary {
     MAP_OPTS_CLIENTS: string,
     MAP_OPTS_AUA: string,
     MAP_OPTS_PROPOSALS: string,
-    MAP_OPTS_PROPOSAL: string,
+    MAP_OPTS_ACC_PROPOSAL: string,
     MAP_OPTS_ALERTS: string,
+    UPFRONT_FEES: string,
+    ONGOING_FEES: string,
+    BUDGET: string,
+    TURNOVER:string,
 
     TIME_HORIZON: string,
     REGION: string,
