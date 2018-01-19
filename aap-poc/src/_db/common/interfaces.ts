@@ -42,6 +42,7 @@ export interface Client {
     aboveGuidelines: number;
     belowGuidelines: number;
 
+    allocationKPI: number;
 
 }
 

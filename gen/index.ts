@@ -111,6 +111,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
         regulatoryIndicator: 0,
         aboveGuidelines: 0,
         belowGuidelines: 0,
+        allocationKPI:rnd(0,100),
         aua: 0// sumBy(cli.holdings, v => v.amount) || 0 //faker.random.number({ min: 0, max: 100000000 }),
 
     }
