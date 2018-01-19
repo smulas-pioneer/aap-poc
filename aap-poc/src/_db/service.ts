@@ -6,9 +6,11 @@ import { SpotlightSearchParms, SpotlightContext, Holding, StrategyItem, Intervie
 import * as ce from './coreEngine';
 import { intersection } from 'lodash';
 import * as moment from 'moment';
-import { getRandomRadar, isFakeClient } from './common/radarUtils';
+import { getRandomRadar, isFakeClient, currentPosition } from './common/radarUtils';
 import { promisify } from 'util';
-import { REFERENCE_DATE_TODAY } from './common/consts';
+import { REFERENCE_DATE_TODAY, MainColors } from './common/consts';
+import { Holdings } from '../components/clientView/Holdings';
+import { Aggregation } from './interfaces';
 
 export const patchHoldings = (holdings: Model.Holding[], transactions: Model.Transaction[]): Promise<Model.Holding[]> => {
     return Promise.resolve([]);
@@ -49,12 +51,16 @@ export const searchClient = (parms: Model.SearchParms, visibility?: string[]): P
         .filter(c => arrayContains(parms.size, c.size))
         .filter(c => arrayContains(parms.segments, c.segment))
         .filter(c => arrayContains(parms.branch, c.branch))
+
         .map(c => ({ ...c, holdings: [] }));
+
+
 
     return Promise.resolve({
         parms,
         result,
-        radar: undefined
+        radar: undefined,
+        breakdowns: getClientsBreakdowns(result)
     });
 };
 
@@ -137,6 +143,72 @@ export const getStrategy = (clientId: string) => {
                     b.currentWeight - a.currentWeight)
     );
 }
+
+
+const strategyToAggreg = (position: StrategyItem): Aggregation => {
+    return {
+        weight: position.currentWeight,
+        MacroAssetClass: position.security.MacroAssetClass,
+        MicroAssetClass: position.security.MicroAssetClass,
+        Sector: position.security.Sector || '',
+        Currency: position.security.Currency,
+        Country: position.security.Country || '',
+        Rating: position.security.Rating || '',
+        Maturity: position.security.Maturity || '',
+        Region: position.security.Region || '',
+    }
+}
+const aggToBreakdown = (data: Aggregation[], key: string): Model.Breakdown => {
+    const d = data.reduce((prev, curr) => {
+        prev[curr[key]] = prev[curr[key]] || 0 + curr.weight;
+        return prev;
+    }, {} as { [key: string]: number }
+    );
+
+    const tot = Object.keys(d).reduce((a, b) => a + d[b], 0);
+
+    return {
+        attributeName: key,
+        weight: 1,
+        data: top10(Object.keys(d).map(k => ({ value: k, weight: d[k] / tot, bmk: d[k] / tot })).filter(i => i.value.trim() !== '')),
+        color: MainColors[key]
+    }
+}
+
+const top10 = (data: { value: string, weight: number, bmk: number }[]) => {
+    const sortedData = data.sort((a, b) => b.weight - a.weight);
+    if (sortedData.length < 10) return sortedData;
+    const others = sortedData.slice(10);
+
+    return sortedData.slice(0,10).concat([{
+        value:'Other',
+        weight:sumBy(others,i=>i.weight),
+        bmk:0
+    }]);
+
+}
+
+
+export const getClientsBreakdowns = (clients: Model.Client[]) => {
+    const agg = clients.map(c => strategies[c.id])
+        .reduce((prev, curr) => {
+            prev = prev.concat(curr.filter(f => f.currentWeight > 0).map(strategyToAggreg));
+            return prev;
+        }, [] as Model.Aggregation[]);
+
+    return [
+        aggToBreakdown(agg, 'MacroAssetClass'),
+        aggToBreakdown(agg, 'MicroAssetClass'),
+        aggToBreakdown(agg, 'Currency'),
+        aggToBreakdown(agg, 'Sector'),
+        aggToBreakdown(agg, 'Country'),
+        aggToBreakdown(agg, 'Rating'),
+        aggToBreakdown(agg, 'Maturity'),
+        //aggToBreakdown(agg, 'Region'),
+
+    ];
+}
+
 
 export const getSuggestion = (args: { id: string, position: Model.StrategyItem[], axes: Model.RadarStrategyParm, calculateFromAxes: boolean }) => {
     if (isFakeClient(args.id)) {

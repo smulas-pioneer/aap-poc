@@ -24,6 +24,8 @@ export interface CustomChartProps {
     width: number,
     height: number,
     responsiveHeight?: number | string
+
+    color?:string
 }
 
 export interface CustomPieProps extends CustomChartProps {
@@ -185,7 +187,7 @@ export class CustomComposedChart extends React.Component<CustomChartProps, Custo
 
     render() {
         const { data, width, height, responsiveHeight, dataKey, nameKey } = this.props;
-        const color = getRndItem(Object.keys(Colors).map(k => Colors[k]));
+        const color =this.props.color || getRndItem(Object.keys(Colors).map(k => Colors[k]));
         return (
             <CustomResponsiveContainer height={responsiveHeight || height}>
                 <ComposedChart layout="vertical" height={height} width={width} data={data} margin={{ top: 5, right: 5, bottom: 5, left: 5 }} >
