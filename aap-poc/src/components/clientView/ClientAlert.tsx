@@ -34,7 +34,7 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
         ? lang.ONHOLD + ' (' + alertTitle + ')'
         : alertTitle
 
-    const alertColor = props.client.decision=='ONHOLD' ? 'blue': radar.numOfAlerts ? 'red' : 'green';
+    const alertColor = props.client.decision=='ONHOLD' ? 'blue': radar.numOfAlerts ==0 ? 'green' : radar.riskAdequacyAlert =='red' ? 'red' : 'orange';
     const title = (
         <Segment basic as="span" >
             <Icon name='alarm' circular inverted color={alertColor} />
