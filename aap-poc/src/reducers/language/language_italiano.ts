@@ -68,6 +68,7 @@ export const Italiano: LanguageState = {
         UPFRONT_FEES: "Comm. di ingresso",
         ONGOING_FEES: "Comm. di gestione",
         BUDGET: 'Budget',
+        ALLOCATION: 'Allocazione',
         TURNOVER: 'Rotazione',
         TIME_HORIZON: "Orizzonte Temporale",
         REGION: "Regione",

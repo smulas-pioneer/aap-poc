@@ -81,6 +81,7 @@ export const English: LanguageState = {
         UPFRONT_FEES: "Upfront Fees",
         ONGOING_FEES: "Ongoing Fees",
         BUDGET: 'Budget',
+        ALLOCATION: 'Allocation',
         TURNOVER: 'Turnover',
         TIME_HORIZON: "Horizon",
         REGION: "Region",

@@ -85,6 +85,7 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
             const sumOngoingFees = sumBy(grouped[key], c => c.ongoingFees);
             const sumBudget = sumBy(grouped[key], c => c.budget);
             const sumTurnover = sumBy(grouped[key], c => c.turnover) / grouped[key].length;
+            const sumAllocation = sumBy(grouped[key], c => c.allocationKPI) / grouped[key].length;            
             let first = grouped[key][0];
             recs.push({
                 region: first.address.region,
@@ -101,7 +102,8 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
                     ongoingFees: sumOngoingFees,
                     budget: sumBudget,
                     turnover: sumTurnover,
-                    budgetAccomplished: Math.round(100 * (sumUpfrontFees + sumOngoingFees) /  sumBudget)
+                    allocation: sumAllocation,
+                    budgetAccomplished: Math.round(100 * (sumUpfrontFees + sumOngoingFees) / sumBudget)
                 }
             });
         }
