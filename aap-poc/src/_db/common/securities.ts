@@ -6869,11 +6869,11 @@ const dictMA = {
   'Alternative': 'Fixed Income',
   'Balanced': 'Balanced',
   'Cash & Cash Equivalents': "Money Market",
-  'Units': 'Fund of Funds',
+  'Units': 'Commodities',
   "Cash": "Money Market",
   "Money Market": "Money Market",
   "Commodities": "Commodities",
-  "Fund of Funds": "Fund of Funds"
+  "Fund of Funds": "Balanced"
 }
 
 const dictMI = {
