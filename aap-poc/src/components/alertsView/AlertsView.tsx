@@ -138,6 +138,7 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
                                 {this.renderHeader('clientStatusAge', lang.STATUS_DATE, 1)}
                                 {this.renderHeader('modelName', lang.RISKPROFILE, 2)}
                                 {this.renderHeader('radar.regulatoryIndicator', lang.REGULATORY_INDICATOR, 2)}
+                                {this.renderHeader('radar.guidelineIndicator', lang.GUIDELINE_INDICATOR, 2)}
                                 {this.renderHeader('radar.aboveGuidelines', lang.ABOVE_GUIDELINES, 2)}
                                 {this.renderHeader('radar.belowGuidelines', lang.BELOW_GUIDELINES, 2)}
                             </Table.Row>
@@ -157,9 +158,10 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
                                         <Table.Cell>{client.clientStatus}</Table.Cell>
                                         <Table.Cell>{client.clientStatusAge}</Table.Cell>
                                         <Table.Cell>{client.clientRiskProfile}</Table.Cell>
-                                        <Table.Cell>{client.regulatoryIndicator == 0 ? '' : client.regulatoryIndicator}</Table.Cell>
-                                        <Table.Cell>{client.aboveGuidelines == 0 ? '' : client.aboveGuidelines}</Table.Cell>
-                                        <Table.Cell>{client.belowGuidelines == 0 ? '' : client.belowGuidelines}</Table.Cell>
+                                        <Table.Cell>{client.regulatoryIndicator == 0 ? '' :fmt( client.regulatoryIndicator,1)}</Table.Cell>
+                                        <Table.Cell>{client.guidelineIndicator == 0 ? '' : fmt(client.guidelineIndicator,1)}</Table.Cell>
+                                        <Table.Cell>{client.aboveGuidelines == 0 ? '' : fmt(client.aboveGuidelines,1)}</Table.Cell>
+                                        <Table.Cell>{client.belowGuidelines == 0 ? '' : fmt(client.belowGuidelines,1)}</Table.Cell>
                                         <Table.Cell>
                                             <Popup
                                                 key={clIndex}

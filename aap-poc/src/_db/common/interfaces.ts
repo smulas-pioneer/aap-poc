@@ -39,6 +39,7 @@ export interface Client {
     turnover: number;
 
     regulatoryIndicator: number;
+    guidelineIndicator: number;
     aboveGuidelines: number;
     belowGuidelines: number;
 

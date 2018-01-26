@@ -40,8 +40,8 @@
     "riskAnalysisAlert": "green",
     "numOfAlerts": 2,
     "color": "orange",
-    "belowGuidelines": -27,
-    "aboveGuidelines": 8,
+    "belowGuidelines": -13.5,
+    "aboveGuidelines": 3.65,
     "regulatoryIndicator": 0
   },
   "1": {
@@ -85,9 +85,9 @@
     "riskAnalysisAlert": "orange",
     "numOfAlerts": 3,
     "color": "red",
-    "belowGuidelines": -8,
-    "aboveGuidelines": 6,
-    "regulatoryIndicator": 4
+    "belowGuidelines": -4.2,
+    "aboveGuidelines": 3,
+    "regulatoryIndicator": 1.9
   },
   "2": {
     "guideLines": {
@@ -130,8 +130,8 @@
     "riskAnalysisAlert": "green",
     "numOfAlerts": 2,
     "color": "orange",
-    "belowGuidelines": -3,
-    "aboveGuidelines": 4,
+    "belowGuidelines": -1.5,
+    "aboveGuidelines": 2,
     "regulatoryIndicator": 0
   },
   "0!": {
@@ -175,8 +175,8 @@
     "riskAnalysisAlert": "green",
     "numOfAlerts": 0,
     "color": "green",
-    "belowGuidelines": -27,
-    "aboveGuidelines": 8,
+    "belowGuidelines": -13.5,
+    "aboveGuidelines": 3.65,
     "regulatoryIndicator": 0
   },
   "1!": {
@@ -220,9 +220,9 @@
     "riskAnalysisAlert": "green",
     "numOfAlerts": 0,
     "color": "green",
-    "belowGuidelines": -8,
-    "aboveGuidelines": 6,
-    "regulatoryIndicator": 4
+    "belowGuidelines": -4.2,
+    "aboveGuidelines": 3,
+    "regulatoryIndicator": 1.9
   },
   "2!": {
     "guideLines": {
@@ -265,8 +265,8 @@
     "riskAnalysisAlert": "green",
     "numOfAlerts": 0,
     "color": "green",
-    "belowGuidelines": -3,
-    "aboveGuidelines": 4,
+    "belowGuidelines": -1.5,
+    "aboveGuidelines": 2,
     "regulatoryIndicator": 0
   }
 }

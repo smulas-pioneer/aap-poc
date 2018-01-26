@@ -123,7 +123,7 @@ export const English: LanguageState = {
     'PENDING EXECUTION':'Pending Execution',
     RISKPROFILE: 'Risk Profile',
     REGULATORY_INDICATOR: 'Regulatory Indicator',
-
+    GUIDELINE_INDICATOR: 'Guideline Indicator',
     ABOVE_GUIDELINES: 'Above Guidelines',
     BELOW_GUIDELINES: 'Below Guidelines',
     STATUS_DATE: 'Status Date',

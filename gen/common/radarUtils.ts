@@ -82,10 +82,9 @@ export const createRadarSync = (guideLines: RadarItem,
     const numOfAlerts = reds + oranges;
     const color = numOfAlerts == 0 ? 'green' : reds == 0 ? 'orange' : 'red';
 
-    const f= (n:number) => Math.floor(n)/10;
+    const f= (n:number) => n/20
 
     const regulatoryIndicator =math.max( f(actual.riskAdequacy - guideLines.riskAdequacy),0);
-    
     const distances = [
         actual.concentration -guideLines.concentration,
         actual.consistency -guideLines.consistency,
@@ -93,17 +92,13 @@ export const createRadarSync = (guideLines: RadarItem,
         actual.overlap -guideLines.overlap,
         actual.riskAnalysis -guideLines.riskAnalysis,
     ]
-
-
     const aboveGuidelines = f(distances.filter(d=>d> 0).reduce((a,b)=>a+b,0));
     const belowGuidelines = f(distances.filter(d=>d< 0).reduce((a,b)=>a+b,0));
-
-
-
     return { ...data, numOfAlerts, color, 
-                belowGuidelines: math.ceil(belowGuidelines), 
-                aboveGuidelines: math.ceil(aboveGuidelines),
-                 regulatoryIndicator:math.ceil(regulatoryIndicator) };
+
+                belowGuidelines, 
+                aboveGuidelines,
+                 regulatoryIndicator };
 
 }
 

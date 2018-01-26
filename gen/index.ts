@@ -110,6 +110,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
         budget: 0,
         turnover: rnd(0, 100),
         regulatoryIndicator: 0,
+        guidelineIndicator:0,
         aboveGuidelines: 0,
         belowGuidelines: 0,
         allocationKPI:rnd(0,100),
@@ -471,8 +472,8 @@ const go = async () => {
             c.clientStatus = getClientState(c.decision, c.radar);
             c.aboveGuidelines = c.radar.aboveGuidelines;
             c.regulatoryIndicator = c.radar.regulatoryIndicator;
-            c.belowGuidelines = (c.regulatoryIndicator > 0 || c.aboveGuidelines > 0)  ? 0: c.radar.belowGuidelines;
-
+            c.belowGuidelines =c.radar.belowGuidelines;
+            c.guidelineIndicator =  c.aboveGuidelines + c.belowGuidelines;
 
             const dtAlert = rnd(moment(c.lastInterviewDate).unix(), moment(REFERENCE_DATE_TODAY).unix());
             c.clientStatusAge = moment.unix(dtAlert).format('YYYY-MM-DD');

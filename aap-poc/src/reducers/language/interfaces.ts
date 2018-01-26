@@ -134,6 +134,7 @@ export interface LangDictionary {
 
     RISKPROFILE: string,
     REGULATORY_INDICATOR: string,
+    GUIDELINE_INDICATOR:string,
 
     ABOVE_GUIDELINES: string,
     BELOW_GUIDELINES: string,
