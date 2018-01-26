@@ -466,6 +466,15 @@ const go = async () => {
             c.ongoingFees = c.aua * rnd(1, 20) / 1000;
             c.upfrontFees = c.aua * rnd(0, 10) / 1000;
             c.budget = c.aua * rnd(0, 30) / 1000;
+
+            c.MTD_Ongoing_FEES = rnd(-50, 50) / 10;
+            c.YTD_Ongoing_FEES = rnd(-50, 50) / 10;
+            c.Y1_Ongoing_FEES = rnd(-50, 50) / 10;
+
+            c.MTD_Upfront_FEES = rnd(0, c.budget / 2 / 12);
+            c.YTD_Upfront_FEES = rnd(0, c.budget / 2);
+            c.Y1_Upfront_FEES = rnd(-c.MTD_Upfront_FEES, c.MTD_Ongoing_FEES);
+
             c.size = c.aua > 20000000 ? '>20M' : c.aua > 10000000 ? '10-20M' : c.aua > 5000000 ? '5-10M' : c.aua > 1000000 ? '1-5M' : '<1M';
             c.segment = c.aua > 15000000 ? 'Private' : c.aua > 5000000 ? 'Wealth Management' : c.aua > 2000000 ? 'Mass Affluent' : 'Retail';
             c.breaks = Object.keys(c.radar).filter(k => k.endsWith("Alert")).filter(k => c.radar[k] !== "green").map(k => k.replace('Alert', ''));
