@@ -61,7 +61,7 @@ export interface LangDictionary {
     SEARCH: string,
     FINAL_WEIGHT: string,
     FEES: string,
-    UPFRONT_FEES:string,
+    UPFRONT_FEES: string,
 
     MENU_SPOTLIGHT: string,
     TOTAL: string,
@@ -83,7 +83,7 @@ export interface LangDictionary {
     ONGOING_FEES: string,
     BUDGET: string,
     ALLOCATION: string,
-    TURNOVER:string,
+    TURNOVER: string,
 
     TIME_HORIZON: string,
     REGION: string,
@@ -125,6 +125,13 @@ export interface LangDictionary {
         concentrationAlert: { name: string, sentence: string },
         overlapAlert: { name: string, sentence: string }
     },
+    BUDGET_YTD_UPFRONT_FEES: string,
+    BUDGET_YTD_ONGOING_FEES: string,
+    BUDGET_MTD_UPFRONT_FEES: string,
+    BUDGET_MTD_ONGOING_FEES: string,
+    BUDGET_1Y_UPFRONT_FEES: string,
+    BUDGET_1Y_ONGOING_FEES: string,
+
     'NO ALERT': string,
     'REGULATOR ALERT': string,
     'GUIDELINE ALERT': string,
@@ -134,7 +141,7 @@ export interface LangDictionary {
 
     RISKPROFILE: string,
     REGULATORY_INDICATOR: string,
-    GUIDELINE_INDICATOR:string,
+    GUIDELINE_INDICATOR: string,
 
     ABOVE_GUIDELINES: string,
     BELOW_GUIDELINES: string,

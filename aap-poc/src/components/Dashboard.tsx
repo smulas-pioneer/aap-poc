@@ -18,6 +18,7 @@ import { ClientFilter } from './shared/ClientFilter';
 import { AdvancedGrid, OverflowColumn, OverflowItem } from './shared/GridOverflow';
 import { WidgetTitle } from './shared/WidgetTitle';
 import { formatAua, formatNumber } from '../_db/utils';
+import { ClientListBudget } from './clientsView/ClientListBudget';
 
 const sprintf = require("sprintf-js").sprintf;
 
@@ -99,7 +100,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
 
     // render filter
     renderFilterGraphics(data: Client[]) {
-        const { filter = { Alerts: {}, Aua: {} } } = this.props;
+        const { lang, filter = { Alerts: {}, Aua: {} } } = this.props;
         return (
             <Grid columns={2}>
                 <Grid.Column>
@@ -107,6 +108,9 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                 </Grid.Column>
                 <Grid.Column>
                     {this.renderFilterGraphItem(2, filterMapItems.Alerts, filter.Alerts)}
+                </Grid.Column>
+                <Grid.Column width={16} style={{paddingTop: '0', paddingButtom:'0'}}>
+                    <ClientListBudget clients={data} lang={lang} />
                 </Grid.Column>
             </Grid>
         )
