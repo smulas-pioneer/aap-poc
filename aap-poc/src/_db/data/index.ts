@@ -1,4 +1,4 @@
-import { securities as securityList } from '../common/securities';
+import { securities as securityList, wrapSecurities } from '../common/securities';
 import { Security, StrategyItem, Client, AlertHistory, InterviewResult } from '../common/interfaces';
 import { Radar } from '../interfaces';
 import { updateStrategies } from '../fakedata1';
@@ -25,9 +25,9 @@ fetch('/perfSummary.json').then(r => r.json()).then(p => perfSummary = p);
 let securities2: Security[];
 fetch('/securities2.json').then(r => r.json()).then(p => {
     securities2 =
-        securityList.map(p => ({ ...p, blacklisted: p.Rating == "BBB" && p.Sector == "Utilities" }))
+        (securityList).map((p:any) => ({ ...p, blacklisted: p.Rating == "BBB" && p.Sector == "Utilities" }))
             .concat(p)
-            .map(r => ({
+            .map((r:any)=> ({
                 ...r, pushed:
                     r.SecurityName.toLowerCase().indexOf("amundi") > -1 ||
                     r.SecurityName.toLowerCase().indexOf("pioneer") > -1

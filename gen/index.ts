@@ -1,5 +1,5 @@
 import { Portfolio, Holding, Client, Radar, InterviewResult, StrategyItem, AlertHistory, TimeHorizon, TimeHorizonMonths, ClientState } from './common/interfaces';
-import { securities, cash } from './common/securities';
+import { securities, cash, wrapSecurities, wrapSecurity, SHOWMISSING } from './common/securities';
 import { createRadarFromStrategy, isFakeClient, getRandomRadar } from './common/radarUtils';
 import { REFERENCE_DATE_TODAY } from './common/consts';
 //import * as ce from './_db/coreEngine';
@@ -177,7 +177,7 @@ const strategyCreator = (): StrategyItem[] => {
         tot += amount;
         totModel += modelWeight;
         return {
-            security: sec,
+            security: wrapSecurity(sec),
             radar: getRandomRadar(),
             currentWeight: 0,
             currentQuantity: quantity,
@@ -505,7 +505,7 @@ const go = async () => {
         dump('output/radars.json', radars);
 
         console.log(`created ${alertHistory.length} Alert History`);
-        dump('output/securities2.json', secuirities);
+        dump('output/securities2.json', wrapSecurities(secuirities));
 
         console.log(`created ${alertHistory.length} Alert History`);
         dump('output/alertHistory.json', alertHistory);
@@ -526,6 +526,8 @@ const go = async () => {
         const perf = fixPerformances(allPerf)
         dump('output/performances.json', perf);
         dump('output/perfSummary.json', perfSummaryAll(perf));
+
+        SHOWMISSING();
 
     } catch (error) {
         console.error(error);

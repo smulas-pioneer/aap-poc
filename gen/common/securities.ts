@@ -1,6 +1,7 @@
 import { Security } from "./interfaces";
+import { min } from "moment";
 
-export const cash: Security =   {
+export const cash: Security = {
   "IsinCode": "CASH",
   "SecurityName": "CASH",
   "AssetId": "-1",
@@ -16,7 +17,7 @@ export const cash: Security =   {
   "Maturity": null
 };
 
-export const securities: Security[] = [
+const _securities: Security[] = [
   cash,
   {
     "IsinCode": "353578",
@@ -3283,7 +3284,7 @@ export const securities: Security[] = [
     "MicroAssetClass": "Global Corporate High Yield Bond",
     "Sector": "Consumer Discretionary",
     "Currency": "Dollar",
-    "Rating": "CC and Below",
+    "Rating": "CC",
     "Country": "United States",
     "Region": "North America",
     "Maturity": "1 - 3 yrs"
@@ -6844,3 +6845,99 @@ export const securities: Security[] = [
     "Maturity": null
   }
 ];
+
+const dictCur = {
+  'Euro': 'EUR',
+  'Asia Ex Yen': 'HKD',
+  'America ex Dollar': 'CAD',
+  'Europe ex Euro': 'GBP',
+  'Dollar': 'USD',
+  'Other': 'Other',
+  'Yen': 'YEN',
+  "HKD": "HKD",
+  "EUR": "EUR",
+  "USD": "USD",
+  "YEN": "YEN",
+  "GBP": "GBP",
+  "CAD": "CAD"
+}
+
+const dictMA = {
+  'Equity': 'Equity',
+  'Fixed Income': 'Fixed Income',
+  'Absolute Return': 'Fixed Income',
+  'Alternative': 'Fixed Income',
+  'Balanced': 'Balanced',
+  'Cash & Cash Equivalents': "Money Market",
+  'Units': 'Fund of Funds',
+  "Cash": "Money Market",
+  "Money Market": "Money Market",
+  "Commodities": "Commodities",
+  "Fund of Funds": "Fund of Funds"
+}
+
+const dictMI = {
+  'Equity Pacific': 'Asia Pacific ex. Japan',
+  'Emerging Market Bond': 'Diversified Bond',
+  'International Bond': 'Corporate Bond',
+  "Equity": "Large Cap Equity",
+  'Equity Emerging Markets': 'EM Equity',
+  'Equity Europe': 'Europe Equity',
+  'Equity North America': 'North America Equity',
+  'Euro Corporate Bond': 'Corporate Bond',
+  'Euro Government Bond': 'Governement Bond',
+  'Global Corporate High Yield Bond': 'High Yield Bond',
+  'Other': 'Other',
+  'Money Market Euro': 'Money Market',
+  "Cash": "Money Market",
+  "Large Cap": "Large Cap Equity",
+  "Corporate Bond": "Corporate Bond",
+  "Government Bond": "Government Bond",
+  "Inflation Linked": "Inflation Linked Bond",
+  "High Yield": "High Yield Bond",
+  "Money Market": "Money Market",
+  "Gold": "Other",
+  "Small Cap": "Small Cap Equity",
+  "Event Driven": "Other",
+  "Global Macro": "Other",
+  "Systematic Future": "Other",
+  "Corporate": "Corporate Bond",
+  "Europe Equity": "Europe Equity",
+  "North America Equity": "North America Equity",
+  "High Yield Bond": "High Yield Bond",
+  "EM Equity": "EM Equity",
+  "Asia Pacific ex. Japan": "Asia Pacific ex. Japan",
+  "Diversified Bond": "Diversified Bond",
+  "Governement Bond": "Governement Bond",
+  "Large Cap Equity": "Large Cap Equity",
+  "Inflation Linked Bond": "Inflation Linked Bond",
+  "Small Cap Equity": "Small Cap Equity"
+}
+let missingCurrency ={};
+let missingMA ={};
+let missingMI ={};
+
+
+export const wrapSecurity = (s:any ) =>{
+  /*
+  if (!dictCur[s.Currency]) missingCurrency[s.Currency] = s.Currency;
+  if (!dictMA[s.MacroAssetClass])  missingMA[s.MacroAssetClass] = s.MacroAssetClass;
+  if (!dictMI[s.MicroAssetClass])  missingMI[s.MicroAssetClass] = s.MicroAssetClass;
+*/
+  return { ...s,
+    Currency: dictCur[s.Currency] || s.Currency ,
+    MicroAssetClass: dictMI[s.MicroAssetClass] || s.MicroAssetClass,
+    MacroAssetClass: dictMA[s.MacroAssetClass] || s.MacroAssetClass
+  }
+}
+
+
+export const wrapSecurities = (secs:any ) =>secs.map(wrapSecurity);
+
+export const securities = wrapSecurities (_securities);
+
+export const SHOWMISSING =() => {
+  console.log(JSON.stringify(missingCurrency,null,2));
+  console.log(JSON.stringify(missingMA,null,2));
+  console.log(JSON.stringify(missingMI,null,2)); 
+}

@@ -23,10 +23,10 @@ const stats = (aua: number, region: string) => (
     </Statistic.Group>
 )
 
-const numberOfAlerts = ( client:Client) => {
+const numberOfAlerts = (client: Client) => {
     const color = ClientStateColors[client.clientStatus];
     return (
-        <Label corner color={color as any}>
+        <Label corner color={color == "#2185d0" ? "blue" : color as any}>
             <div style={{ marginLeft: 20, marginTop: 10 }}>{client.radar.numOfAlerts || ''}
             </div>
         </Label>
