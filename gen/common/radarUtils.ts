@@ -1,5 +1,5 @@
 import { PositionItem, RadarItem, StrategyItem, RadarStrategyParm, Breakdown, Alert, Radar, PerformancePeriod, Client, AlertHistory2, TimeHorizon } from "./interfaces";
-import { sumBy, groupBy, endsWith } from "lodash";
+import { sumBy, groupBy, endsWith, sum } from "lodash";
 import * as moment from 'moment';
 import * as math from 'mathjs';
 import { networkInterfaces } from "os";
@@ -82,25 +82,23 @@ export const createRadarSync = (guideLines: RadarItem,
     const numOfAlerts = reds + oranges;
     const color = numOfAlerts == 0 ? 'green' : reds == 0 ? 'orange' : 'red';
 
-    const regulatoryIndicator = reds == 0 ? 0 : (actual.riskAdequacy / guideLines.riskAdequacy - 1) * 100;
+    const f= (n:number) => Math.floor(n)/10;
 
-    const aboveGuidelines = oranges == 0 ? 0 :
-        (
-            (actual.concentration < guideLines.concentration ? 0 : actual.concentration / guideLines.concentration - 1) +
-            (actual.consistency < guideLines.consistency ? 0 : actual.consistency / guideLines.consistency - 1) +
-            (actual.efficency < guideLines.efficency ? 0 : actual.efficency / guideLines.efficency - 1) +
-            (actual.overlap < guideLines.overlap ? 0 : actual.overlap / guideLines.overlap - 1) +
-            (actual.riskAnalysis < guideLines.riskAnalysis ? 0 : actual.riskAnalysis / guideLines.riskAnalysis - 1)
-        ) * 100 / 5;
+    const regulatoryIndicator =math.max( f(actual.riskAdequacy - guideLines.riskAdequacy),0);
+    
+    const distances = [
+        actual.concentration -guideLines.concentration,
+        actual.consistency -guideLines.consistency,
+        actual.efficency -guideLines.efficency,
+        actual.overlap -guideLines.overlap,
+        actual.riskAnalysis -guideLines.riskAnalysis,
+    ]
 
-    const belowGuidelines = oranges == 0 ? 0 :
-        (
-            (actual.concentration > guideLines.concentration ? 0 : guideLines.concentration / actual.concentration - 1) +
-            (actual.consistency > guideLines.consistency ? 0 : guideLines.consistency / actual.consistency - 1) +
-            (actual.efficency > guideLines.efficency ? 0 : guideLines.efficency / actual.efficency - 1) +
-            (actual.overlap > guideLines.overlap ? 0 : guideLines.overlap / actual.overlap - 1) +
-            (actual.riskAnalysis > guideLines.riskAnalysis ? 0 : guideLines.riskAnalysis / actual.riskAnalysis - 1)
-        ) * 100 / 5;
+
+    const aboveGuidelines = f(distances.filter(d=>d> 0).reduce((a,b)=>a+b,0));
+    const belowGuidelines = f(distances.filter(d=>d< 0).reduce((a,b)=>a+b,0));
+
+
 
     return { ...data, numOfAlerts, color, 
                 belowGuidelines: math.ceil(belowGuidelines), 
