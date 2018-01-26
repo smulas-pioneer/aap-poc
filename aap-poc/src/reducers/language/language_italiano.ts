@@ -130,5 +130,13 @@ export const Italiano: LanguageState = {
         ABOVE_GUIDELINES: 'Sopra le linee guida',
         BELOW_GUIDELINES: 'Sotto le linee guidas',
         STATUS_DATE: 'Status Date',
+
+        BUDGET_YTD_UPFRONT_FEES: 'YTD UPFRONT',
+        BUDGET_YTD_ONGOING_FEES:  'YTD ONGOING',
+        BUDGET_MTD_UPFRONT_FEES:  'MTD UPFRONT',
+        BUDGET_MTD_ONGOING_FEES:  'MTD ONGOING',
+        BUDGET_1Y_UPFRONT_FEES:  '1Y UPFRONT',
+        BUDGET_1Y_ONGOING_FEES:  '1Y ONGOING',
+
     }
 };
