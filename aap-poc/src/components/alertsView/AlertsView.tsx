@@ -136,11 +136,11 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
                                 {this.renderHeader('lastInterviewDate', lang.LAST_INTERVIEW_DATE, 1)}
                                 {this.renderHeader('clientStatus', lang.STATUS, 2)}
                                 {this.renderHeader('clientStatusAge', lang.STATUS_DATE, 1)}
-                                {this.renderHeader('modelName', lang.RISKPROFILE, 2)}
-                                {this.renderHeader('radar.regulatoryIndicator', lang.REGULATORY_INDICATOR, 2)}
-                                {this.renderHeader('radar.guidelineIndicator', lang.GUIDELINE_INDICATOR, 2)}
-                                {this.renderHeader('radar.aboveGuidelines', lang.ABOVE_GUIDELINES, 2)}
-                                {this.renderHeader('radar.belowGuidelines', lang.BELOW_GUIDELINES, 2)}
+                                {this.renderHeader('modelName', lang.RISKPROFILE, 1)}
+                                {this.renderHeader('radar.regulatoryIndicator', lang.REGULATORY_INDICATOR, 1)}
+                                {this.renderHeader('radar.guidelineIndicator', lang.GUIDELINE_INDICATOR, 1)}
+                                {this.renderHeader('radar.aboveGuidelines', lang.ABOVE_GUIDELINES, 1)}
+                                {this.renderHeader('radar.belowGuidelines', lang.BELOW_GUIDELINES, 1)}
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
@@ -162,17 +162,7 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
                                         <Table.Cell>{client.guidelineIndicator == 0 ? '' : fmt(client.guidelineIndicator,1)}</Table.Cell>
                                         <Table.Cell>{client.aboveGuidelines == 0 ? '' : fmt(client.aboveGuidelines,1)}</Table.Cell>
                                         <Table.Cell>{client.belowGuidelines == 0 ? '' : fmt(client.belowGuidelines,1)}</Table.Cell>
-                                        <Table.Cell>
-                                            <Popup
-                                                key={clIndex}
-                                                trigger={<span> {client.deltaAnalysis}</span>}
-                                                wide='very'
-                                                content={client.deltaAnalysis}
-                                                header={lang.DELTA_ANALYSIS}
-                                            />
-
-                                        </Table.Cell>
-
+               
                                     </Table.Row>
                                 )
                             }
