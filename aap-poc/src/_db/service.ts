@@ -10,7 +10,7 @@ import { getRandomRadar, isFakeClient, currentPosition } from './common/radarUti
 import { promisify } from 'util';
 import { REFERENCE_DATE_TODAY, MainColors } from './common/consts';
 import { Holdings } from '../components/clientView/Holdings';
-import { Aggregation } from './interfaces';
+import { Aggregation, ClientState } from './interfaces';
 
 export const patchHoldings = (holdings: Model.Holding[], transactions: Model.Transaction[]): Promise<Model.Holding[]> => {
     return Promise.resolve([]);
@@ -180,10 +180,10 @@ const top10 = (data: { value: string, weight: number, bmk: number }[]) => {
     if (sortedData.length < 10) return sortedData;
     const others = sortedData.slice(10);
 
-    return sortedData.slice(0,10).concat([{
-        value:'Other',
-        weight:sumBy(others,i=>i.weight),
-        bmk:0
+    return sortedData.slice(0, 10).concat([{
+        value: 'Other',
+        weight: sumBy(others, i => i.weight),
+        bmk: 0
     }]);
 
 }
@@ -200,10 +200,10 @@ export const getClientsBreakdowns = (clients: Model.Client[]) => {
         aggToBreakdown(agg, 'MacroAssetClass'),
         aggToBreakdown(agg, 'MicroAssetClass'),
         aggToBreakdown(agg, 'Currency'),
-       // aggToBreakdown(agg, 'Sector'),
-       // aggToBreakdown(agg, 'Country'),
+        // aggToBreakdown(agg, 'Sector'),
+        // aggToBreakdown(agg, 'Country'),
         aggToBreakdown(agg, 'Rating'),
-      //  aggToBreakdown(agg, 'Maturity'),
+        //  aggToBreakdown(agg, 'Maturity'),
         //aggToBreakdown(agg, 'Region'),
 
     ];
@@ -238,8 +238,8 @@ export const spotlightSearch = (parms: SpotlightSearchParms): Promise<Model.Spot
             age = getAgentViewsFromClients(clientList.filter(c => arrayContains(parms.agents, c.agent)).filter(c => c.agent.toLowerCase().indexOf(filter) !== -1));
         }
         if (hasFlag(cc, SpotlightContext.Security)) {
-            sec = securityList.filter((s, ix) => ix != 0 
-                && (!parms.macroAssetClass || s.MacroAssetClass == parms.macroAssetClass)                
+            sec = securityList.filter((s, ix) => ix != 0
+                && (!parms.macroAssetClass || s.MacroAssetClass == parms.macroAssetClass)
                 &&
                 (s.SecurityName.toLowerCase().indexOf(filter) !== -1 ||
                     s.IsinCode.toLowerCase().indexOf(filter) !== -1)
@@ -299,11 +299,11 @@ export const addSecurity = ({ securityId, clientId }: { securityId: string, clie
     return getClient({ id: clientId })
 }
 
-export const addHistory = ({ clientId, notes }: { clientId: string, notes: string }) => {
+export const addHistory = ({ clientId, notes, status = 'PENDING EXECUTION' }: { clientId: string, notes: string, status: ClientState }) => {
     const h: InterviewResult = {
-        status: 'ONGOING',
         date: moment(REFERENCE_DATE_TODAY).format(),
-        notes
+        notes,
+        status
     }
 
     history[clientId] = [...history[clientId], h];

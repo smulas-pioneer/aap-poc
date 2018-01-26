@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StrategyItem, Security, Radar, RadarStrategyParm } from '../../_db/interfaces';
+import { StrategyItem, Security, Radar, RadarStrategyParm, ClientState } from '../../_db/interfaces';
 import { Table, Button, Segment, Menu, Icon, Dropdown } from 'semantic-ui-react';
 import { LangDictionary } from '../../reducers/language/interfaces';
 import { HoldingWeigthControl } from './HoldingWeightControl';
@@ -22,7 +22,7 @@ interface Props {
     clientId: string,
     onChange: (items: StrategyItem[]) => void;
     onAddSecurity: (props: { securityId: string, clientId: string }) => void;
-    onAddHistory?: (props: { clientId: string, notes: string }) => void;
+    onAddHistory?: (props: { clientId: string, notes: string, status: ClientState }) => void;
     onShowModel: () => void;
     onSomethingChanged: (value: boolean) => void;
     radar?: Radar,
@@ -139,6 +139,12 @@ export class Holdings extends React.Component<Props, State> {
         })
     }
 
+    handleOnAddHistory = (status: ClientState) => {
+        const {onAddHistory, lang} = this.props;
+        onAddHistory!({ clientId: this.props.clientId, notes: this.props.lang.PROPOSAL_VALIDATION.title, status });
+    }
+
+
     render() {
         const { lang } = this.props;
         const { holdings } = this.state;
@@ -217,12 +223,13 @@ export class Holdings extends React.Component<Props, State> {
                                     confirmButton="Accept"
                                     cancelButton="Reject"
                                     customButton={{ text: 'Later', icon: 'forward', color: 'blue' }}
-                                    onConfirm={() => this.props.onAddHistory!({ clientId: this.props.clientId, notes: lang.PROPOSAL_VALIDATION.title })} >
+                                    onConfirm={() => this.handleOnAddHistory('PENDING EXECUTION')} 
+                                    onCancel={() => this.handleOnAddHistory('ON HOLD')} 
+                                    onCustom={() => this.handleOnAddHistory('PENDING PROPOSAL')} >
 
                                     <div style={{ width: '100%' }}>
                                         <OrderList data={holdings} lang={lang} />
                                         <RadarGraph data={this.props.radar!} lang={lang} axes={this.props.axes} onClickShape={() => { }} width={700} height={413} alertsAbout={'proposed'} />
-
                                         <br />
                                         <Checkbox defaultChecked label='Open pdf after generation' />
                                     </div>
