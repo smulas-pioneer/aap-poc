@@ -203,19 +203,7 @@ const top10Rating = (data: { value: string, weight: number, bmk: number }[]) => 
     const sortedData = data.sort((a, b) => {
         return RKEY[a.value] - RKEY[b.value];
     });
-    console.log('here', sortedData);
     return sortedData;
-
-    /*
-    if (sortedData.length < 10) return sortedData;
-    const others = sortedData.slice(10);
-
-    return sortedData.slice(0, 10).concat([{
-        value: 'Other',
-        weight: sumBy(others, i => i.weight),
-        bmk: 0
-    }]);
-    */
 }
 
 

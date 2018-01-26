@@ -6919,14 +6919,15 @@ let missingMI ={};
 
 
 export const wrapSecurity = (s:any ) =>{
+  /*
   if (!dictCur[s.Currency]) missingCurrency[s.Currency] = s.Currency;
   if (!dictMA[s.MacroAssetClass])  missingMA[s.MacroAssetClass] = s.MacroAssetClass;
   if (!dictMI[s.MicroAssetClass])  missingMI[s.MicroAssetClass] = s.MicroAssetClass;
-
+*/
   return { ...s,
-    Currency: dictCur[s.Currency] || s.Currency + "__",
-    MicroAssetClass: dictMI[s.MicroAssetClass] || s.MicroAssetClass+ "__",
-    MacroAssetClass: dictMA[s.MacroAssetClass] || s.MacroAssetClass+ "__",
+    Currency: dictCur[s.Currency] || s.Currency ,
+    MicroAssetClass: dictMI[s.MicroAssetClass] || s.MicroAssetClass,
+    MacroAssetClass: dictMA[s.MacroAssetClass] || s.MacroAssetClass
   }
 }
 
@@ -6938,6 +6939,5 @@ export const securities = wrapSecurities (_securities);
 export const SHOWMISSING =() => {
   console.log(JSON.stringify(missingCurrency,null,2));
   console.log(JSON.stringify(missingMA,null,2));
-  console.log(JSON.stringify(missingMI,null,2));
-  
+  console.log(JSON.stringify(missingMI,null,2)); 
 }
