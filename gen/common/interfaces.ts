@@ -39,6 +39,7 @@ export interface Client {
     turnover: number;
 
     regulatoryIndicator: number;
+    guidelineIndicator: number;
     aboveGuidelines: number;
     belowGuidelines: number;
 
@@ -184,6 +185,7 @@ export interface Breakdown {
     attributeName: string,
     data: Array<{ value: string, weight: number, bmk: number }>
     weight: number;
+    color?: string
 }
 
 export interface PerformanceStat {
@@ -222,6 +224,7 @@ export interface SearchResult {
     parms: SearchParms,
     result: Client[],
     radar?: Radar,
+    breakdowns: Breakdown[]
 }
 
 export type AgentView = {
@@ -234,12 +237,24 @@ export interface InterviewResult {
     status: 'ACCEPTED' | 'REJECTED' | 'ONGOING' | 'ON HOLD' | ClientState 
     notes: string;
 }
+export interface Aggregation {
+    MacroAssetClass:string,
+    MicroAssetClass:string,
+    Sector:string,
+    Currency:string,
 
+    Country: string,
+    Rating: string,
+    Maturity: string,
+    Region: string,
+    
+    weight:number
+}
 export type ClientState = 'NO ALERT' | 'REGULATOR ALERT' | 'GUIDELINE ALERT' | 'ON HOLD' | 'PENDING PROPOSAL' | 'PENDING EXECUTION'
 
 export const ClientStateColors = {
     'NO ALERT': 'green',
-    'REGULATOR ALERT': '#db2828',
+    'REGULATOR ALERT': 'red',
     'GUIDELINE ALERT': 'orange',
     'ON HOLD': 'blue',
     'PENDING PROPOSAL': 'blue',
@@ -265,6 +280,7 @@ export interface SpotlightSearchParms {
     agents?: string[];
     onlyPushedSecurity?: boolean;
     limit?: number;
+    macroAssetClass?:string;
 }
 
 export interface StrategyItem {
