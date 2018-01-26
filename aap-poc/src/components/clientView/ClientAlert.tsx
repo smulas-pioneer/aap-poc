@@ -2,6 +2,8 @@ import { Radar, Client } from "../../_db/interfaces";
 import { LangDictionary } from "../../reducers/language/interfaces";
 import { List, Segment, Header, Icon, Accordion } from "semantic-ui-react";
 import * as React from 'react';
+import { REFERENCE_DATE_TODAY } from "../../_db/common/consts";
+import * as moment from 'moment';
 
 export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client: Client, onOpenHistory: () => void }) => {
     const { radar, lang } = props;
@@ -35,6 +37,7 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
         : alertTitle
 
     const alertColor = props.client.decision=='ONHOLD' ? 'blue': radar.numOfAlerts ==0 ? 'green' : radar.riskAdequacyAlert =='red' ? 'red' : 'orange';
+    const dur = moment(REFERENCE_DATE_TODAY).to(moment(props.client.clientStatusAge));
     const title = (
         <Segment basic as="span" >
             <Icon name='alarm' circular inverted color={alertColor} />
@@ -48,7 +51,7 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
 
             <Header floated="right" key="1" as='h2' style={{ display: 'initial' }} color="black">
                 <Header.Subheader style={{ marginTop: '4px' }}>
-                    {lang.LAST_STATUS}: <b>{lang[props.client.clientStatus]}</b> <small>({props.client.clientStatusAge})</small>
+                    {lang.LAST_STATUS}: <b>{lang[props.client.clientStatus]}</b> <small>({props.client.clientStatusAge}, {dur})</small>
                 </Header.Subheader>
             </Header>
 

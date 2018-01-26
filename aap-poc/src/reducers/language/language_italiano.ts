@@ -40,7 +40,7 @@ export const Italiano: LanguageState = {
         AGENTS: 'Agenti',
         DATE: 'Data',
         STATUS: 'Stato',
-        LAST_STATUS: "Stato ultima intevista",
+        LAST_STATUS: "Stato Cliente",
         NOTES: 'Note',
         DATE_FORMAT: 'DD/MM/YYYY',
         ACCEPTED: 'Accettata',

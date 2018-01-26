@@ -61,6 +61,8 @@ export interface LangDictionary {
     SEARCH: string,
     FINAL_WEIGHT: string,
     FEES: string,
+    UPFRONT_FEES:string,
+
     MENU_SPOTLIGHT: string,
     TOTAL: string,
     SIGN_OUT: string,
@@ -78,7 +80,6 @@ export interface LangDictionary {
     MAP_OPTS_PROPOSALS: string,
     MAP_OPTS_ACC_PROPOSAL: string,
     MAP_OPTS_ALERTS: string,
-    UPFRONT_FEES: string,
     ONGOING_FEES: string,
     BUDGET: string,
     ALLOCATION: string,

@@ -49,7 +49,7 @@ export const English: LanguageState = {
         AGENTS: 'Agents',
         DATE: "Date",
         STATUS: "Status",
-        LAST_STATUS:"Last interview state",
+        LAST_STATUS:"Last Client State",
         NOTES: 'Notes',
         DATE_FORMAT: 'MMM, DD YYYY',
         ACCEPTED: 'Accepted',

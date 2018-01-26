@@ -200,7 +200,7 @@ export const getClientsBreakdowns = (clients: Model.Client[]) => {
         aggToBreakdown(agg, 'MacroAssetClass'),
         aggToBreakdown(agg, 'MicroAssetClass'),
         aggToBreakdown(agg, 'Currency'),
-        aggToBreakdown(agg, 'Sector'),
+       // aggToBreakdown(agg, 'Sector'),
        // aggToBreakdown(agg, 'Country'),
         aggToBreakdown(agg, 'Rating'),
       //  aggToBreakdown(agg, 'Maturity'),

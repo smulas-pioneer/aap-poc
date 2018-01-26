@@ -183,6 +183,10 @@ export class Holdings extends React.Component<Props, State> {
                         <Icon name="add" />
                         Add Security
                     </Menu.Item>
+                    <Menu.Item>
+                        <Icon name="add" />
+                        New Cash
+                    </Menu.Item>
                     <Menu.Menu position="right">
 
                         <ConfirmDialog

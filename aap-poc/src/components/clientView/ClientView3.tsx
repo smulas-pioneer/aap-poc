@@ -415,11 +415,11 @@ const Fees = (props: { strategy: StrategyItem[], lang: LangDictionary, targetRet
             </Statistic>
             <Statistic size="mini">
                 <Statistic.Value>{fmt.format(fees)} €</Statistic.Value>
-                <Statistic.Label>{lang.FEES}</Statistic.Label>
+                <Statistic.Label>{lang.UPFRONT_FEES}</Statistic.Label>
             </Statistic>
             <Statistic size="mini">
-                <Statistic.Value>{fmt.format(perc)} %</Statistic.Value>
-                <Statistic.Label>{lang.FEES}</Statistic.Label>
+                <Statistic.Value> {perc >0 ? '-':''} {fmt.format(perc)} %</Statistic.Value>
+                <Statistic.Label>{lang.ONGOING_FEES}</Statistic.Label>
             </Statistic>
             {props.targetReturn && <Statistic size="mini">
                 <Statistic.Value>{fmt.format(amount * (props.targetReturn / 100))} €</Statistic.Value>
