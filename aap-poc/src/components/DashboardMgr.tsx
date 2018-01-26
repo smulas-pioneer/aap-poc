@@ -225,7 +225,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         ]
 
         const info = data.result.reduce<
-            { length: number, assetUnder: number, clientAlert: number, mifidAlert: number, acceptedProposals: number, totalProposals: number, rejectedProposals: number, totalBudget: number, totRevenues: number }>(
+            { length: number, assetUnder: number, clientAlert: number, mifidAlert: number, acceptedProposals: number, totalProposals: number, rejectedProposals: number, totalBudget: number, totRevenues: number, totalTurnover: number }>(
             (ret, v, i) => {
                 ret.length += 1;
                 ret.totalBudget += v.budget;
@@ -235,15 +235,16 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 ret.assetUnder += v.aua;
                 ret.clientAlert += v.radar.numOfAlerts > 0 ? 1 : 0;
                 ret.mifidAlert += v.radar.riskAdequacyAlert != 'green' ? 1 : 0;
+                ret.totalTurnover += v.turnover;
                 return ret;
             },
-            { length: 0, assetUnder: 0, clientAlert: 0, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0, rejectedProposals: 0, totalBudget: 0, totRevenues: 0 });
+            { length: 0, assetUnder: 0, clientAlert: 0, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0, rejectedProposals: 0, totalBudget: 0, totRevenues: 0, totalTurnover:  0});
 
 
         return (
             <AdvancedGrid className="grid-header-fix" >
                 <Segment style={{ margin: 0 }}>
-                    <Grid columns={5} >
+                    <Grid columns={6} >
                         <Grid.Column textAlign="center" >
                             {this.renderItem(fmt(info.length), lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
                         </Grid.Column>
@@ -259,7 +260,9 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                         <Grid.Column textAlign="center">
                             {this.renderItem(fmt(info.totalBudget) + "€", lang.BUDGET, Math.round(100 * (info.totRevenues / info.totalBudget)).toString() + '% accomplished', undefined, 'green')}
                         </Grid.Column>
-
+                        <Grid.Column textAlign="center">
+                            {this.renderItem(fmt(info.totalTurnover / info.length) + "%", lang.TURNOVER, 'YTD', undefined, 'green')}
+                        </Grid.Column>
                         <Grid.Column textAlign="center">
                             {this.renderItem(fmt(info.acceptedProposals), lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${fmt(info.totalProposals)} (${Math.round(100 * (info.acceptedProposals / info.totalProposals)).toString() + '%)'}`)}
                         </Grid.Column>
