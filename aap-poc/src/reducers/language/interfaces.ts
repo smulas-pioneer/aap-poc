@@ -145,7 +145,7 @@ export interface LangDictionary {
 
     ABOVE_GUIDELINES: string,
     BELOW_GUIDELINES: string,
-    STATUS_DATE: string
+    STATUS_DATE: string,
 }
 
 export interface WithLang { lang: LangDictionary };
