@@ -280,7 +280,7 @@ export class Holdings extends React.Component<Props, State> {
                                             {t.clientFavorites && <Icon size="large" color="red" name='heart' />}
                                         </Table.Cell>
                                         <Table.Cell >{t.security.IsinCode} 
-                                        {!t.isCash && <Icon onClick={
+                                        {/*!t.isCash && <Icon onClick={
                                                 () => this.setState({ changingSecurity: t.security.IsinCode })
                                             } name="exchange" />}
                                         */}

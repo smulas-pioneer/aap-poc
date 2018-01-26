@@ -6876,6 +6876,45 @@ const dictMA = {
   "Fund of Funds": "Balanced"
 }
 
+const dictMA2 = {
+  'Equity Pacific': 'Equity',
+  'Emerging Market Bond':'Fixed Income',
+  'International Bond': 'Fixed Income',
+  "Equity":  'Equity',
+  'Equity Emerging Markets': 'Equity',
+  'Equity Europe': 'Equity',
+  'Equity North America':  'Equity',
+  'Euro Corporate Bond': 'Fixed Income',
+  'Euro Government Bond':'Fixed Income',
+  'Global Corporate High Yield Bond': 'Fixed Income',
+  'Other': 'Commodities',
+  'Money Market Euro': 'Money Market',
+  "Cash": "Money Market",
+  "Large Cap":  'Equity',
+  "Corporate Bond":'Fixed Income',
+  "Government Bond": 'Fixed Income',
+  "Inflation Linked": 'Fixed Income',
+  "High Yield": 'Fixed Income',
+  "Money Market": "Money Market",
+  "Gold":  'Commodities',
+  "Small Cap":  'Equity',
+  "Event Driven":"Balanced",
+  "Global Macro": "Balanced",
+  "Systematic Future":  'Commodities',
+  "Corporate": 'Fixed Income',
+  "Europe Equity":  'Equity',
+  "North America Equity": 'Equity',
+  "High Yield Bond": 'Fixed Income',
+  "EM Equity":  'Equity',
+  "Asia Pacific ex. Japan":  'Equity',
+  "Diversified Bond": 'Fixed Income',
+  "Governement Bond":'Fixed Income',
+  "Large Cap Equity":  'Equity',
+  "Inflation Linked Bond":'Fixed Income',
+  "Small Cap Equity":  'Equity',
+}
+
+
 const dictMI = {
   'Equity Pacific': 'Asia Pacific ex. Japan',
   'Emerging Market Bond': 'Diversified Bond',
@@ -6913,6 +6952,8 @@ const dictMI = {
   "Inflation Linked Bond": "Inflation Linked Bond",
   "Small Cap Equity": "Small Cap Equity"
 }
+
+
 let missingCurrency ={};
 let missingMA ={};
 let missingMI ={};
@@ -6926,7 +6967,7 @@ export const wrapSecurity = (s:any ) =>{
   return { ...s,
     Currency: dictCur[s.Currency] || s.Currency + "__",
     MicroAssetClass: dictMI[s.MicroAssetClass] || s.MicroAssetClass+ "__",
-    MacroAssetClass: dictMA[s.MacroAssetClass] || s.MacroAssetClass+ "__",
+    MacroAssetClass: dictMA2[s.MicroAssetClass] || s.MacroAssetClass+ "__",
   }
 }
 
@@ -6941,3 +6982,44 @@ export const SHOWMISSING =() => {
   console.log(JSON.stringify(missingMI,null,2));
   
 }
+
+/*
+
+
+'Equity Pacific      '            : 'Asia Pacific ex. Japan':'Equity',
+'Emerging Market Bond'            : 'Diversified Bond':'Fixed Income",
+'International Bond'              : 'Corporate Bond':'Fixed Income",
+"Equity"                          : "Large Cap Equity":'Equity',
+'Equity Emerging Markets'         : 'EM Equity':'Equity',
+'Equity Europe'                   : 'Europe Equity':'Equity',
+'Equity North America'            : 'North America Equity':'Equity',
+'Euro Corporate Bond'             : 'Corporate Bond':'Fixed Income",
+'Euro Government Bond'            : 'Governement Bond':'Fixed Income",
+'Global Corporate High Yield Bond': 'High Yield Bond':'Fixed Income",
+'Other'                           : 'Other':'Balanced',
+'Money Market Euro'               : 'Money Market',
+"Cash"                            : "Money Market",
+"Large Cap"                       : "Large Cap Equity":'Equity',
+"Corporate Bond"                  : "Corporate Bond":'Fixed Income",
+"Government Bond"                 : "Government Bond":'Fixed Income",
+"Inflation Linked"                : "Inflation Linked Bond":'Fixed Income",
+"High Yield"                      : "High Yield Bond":'Fixed Income",
+"Money Market"                    : "Money Market",
+"Gold"                            : "Other",
+"Small Cap"                       : "Small Cap Equity":'Equity',
+"Event Driven"                    : "Other",
+"Global Macro"                    : "Other",
+"Systematic Future"               : "Other",
+"Corporate"                       : "Corporate Bond":'Fixed Income",
+"Europe Equity"                   : "Europe Equity":'Equity',
+"North America Equity"            : "North America Equity":'Equity',
+"High Yield Bond"                 : "High Yield Bond":'Fixed Income",
+"EM Equity"                       : "EM Equity":'Equity',
+"Asia Pacific ex. Japan"          : "Asia Pacific ex. Japan":'Equity',
+"Diversified Bond"                : "Diversified Bond":'Fixed Income",
+"Governement Bond"                : "Governement Bond":'Fixed Income",
+"Large Cap Equity"                : "Large Cap Equity":'Equity',
+"Inflation Linked Bond"           : "Inflation Linked Bond":'Fixed Income",
+"Small Cap Equity"                : "Small Cap Equity":'Equity'
+
+*/
