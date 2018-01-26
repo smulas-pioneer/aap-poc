@@ -15,6 +15,9 @@ import { FilterMapTypes } from '../../actions/model';
 import { ItalyMapClientsChart } from './ItalyMapClientsChart';
 import { formatAua, formatNumber } from '../../_db/utils';
 import { WidgetTitle } from '../shared/WidgetTitle';
+import { icons, historyColors } from '../clientView/HistoryView';
+import { REFERENCE_DATE_TODAY } from '../../_db/common/consts';
+import * as moment from 'moment';
 
 const conn = appConnector<{ uid: string, hideGraphs?: boolean, manager?: boolean, showTitle?: boolean, showFilter?: boolean }>()(
     (s, p) => ({
@@ -135,7 +138,7 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
                                 {this.renderHeader('aua', lang.AUA, 2, 'right')}
                                 {this.renderHeader('lastInterviewDate', lang.LAST_INTERVIEW_DATE, 1)}
                                 {this.renderHeader('clientStatus', lang.STATUS, 2)}
-                                {this.renderHeader('clientStatusAge', lang.STATUS_DATE, 1)}
+                                {this.renderHeader('clientStatusAge', lang.STATUS_DATE,2)}
                                 {this.renderHeader('modelName', lang.RISKPROFILE, 1)}
                                 {this.renderHeader('radar.regulatoryIndicator', lang.REGULATORY_INDICATOR, 1)}
                                 {this.renderHeader('radar.guidelineIndicator', lang.GUIDELINE_INDICATOR, 1)}
@@ -155,14 +158,19 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
                                         {manager && <Table.Cell>{client.agent}</Table.Cell>}
                                         <Table.Cell textAlign="right" >{fmt(client.aua)}</Table.Cell>
                                         <Table.Cell>{client.lastInterviewDate}</Table.Cell>
-                                        <Table.Cell>{client.clientStatus}</Table.Cell>
-                                        <Table.Cell>{client.clientStatusAge}</Table.Cell>
+                                        <Table.Cell style={{ color: historyColors[client.clientStatus] }}>
+                                            <Icon name={icons[client.clientStatus]} size="small" />
+                                            {client.clientStatus}
+                                        </Table.Cell>
+                                        <Table.Cell>{client.clientStatusAge},&nbsp;
+                                            <small style={{color:'grey'}}>{moment(REFERENCE_DATE_TODAY).to(moment(client.clientStatusAge))}</small>
+                                        </Table.Cell>
                                         <Table.Cell>{client.clientRiskProfile}</Table.Cell>
-                                        <Table.Cell>{client.regulatoryIndicator == 0 ? '' :fmt( client.regulatoryIndicator,1)}</Table.Cell>
-                                        <Table.Cell>{client.guidelineIndicator == 0 ? '' : fmt(client.guidelineIndicator,1)}</Table.Cell>
-                                        <Table.Cell>{client.aboveGuidelines == 0 ? '' : fmt(client.aboveGuidelines,1)}</Table.Cell>
-                                        <Table.Cell>{client.belowGuidelines == 0 ? '' : fmt(client.belowGuidelines,1)}</Table.Cell>
-               
+                                        <Table.Cell>{client.regulatoryIndicator == 0 ? '' : fmt(client.regulatoryIndicator, 1)}</Table.Cell>
+                                        <Table.Cell>{client.guidelineIndicator == 0 ? '' : fmt(client.guidelineIndicator, 1)}</Table.Cell>
+                                        <Table.Cell>{client.aboveGuidelines == 0 ? '' : fmt(client.aboveGuidelines, 1)}</Table.Cell>
+                                        <Table.Cell>{client.belowGuidelines == 0 ? '' : fmt(client.belowGuidelines, 1)}</Table.Cell>
+
                                     </Table.Row>
                                 )
                             }

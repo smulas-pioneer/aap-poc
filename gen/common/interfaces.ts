@@ -47,6 +47,14 @@ export interface Client {
     productAppropriateness: number;
     percentageOfDiscountFees: number;
     project: string;
+
+    YTD_Upfront_FEES: number;
+    MTD_Upfront_FEES: number;
+    Y1_Upfront_FEES: number;
+    YTD_Ongoing_FEES: number;
+    MTD_Ongoing_FEES: number;
+    Y1_Ongoing_FEES: number;
+    
     
 }
 
@@ -256,9 +264,9 @@ export const ClientStateColors = {
     'NO ALERT': 'green',
     'REGULATOR ALERT': 'red',
     'GUIDELINE ALERT': 'orange',
-    'ON HOLD': 'blue',
-    'PENDING PROPOSAL': 'blue',
-    'PENDING EXECUTION': 'blue'
+    'ON HOLD': '#2185d0',
+    'PENDING PROPOSAL': '#2185d0',
+    'PENDING EXECUTION': '#2185d0'
 }
 
 export enum SpotlightContext {

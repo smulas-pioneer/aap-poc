@@ -14,7 +14,7 @@ interface HistoryViewProps {
     lang: LangDictionary,
     height?: number;
 }
-const colors: { [id: string]: 'green' | '#db2828' | 'olive' | '#2185CB' | 'blue' | 'red' | 'orange' } = {
+export const historyColors: { [id: string]: 'green' | '#db2828' | 'olive' | '#2185CB' | 'blue' | 'red' | 'orange' } = {
     ACCEPTED: 'green',
     REJECTED: '#db2828',
     ONGOING: 'olive',
@@ -22,7 +22,7 @@ const colors: { [id: string]: 'green' | '#db2828' | 'olive' | '#2185CB' | 'blue'
     ...ClientStateColors as any
 }
 
-const icons: { [id: string]: SemanticICONS } = {
+export const icons: { [id: string]: SemanticICONS } = {
     ACCEPTED: 'check',
     REJECTED: 'alarm',
     ONGOING: 'wait',
@@ -101,9 +101,9 @@ export const HistoryViewTimelineEvent = ({ history, lang, height }: HistoryViewP
                             title=''
                             createdAt={moment(item.date).format(lang.DATE_FORMAT)}
                             icon={<Icon name={icons[item.status]} size="large" style={{ margin: 0 }} />}
-                            iconColor={colors[item.status]}
+                            iconColor={historyColors[item.status]}
                             container="card"
-                            cardHeaderStyle={{ backgroundColor: colors[item.status] }}
+                            cardHeaderStyle={{ backgroundColor: historyColors[item.status] }}
                         >
                             <h3>{lang.STATUS}: {lang[item.status]}</h3>
                             <p>{item.notes}</p>

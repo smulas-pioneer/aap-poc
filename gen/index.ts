@@ -16,7 +16,7 @@ f.locale = 'it';
 const log = console.log;
 const rnd = (min: number, max: number) => Math.floor(Math.random() * (max - min)) + min;
 const fmt = (num: number) => Math.ceil(num * 10) / 10
-const rndS = (data:string[]) => data[rnd(0,data.length-1)];
+const rndS = (data: string[]) => data[rnd(0, data.length - 1)];
 
 const dump = (file: string, data: any) => fs.writeFileSync(`./build/${file}`, JSON.stringify(data, null, 2));
 const italyRegions = ['Nord Ovest', 'Lombardia', 'Nord Est', 'Centro Nord', 'Centro', 'Sud', 'Sicilia'];
@@ -92,7 +92,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
                 id == "2" ? "Defensive" :
                     faker.company.catchPhraseAdjective(),
         decision: '',
-        clientRiskProfile: rndS (['Medium', 'Low', 'High']),
+        clientRiskProfile: rndS(['Medium', 'Low', 'High']),
         clientStatus: 'NO ALERT',
         mifid: rnd(1, 40),
         numOfAcceptedProposal: 0,
@@ -110,15 +110,22 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
         budget: 0,
         turnover: rnd(0, 100),
         regulatoryIndicator: 0,
-        guidelineIndicator:0,
+        guidelineIndicator: 0,
         aboveGuidelines: 0,
         belowGuidelines: 0,
-        allocationKPI:rnd(0,100),
-        productAppropriateness: rnd(1,5),
-        percentageOfDiscountFees: rnd(0,5),
-        project: rndS(['Wealth','Retirement','New House','New Car','University','Vacations']),
+        allocationKPI: rnd(0, 100),
+        productAppropriateness: rnd(1, 5),
+        percentageOfDiscountFees: rnd(0, 5),
+        project: rndS(['Wealth', 'Retirement', 'New House', 'New Car', 'University', 'Vacations']),
+        Y1_Ongoing_FEES: 0,
+        Y1_Upfront_FEES: 0,
+        MTD_Ongoing_FEES: 0,
+        MTD_Upfront_FEES: 0,
+        YTD_Ongoing_FEES: 0,
+        YTD_Upfront_FEES: 0,
         aua: 0// sumBy(cli.holdings, v => v.amount) || 0 //faker.random.number({ min: 0, max: 100000000 }),
-    
+
+
     }
 }
 
@@ -472,8 +479,8 @@ const go = async () => {
             c.clientStatus = getClientState(c.decision, c.radar);
             c.aboveGuidelines = c.radar.aboveGuidelines;
             c.regulatoryIndicator = c.radar.regulatoryIndicator;
-            c.belowGuidelines =c.radar.belowGuidelines;
-            c.guidelineIndicator =  c.aboveGuidelines + c.belowGuidelines;
+            c.belowGuidelines = c.radar.belowGuidelines;
+            c.guidelineIndicator = c.aboveGuidelines + c.belowGuidelines;
 
             const dtAlert = rnd(moment(c.lastInterviewDate).unix(), moment(REFERENCE_DATE_TODAY).unix());
             c.clientStatusAge = moment.unix(dtAlert).format('YYYY-MM-DD');
