@@ -8,7 +8,7 @@ import * as P4 from './fds_c2_m';
 import * as P5 from './fds_c3_m';
 import * as P6 from './fds_c4_m';
 import * as P7 from './fds_c3_c_bis';
-import { cash } from '../common/securities';
+import { cash, wrapSecurities, wrapSecurity } from '../common/securities';
 import { modelPosition, createRadarSync, getRandomRadar } from '../common/radarUtils';
 
 const mapSecurity = (p: any) => {
@@ -36,7 +36,7 @@ const mapSecurity = (p: any) => {
 
 const mapSecurities = (pos: any[]): Security[] => {
     //const pos = FD.case_4_proposed;
-    return pos.filter(p => p.Symbol != 'CASH_EUR').map(mapSecurity);
+    return wrapSecurities( pos.filter(p => p.Symbol != 'CASH_EUR').map(mapSecurity));
 }
 
 const mapStrategy = (pos: any[], mod: any[]): StrategyItem[] => {
@@ -199,7 +199,7 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
         const suggDelta = sumBy(items, w => w.suggestedDelta || 0);
         const weight = sumBy(items, w => w.currentWeight || 0);
         return {
-            security: items[0].security,
+            security: wrapSecurity(items[0].security),
             radar: items[0].radar,
             currentWeight: weight,
             currentQuantity: sumBy(items, w => w.currentQuantity || 0),

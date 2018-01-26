@@ -166,11 +166,11 @@ const aggToBreakdown = (data: Aggregation[], key: string): Model.Breakdown => {
     );
 
     const tot = Object.keys(d).reduce((a, b) => a + d[b], 0);
-
+    const fn = key.toLowerCase() == "rating" ? top10Rating : top10;
     return {
         attributeName: key,
         weight: 1,
-        data: top10(Object.keys(d).map(k => ({ value: k, weight: d[k] / tot, bmk: d[k] / tot })).filter(i => i.value.trim() !== '')),
+        data: fn(Object.keys(d).map(k => ({ value: k, weight: d[k] / tot, bmk: d[k] / tot })).filter(i => i.value.trim() !== '')),
         color: MainColors[key]
     }
 }
@@ -185,7 +185,37 @@ const top10 = (data: { value: string, weight: number, bmk: number }[]) => {
         weight: sumBy(others, i => i.weight),
         bmk: 0
     }]);
+}
 
+const RKEY={
+    "AAA":0,
+    "AA":1,
+    "A":2,
+    "BBB":3,
+    "BB":4,
+    "B":5,
+    "CCC":6,
+    "CC":7,
+    "C":8,
+    "Not Rated":9
+}
+const top10Rating = (data: { value: string, weight: number, bmk: number }[]) => {
+    const sortedData = data.sort((a, b) => {
+        return RKEY[a.value] - RKEY[b.value];
+    });
+    console.log('here', sortedData);
+    return sortedData;
+
+    /*
+    if (sortedData.length < 10) return sortedData;
+    const others = sortedData.slice(10);
+
+    return sortedData.slice(0, 10).concat([{
+        value: 'Other',
+        weight: sumBy(others, i => i.weight),
+        bmk: 0
+    }]);
+    */
 }
 
 
