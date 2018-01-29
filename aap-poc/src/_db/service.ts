@@ -160,7 +160,7 @@ const strategyToAggreg = (position: StrategyItem): Aggregation => {
 }
 const aggToBreakdown = (data: Aggregation[], key: string): Model.Breakdown => {
     const d = data.reduce((prev, curr) => {
-        prev[curr[key]] = prev[curr[key]] || 0 + curr.weight;
+        prev[curr[key]] = (prev[curr[key]] || 0) + curr.weight;
         return prev;
     }, {} as { [key: string]: number }
     );
