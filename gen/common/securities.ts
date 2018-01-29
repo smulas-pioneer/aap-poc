@@ -6878,40 +6878,40 @@ const dictMA = {
 
 const dictMA2 = {
   'Equity Pacific': 'Equity',
-  'Emerging Market Bond':'Fixed Income',
+  'Emerging Market Bond': 'Fixed Income',
   'International Bond': 'Fixed Income',
-  "Equity":  'Equity',
+  "Equity": 'Equity',
   'Equity Emerging Markets': 'Equity',
   'Equity Europe': 'Equity',
-  'Equity North America':  'Equity',
+  'Equity North America': 'Equity',
   'Euro Corporate Bond': 'Fixed Income',
-  'Euro Government Bond':'Fixed Income',
+  'Euro Government Bond': 'Fixed Income',
   'Global Corporate High Yield Bond': 'Fixed Income',
   'Other': 'Commodities',
   'Money Market Euro': 'Money Market',
   "Cash": "Money Market",
-  "Large Cap":  'Equity',
-  "Corporate Bond":'Fixed Income',
+  "Large Cap": 'Equity',
+  "Corporate Bond": 'Fixed Income',
   "Government Bond": 'Fixed Income',
   "Inflation Linked": 'Fixed Income',
   "High Yield": 'Fixed Income',
   "Money Market": "Money Market",
-  "Gold":  'Commodities',
-  "Small Cap":  'Equity',
-  "Event Driven":"Balanced",
+  "Gold": 'Commodities',
+  "Small Cap": 'Equity',
+  "Event Driven": "Balanced",
   "Global Macro": "Balanced",
-  "Systematic Future":  'Commodities',
+  "Systematic Future": 'Commodities',
   "Corporate": 'Fixed Income',
-  "Europe Equity":  'Equity',
+  "Europe Equity": 'Equity',
   "North America Equity": 'Equity',
   "High Yield Bond": 'Fixed Income',
-  "EM Equity":  'Equity',
-  "Asia Pacific ex. Japan":  'Equity',
+  "EM Equity": 'Equity',
+  "Asia Pacific ex. Japan": 'Equity',
   "Diversified Bond": 'Fixed Income',
-  "Governement Bond":'Fixed Income',
-  "Large Cap Equity":  'Equity',
-  "Inflation Linked Bond":'Fixed Income',
-  "Small Cap Equity":  'Equity',
+  "Governement Bond": 'Fixed Income',
+  "Large Cap Equity": 'Equity',
+  "Inflation Linked Bond": 'Fixed Income',
+  "Small Cap Equity": 'Equity',
 }
 
 
@@ -6926,7 +6926,7 @@ const dictMI = {
   'Euro Corporate Bond': 'Corporate Bond',
   'Euro Government Bond': 'Governement Bond',
   'Global Corporate High Yield Bond': 'High Yield Bond',
-  'Other': 'Other',
+  'Other': 'Commodities',
   'Money Market Euro': 'Money Market',
   "Cash": "Money Market",
   "Large Cap": "Large Cap Equity",
@@ -6935,10 +6935,10 @@ const dictMI = {
   "Inflation Linked": "Inflation Linked Bond",
   "High Yield": "High Yield Bond",
   "Money Market": "Money Market",
-  "Gold": "Other",
+  "Gold": "Commodities",
   "Small Cap": "Small Cap Equity",
-  "Event Driven": "Other",
-  "Global Macro": "Other",
+  "Event Driven": "Other Equity",
+  "Global Macro": "Other Equity",
   "Systematic Future": "Other",
   "Corporate": "Corporate Bond",
   "Europe Equity": "Europe Equity",
@@ -6954,33 +6954,42 @@ const dictMI = {
 }
 
 
-let missingCurrency ={};
-let missingMA ={};
-let missingMI ={};
+let missingCurrency = {};
+let missingMA = {};
+let missingMI = {};
 
 
-export const wrapSecurity = (s:any ) =>{
+export const wrapSecurity = (s: any) => {
   if (!dictCur[s.Currency]) missingCurrency[s.Currency] = s.Currency;
-  if (!dictMA[s.MacroAssetClass])  missingMA[s.MacroAssetClass] = s.MacroAssetClass;
-  if (!dictMI[s.MicroAssetClass])  missingMI[s.MicroAssetClass] = s.MicroAssetClass;
+  if (!dictMA[s.MacroAssetClass]) missingMA[s.MacroAssetClass] = s.MacroAssetClass;
+  if (!dictMI[s.MicroAssetClass]) missingMI[s.MicroAssetClass] = s.MicroAssetClass;
 
-  return { ...s,
-    Currency: dictCur[s.Currency] || s.Currency + "__",
-    MicroAssetClass: dictMI[s.MicroAssetClass] || s.MicroAssetClass+ "__",
-    MacroAssetClass: dictMA2[s.MicroAssetClass] || s.MacroAssetClass+ "__",
+  return {
+    ...s,
+    Currency: dictCur[s.Currency] || s.Currency ,
+    MicroAssetClass: dictMI[s.MicroAssetClass] || s.MicroAssetClass ,
+    MacroAssetClass: s.MacroAssetClass == "Balanced" ? "Balanced" : dictMA2[s.MicroAssetClass] || s.MacroAssetClass ,
   }
 }
 
 
-export const wrapSecurities = (secs:any ) =>secs.map(wrapSecurity);
+export const wrapSecurities = (secs: any) => secs.map(wrapSecurity);
 
-export const securities = wrapSecurities (_securities);
 
-export const SHOWMISSING =() => {
-  console.log(JSON.stringify(missingCurrency,null,2));
-  console.log(JSON.stringify(missingMA,null,2));
-  console.log(JSON.stringify(missingMI,null,2));
-  
+let cntOther = 0;
+
+export const securities = wrapSecurities(_securities.filter(s => {
+  if (s.MacroAssetClass=="Balanced") return true;
+  if (s.MicroAssetClass !== 'Other') return true;
+  cntOther++;
+  return cntOther < 10;
+}));
+
+export const SHOWMISSING = () => {
+  console.log(JSON.stringify(missingCurrency, null, 2));
+  console.log(JSON.stringify(missingMA, null, 2));
+  console.log(JSON.stringify(missingMI, null, 2));
+
 }
 
 /*

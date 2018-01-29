@@ -165,10 +165,6 @@ const strategyCreator = (): StrategyItem[] => {
 
         const sec = i == 0 ? cash : securities[rnd(1, securities.length - 1)];
 
-
-        //Client AUM
-
-
         const quantity = skipQ ? 0 : Math.ceil(rnd(0, qUbound));
         const price = i == 0 ? 1 : rnd(0, 8000) / 100;
         const modelWeight = i == 0 ? 0 : skipM ? 0 : quantity * (1 + rnd(-50, 50) / 100);
