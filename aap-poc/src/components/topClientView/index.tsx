@@ -28,7 +28,7 @@ interface TopClientState {
     currentData: TopClientItem[];
 }
 
-export enum GroupTypes { Region = 0, City, Branch, Advisor };
+export enum GroupTypes { Region = 0,  Branch, Advisor };
 export type GroupType = keyof typeof GroupTypes;
 
 export class TopClient extends React.Component<TopClientProps, TopClientState> {
@@ -61,10 +61,7 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
                 grouped = groupBy(clients, d => d.address.region);
                 break;
             }
-            case GroupTypes.City: {
-                grouped = groupBy(clients, d => d.address.city);
-                break;
-            }
+
             case GroupTypes.Branch: {
                 grouped = groupBy(clients, d => d.branch);
                 break;
@@ -85,7 +82,7 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
             const sumOngoingFees = sumBy(grouped[key], c => c.ongoingFees);
             const sumBudget = sumBy(grouped[key], c => c.budget);
             const sumTurnover = sumBy(grouped[key], c => c.turnover) / grouped[key].length;
-            const sumAllocation = sumBy(grouped[key], c => c.allocationKPI) / grouped[key].length;            
+         //   const sumAllocation = sumBy(grouped[key], c => c.allocationKPI) / grouped[key].length;            
             let first = grouped[key][0];
             recs.push({
                 region: first.address.region,
@@ -102,8 +99,8 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
                     ongoingFees: sumOngoingFees,
                     budget: sumBudget,
                     turnover: sumTurnover,
-                    allocation: sumAllocation,
-                    budgetAccomplished: Math.round(100 * (sumUpfrontFees + sumOngoingFees) / sumBudget)
+           //         allocation: sumAllocation,
+                    budgetAccomplishedYTD: Math.round(100 * (sumUpfrontFees + sumOngoingFees) / sumBudget)
                 }
             });
         }

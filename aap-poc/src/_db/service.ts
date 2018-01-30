@@ -187,17 +187,17 @@ const top10 = (data: { value: string, weight: number, bmk: number }[]) => {
     }]);
 }
 
-const RKEY={
-    "AAA":0,
-    "AA":1,
-    "A":2,
-    "BBB":3,
-    "BB":4,
-    "B":5,
-    "CCC":6,
-    "CC":7,
-    "C":8,
-    "Not Rated":9
+const RKEY = {
+    "AAA": 0,
+    "AA": 1,
+    "A": 2,
+    "BBB": 3,
+    "BB": 4,
+    "B": 5,
+    "CCC": 6,
+    "CC": 7,
+    "C": 8,
+    "Not Rated": 9
 }
 const top10Rating = (data: { value: string, weight: number, bmk: number }[]) => {
     const sortedData = data.sort((a, b) => {
@@ -323,6 +323,7 @@ export const addHistory = ({ clientId, notes, status = 'PENDING EXECUTION' }: { 
         notes,
         status
     }
+    clientList[clientId] = { ...clientList[clientId]!, clientStatus: status, clientStatusDuration: '<1W', clientStatusAge: REFERENCE_DATE_TODAY };
 
     history[clientId] = [...history[clientId], h];
     return getClient({ id: clientId })

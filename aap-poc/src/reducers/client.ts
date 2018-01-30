@@ -1,5 +1,5 @@
 import { Client, Transaction, Breakdown, InterviewResult, StrategyItem } from "../_db/interfaces";
-import { getClientSuccess, getClientSuggestedTranasactionsSuccess, getBreakdownsSuccess, getHistorySuccess, getStrategySuccess, logoutSuccess } from "../actions/index";
+import { getClientSuccess, getClientSuggestedTranasactionsSuccess, getBreakdownsSuccess, getHistorySuccess, getStrategySuccess, logoutSuccess, addHistory } from "../actions/index";
 
 export interface ClientState {
     clientData: Client | undefined;

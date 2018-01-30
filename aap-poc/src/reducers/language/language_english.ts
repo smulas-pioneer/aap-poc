@@ -33,7 +33,7 @@ export const English: LanguageState = {
         FILTER: 'Filter',
         ENTER_FILTER_TEXT: 'Enter filter text',
         MANAGED_BY: 'Managed by',
-        LAST_INTERVIEW_DATE: 'Interview',
+        LAST_INTERVIEW_DATE: 'Last Interview',
         LAST_ADVICE_DATE: 'Advice',
         SECURITY_NAME: 'Security Name',
         QUANTITY: 'Quantity',

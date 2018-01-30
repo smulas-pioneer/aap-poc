@@ -1,608 +1,608 @@
 [
   {
     "date": "2004-05-04",
-    "Red": 2068,
-    "Green": 13673,
-    "Orange": 8916
+    "Red": 2063,
+    "Green": 13427,
+    "Orange": 9176
   },
   {
     "date": "2004-08-11",
-    "Red": 2069,
-    "Green": 13669,
-    "Orange": 8911
+    "Red": 2062,
+    "Green": 13431,
+    "Orange": 9170
   },
   {
     "date": "2004-11-17",
-    "Red": 2060,
-    "Green": 13663,
-    "Orange": 8910
+    "Red": 2061,
+    "Green": 13435,
+    "Orange": 9162
   },
   {
     "date": "2005-02-22",
-    "Red": 2051,
-    "Green": 13666,
-    "Orange": 8902
+    "Red": 2061,
+    "Green": 13439,
+    "Orange": 9162
   },
   {
     "date": "2005-05-29",
-    "Red": 2044,
-    "Green": 13661,
-    "Orange": 8900
+    "Red": 2052,
+    "Green": 13439,
+    "Orange": 9161
   },
   {
     "date": "2005-09-01",
-    "Red": 2041,
-    "Green": 13662,
-    "Orange": 8903
+    "Red": 2056,
+    "Green": 13436,
+    "Orange": 9163
   },
   {
     "date": "2005-12-04",
-    "Red": 2034,
-    "Green": 13662,
-    "Orange": 8894
+    "Red": 2053,
+    "Green": 13439,
+    "Orange": 9166
   },
   {
     "date": "2006-03-07",
-    "Red": 2031,
-    "Green": 13654,
-    "Orange": 8885
+    "Red": 2044,
+    "Green": 13437,
+    "Orange": 9159
   },
   {
     "date": "2006-06-07",
-    "Red": 2029,
-    "Green": 13645,
-    "Orange": 8881
+    "Red": 2047,
+    "Green": 13437,
+    "Orange": 9163
   },
   {
     "date": "2006-09-06",
-    "Red": 2023,
-    "Green": 13639,
-    "Orange": 8877
+    "Red": 2039,
+    "Green": 13440,
+    "Orange": 9161
   },
   {
     "date": "2006-12-05",
-    "Red": 2019,
-    "Green": 13630,
-    "Orange": 8871
+    "Red": 2034,
+    "Green": 13445,
+    "Orange": 9154
   },
   {
     "date": "2007-03-04",
-    "Red": 2016,
-    "Green": 13624,
-    "Orange": 8865
+    "Red": 2028,
+    "Green": 13438,
+    "Orange": 9157
   },
   {
     "date": "2007-05-31",
-    "Red": 2017,
-    "Green": 13621,
-    "Orange": 8856
+    "Red": 2019,
+    "Green": 13430,
+    "Orange": 9161
   },
   {
     "date": "2007-08-26",
-    "Red": 2018,
-    "Green": 13623,
-    "Orange": 8856
+    "Red": 2014,
+    "Green": 13432,
+    "Orange": 9158
   },
   {
     "date": "2007-11-20",
-    "Red": 2019,
-    "Green": 13627,
-    "Orange": 8848
+    "Red": 2011,
+    "Green": 13431,
+    "Orange": 9156
   },
   {
     "date": "2008-02-13",
-    "Red": 2010,
-    "Green": 13624,
-    "Orange": 8842
+    "Red": 2013,
+    "Green": 13425,
+    "Orange": 9152
   },
   {
     "date": "2008-05-07",
     "Red": 2010,
-    "Green": 13621,
-    "Orange": 8839
+    "Green": 13425,
+    "Orange": 9148
   },
   {
     "date": "2008-07-29",
-    "Red": 2011,
-    "Green": 13615,
-    "Orange": 8835
+    "Red": 2004,
+    "Green": 13419,
+    "Orange": 9145
   },
   {
     "date": "2008-10-19",
-    "Red": 2014,
-    "Green": 13614,
-    "Orange": 8828
+    "Red": 2005,
+    "Green": 13421,
+    "Orange": 9139
   },
   {
     "date": "2009-01-08",
-    "Red": 2006,
-    "Green": 13614,
-    "Orange": 8824
+    "Red": 1997,
+    "Green": 13426,
+    "Orange": 9131
   },
   {
     "date": "2009-03-29",
-    "Red": 1997,
-    "Green": 13612,
-    "Orange": 8822
+    "Red": 1995,
+    "Green": 13426,
+    "Orange": 9122
   },
   {
     "date": "2009-06-16",
-    "Red": 2002,
-    "Green": 13617,
-    "Orange": 8823
+    "Red": 1999,
+    "Green": 13420,
+    "Orange": 9120
   },
   {
     "date": "2009-09-02",
-    "Red": 1993,
-    "Green": 13621,
-    "Orange": 8821
+    "Red": 2001,
+    "Green": 13417,
+    "Orange": 9115
   },
   {
     "date": "2009-11-18",
-    "Red": 1994,
-    "Green": 13623,
-    "Orange": 8816
+    "Red": 1997,
+    "Green": 13414,
+    "Orange": 9109
   },
   {
     "date": "2010-02-02",
-    "Red": 1985,
-    "Green": 13614,
-    "Orange": 8814
+    "Red": 1999,
+    "Green": 13419,
+    "Orange": 9110
   },
   {
     "date": "2010-04-18",
-    "Red": 1980,
-    "Green": 13615,
-    "Orange": 8810
+    "Red": 1996,
+    "Green": 13413,
+    "Orange": 9110
   },
   {
     "date": "2010-07-01",
-    "Red": 1979,
-    "Green": 13606,
-    "Orange": 8808
+    "Red": 1996,
+    "Green": 13404,
+    "Orange": 9114
   },
   {
     "date": "2010-09-12",
-    "Red": 1982,
-    "Green": 13597,
-    "Orange": 8808
+    "Red": 1995,
+    "Green": 13404,
+    "Orange": 9112
   },
   {
     "date": "2010-11-23",
-    "Red": 1982,
-    "Green": 13600,
-    "Orange": 8806
+    "Red": 1987,
+    "Green": 13403,
+    "Orange": 9113
   },
   {
     "date": "2011-02-02",
-    "Red": 1976,
-    "Green": 13592,
-    "Orange": 8809
+    "Red": 1983,
+    "Green": 13394,
+    "Orange": 9116
   },
   {
     "date": "2011-04-13",
-    "Red": 1975,
-    "Green": 13592,
-    "Orange": 8802
+    "Red": 1987,
+    "Green": 13394,
+    "Orange": 9107
   },
   {
     "date": "2011-06-21",
-    "Red": 1968,
-    "Green": 13584,
-    "Orange": 8802
+    "Red": 1988,
+    "Green": 13392,
+    "Orange": 9102
   },
   {
     "date": "2011-08-28",
-    "Red": 1972,
-    "Green": 13586,
-    "Orange": 8805
+    "Red": 1979,
+    "Green": 13396,
+    "Orange": 9098
   },
   {
     "date": "2011-11-03",
-    "Red": 1972,
-    "Green": 13590,
-    "Orange": 8800
+    "Red": 1980,
+    "Green": 13395,
+    "Orange": 9097
   },
   {
     "date": "2012-01-08",
-    "Red": 1966,
-    "Green": 13593,
-    "Orange": 8804
+    "Red": 1972,
+    "Green": 13389,
+    "Orange": 9102
   },
   {
     "date": "2012-03-13",
     "Red": 1966,
-    "Green": 13598,
-    "Orange": 8808
+    "Green": 13390,
+    "Orange": 9105
   },
   {
     "date": "2012-05-16",
-    "Red": 1963,
-    "Green": 13597,
-    "Orange": 8807
+    "Red": 1969,
+    "Green": 13383,
+    "Orange": 9106
   },
   {
     "date": "2012-07-18",
-    "Red": 1960,
-    "Green": 13590,
-    "Orange": 8798
+    "Red": 1973,
+    "Green": 13379,
+    "Orange": 9107
   },
   {
     "date": "2012-09-18",
-    "Red": 1961,
-    "Green": 13595,
-    "Orange": 8800
+    "Red": 1967,
+    "Green": 13373,
+    "Orange": 9111
   },
   {
     "date": "2012-11-18",
-    "Red": 1952,
-    "Green": 13587,
-    "Orange": 8801
+    "Red": 1964,
+    "Green": 13374,
+    "Orange": 9103
   },
   {
     "date": "2013-01-17",
-    "Red": 1945,
-    "Green": 13584,
-    "Orange": 8804
+    "Red": 1965,
+    "Green": 13374,
+    "Orange": 9100
   },
   {
     "date": "2013-03-17",
-    "Red": 1942,
-    "Green": 13582,
-    "Orange": 8795
+    "Red": 1958,
+    "Green": 13370,
+    "Orange": 9103
   },
   {
     "date": "2013-05-14",
-    "Red": 1933,
-    "Green": 13581,
-    "Orange": 8789
+    "Red": 1961,
+    "Green": 13370,
+    "Orange": 9106
   },
   {
     "date": "2013-07-10",
-    "Red": 1926,
-    "Green": 13573,
-    "Orange": 8791
+    "Red": 1958,
+    "Green": 13362,
+    "Orange": 9109
   },
   {
     "date": "2013-09-04",
-    "Red": 1926,
-    "Green": 13576,
-    "Orange": 8790
+    "Red": 1950,
+    "Green": 13364,
+    "Orange": 9111
   },
   {
     "date": "2013-10-29",
-    "Red": 1923,
-    "Green": 13579,
-    "Orange": 8784
+    "Red": 1941,
+    "Green": 13367,
+    "Orange": 9114
   },
   {
     "date": "2013-12-22",
-    "Red": 1917,
-    "Green": 13584,
-    "Orange": 8784
+    "Red": 1937,
+    "Green": 13363,
+    "Orange": 9113
   },
   {
     "date": "2014-02-13",
-    "Red": 1915,
-    "Green": 13580,
-    "Orange": 8775
+    "Red": 1928,
+    "Green": 13361,
+    "Orange": 9116
   },
   {
     "date": "2014-04-06",
-    "Red": 1920,
-    "Green": 13577,
-    "Orange": 8770
+    "Red": 1924,
+    "Green": 13359,
+    "Orange": 9113
   },
   {
     "date": "2014-05-27",
-    "Red": 1915,
-    "Green": 13581,
-    "Orange": 8763
+    "Red": 1924,
+    "Green": 13356,
+    "Orange": 9117
   },
   {
     "date": "2014-07-16",
-    "Red": 1909,
-    "Green": 13577,
-    "Orange": 8760
+    "Red": 1921,
+    "Green": 13356,
+    "Orange": 9108
   },
   {
     "date": "2014-09-03",
-    "Red": 1911,
-    "Green": 13581,
-    "Orange": 8765
+    "Red": 1912,
+    "Green": 13350,
+    "Orange": 9106
   },
   {
     "date": "2014-10-21",
-    "Red": 1914,
-    "Green": 13575,
-    "Orange": 8757
+    "Red": 1910,
+    "Green": 13347,
+    "Orange": 9099
   },
   {
     "date": "2014-12-07",
-    "Red": 1908,
-    "Green": 13568,
-    "Orange": 8753
+    "Red": 1905,
+    "Green": 13350,
+    "Orange": 9090
   },
   {
     "date": "2015-01-22",
-    "Red": 1903,
-    "Green": 13564,
-    "Orange": 8756
+    "Red": 1897,
+    "Green": 13347,
+    "Orange": 9086
   },
   {
     "date": "2015-03-08",
-    "Red": 1906,
-    "Green": 13561,
-    "Orange": 8753
+    "Red": 1892,
+    "Green": 13343,
+    "Orange": 9085
   },
   {
     "date": "2015-04-21",
-    "Red": 1902,
-    "Green": 13566,
-    "Orange": 8751
+    "Red": 1885,
+    "Green": 13339,
+    "Orange": 9077
   },
   {
     "date": "2015-06-03",
-    "Red": 1896,
-    "Green": 13566,
-    "Orange": 8742
+    "Red": 1887,
+    "Green": 13340,
+    "Orange": 9082
   },
   {
     "date": "2015-07-15",
-    "Red": 1896,
-    "Green": 13567,
-    "Orange": 8745
+    "Red": 1881,
+    "Green": 13337,
+    "Orange": 9083
   },
   {
     "date": "2015-08-25",
-    "Red": 1898,
-    "Green": 13559,
-    "Orange": 8745
+    "Red": 1880,
+    "Green": 13336,
+    "Orange": 9077
   },
   {
     "date": "2015-10-04",
-    "Red": 1902,
-    "Green": 13560,
-    "Orange": 8745
+    "Red": 1876,
+    "Green": 13336,
+    "Orange": 9079
   },
   {
     "date": "2015-11-12",
-    "Red": 1902,
-    "Green": 13563,
-    "Orange": 8745
+    "Red": 1868,
+    "Green": 13337,
+    "Orange": 9073
   },
   {
     "date": "2015-12-20",
-    "Red": 1894,
-    "Green": 13568,
-    "Orange": 8746
+    "Red": 1870,
+    "Green": 13334,
+    "Orange": 9069
   },
   {
     "date": "2016-01-26",
-    "Red": 1894,
-    "Green": 13565,
-    "Orange": 8750
+    "Red": 1871,
+    "Green": 13325,
+    "Orange": 9063
   },
   {
     "date": "2016-03-02",
-    "Red": 1895,
-    "Green": 13565,
-    "Orange": 8741
+    "Red": 1871,
+    "Green": 13318,
+    "Orange": 9055
   },
   {
     "date": "2016-04-06",
-    "Red": 1895,
-    "Green": 13564,
-    "Orange": 8746
+    "Red": 1876,
+    "Green": 13319,
+    "Orange": 9047
   },
   {
     "date": "2016-05-10",
-    "Red": 1896,
-    "Green": 13563,
-    "Orange": 8746
+    "Red": 1872,
+    "Green": 13312,
+    "Orange": 9043
   },
   {
     "date": "2016-06-12",
-    "Red": 1893,
-    "Green": 13557,
-    "Orange": 8747
+    "Red": 1864,
+    "Green": 13309,
+    "Orange": 9043
   },
   {
     "date": "2016-07-14",
-    "Red": 1885,
-    "Green": 13555,
-    "Orange": 8750
+    "Red": 1866,
+    "Green": 13302,
+    "Orange": 9036
   },
   {
     "date": "2016-08-14",
-    "Red": 1883,
-    "Green": 13549,
-    "Orange": 8745
+    "Red": 1858,
+    "Green": 13295,
+    "Orange": 9032
   },
   {
     "date": "2016-09-13",
-    "Red": 1875,
-    "Green": 13548,
-    "Orange": 8746
+    "Red": 1852,
+    "Green": 13291,
+    "Orange": 9028
   },
   {
     "date": "2016-10-12",
-    "Red": 1871,
-    "Green": 13551,
-    "Orange": 8741
+    "Red": 1848,
+    "Green": 13296,
+    "Orange": 9020
   },
   {
     "date": "2016-11-09",
-    "Red": 1866,
-    "Green": 13545,
-    "Orange": 8746
+    "Red": 1853,
+    "Green": 13299,
+    "Orange": 9011
   },
   {
     "date": "2016-12-06",
-    "Red": 1865,
-    "Green": 13550,
-    "Orange": 8743
+    "Red": 1852,
+    "Green": 13291,
+    "Orange": 9014
   },
   {
     "date": "2017-01-01",
-    "Red": 1864,
-    "Green": 13551,
-    "Orange": 8740
+    "Red": 1850,
+    "Green": 13282,
+    "Orange": 9018
   },
   {
     "date": "2017-01-26",
-    "Red": 1855,
-    "Green": 13550,
-    "Orange": 8743
+    "Red": 1851,
+    "Green": 13274,
+    "Orange": 9017
   },
   {
     "date": "2017-02-19",
-    "Red": 1849,
-    "Green": 13544,
-    "Orange": 8748
+    "Red": 1842,
+    "Green": 13274,
+    "Orange": 9012
   },
   {
     "date": "2017-03-14",
-    "Red": 1841,
-    "Green": 13546,
-    "Orange": 8745
+    "Red": 1836,
+    "Green": 13265,
+    "Orange": 9016
   },
   {
     "date": "2017-04-05",
-    "Red": 1837,
-    "Green": 13546,
-    "Orange": 8741
+    "Red": 1827,
+    "Green": 13260,
+    "Orange": 9014
   },
   {
     "date": "2017-04-26",
-    "Red": 1833,
-    "Green": 13542,
-    "Orange": 8733
+    "Red": 1828,
+    "Green": 13255,
+    "Orange": 9019
   },
   {
     "date": "2017-05-16",
-    "Red": 1826,
-    "Green": 13536,
-    "Orange": 8727
+    "Red": 1824,
+    "Green": 13257,
+    "Orange": 9012
   },
   {
     "date": "2017-06-04",
-    "Red": 1818,
-    "Green": 13529,
-    "Orange": 8719
+    "Red": 1822,
+    "Green": 13261,
+    "Orange": 9008
   },
   {
     "date": "2017-06-22",
-    "Red": 1819,
-    "Green": 13531,
-    "Orange": 8710
+    "Red": 1820,
+    "Green": 13261,
+    "Orange": 9010
   },
   {
     "date": "2017-07-09",
-    "Red": 1820,
-    "Green": 13527,
-    "Orange": 8707
+    "Red": 1816,
+    "Green": 13265,
+    "Orange": 9005
   },
   {
     "date": "2017-07-25",
-    "Red": 1818,
-    "Green": 13520,
-    "Orange": 8706
+    "Red": 1814,
+    "Green": 13269,
+    "Orange": 9008
   },
   {
     "date": "2017-08-09",
-    "Red": 1821,
-    "Green": 13523,
-    "Orange": 8711
+    "Red": 1813,
+    "Green": 13271,
+    "Orange": 9011
   },
   {
     "date": "2017-08-23",
-    "Red": 1812,
-    "Green": 13516,
-    "Orange": 8716
+    "Red": 1808,
+    "Green": 13268,
+    "Orange": 9015
   },
   {
     "date": "2017-09-05",
-    "Red": 1808,
-    "Green": 13518,
-    "Orange": 8708
+    "Red": 1813,
+    "Green": 13259,
+    "Orange": 9016
   },
   {
     "date": "2017-09-17",
-    "Red": 1811,
-    "Green": 13515,
-    "Orange": 8702
+    "Red": 1817,
+    "Green": 13263,
+    "Orange": 9016
   },
   {
     "date": "2017-09-28",
-    "Red": 1808,
-    "Green": 13511,
-    "Orange": 8703
+    "Red": 1818,
+    "Green": 13257,
+    "Orange": 9017
   },
   {
     "date": "2017-10-08",
-    "Red": 1799,
-    "Green": 13504,
-    "Orange": 8703
+    "Red": 1813,
+    "Green": 13257,
+    "Orange": 9019
   },
   {
     "date": "2017-10-17",
-    "Red": 1792,
-    "Green": 13509,
-    "Orange": 8705
+    "Red": 1816,
+    "Green": 13250,
+    "Orange": 9010
   },
   {
     "date": "2017-10-25",
-    "Red": 1789,
-    "Green": 13511,
-    "Orange": 8705
+    "Red": 1810,
+    "Green": 13252,
+    "Orange": 9002
   },
   {
     "date": "2017-11-01",
-    "Red": 1791,
-    "Green": 13512,
-    "Orange": 8696
+    "Red": 1802,
+    "Green": 13249,
+    "Orange": 9003
   },
   {
     "date": "2017-11-07",
-    "Red": 1795,
-    "Green": 13514,
-    "Orange": 8687
+    "Red": 1798,
+    "Green": 13246,
+    "Orange": 9006
   },
   {
     "date": "2017-11-12",
-    "Red": 1793,
-    "Green": 13519,
-    "Orange": 8687
+    "Red": 1790,
+    "Green": 13250,
+    "Orange": 9003
   },
   {
     "date": "2017-11-16",
-    "Red": 1791,
-    "Green": 13520,
-    "Orange": 8692
+    "Red": 1792,
+    "Green": 13244,
+    "Orange": 9006
   },
   {
     "date": "2017-11-19",
-    "Red": 1791,
-    "Green": 13519,
-    "Orange": 8697
+    "Red": 1786,
+    "Green": 13244,
+    "Orange": 8997
   },
   {
     "date": "2017-11-21",
-    "Red": 1783,
-    "Green": 13516,
-    "Orange": 8698
+    "Red": 1778,
+    "Green": 13238,
+    "Orange": 8992
   },
   {
     "date": "2017-11-22",
-    "Red": 1784,
-    "Green": 13509,
-    "Orange": 8703
+    "Red": 1773,
+    "Green": 13241,
+    "Orange": 8997
   },
   {
     "date": "2017-11-22",
-    "Red": 1784,
-    "Orange": 8706,
-    "Green": 13510
+    "Red": 1770,
+    "Orange": 8988,
+    "Green": 13242
   }
 ]

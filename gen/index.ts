@@ -149,6 +149,18 @@ const clientStrategyCreator = (clients: Client[]) => {
     }, {} as { [cli: string]: StrategyItem[] })
 }
 
+let usedCurr :any ={'USD':0,'EUR':0};
+const getRandomSecurity = () => {
+    let ret;
+    do {
+        ret = securities[rnd(1, securities.length - 1)];
+
+    } while (ret.Currency =='USD' && usedCurr.EUR < (usedCurr.USD*2));
+    usedCurr[ret.Currency] ++;
+
+    return ret;
+}
+
 const strategyCreator = (): StrategyItem[] => {
     let tot = 0;
     let totModel = 0;
@@ -163,7 +175,7 @@ const strategyCreator = (): StrategyItem[] => {
         const skipQ = i > (num - 2);
         const skipM = i > 2 && rnd(1, 7) < 3;
 
-        const sec = i == 0 ? cash : securities[rnd(1, securities.length - 1)];
+        const sec = i == 0 ? cash : getRandomSecurity();
 
         const quantity = skipQ ? 0 : Math.ceil(rnd(0, qUbound));
         const price = i == 0 ? 1 : rnd(0, 8000) / 100;
@@ -459,8 +471,8 @@ const go = async () => {
                 c.radar = createRadarFromStrategy(strategies[c.id], c.id, radars);
             }
             c.aua = sumBy(strategies[c.id], v => v.currentAmount);
-            c.ongoingFees = c.aua * rnd(1, 20) / 1000;
-            c.upfrontFees = c.aua * rnd(0, 10) / 1000;
+            c.ongoingFees = c.aua * rnd(1, 10) / 1000;
+            c.upfrontFees = c.aua * rnd(0, 6) / 1000;
             c.budget = c.aua * rnd(0, 30) / 1000;
 
             c.MTD_Ongoing_FEES = rnd(-50, 50) / 10;

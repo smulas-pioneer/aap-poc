@@ -6857,7 +6857,7 @@ const dictCur = {
   "HKD": "HKD",
   "EUR": "EUR",
   "USD": "USD",
-  "YEN": "YEN",
+  "YEN": "JPY",
   "GBP": "GBP",
   "CAD": "CAD"
 }
