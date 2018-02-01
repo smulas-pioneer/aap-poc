@@ -125,7 +125,7 @@ export const Italiano: LanguageState = {
         'PENDING PROPOSAL': 'Pending Proposal',
         'PENDING EXECUTION': 'Pending Execution',
         RISKPROFILE: 'Profilo di rischio',
-        REGULATORY_INDICATOR: 'Regulatory Indicator',
+        REGULATORY_INDICATOR: 'MIFID Indicator',
         GUIDELINE_INDICATOR:'Guideline Indicator',
         ABOVE_GUIDELINES: 'Sopra le linee guida',
         BELOW_GUIDELINES: 'Sotto le linee guidas',

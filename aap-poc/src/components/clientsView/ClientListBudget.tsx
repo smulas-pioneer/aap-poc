@@ -6,6 +6,7 @@ import { formatAua, formatNumber } from "../../_db/utils";
 import client from '../../reducers/client';
 import { numArray } from '../../_db/common/radarUtils';
 import { WidgetTitle } from '../shared/WidgetTitle';
+import { Link } from 'react-router-dom';
 
 export interface ClientListBudgetProps {
     clients: Client[];
@@ -40,7 +41,7 @@ export class ClientListBudget extends React.Component<ClientListBudgetProps, Cli
 
         return (
             <Segment>
-                <WidgetTitle title="Fees"/>
+                <WidgetTitle title="Fees" />
                 <Table compact fixed singleLine style={{ height: '30vh', padding: '0' }}>
                     <Table.Header fullWidth >
                         <Table.Row>
@@ -56,12 +57,14 @@ export class ClientListBudget extends React.Component<ClientListBudgetProps, Cli
                         {
                             renderClients.map((client, clIndex) =>
                                 <Table.Row key={clIndex} >
-                                    <Table.Cell>{client.name}</Table.Cell>
+                                    <Table.Cell >
+                                        <Link to={`/clients/${client.id}`}>   {client.name}</Link>
+                                    </Table.Cell>
                                     <Table.Cell textAlign="right" >{fmt(client.YTD_Upfront_FEES)}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={{ color: client.YTD_Ongoing_FEES < 0 ? 'red' : 'black' }}>{fmt(client.YTD_Ongoing_FEES,1)}</Table.Cell>
+                                    <Table.Cell textAlign="right" style={{ color: client.YTD_Ongoing_FEES < 0 ? 'red' : 'black' }}>{fmt(client.YTD_Ongoing_FEES, 1)}</Table.Cell>
                                     <Table.Cell textAlign="right" >{fmt(client.Y1_Upfront_FEES)}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={{ color: client.Y1_Ongoing_FEES < 0 ? 'red' : 'black' }} >{fmt(client.Y1_Ongoing_FEES,1)}</Table.Cell>
-                                    <Table.Cell textAlign="right" >{fmt(client.turnover,2)}</Table.Cell>
+                                    <Table.Cell textAlign="right" style={{ color: client.Y1_Ongoing_FEES < 0 ? 'red' : 'black' }} >{fmt(client.Y1_Ongoing_FEES, 1)}</Table.Cell>
+                                    <Table.Cell textAlign="right" >{fmt(client.turnover, 2)}</Table.Cell>
                                 </Table.Row>
                             )
                         }

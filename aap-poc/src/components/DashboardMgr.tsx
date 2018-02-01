@@ -249,7 +249,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                             {this.renderItem(fmt(info.length), lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
-                            {this.renderItem(formatAua(info.assetUnder, fmt), lang.DB_ASSET_ADVISE, this.percDetail(15, ' 1', 'Y', 'NET CASHFLOWS'), undefined, 'green')}
+                            {this.renderItem(formatAua(info.assetUnder, fmt), lang.DB_ASSET_ADVISE,  this.percDetail(15, '1', 'Y'), undefined, 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
                             {this.renderItem(<span style={{ color: 'red' }}>{fmt(info.clientAlert)}</span>, lang.DB_CLIENTS_ALERTS, this.alertsDetail(fmt(info.mifidAlert)))}
