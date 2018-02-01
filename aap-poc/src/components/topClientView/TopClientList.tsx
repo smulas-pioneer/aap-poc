@@ -68,7 +68,7 @@ export const TopClientList = ({ clients, group, indicator, lang }: TopClientList
                             <Table.HeaderCell textAlign="right" width={1}>{lang.UPFRONT_FEES}</Table.HeaderCell>
                             <Table.HeaderCell textAlign="right" width={1}>{lang.ONGOING_FEES}</Table.HeaderCell>
                             <Table.HeaderCell textAlign="right" width={1}>{lang.BUDGET} YTD</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right" width={1}>{lang.BUDGET} Accomplished YTD</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="right" width={1}>{lang.BUDGET} Accomplished YTD %</Table.HeaderCell>
                             <Table.HeaderCell textAlign="right" width={1}>{lang.TURNOVER} %</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
