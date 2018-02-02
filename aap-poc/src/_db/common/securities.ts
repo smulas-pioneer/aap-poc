@@ -6958,6 +6958,11 @@ let missingCurrency = {};
 let missingMA = {};
 let missingMI = {};
 
+const wRegion = {
+  "global": "World",
+  "pacific": "Asia-Pacific",
+  "international": "Other"
+}
 
 export const wrapSecurity = (s: any) => {
   if (!dictCur[s.Currency]) missingCurrency[s.Currency] = s.Currency;
@@ -6966,12 +6971,12 @@ export const wrapSecurity = (s: any) => {
 
   return {
     ...s,
-    Currency: dictCur[s.Currency] || s.Currency ,
-    MicroAssetClass: dictMI[s.MicroAssetClass] || s.MicroAssetClass ,
-    MacroAssetClass: s.MacroAssetClass == "Balanced" ? "Balanced" : dictMA2[s.MicroAssetClass] || s.MacroAssetClass ,
+    Currency: dictCur[s.Currency] || s.Currency,
+    MicroAssetClass: dictMI[s.MicroAssetClass] || s.MicroAssetClass,
+    MacroAssetClass: s.MacroAssetClass == "Balanced" ? "Balanced" : dictMA2[s.MicroAssetClass] || s.MacroAssetClass,
+    Region: s.Region && wRegion[s.Region.toLowerCase()] || s.Region
   }
 }
-
 
 export const wrapSecurities = (secs: any) => secs.map(wrapSecurity);
 
@@ -6979,7 +6984,7 @@ export const wrapSecurities = (secs: any) => secs.map(wrapSecurity);
 let cntOther = 0;
 
 export const securities = wrapSecurities(_securities.filter(s => {
-  if (s.MacroAssetClass=="Balanced") return true;
+  if (s.MacroAssetClass == "Balanced") return true;
   if (s.MicroAssetClass !== 'Other') return true;
   cntOther++;
   return cntOther < 10;
