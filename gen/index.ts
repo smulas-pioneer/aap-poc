@@ -14,7 +14,7 @@ var f = faker;
 f.locale = 'it';
 
 const log = console.log;
-const rnd = (min: number, max: number) => Math.floor(Math.random() * (max - min)) + min;
+const rnd = (min: number, max: number) => Math.round(Math.random() * (max - min)) + min;
 const fmt = (num: number) => Math.ceil(num * 10) / 10
 const rndS = (data: string[]) => data[rnd(0, data.length - 1)];
 
@@ -92,7 +92,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
                 id == "2" ? "Defensive" :
                     faker.company.catchPhraseAdjective(),
         decision: '',
-        clientRiskProfile: rndS(['Medium', 'Low', 'High']),
+        clientRiskProfile: rndS(['Risk Adverse', 'Conservative', 'Balanced','Dynamic','Aggressive']),
         clientStatus: 'NO ALERT',
         mifid: rnd(1, 40),
         numOfAcceptedProposal: 0,

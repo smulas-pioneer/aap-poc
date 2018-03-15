@@ -53,6 +53,8 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
     colors: number[][];
     MAX_COLORS_LEN = 0;
 
+    LAST_COLOR = '';
+
     constructor(props: ItalyMapProps) {
         super(props);
 
@@ -61,7 +63,19 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
         this.interpolateColors = this.interpolateColors.bind(this);
         this.onMapOptionsChange = this.onMapOptionsChange.bind(this);
         this.getAreaById = this.getAreaById.bind(this);
-        this.colors = this.interpolateColors('rgb(255, 192, 77)', 'rgb(2, 2, 234)', 10);
+//        this.colors = this.interpolateColors('rgb(255, 192, 77)', 'rgb(2, 2, 234)', 10);
+//        this.colors = this.interpolateColors('rgb(179, 241, 255)', 'rgb(8, 19, 50)', 7);
+        this.colors = [
+            [179,241,255],
+            [51,216,255],
+            [74,190,236],
+            [0,170,238],
+            [0,111,172],
+            [0,67,112],
+            [8,19,50]
+        ];
+        this.MAX_COLORS_LEN = this.colors.length;
+        this.LAST_COLOR = 'whitesmoke';
 
         this.state = {
             mapIndex: undefined,
@@ -161,14 +175,14 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
             if (value > 0 && (maxValue - minValue) === 0) {
                 color = this.colors[this.MAX_COLORS_LEN];
             } else if (value !== 0) {
-                color = this.colors[Math.ceil((value - minValue) / (maxValue - minValue) * this.MAX_COLORS_LEN)];
+                color = this.colors[Math.ceil((value - minValue) / (maxValue - minValue) * (this.MAX_COLORS_LEN-1))];
                 countWithValues++;
             };
             acc.push({
                 key,
                 value,
                 perc,
-                color: color !== undefined ? `rgb(${color[0]}, ${color[1]}, ${color[2]}` : '#CECCCC'
+                color: color !== undefined ? `rgb(${color[0]}, ${color[1]}, ${color[2]}` :this.LAST_COLOR
             });
             return acc;
         }, [] as AreaValue[]
@@ -286,7 +300,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
                         <Label size="medium" color="blue" ribbon >{regionLegend && regionLegend.title}</Label>
                         <FillAreaLegend legend={regionLegend} />
                         <svg version="1.2" id="aap-italy" baseProfile="tiny" x="0px" y="0px" width="100%" height="98%" viewBox="-832 802.4417725 340 400" onClick={() => this.setState({ requestMapIndex: undefined })}>
-                            {this.getAreaById(this.state.mapIndex!, { fill: true, color: '#CECCCC' })}
+                            {this.getAreaById(this.state.mapIndex!, { fill: true, color: this.LAST_COLOR})}
                         </svg>
                     </div>
                 </Transition>
