@@ -55,7 +55,7 @@ export const memuItems: MemuItemModel[] = [
     { langProps: 'NEWS_INSIGHTS', linkTo: undefined, color: 'grey', icon: 'newspaper', innewline: true }
 ]
 
-export type FilterMapTypes = 'Regions' | 'Alerts' | 'Agents' | 'Aua' | 'AlertType' | 'Segment' | 'Branch' | 'ClientStatus' | 'ClientStatusDuration';
+export type FilterMapTypes = 'Regions' | 'Alerts' | 'Agents' | 'Aua' | 'AlertType' | 'Segment' | 'Branch' | 'ClientStatus' | 'ClientStatusDuration' | 'RiskProfile';
 
 export interface FilterMap {
     prop: string;
@@ -111,6 +111,12 @@ export const filterMapItems: {[key in FilterMapTypes]: FilterMap } = {
         prop: 'clientStatusDuration',
         searchprop: 'clientStatusDuration',
         render: { header: 'Client Status Duration', icon: 'time', label: undefined }
+    },
+    RiskProfile: {
+        prop: 'clientRiskProfile',
+        searchprop: 'clientRiskProfile',
+        render: { header: 'Client Risk Profile', icon: 'american express card', label: undefined }
+
     }
 }
 

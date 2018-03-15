@@ -6964,10 +6964,42 @@ const wRegion = {
   "international": "Other"
 }
 
+const fix = {
+  'FR0010314401':{region:'Europe',country:'Italy',rating:null},
+  'LU0119099819':{region:'Europe',country:'Italy',rating:null},
+  'LU0281578517':{region:'Europe',country:'Italy',rating:null},
+  'LU0201576401':{region:'Europe',country:'Italy',rating:null},
+  'LU0281579598':{region:'Europe',country:'Italy',rating:null},
+  'LU0568620560':{region:'Europe',country:'Italy',rating:null},
+  'IE00B4ND3602':{region:'Europe',country:'Italy',rating:null},
+  'LU0399031052':{region:'Europe',country:'Italy',rating:null},
+  'FR0010816819':{region:'Europe',country:'Italy',rating:null},
+  'FR0010930446':{region:'Europe',country:'Italy',rating:null},
+  'LU0627756538':{region:'Europe',country:'Italy',rating:null},
+  'LU0518421895':{region:'Europe',country:'Italy',rating:null},
+  'NL0011585146':{region:'Europe',country:'Italy',rating:null},
+  'XS1327539976':{region:'Europe',country:'Italy',rating:'B'},
+  'LU0145482039':{region:'Europe',country:'Italy',rating:null},
+  'IE0007472990':{region:'Europe',country:'Italy',rating:null},
+  'LU1191877379':{region:'Europe',country:'Italy',rating:null},
+  'LU0533595319':{region:'Europe',country:'Italy',rating:null},
+  'FR0000989501':{region:'Europe',country:'Italy',rating:null},
+  'LU0257968619':{region:'Europe',country:'Italy',rating:null},
+  'FR0011006360':{region:'Europe',country:'Italy',rating:null}
+}
+
+
+
 export const wrapSecurity = (s: any) => {
   if (!dictCur[s.Currency]) missingCurrency[s.Currency] = s.Currency;
   if (!dictMA[s.MacroAssetClass]) missingMA[s.MacroAssetClass] = s.MacroAssetClass;
   if (!dictMI[s.MicroAssetClass]) missingMI[s.MicroAssetClass] = s.MicroAssetClass;
+
+  if ( fix[s.IsinCode] ){
+    s.Region = fix[s.IsinCode].region;
+    s.Rating = fix[s.IsinCode].rating;
+    s.Country = fix[s.IsinCode].country;
+  }
 
   return {
     ...s,

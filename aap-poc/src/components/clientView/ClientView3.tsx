@@ -45,7 +45,6 @@ interface State {
     currentTargetReturn?: number,
     showModel: boolean,
     somethingIsChanged: boolean,
-
     viewHistory: boolean,
     processing: string | undefined,
     //isInSimulationMode: boolean
@@ -128,7 +127,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
         if (this.state.firstSimulation) {
             cb();
         } else {
-            this.setState({ processing: 'New Simulation' }, () => setTimeout(cb, 500));
+            this.setState({ processing: 'New Simulation' }, () => setTimeout(cb, 250));
         }
 
     }
@@ -315,7 +314,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                         <ClientHistory lang={lang} history={history} />
                     </Modal.Content>
                 </Modal>}
-                {processing && <Dimmer active>
+                {processing && <Dimmer active blurring inverted>
                     <Loader size="huge">{processing}</Loader>
                 </Dimmer>}
 
@@ -372,10 +371,8 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
     )
 }
 
-
 const ClientHistory = (props: { history: InterviewResult[], lang: LangDictionary }) => {
     const { history, lang } = props;
-
     const listOfHistory = {
         clientEventHistory: true,
         transactions: true,

@@ -226,6 +226,7 @@ export interface SearchParms {
     clientStatus?: string[];
     clientStatusDuration?: ClientStatusDuration[];
     uid: string;
+    clientRiskProfile?:string[];
 }
 
 export interface SearchResult {

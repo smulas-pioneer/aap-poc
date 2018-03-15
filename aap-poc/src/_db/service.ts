@@ -45,6 +45,7 @@ export const searchClient = (parms: Model.SearchParms, visibility?: string[]): P
         .filter(c => arrayContains(parms.alerts, c.radar.numOfAlerts))
         .filter(c => checkAlerts(parms.alertTypes, c.breaks))
         .filter(c => arrayContains(parms.agents, c.agent))
+        .filter( c => arrayContains(parms.clientRiskProfile, c.clientRiskProfile))
         .filter(c => arrayContains(parms.clientStatus, c.clientStatus))
         .filter(c => arrayContains(parms.regions, c.address.region))
         .filter(c => arrayContains(parms.clientStatusDuration, c.clientStatusDuration))

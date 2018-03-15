@@ -1,4 +1,4 @@
-import { securities as securityList, wrapSecurities } from '../common/securities';
+import { securities as securityList, wrapSecurities, wrapSecurity } from '../common/securities';
 import { Security, StrategyItem, Client, AlertHistory, InterviewResult } from '../common/interfaces';
 import { Radar } from '../interfaces';
 import { updateStrategies } from '../fakedata1';
@@ -44,7 +44,7 @@ export const loadDatabase = (appName: string) => {
                     ...r, pushed:
                         r.SecurityName.toLowerCase().indexOf("amundi") > -1 ||
                         r.SecurityName.toLowerCase().indexOf("pioneer") > -1
-                }))
+                })).map((s:any)=>wrapSecurity(s))
     });
 
     //SECURITIES
