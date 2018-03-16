@@ -49,6 +49,10 @@ export const TopClientList = ({ clients, group, indicator, lang }: TopClientList
                 <Table compact fixed singleLine >
                     <Table.Header fullWidth >
                         <Table.Row>
+                            {group >= GroupTypes.Country &&
+                                <Table.HeaderCell width={1}>COUNTRY</Table.HeaderCell>
+                            }
+
                             {group >= GroupTypes.Region &&
                                 <Table.HeaderCell width={1}>{lang.REGION}</Table.HeaderCell>
                             }
@@ -76,10 +80,13 @@ export const TopClientList = ({ clients, group, indicator, lang }: TopClientList
                         {
                             clients.map((client, clIndex) =>
                                 <Table.Row key={clIndex} style={rowStyle(clIndex)}>
+                                    {group >= GroupTypes.Country &&
+                                        <Table.Cell style={cellStyle(clIndex, GroupTypes.Country, true)}>{client.country}</Table.Cell>
+                                    }
                                     {group >= GroupTypes.Region &&
                                         <Table.Cell style={cellStyle(clIndex, GroupTypes.Region, true)}>{client.region}</Table.Cell>
                                     }
-    
+
                                     {group >= GroupTypes.Branch &&
                                         <Table.Cell style={cellStyle(clIndex, GroupTypes.Branch, true)}>{client.branch}</Table.Cell>
                                     }
@@ -96,7 +103,7 @@ export const TopClientList = ({ clients, group, indicator, lang }: TopClientList
                                     <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.ongoingFees)}>{fmt(client.totals.ongoingFees)}</Table.Cell>
                                     <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.budget)}>{fmt(client.totals.budget)}</Table.Cell>
                                     <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.budgetAccomplishedYTD)}>{fmt(client.totals.budgetAccomplishedYTD)}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.turnover)}>{fmt(client.totals.turnover)}</Table.Cell>                                    
+                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.turnover)}>{fmt(client.totals.turnover)}</Table.Cell>
                                 </Table.Row>
                             )
                         }

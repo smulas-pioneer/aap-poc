@@ -6965,30 +6965,28 @@ const wRegion = {
 }
 
 const fix = {
-  'FR0010314401':{region:'Europe',country:'Italy',rating:null},
-  'LU0119099819':{region:'Europe',country:'Italy',rating:null},
-  'LU0281578517':{region:'Europe',country:'Italy',rating:null},
-  'LU0201576401':{region:'Europe',country:'Italy',rating:null},
-  'LU0281579598':{region:'Europe',country:'Italy',rating:null},
-  'LU0568620560':{region:'Europe',country:'Italy',rating:null},
-  'IE00B4ND3602':{region:'Europe',country:'Italy',rating:null},
-  'LU0399031052':{region:'Europe',country:'Italy',rating:null},
-  'FR0010816819':{region:'Europe',country:'Italy',rating:null},
-  'FR0010930446':{region:'Europe',country:'Italy',rating:null},
-  'LU0627756538':{region:'Europe',country:'Italy',rating:null},
-  'LU0518421895':{region:'Europe',country:'Italy',rating:null},
-  'NL0011585146':{region:'Europe',country:'Italy',rating:null},
-  'XS1327539976':{region:'Europe',country:'Italy',rating:'B'},
-  'LU0145482039':{region:'Europe',country:'Italy',rating:null},
-  'IE0007472990':{region:'Europe',country:'Italy',rating:null},
-  'LU1191877379':{region:'Europe',country:'Italy',rating:null},
-  'LU0533595319':{region:'Europe',country:'Italy',rating:null},
-  'FR0000989501':{region:'Europe',country:'Italy',rating:null},
-  'LU0257968619':{region:'Europe',country:'Italy',rating:null},
-  'FR0011006360':{region:'Europe',country:'Italy',rating:null}
+  'FR0010314401':{region:'Europe',country:'France',rating:null},
+  'LU0119099819':{region:'Europe',country:'Luxembourg',rating:'A'},
+  'LU0281578517':{region:'Europe',country:'Luxembourg',rating:'A'},
+  'LU0201576401':{region:'Europe',country:'v',rating:'AA'},
+  'LU0281579598':{region:'Europe',country:'Luxembourg',rating:'A'},
+  'LU0568620560':{region:'Europe',country:'Luxembourg',rating:'B'},
+  'IE00B4ND3602':{region:'Europe',country:'Ireland',rating:'A'},
+  'LU0399031052':{region:'Europe',country:'Luxembourg',rating:'A'},
+  'FR0010816819':{region:'Europe',country:'France',rating:null},
+  'FR0010930446':{region:'Europe',country:'France',rating:null},
+  'LU0627756538':{region:'Europe',country:'Luxembourg',rating:'A'},
+  'LU0518421895':{region:'Europe',country:'Luxembourg',rating:'A'},
+  'NL0011585146':{region:'Europe',country:'Netherlands',rating:null},
+  'XS1327539976':{region:'Europe',country:'United Kingdom',rating:'B'},
+  'LU0145482039':{region:'Europe',country:'Luxembourg',rating:'A'},
+  'IE0007472990':{region:'Europe',country:'Ireland',rating:'BBB'},
+  'LU1191877379':{region:'Europe',country:'Luxembourg',rating:'A'},
+  'LU0533595319':{region:'Europe',country:'Luxembourg',rating:'A'},
+  'FR0000989501':{region:'Europe',country:'France',rating:'A'},
+  'LU0257968619':{region:'Europe',country:'Luxembourg',rating:'A'},
+  'FR0011006360':{region:'Europe',country:'France',rating:'AAA'},
 }
-
-
 
 export const wrapSecurity = (s: any) => {
   if (!dictCur[s.Currency]) missingCurrency[s.Currency] = s.Currency;

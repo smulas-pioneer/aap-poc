@@ -14,6 +14,7 @@ export interface TopClientProps {
 }
 
 export interface TopClientItem {
+    country: string,
     region: string,
     city: string,
     branch: string,
@@ -28,7 +29,7 @@ interface TopClientState {
     currentData: TopClientItem[];
 }
 
-export enum GroupTypes { Region = 0,  Branch, Advisor };
+export enum GroupTypes { Country= 0,Region ,  Branch, Advisor };
 export type GroupType = keyof typeof GroupTypes;
 
 export class TopClient extends React.Component<TopClientProps, TopClientState> {
@@ -70,6 +71,10 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
                 grouped = groupBy(clients, d => d.agent);
                 break;
             }
+            case GroupTypes.Country: {
+                grouped = groupBy(clients, d => d.country);
+                break;
+            }
         }
 
         for (let key in grouped) {
@@ -85,6 +90,7 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
          //   const sumAllocation = sumBy(grouped[key], c => c.allocationKPI) / grouped[key].length;            
             let first = grouped[key][0];
             recs.push({
+                country: first.country,
                 region: first.address.region,
                 city: first.address.city,
                 branch: first.branch,

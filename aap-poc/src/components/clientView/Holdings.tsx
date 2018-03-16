@@ -245,11 +245,11 @@ export class Holdings extends React.Component<Props, State> {
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell style={{ width: '10px' }} ></Table.HeaderCell>
-                            <Table.HeaderCell >{lang.ISIN}</Table.HeaderCell>
+                            <Table.HeaderCell width={1}>{lang.ISIN}</Table.HeaderCell>
                             <Table.HeaderCell >{lang.SECURITY_NAME}</Table.HeaderCell>
                             <Table.HeaderCell width={2}>{lang.ASSET_CLASS}</Table.HeaderCell>
                             <Table.HeaderCell width={2} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
-                            <Table.HeaderCell width={2} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
+                            <Table.HeaderCell width={1} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
                             <Table.HeaderCell width={1} textAlign="right">{lang.WEIGHT}</Table.HeaderCell>
                             <Table.HeaderCell width={1} textAlign="center">
                                 <Dropdown text={`${lang.PROPOSE}: ${this.state.mode}`} pointing='left' className='link item'>

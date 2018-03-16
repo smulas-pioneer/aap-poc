@@ -74,6 +74,18 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
             [0,67,112],
             [8,19,50]
         ];
+
+        this.colors = [
+            [255,210,205],
+            [255,134,121],
+            [255,67,47],
+            [226,22,0],
+            [176,18,0],
+            [92,9,0],
+            [50,5,0]
+        ];
+
+
         this.MAX_COLORS_LEN = this.colors.length;
         this.LAST_COLOR = 'whitesmoke';
 

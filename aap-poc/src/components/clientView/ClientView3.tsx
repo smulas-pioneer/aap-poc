@@ -142,7 +142,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                     this.setState({ axes, somethingIsChanged: true, processing: undefined }, () => {
                         this.props.getSuggestions({ id: this.props.client!.id, position: this.state.strategy, axes: axes, calculateFromAxes: true });
                     })
-                }, 1500);
+                }, 800);
             }
         )
 
@@ -254,72 +254,77 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
         const graphs = this.calculateGraphs();
         return (
-            <AdvancedGrid className="grid-client-view-main" style={{ marginBottom: '10px' }}>
-                <Segment style={{ margin: 0 }} >
-                    <WidgetTitle title={lang.PERSONAL_INFORMATION} />
-                    <ClientCard client={client} lang={lang} color={'blue'} />
-                </Segment>
-                <Segment style={{ margin: 0 }}>
-                    <ClientAlert radar={client.radar} client={client} lang={lang} onOpenHistory={() => this.setState({ viewHistory: true })} />
-                </Segment>
-                <AdvancedGrid className="grid-client-view-sub">
-                    <Segment style={{ margin: 0 }}>
-                        <WidgetTitle title={this.state.showModel ? lang.MODEL : lang.PORTFOLIO_HOLDINGS} shareButtons={['Excel', 'Pdf', 'Copy']} />
-                        {this.state.showModel && <Model
-                            clientId={client.id} lang={lang} holdings={strategy}
-                            onShowHoldings={() => this.setState({ showModel: false })}
-                        />}
-                        {!this.state.showModel && <Holdings
-                            clientId={client.id}
-                            lang={lang}
-                            holdings={strategy}
-                            onChange={this.handleOnChange}
-                            onAddSecurity={this.props.addSecurity}
-                            onAddHistory={this.props.addHistory}
-                            onShowModel={() => this.setState({ showModel: true })}
-                            onSomethingChanged={this.handleSomethingIsChanged}
-                            radar={this.state.radar}
-                            axes={this.state.axes}
-                        />}
-                        <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={!somethingIsChanged} />
-                    </Segment>
+            <div>
 
-                    <Segment style={{ margin: 0 }}>
-                        <WidgetTitle title={lang.PORTFOLIO_MONITORING} shareButtons={['Image', 'Pdf', 'Copy']} />
-                        {radar &&
-                            <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} alertsAbout={'actual'} />
-                        }
-                        <br />
-                        <p style={{ textAlign: 'center' }}>Alerts are about: <b>{'proposed'}</b> </p>
+                <AdvancedGrid className="grid-client-view-main" style={{ marginBottom: '10px' }}>
+                    <Segment style={{ margin: 0 }} >
+                        <WidgetTitle title={lang.PERSONAL_INFORMATION} />
+                        <ClientCard client={client} lang={lang} color={'blue'} />
                     </Segment>
-                </AdvancedGrid>
+                    <Segment style={{ margin: 0 }}>
+                        <ClientAlert radar={client.radar} client={client} lang={lang} onOpenHistory={() => this.setState({ viewHistory: true })} />
+                    </Segment>
+                    <AdvancedGrid className="grid-client-view-sub">
+                        <Segment style={{ margin: 0 }}>
+                            <WidgetTitle title={this.state.showModel ? lang.MODEL : lang.PORTFOLIO_HOLDINGS} shareButtons={['Excel', 'Pdf', 'Copy']} />
+                            {this.state.showModel && <Model
+                                clientId={client.id} lang={lang} holdings={strategy}
+                                onShowHoldings={() => this.setState({ showModel: false })}
+                            />}
+                            {!this.state.showModel && <Holdings
+                                clientId={client.id}
+                                lang={lang}
+                                holdings={strategy}
+                                onChange={this.handleOnChange}
+                                onAddSecurity={this.props.addSecurity}
+                                onAddHistory={this.props.addHistory}
+                                onShowModel={() => this.setState({ showModel: true })}
+                                onSomethingChanged={this.handleSomethingIsChanged}
+                                radar={this.state.radar}
+                                axes={this.state.axes}
+                            />}
+                            <Fees strategy={strategy} lang={lang} targetReturn={this.state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={!somethingIsChanged} />
+                        </Segment>
 
-                <AdvancedGrid className="grid-client-view-sub2">
-                    <Segment style={{ margin: 0 }}>
-                        <ClientViews graphs={graphs} lang={lang} mode='tab' defaultIndex={3} />
-                    </Segment>
-                    {/*}
+                        <Segment style={{ margin: 0 }}>
+                            <WidgetTitle title={lang.PORTFOLIO_MONITORING} shareButtons={['Image', 'Pdf', 'Copy']} />
+                            {radar &&
+                                <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={this.handleAxesChange} width={700} height={413} alertsAbout={'actual'} />
+                            }
+                            <br />
+                            <p style={{ textAlign: 'center' }}>Alerts are about: <b>{'proposed'}</b> </p>
+                        </Segment>
+                    </AdvancedGrid>
+
+                    <AdvancedGrid className="grid-client-view-sub2">
+                        <Segment style={{ margin: 0 }}>
+                            <ClientViews graphs={graphs} lang={lang} mode='tab' defaultIndex={3} />
+                        </Segment>
+                        {/*}
                     <Segment style={{ margin: 0 }} as={OverflowColumn}>
                         <WidgetTitle title={lang.CLIENT_EVENT_HISTORY} />
                         <ClientHistory lang={lang} history={history} />
                     </Segment>
                         */}
-                </AdvancedGrid>
-                {viewHistory && <Modal open closeOnDimmerClick={false} closeOnEscape onClose={() => this.setState({ viewHistory: false })}>
-                    <Modal.Header>
-                        <Button floated="right" size="tiny" basic negative circular icon="remove" onClick={() => this.setState({ viewHistory: false })} />
-                        <WidgetTitle title={lang.CLIENT_EVENT_HISTORY} />
-                    </Modal.Header>
-                    <Modal.Content>
-                        <ClientHistory lang={lang} history={history} />
-                    </Modal.Content>
-                </Modal>}
-                {processing && <Dimmer active blurring inverted>
-                    <Loader size="huge">{processing}</Loader>
-                </Dimmer>}
+                    </AdvancedGrid>
+                    {viewHistory && <Modal open closeOnDimmerClick={false} closeOnEscape onClose={() => this.setState({ viewHistory: false })}>
+                        <Modal.Header>
+                            <Button floated="right" size="tiny" basic negative circular icon="remove" onClick={() => this.setState({ viewHistory: false })} />
+                            <WidgetTitle title={lang.CLIENT_EVENT_HISTORY} />
+                        </Modal.Header>
+                        <Modal.Content>
+                            <ClientHistory lang={lang} history={history} />
+                        </Modal.Content>
+                    </Modal>}
 
-                }
+                    }
             </AdvancedGrid>
+            {processing &&
+                    <div style={{opacity:0.9, position:'fixed', top:0,left:0,width:'100%', height:'100%', backgroundColor:'whitesmoke'}}>
+                        <Loader style={{opacity:1}} active size="huge">{processing}</Loader>
+                    </div>}
+
+            </div>
         )
     }
 }
@@ -360,10 +365,10 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
         <Grid.Row>
             <Grid.Column width={16} style={{ margin: 0 }}>
                 <Grid columns="equal">
-                    {renderColumns({ 'Client Id': client.id, 'Entry Date': client.lastAdvicedate, 'Segment': client.segment,'% of discount fees': `${client.percentageOfDiscountFees}%` })}
-                    {renderColumns({ 'Tel': client.phone, 'Email': client.email, 'Branch': client.branch, 'Model': client.modelName  })}
-                    {renderColumns({ 'Address': client.address.streetAddress, 'ZIP Code': client.address.zipCode, 'City': client.address.city, 'Region': client.address.region })}
-                    {renderColumns({ 'Risk Profile': client.clientRiskProfile, 'Project': client.project, [lang.TIME_HORIZON]: client.timeHorizon, 'Product Appropriateness': client.productAppropriateness }, true)}
+                    {renderColumns({ 'Client Id': client.id, 'Entry Date': client.lastAdvicedate, 'Segment': client.segment, 'Branch': client.branch })}
+                    {renderColumns({ 'Address': client.address.streetAddress, 'City': client.address.city, 'Tel': client.phone, 'Email': client.email })}
+                    {renderColumns({'Risk Profile': client.clientRiskProfile, 'Model': client.modelName, [lang.TIME_HORIZON]: client.timeHorizon , 'Product Appropriateness': client.productAppropriateness})}
+                    {renderColumns({  'Project': client.project,'% of Project Accomplishment':`${client.projectAccomplishment}%` ,'% of Discount Fees': `${client.percentageOfDiscountFees}%` }, true)}
                 </Grid>
             </Grid.Column>
         </Grid.Row>
@@ -415,7 +420,7 @@ const Fees = (props: { strategy: StrategyItem[], lang: LangDictionary, targetRet
                 <Statistic.Label>{lang.UPFRONT_FEES}</Statistic.Label>
             </Statistic>
             <Statistic size="mini">
-                <Statistic.Value> {perc >0 ? '-':''} {fmt.format(perc)} %</Statistic.Value>
+                <Statistic.Value> {perc > 0 ? '-' : ''} {fmt.format(perc)} %</Statistic.Value>
                 <Statistic.Label>{lang.ONGOING_FEES}</Statistic.Label>
             </Statistic>
             {props.targetReturn && <Statistic size="mini">
@@ -451,7 +456,7 @@ interface ClientViewProps {
     lang: LangDictionary,
     mode: 'tab' | 'buttons',
     defaultIndex: number,
-    hideTitle?:boolean
+    hideTitle?: boolean
 }
 
 export class ClientViews extends React.Component<ClientViewProps, { activeIndex?: number }> {
@@ -461,9 +466,9 @@ export class ClientViews extends React.Component<ClientViewProps, { activeIndex?
         this.handleBtnChange = this.handleBtnChange.bind(this);
         this.handleTabChange = this.handleTabChange.bind(this);
 
-            setTimeout(() => {
-                this.setState({ activeIndex: props.defaultIndex });
-            }, 1000);
+        setTimeout(() => {
+            this.setState({ activeIndex: props.defaultIndex });
+        }, 1000);
     }
     componentDidMount() {
     }
@@ -491,7 +496,7 @@ export class ClientViews extends React.Component<ClientViewProps, { activeIndex?
 
         return (
             <div>
-                {!this.props.hideTitle && <WidgetTitle title={lang.PORTFOLIO_VIEWS} shareButtons={['Image', 'Copy']} /> }
+                {!this.props.hideTitle && <WidgetTitle title={lang.PORTFOLIO_VIEWS} shareButtons={['Image', 'Copy']} />}
                 <Tab menu={{ pointing: true, secondary: true }} panes={panes} activeIndex={activeIndex} onTabChange={this.handleTabChange} style={{ height: '95%' }} />
             </div>
         );

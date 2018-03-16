@@ -74,6 +74,8 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
         lastAdvicedate: '2017-01-01',
         clientStatusAge: '2017-01-01',
         clientStatusDuration: '<1W',
+        projectAccomplishment: rnd(0,100),
+        country:'Italy',
         address: {
             city: agent.branch.city.cityName,
             region: agent.branch.city.region,

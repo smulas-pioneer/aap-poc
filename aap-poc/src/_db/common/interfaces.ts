@@ -47,6 +47,9 @@ export interface Client {
     productAppropriateness: number;
     percentageOfDiscountFees: number;
     project: string;
+    projectAccomplishment: number;
+
+    country:string;
 
     YTD_Upfront_FEES: number;
     MTD_Upfront_FEES: number;
