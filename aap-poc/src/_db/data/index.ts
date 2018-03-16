@@ -23,20 +23,21 @@ let strategies: { [isin: string]: StrategyItem[] };
 let alertHistory: AlertHistory[];
 let history: { [isin: string]: InterviewResult[] };
 let agents: string[];
+import * as moment from 'moment';
 
 export const loadDatabase = (appName: string) => {
     const baseUrl = appName === "" ? "" : "/" + appName;
+    const tag = "?ts="+ moment().format('YYMMDDhhmmss');
 
-
-    fetch(baseUrl + '/radars.json').then(r => r.json()).then(p => radars = p);
+    fetch(baseUrl + '/radars.json'+tag).then(r => r.json()).then(p => radars = p);
 
     //PERFORMANCES
-    fetch(baseUrl + '/performances.json').then(r => r.json()).then(p => performances = p);
+    fetch(baseUrl + '/performances.json'+tag).then(r => r.json()).then(p => performances = p);
 
-    fetch(baseUrl + '/perfSummary.json').then(r => r.json()).then(p => perfSummary = p);
+    fetch(baseUrl + '/perfSummary.json'+tag).then(r => r.json()).then(p => perfSummary = p);
 
     //SECURITIES
-    fetch(baseUrl + '/securities2.json').then(r => r.json()).then(p => {
+    fetch(baseUrl + '/securities2.json'+tag).then(r => r.json()).then(p => {
         securities2 =
             (securityList).map((p: any) => ({ ...p, blacklisted: p.Rating == "BBB" && p.Sector == "Utilities" }))
                 .concat(p)
@@ -48,24 +49,24 @@ export const loadDatabase = (appName: string) => {
     });
 
     //SECURITIES
-    fetch(baseUrl + '/clients.json').then(r => r.json()).then(p => {
+    fetch(baseUrl + '/clients.json'+tag).then(r => r.json()).then(p => {
         clients = p
     });
 
     //STRATEGIES
-    fetch(baseUrl + '/strategy.json').then(r => r.json()).then(p => {
+    fetch(baseUrl + '/strategy.json'+tag).then(r => r.json()).then(p => {
         strategies = p
         updateStrategies();
     });
 
     //ALERT HISTORY
-    fetch(baseUrl + '/alertHistory.json').then(r => r.json()).then(p => alertHistory = p);
+    fetch(baseUrl + '/alertHistory.json'+tag).then(r => r.json()).then(p => alertHistory = p);
 
     //History
-    fetch(baseUrl + '/history.json').then(r => r.json()).then(p => history = p);
+    fetch(baseUrl + '/history.json'+tag).then(r => r.json()).then(p => history = p);
 
     //ALERT HISTORY
-    fetch(baseUrl + '/agents.json').then(r => r.json()).then(p => agents = p);
+    fetch(baseUrl + '/agents.json'+tag).then(r => r.json()).then(p => agents = p);
 }
 
 export { radars, securities2 as securityList, clients as clientList, history, agents, strategies, performances, alertHistory, perfSummary };
