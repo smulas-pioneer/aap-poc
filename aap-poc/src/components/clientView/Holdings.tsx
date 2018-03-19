@@ -220,12 +220,15 @@ export class Holdings extends React.Component<Props, State> {
                                     title={lang.PROPOSAL_VALIDATION.title}
                                     trigger={<Menu.Item position="right" disabled={!isValid || !somethingIsChanged}><Icon name="send" />Validate</Menu.Item>}
                                     style={{ border: '2px solid green' }}
+                                    
                                     confirmButton="Accept"
                                     cancelButton="Reject"
                                     customButton={{ text: 'Later', icon: 'forward', color: 'blue' }}
+                                    
                                     onConfirm={() => this.handleOnAddHistory('PENDING EXECUTION')} 
                                     onCancel={() => this.handleOnAddHistory('ON HOLD')} 
                                     onCustom={() => this.handleOnAddHistory('PENDING PROPOSAL')} >
+                                    
 
                                     <div style={{ width: '100%' }}>
                                         <OrderList data={holdings} lang={lang} />

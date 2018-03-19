@@ -20,11 +20,9 @@ export const solve = (strategy: StrategyItem[], axes: RadarStrategyParm): Strate
         return prev;
     }, {});
 
-    var minSec = 0;
-
     let constraints = retStrategy.reduce((prev, curr) => {
         prev['weight_' + curr.security.IsinCode] = {
-            min: ++minSec < 4 ?0.2:0,
+            min: 0,
             max: maxWeight
         }
         return prev;

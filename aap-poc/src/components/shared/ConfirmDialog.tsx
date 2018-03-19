@@ -51,20 +51,28 @@ export class ConfirmDialog extends React.Component<ConfirmDialogProps, ConfirmDi
     }
 
     handleCancel() {
+        
         if (this.props.onCancel) {
             this.props.onCancel();
         } else {
             this.setState({ open: false })
-        }
+        }        
     }
 
     handleCustom() {
+        
         if (this.props.onCustom) {
             this.props.onCustom();
-        } else {
+        } else {   
             this.setState({ open: false });
         }
+        
     }
+
+   handleClose  = () => {
+    this.setState({ open: false });
+
+   }
 
     private createCustomButton() {
         const { customButton } = this.props;
@@ -96,7 +104,7 @@ export class ConfirmDialog extends React.Component<ConfirmDialogProps, ConfirmDi
             >
                 <Modal.Header>
                     <Segment basic clearing style={{ padding: 0 }}>
-                        <Button floated="right" size="tiny" basic negative circular icon="remove" onClick={this.handleCancel} />
+                        <Button floated="right" size="tiny" basic negative circular icon="remove" onClick={this.handleClose} />
                         {title && <WidgetTitle title={title} shareButtons={shareButtons} style={{ marginTop: 0 }} />}
                     </Segment>
                 </Modal.Header>
