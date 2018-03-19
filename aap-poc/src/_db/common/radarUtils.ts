@@ -26,7 +26,10 @@ export const avgRadar = (position: PositionItem[]): RadarItem => {
     }
 }
 
-export const adjustRadarValue = (value: number) => value;// < 10 ? value * 20 : value;
+export const adjustRadarValue = (value: number) => {
+    if ( value >10 ) return value;
+    return value * 20 ;
+}
 
 export const getRAG = (act: number, limit: number, mifid: boolean): Alert => {
     return act > (limit + 1) ? (mifid ? 'red' : 'orange') : 'green'
