@@ -75,7 +75,7 @@ export const getBreakdown = (holdings: PositionItem[]) => {
         'Sector',
         'Currency',
         'Rating',
-        'Country',
+        'Region',
         'Maturity'
     ];
     return attributes.map(r => getAttributeBreakDown(r, holdings));

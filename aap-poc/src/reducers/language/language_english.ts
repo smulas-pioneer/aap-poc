@@ -89,7 +89,7 @@ export const English: LanguageState = {
         BRANCH: "Branch",
         ADVISOR: "Advisor",
         RESULTS: "Results",
-        TARGET_RESULT: "Target Result",
+        TARGET_RESULT: "Target Return",
 
         //client view
         PERSONAL_INFORMATION: 'Personal Information',

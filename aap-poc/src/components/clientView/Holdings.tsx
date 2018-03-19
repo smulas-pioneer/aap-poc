@@ -223,8 +223,8 @@ export class Holdings extends React.Component<Props, State> {
                                     
                                     confirmButton="Accept"
                                     cancelButton="Reject"
-                                    customButton={{ text: 'Later', icon: 'forward', color: 'blue' }}
-                                    
+                                    customButton={{ text: 'Postpone', icon: 'forward', color: 'blue' }}
+
                                     onConfirm={() => this.handleOnAddHistory('PENDING EXECUTION')} 
                                     onCancel={() => this.handleOnAddHistory('ON HOLD')} 
                                     onCustom={() => this.handleOnAddHistory('PENDING PROPOSAL')} >

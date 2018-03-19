@@ -31,9 +31,9 @@ const italyRegionsRate = {
 }
 const MODEL_COUNT = 10;
 const CLIENT_COUNT = 4000;
-const MAX_CITIES_X_REGION = 4;
+const MAX_CITIES_X_REGION = 3;
 const MAX_BRANCH_X_CITY = 3;
-const MAX_AGENT_X_BRANCH = 4;
+const MAX_AGENT_X_BRANCH = 3;
 
 const STRAGEGY_MIN_SECURITY_COUNT = 4;
 const STRATEGY_MAX_SECURITY_COUNT = 8;
@@ -56,13 +56,14 @@ const portfolioCreator = (id: string, name: string): Portfolio => {
     }
 }
 
+var clientIndex = 0;
 
 const clientCreator = (id: string, models: Portfolio[], agents: string[]): Client => {
     const name = faker.name.firstName();
     const lastName = faker.name.lastName();
     const modelIx = Math.ceil(Math.random() * (MODEL_COUNT - 1));
 
-    const agentName = isFakeClient(id) ? agents[0] : agents[rnd(0, agents.length - 1)];
+    const agentName = isFakeClient(id) || (++clientIndex) < 200 ? agents[0] : agents[rnd(0, agents.length - 1)];
     const agent = agentDictionary[agentName];
     return {
         id,
@@ -74,8 +75,8 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
         lastAdvicedate: '2017-01-01',
         clientStatusAge: '2017-01-01',
         clientStatusDuration: '<1W',
-        projectAccomplishment: rnd(0,100),
-        country:'Italy',
+        projectAccomplishment: rnd(0, 100),
+        country: 'Italy',
         address: {
             city: agent.branch.city.cityName,
             region: agent.branch.city.region,
@@ -94,7 +95,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[]): Clien
                 id == "2" ? "Defensive" :
                     faker.company.catchPhraseAdjective(),
         decision: '',
-        clientRiskProfile: rndS(['Risk Adverse', 'Conservative', 'Balanced','Dynamic','Aggressive']),
+        clientRiskProfile: rndS(['Risk Adverse', 'Conservative', 'Balanced', 'Dynamic', 'Aggressive']),
         clientStatus: 'NO ALERT',
         mifid: rnd(1, 40),
         numOfAcceptedProposal: 0,
@@ -151,14 +152,14 @@ const clientStrategyCreator = (clients: Client[]) => {
     }, {} as { [cli: string]: StrategyItem[] })
 }
 
-let usedCurr :any ={'USD':0,'EUR':0};
+let usedCurr: any = { 'USD': 0, 'EUR': 0 };
 const getRandomSecurity = () => {
     let ret;
     do {
         ret = securities[rnd(1, securities.length - 1)];
 
-    } while (ret.Currency =='USD' && usedCurr.EUR < (usedCurr.USD*2));
-    usedCurr[ret.Currency] ++;
+    } while (ret.Currency == 'USD' && usedCurr.EUR < (usedCurr.USD * 2));
+    usedCurr[ret.Currency]++;
 
     return ret;
 }
@@ -512,9 +513,9 @@ const go = async () => {
             });
 
             c.clientStatusDuration = getClientStatusDuration(c.clientStatusAge);
-            c.numOfInterviews = histories[c.id].length;
-            c.numOfAcceptedProposal = histories[c.id].filter(p => p.status == 'ACCEPTED').length;
-            c.numOfRejectedProposal = histories[c.id].filter(p => p.status == 'REJECTED').length;
+            c.numOfInterviews = Math.round(histories[c.id].length / 5);
+            c.numOfAcceptedProposal = Math.round(histories[c.id].filter(p => p.status == 'ACCEPTED').length / 5);
+            c.numOfRejectedProposal = c.numOfInterviews- c.numOfAcceptedProposal;// Math.round(histories[c.id].filter(p => p.status == 'REJECTED').length / 5);
             c.sales = c.aua * rnd(-100, 100) / 1000;
             c.deltaAnalysis = deltaAnalysis(c.radar);
         });

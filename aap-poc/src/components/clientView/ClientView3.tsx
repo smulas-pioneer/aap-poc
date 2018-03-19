@@ -217,10 +217,10 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                 title = "MICRO";
                 prop = "AssetClass";
             } else if (prop === 'Rating' || prop === 'Maturity') {
-                prop = "Bond Indicators";
+                prop = "Rating";
             }
 
-            const chartView = (prop === "AssetClass" ? 'pie' : prop === 'Bond Indicators' ? 'pie' : 'composed');
+            const chartView = (prop === "AssetClass" ? 'pie' : prop === 'Rating' ? 'pie' : 'composed');
 
             const element = (memo[prop] || {
                 title: prop,
@@ -365,7 +365,7 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
         <Grid.Row>
             <Grid.Column width={16} style={{ margin: 0 }}>
                 <Grid columns="equal">
-                    {renderColumns({ 'Client Id': client.id, 'Entry Date': client.lastAdvicedate, 'Segment': client.segment, 'Branch': client.branch })}
+                    {renderColumns({ 'Born Date': client.bornDate ||'1972-12-21', 'Entry Date': client.lastAdvicedate, 'Segment': client.segment, 'Branch': client.branch })}
                     {renderColumns({ 'Address': client.address.streetAddress, 'City': client.address.city, 'Tel': client.phone, 'Email': client.email })}
                     {renderColumns({'Risk Profile': client.clientRiskProfile, 'Model': client.modelName, [lang.TIME_HORIZON]: client.timeHorizon , 'Product Appropriateness': client.productAppropriateness})}
                     {renderColumns({  'Project': client.project,'% of Project Accomplishment':`${client.projectAccomplishment}%` ,'% of Discount Fees': `${client.percentageOfDiscountFees}%` }, true)}

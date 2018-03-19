@@ -2,6 +2,7 @@
 export interface Client {
     id: string;
     name: string;
+    bornDate?: string;
     modelId: string;
     modelName: string;
     agent: string;
@@ -62,7 +63,7 @@ export interface Client {
 }
 
 export type ClientSegment = 'Private' | 'Mass Affluent' | 'Retail' | 'Wealth Management'
-export type TimeHorizon = '18 Months' | '3 Years' | '4 Years' | '5 Years' | 'More than 5 Years'
+export type TimeHorizon = '18 Months' | '3 Years' | '4 Years' | '5 Years' | '10 Years';
 
 
 const K = 10;
@@ -71,7 +72,7 @@ export const TimeHorizonMonths = {
     '3 Years': 36 * K,
     '4 Years': 48 * K,
     '5 Years': 60 * K,
-    'More than 5 Years': 100 * K
+    '10 Years': 100 * K
 }
 
 export interface Address {
