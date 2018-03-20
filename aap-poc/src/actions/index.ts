@@ -102,13 +102,13 @@ export const getClient = createPromiseWithThunkAction('GET_CLIENT', svc.getClien
 export const addSecurity = createPromiseWithThunkAction('ADD_SECURITY', svc.addSecurity, getClientSuccess, (d, s, r, p) => {
     if (r) {
         d(getHistory(r.id))
-        d(getStrategy(r.id))
+        // d(getStrategy(r.id))
     }
 });
 
 export const addHistory = createPromiseWithThunkAction('ADD_HISTORY', svc.addHistory, getClientSuccess, (d, s, r, p) => {
     if (r) {
         d(getHistory(r.id))
-        d(getStrategy(r.id))
+      //  d(getStrategy(r.id))
     }
 });
