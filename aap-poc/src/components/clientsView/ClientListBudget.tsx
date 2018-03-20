@@ -61,9 +61,9 @@ export class ClientListBudget extends React.Component<ClientListBudgetProps, Cli
                                         <Link to={`/clients/${client.id}`}>   {client.name}</Link>
                                     </Table.Cell>
                                     <Table.Cell textAlign="right" >{fmt(client.YTD_Upfront_FEES)}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={{ color: client.YTD_Ongoing_FEES < 0 ? 'red' : 'black' }}>{fmt(client.YTD_Ongoing_FEES, 1)}</Table.Cell>
+                                    <Table.Cell textAlign="right" style={{ color: 'black' }}>{fmt(client.YTD_Ongoing_FEES, 1)}</Table.Cell>
                                     <Table.Cell textAlign="right" >{fmt(client.Y1_Upfront_FEES)}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={{ color: client.Y1_Ongoing_FEES < 0 ? 'red' : 'black' }} >{fmt(client.Y1_Ongoing_FEES, 1)}</Table.Cell>
+                                    <Table.Cell textAlign="right" style={{ color: 'black' }} >{fmt(client.Y1_Ongoing_FEES, 1)}</Table.Cell>
                                     <Table.Cell textAlign="right" >{fmt(client.turnover, 2)}</Table.Cell>
                                 </Table.Row>
                             )

@@ -1,0 +1,13 @@
+{
+  "name": "aap-poc",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index-html",
+  "license": "MIT",
+  "dependencies": {
+    "serve": "^6.5.3"
+  },
+  "scripts": {
+    "start": "serve . --port 8080"
+  }
+}
