@@ -72,7 +72,7 @@ export const TimeHorizonMonths = {
     '3 Years': 36 * K,
     '4 Years': 48 * K,
     '5 Years': 60 * K,
-    '10 Years': 100 * K
+    '10 Years': 120 * K
 }
 
 export interface Address {

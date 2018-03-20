@@ -196,6 +196,9 @@ export const calculateProjection = (data: { date: string, perf: number }[], days
     let newData = [] as { date: string, perf?: number, projection?: number, min?: number, max?: number }[];
 
     const r = calculateRegression(data);
+
+    console.log(`gradient:${r.gradient} intercept:${r.yIntercept} data:${JSON.stringify(data[0])}`);
+
     let date = moment(data[data.length - 1].date);
     let perf = startValue;
     newData.push({
@@ -229,12 +232,14 @@ export const calculateProjection = (data: { date: string, perf: number }[], days
     }
 
     const returnFor95 = (th: TimeHorizon) => {
+        console.log('return', th, r95);
         return r95;
     }
 
-    return {
+    const ret= {
         data: newData,
         getProbabilityByTimeHorizon,
         returnFor95
     };
+    return ret;
 }

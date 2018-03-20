@@ -58,8 +58,11 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
 
     constructor(props: PerformanceChartProps) {
         super(props)
+        console.log('CTOR');
 
-        const reg = regression(props.advancedView || false, TimeHorizonMonths[props.clientTimeHorizon || '18 Months'], this.props.data, this.props.actualData || this.props.data);
+        const reg = regression(props.advancedView || false, TimeHorizonMonths[props.clientTimeHorizon || '18 Months'],
+            this.props.data, this.props.actualData || this.props.data
+        );
         this.getProbabilityByTimeHorizon = reg.getProbabilityByTimeHorizon;
         this.returnFor95 = reg.returnFor95;
         const targetReturn = this.returnFor95(props.clientTimeHorizon || '18 Months');
@@ -74,12 +77,17 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
         this.props.onCalculate95TargetRetForClientTimeHorizon && this.props.onCalculate95TargetRetForClientTimeHorizon(targetReturn);
     }
 
+    componentDidMount() {
+        this.setData({showProjection:true,period:this.state.period, data:this.props.data,actualData: this.props.actualData|| this.props.data})
+    }
+
     componentWillReceiveProps(next: PerformanceChartProps) {
         if (next.data && next.data[next.data.length - 1].perf != this.state.data[this.state.data.length - 1].perf) {
             this.setData({ data: next.data })
         }
         if (next.version != this.props.version) {
             const targetReturn = this.returnFor95(next.clientTimeHorizon || '18 Months');
+            console.log('target return', targetReturn)
             this.setState({
                 targetReturn: targetReturn.toString(),
                 probability: 95,
@@ -101,12 +109,14 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
         const minDateStr = minDate.format('YYYY-MM-DD');
         const filteredActuals = actualData.filter(p => p.date >= minDateStr);
 
+        console.log('SETDATA');
         const regr = regression(
             this.props.advancedView || false,
             TimeHorizonMonths[this.state.timeHorizon || '18 Months'],
             data.filter(p => p.date >= minDateStr),
             filteredActuals
         );
+
         this.getProbabilityByTimeHorizon = regr.getProbabilityByTimeHorizon;
         this.returnFor95 = regr.returnFor95;
         this.setState({
@@ -148,10 +158,10 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
         const perf = actualData && fmt.format(100 * (actualData[actualData.length - 1].perf! - initalPerf));
         const primary = actualData && actualData[actualData.length - 1].perf! > 0;
         const minDate = data && moment(data[0].date).format(lang.DATE_FORMAT);
-        
-        const displayedData = data.filter((d, i) => d.date < "2018-03" );
+
+        const displayedData = data.filter((d, i) => d.date < "2018-03");
         const maxDate = displayedData && moment(displayedData[displayedData.length - 1].date).format(lang.DATE_FORMAT);
-        
+
         return <div>
 
             {advancedView && <Menu secondary >
@@ -227,10 +237,15 @@ const regression = (show: boolean, days: number, data: { date: string, perf: num
 
     const d = data[0].perf;
     const newData = data.map(p => ({ ...p, perf: p.perf - d }));
-    if (!show) return {
-        data: newData,
-        getProbabilityByTimeHorizon: (th: TimeHorizon) => 1,
-        returnFor95: (th: TimeHorizon) => 1
+
+
+
+    if (!show) {
+        return {
+            data: newData,
+            getProbabilityByTimeHorizon: (th: TimeHorizon) => 1,
+            returnFor95: (th: TimeHorizon) => 1
+        }
     };
 
     const ad = actualData[0].perf;
