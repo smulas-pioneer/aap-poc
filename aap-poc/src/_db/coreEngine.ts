@@ -11,16 +11,16 @@ import { securityList } from "./data";
 
 
 export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean, forced?: StrategyItem[]): StrategyItem[] => {
-    const k = getSuggestion1(position,axes,calculateFromAxes,forced);
+    const k = getSuggestion1(position, axes, calculateFromAxes, forced);
     return fixCash(k);
 }
-    const getSuggestion1 = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean, forced?: StrategyItem[]): StrategyItem[] => {
+const getSuggestion1 = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean, forced?: StrategyItem[]): StrategyItem[] => {
     if (calculateFromAxes) {
         if (forced && axes.concentration && axes.consistency && axes.efficency && axes.overlap && axes.riskAdequacy && axes.riskAnalysis) return acceptAll(forced);
         return acceptAll(solve(position, axes));
     } else {
 
-        let newPos = forced 
+        let newPos = forced
             ? forced.map(p => ({ ...p, suggestionAccepted: position.find(r => r.security.IsinCode === p.security.IsinCode)!.suggestionAccepted }))
             : position;
         const w = suggestedPositionExCash(newPos)
@@ -31,16 +31,16 @@ export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm,
 };
 
 const fixCash = (strategy: StrategyItem[]) => {
-    const delta = sumBy(strategy, f => ( f.currentWeight + (f.suggestionAccepted ? f.suggestedDelta : 0))) - 1;
+    const delta = sumBy(strategy, f => (f.currentWeight + (f.suggestionAccepted ? f.suggestedDelta : 0))) - 1;
     return strategy.map(s => {
-        return s.isCash ? { ...s,  suggestedDelta: s.suggestedDelta - delta, suggestionAccepted:true }
+        return s.isCash ? { ...s, suggestedDelta: s.suggestedDelta - delta, suggestionAccepted: true }
             : { ...s }
     });
 }
 
 const acceptAll = (forced: StrategyItem[]) => {
     return forced.map(s => {
-        return { ...s,  suggestionAccepted: s.suggestedDelta != 0 ? true:false }
+        return { ...s, suggestionAccepted: s.suggestedDelta != 0 ? true : false }
     });
 }
 
@@ -64,8 +64,8 @@ const getAttributeBreakDown = (attributeName: string, holdings: PositionItem[]):
     }
 }
 
-export const getBreakdowns = (clients:Client[])  => {
-        
+export const getBreakdowns = (clients: Client[]) => {
+
 }
 
 export const getBreakdown = (holdings: PositionItem[]) => {
@@ -117,10 +117,13 @@ export const getRiskReturnFromPerfomance = (data: { date: string, perf: number }
 
 export const getRiskReturn = (position: PositionItem[], model: PositionItem[], period: PerformancePeriod) => {
     const names = position.reduce((prev, curr) => {
-        prev[curr.security.IsinCode] = curr.security.SecurityName
+        if (curr.weight > 0) {
+            prev[curr.security.IsinCode] = curr.security.SecurityName
+        }
         return prev;
     }, {} as { [id: string]: string });
     const perfs = getPerformances(position.map(p => p.security.IsinCode), period);
+
     let ret = Object.keys(perfs)
         .map(id => {
             return { ...getRiskReturnFromPerfomance(perfs[id]), id: names[id] }
@@ -197,8 +200,6 @@ export const calculateProjection = (data: { date: string, perf: number }[], days
 
     const r = calculateRegression(data);
 
-    console.log(`gradient:${r.gradient} intercept:${r.yIntercept} data:${JSON.stringify(data[0])}`);
-
     let date = moment(data[data.length - 1].date);
     let perf = startValue;
     newData.push({
@@ -232,11 +233,10 @@ export const calculateProjection = (data: { date: string, perf: number }[], days
     }
 
     const returnFor95 = (th: TimeHorizon) => {
-        console.log('return', th, r95);
         return r95;
     }
 
-    const ret= {
+    const ret = {
         data: newData,
         getProbabilityByTimeHorizon,
         returnFor95

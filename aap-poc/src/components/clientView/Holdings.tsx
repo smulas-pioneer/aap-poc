@@ -48,7 +48,6 @@ export class Holdings extends React.Component<Props, State> {
 
     componentWillReceiveProps(next: Props) {
         if (JSON.stringify(next.holdings) != JSON.stringify(this.props.holdings)) {
-            console.log('replacing the holdings state');
             this.setState({ holdings: next.holdings, changedIsin: [] })
         }
     }

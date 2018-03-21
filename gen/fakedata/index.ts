@@ -122,7 +122,6 @@ const getPerf = (obj: any[]): { [isin: string]: { date: string, perf: number }[]
 }
 
 export const getAllPerformances = () => {
-    console.log('get all performances');
     //const dict = getAllSecuirities().reduce((p, c) => { p[c.SecurityName] = p.IsinCode; return p; }, {} as { [name: string]: string });
     const perf = [
         ...P1.perf,

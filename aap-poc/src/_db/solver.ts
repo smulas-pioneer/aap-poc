@@ -38,9 +38,6 @@ export const solve = (strategy: StrategyItem[], axes: RadarStrategyParm): Strate
     };
     let ret = solver.MultiObjective (model);
 
-    console.log('axes',axesKeys);
-    console.log('model', model);
-
     if ( ret.midpoint.feasible) {
         return retStrategy.map(h => {
             const w = ret.midpoint[h.security.IsinCode]  || 0;

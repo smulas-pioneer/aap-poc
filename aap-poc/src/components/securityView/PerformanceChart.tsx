@@ -42,7 +42,7 @@ interface PerformanceChartProps {
 interface PerformanceChartState {
     data: { date: string, perf?: number, projection?: number, l0?: number, l1?: number }[];
     period: '1M' | '3M' | '6M' | 'YTD' | '1Y' | 'All',
-    targetReturn: string;
+    target_Return: string;
     timeHorizon: TimeHorizon
     probability: number;
     initalPerf: number;
@@ -58,23 +58,28 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
 
     constructor(props: PerformanceChartProps) {
         super(props)
-        console.log('CTOR');
-
+/*
         const reg = regression(props.advancedView || false, TimeHorizonMonths[props.clientTimeHorizon || '18 Months'],
             this.props.data, this.props.actualData || this.props.data
         );
+
         this.getProbabilityByTimeHorizon = reg.getProbabilityByTimeHorizon;
+
         this.returnFor95 = reg.returnFor95;
+
         const targetReturn = this.returnFor95(props.clientTimeHorizon || '18 Months');
+*/
+
         this.state = {
-            data: reg.data,
+            data: [],
             period: 'YTD',
-            targetReturn: targetReturn.toString(),
+            target_Return: '',
             timeHorizon: props.clientTimeHorizon || '18 Months',
             probability: 95,
             initalPerf: 0
         }
-        this.props.onCalculate95TargetRetForClientTimeHorizon && this.props.onCalculate95TargetRetForClientTimeHorizon(targetReturn);
+        
+      //  this.props.onCalculate95TargetRetForClientTimeHorizon && this.props.onCalculate95TargetRetForClientTimeHorizon(targetReturn);
     }
 
     componentDidMount() {
@@ -87,9 +92,8 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
         }
         if (next.version != this.props.version) {
             const targetReturn = this.returnFor95(next.clientTimeHorizon || '18 Months');
-            console.log('target return', targetReturn)
             this.setState({
-                targetReturn: targetReturn.toString(),
+                target_Return: targetReturn.toString(),
                 probability: 95,
             }, () => {
                 this.props.onCalculate95TargetRetForClientTimeHorizon && this.props.onCalculate95TargetRetForClientTimeHorizon(targetReturn);
@@ -109,7 +113,6 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
         const minDateStr = minDate.format('YYYY-MM-DD');
         const filteredActuals = actualData.filter(p => p.date >= minDateStr);
 
-        console.log('SETDATA');
         const regr = regression(
             this.props.advancedView || false,
             TimeHorizonMonths[this.state.timeHorizon || '18 Months'],
@@ -122,7 +125,8 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
         this.setState({
             data: regr.data,
             period: period,
-            initalPerf: filteredActuals[0].perf!
+            initalPerf: filteredActuals[0].perf!,
+            target_Return: this.returnFor95(this.state.timeHorizon).toString()
         });
     }
 
@@ -132,7 +136,7 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
         }, () => {
             this.setData({});
             this.setState({
-                probability: this.getProbabilityByTimeHorizon(this.state.timeHorizon, parseFloat(this.state.targetReturn))
+                probability: this.getProbabilityByTimeHorizon(this.state.timeHorizon, parseFloat(this.state.target_Return))
             })
 
         });
@@ -140,8 +144,9 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
 
     handleChangeTargetReturn = (value: string) => {
         const n = parseFloat(value);
+
         this.setState({
-            targetReturn: value,
+            target_Return: value,
             probability: this.getProbabilityByTimeHorizon(this.state.timeHorizon, n)
         });
     }
@@ -153,6 +158,7 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
         });
+        if (data.length==0) return null;
 
         // OPTIONALS
         const perf = actualData && fmt.format(100 * (actualData[actualData.length - 1].perf! - initalPerf));
@@ -175,7 +181,7 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
 
                 <Menu.Menu position="right">
                     <Menu.Item>
-                        <Input style={{}} type='number' label="Target Return (%)" size="mini" value={this.state.targetReturn} onChange={(a, b) => this.handleChangeTargetReturn(b.value)} />
+                        <Input style={{}} type='number' label="Target Return (%)" size="mini" value={this.state.target_Return} onChange={(a, b) => this.handleChangeTargetReturn(b.value)} />
                     </Menu.Item>
                     <Menu.Item>
                         <Dropdown text={`${lang.TIME_HORIZON}: ${this.state.timeHorizon}`} pointing='left' className='link item'>
