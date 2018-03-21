@@ -513,9 +513,11 @@ const go = async () => {
             });
 
             c.clientStatusDuration = getClientStatusDuration(c.clientStatusAge);
+ 
             c.numOfInterviews = Math.round(histories[c.id].length / 5);
             c.numOfAcceptedProposal = Math.round(histories[c.id].filter(p => p.status == 'ACCEPTED').length / 5);
             c.numOfRejectedProposal = c.numOfInterviews- c.numOfAcceptedProposal;// Math.round(histories[c.id].filter(p => p.status == 'REJECTED').length / 5);
+ 
             c.sales = c.aua * rnd(-100, 100) / 1000;
             c.deltaAnalysis = deltaAnalysis(c.radar);
         });
