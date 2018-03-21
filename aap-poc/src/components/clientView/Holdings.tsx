@@ -20,6 +20,7 @@ interface Props {
     holdings: StrategyItem[],
     lang: LangDictionary,
     clientId: string,
+    clientState: ClientState,
     onChange: (items: StrategyItem[]) => void;
     onAddSecurity: (props: { securityId: string, clientId: string }) => void;
     onAddHistory?: (props: { clientId: string, notes: string, status: ClientState }) => void;
@@ -138,9 +139,9 @@ export class Holdings extends React.Component<Props, State> {
         })
     }
 
-    handleOnAddHistory = (status: ClientState) => {
+    handleOnAddHistory = (status: ClientState | null, notes?:string) => {
         const {onAddHistory, lang} = this.props;
-        onAddHistory!({ clientId: this.props.clientId, notes: this.props.lang.PROPOSAL_VALIDATION.title, status });
+        onAddHistory!({ clientId: this.props.clientId, notes: notes || this.props.lang.PROPOSAL_VALIDATION.title, status: status || this.props.clientState });
     }
 
 
@@ -225,7 +226,7 @@ export class Holdings extends React.Component<Props, State> {
                                     customButton={{ text: 'Postpone', icon: 'forward', color: 'blue' }}
 
                                     onConfirm={() => this.handleOnAddHistory('PENDING EXECUTION')} 
-                                    onCancel={() => this.handleOnAddHistory('ON HOLD')} 
+                                    onCancel={() => this.handleOnAddHistory(null,'Last proposal reject')} 
                                     onCustom={() => this.handleOnAddHistory('PENDING PROPOSAL')} >
                                     
 

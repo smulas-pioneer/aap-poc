@@ -273,6 +273,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
                             />}
                             {!this.state.showModel && <Holdings
                                 clientId={client.id}
+                                clientState= {client.clientStatus}
                                 lang={lang}
                                 holdings={strategy}
                                 onChange={this.handleOnChange}
