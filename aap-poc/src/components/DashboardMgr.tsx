@@ -230,8 +230,8 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 ret.length += 1;
                 ret.totalBudget += v.budget;
                 ret.totRevenues += v.ongoingFees + v.upfrontFees;
-                ret.acceptedProposals += v.numOfAcceptedProposal;
-                ret.totalProposals += v.numOfInterviews;
+                ret.acceptedProposals += v.numOfAcceptedProposal/2;
+                ret.totalProposals += v.numOfInterviews/2;
                 ret.assetUnder += v.aua;
                 ret.clientAlert += v.radar.numOfAlerts > 0 ? 1 : 0;
                 ret.mifidAlert += v.radar.riskAdequacyAlert != 'green' ? 1 : 0;

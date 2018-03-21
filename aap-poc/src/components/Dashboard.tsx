@@ -91,7 +91,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
             {label && <Statistic.Label>{label}</Statistic.Label>}
             <Statistic.Value>
                 {valueIcon && <Icon name={valueIcon} color={color} />}
-                {value||0}
+                {value || 0}
             </Statistic.Value>
             <br />
             {sublabel && <Statistic.Label><span style={color && { color: color }}>{sublabel}</span></Statistic.Label>}
@@ -197,20 +197,23 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
         const info = data.result.reduce<
             { length: number, assetUnder: number, clientAlert: number, mifidAlert: number, acceptedProposals: number, totalProposals: number, pendingProposals: number, pendingExecution: number, totalBudget: number, totRevenues: number, totalTurnover: number }>(
                 (ret, v, i) => {
+                    const isPP = v.clientStatus == 'PENDING PROPOSAL';
+                    const isPE = v.clientStatus == 'PENDING EXECUTION';
+
                     ret.length += 1;
                     ret.totalBudget += v.budget;
                     ret.totRevenues += v.ongoingFees + v.upfrontFees;
-                    ret.acceptedProposals +=(v.clientStatus == 'PENDING PROPOSAL' ? 0 :  v.numOfAcceptedProposal);
-                    ret.totalProposals += v.numOfInterviews;
-                    ret.pendingProposals += (v.clientStatus == 'PENDING PROPOSAL' ? 1 : 0);
-                    ret.pendingExecution += (v.clientStatus == 'PENDING EXECUTION' ? 1 : 0);
+                    ret.acceptedProposals += isPE ? 1 : isPP ? 0 : v.numOfAcceptedProposal / 2;
+                    ret.totalProposals += isPE || isPP ? 1 : v.numOfInterviews / 2;
+                    ret.pendingProposals += isPP ? 1 : 0;
+                    ret.pendingExecution += isPE ? 1 : 0;
                     ret.assetUnder += v.aua;
                     ret.clientAlert += v.radar.numOfAlerts > 0 ? 1 : 0;
                     ret.mifidAlert += v.radar.riskAdequacyAlert != 'green' ? 1 : 0;
                     ret.totalTurnover += v.turnover;
                     return ret;
                 },
-                { length: 0, assetUnder: 0, clientAlert: 0, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0,pendingExecution:0, pendingProposals: 0, totalBudget: 0, totRevenues: 0, totalTurnover: 0 });
+                { length: 0, assetUnder: 0, clientAlert: 0, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0, pendingExecution: 0, pendingProposals: 0, totalBudget: 0, totRevenues: 0, totalTurnover: 0 });
 
         return (
             <AdvancedGrid className="grid-header-fix">
