@@ -112,3 +112,5 @@ export const addHistory = createPromiseWithThunkAction('ADD_HISTORY', svc.addHis
       //  d(getStrategy(r.id))
     }
 });
+
+export const ready = createAction<boolean>('READY');

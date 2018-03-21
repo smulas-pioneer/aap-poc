@@ -11,9 +11,6 @@ export const group = <T>(data: T[], key: keyof (T)) => data.reduce(
     {} as { [id: string]: T }
 );
 
-
-
-
 let radars: { [id: string]: Radar };
 let performances: { [isin: string]: { date: string, perf: number }[] };
 let perfSummary: { [isin: string]: { date: string, perf: number }[] };
@@ -29,20 +26,23 @@ export const loadDatabase = (appName: string) => {
     const baseUrl = appName === "" ? "" : "/" + appName;
     const tag = "?ts=" + moment().format('YYMMDDhhmmss');
 
-    fetch(baseUrl + '/radars.json' + tag).then(r => r.json()).then(p => radars = p);
+    let procs = [];
+
+
+    procs.push(fetch(baseUrl + '/radars.json' + tag).then(r => r.json()).then(p => radars = p));
 
     //PERFORMANCES
-    fetch(baseUrl + '/performances.json' + tag).then(r => r.json()).then(p => {
+    procs.push(fetch(baseUrl + '/performances.json' + tag).then(r => r.json()).then(p => {
         performances = p
         performances['NL0011585146'] = performances['NL0011585146'].map(i => {
             return { ...i , perf: i.perf/5};
         });
-    });
+    }));
 
-    fetch(baseUrl + '/perfSummary.json' + tag).then(r => r.json()).then(p => perfSummary = p);
+    procs.push(fetch(baseUrl + '/perfSummary.json' + tag).then(r => r.json()).then(p => perfSummary = p));
 
     //SECURITIES
-    fetch(baseUrl + '/securities2.json' + tag).then(r => r.json()).then(p => {
+    procs.push(fetch(baseUrl + '/securities2.json' + tag).then(r => r.json()).then(p => {
         securities2 =
             (securityList).map((p: any) => ({ ...p, blacklisted: p.Rating == "BBB" && p.Sector == "Utilities" }))
                 .concat(p)
@@ -51,10 +51,10 @@ export const loadDatabase = (appName: string) => {
                         r.SecurityName.toLowerCase().indexOf("amundi") > -1 ||
                         r.SecurityName.toLowerCase().indexOf("pioneer") > -1
                 })).map((s: any) => wrapSecurity(s))
-    });
+    }));
 
     //SECURITIES
-    fetch(baseUrl + '/clients.json' + tag).then(r => r.json()).then(p => {
+    procs.push(fetch(baseUrl + '/clients.json' + tag).then(r => r.json()).then(p => {
         clients = p
         clients[1].modelName = "Balanced";
         clients[1].clientRiskProfile = "Dynamic";
@@ -64,22 +64,24 @@ export const loadDatabase = (appName: string) => {
         clients[1].timeHorizon = "10 Years";
         clients[1].projectAccomplishment = 60;
         clients[1].project = "Retirement";
-    });
+    }));
 
     //STRATEGIES
-    fetch(baseUrl + '/strategy.json' + tag).then(r => r.json()).then(p => {
+    procs.push(fetch(baseUrl + '/strategy.json' + tag).then(r => r.json()).then(p => {
         strategies = p
         updateStrategies();
-    });
+    }));
 
     //ALERT HISTORY
-    fetch(baseUrl + '/alertHistory.json' + tag).then(r => r.json()).then(p => alertHistory = p);
+    procs.push(fetch(baseUrl + '/alertHistory.json' + tag).then(r => r.json()).then(p => alertHistory = p));
 
     //History
-    fetch(baseUrl + '/history.json' + tag).then(r => r.json()).then(p => history = p);
+    procs.push(fetch(baseUrl + '/history.json' + tag).then(r => r.json()).then(p => history = p));
 
     //ALERT HISTORY
-    fetch(baseUrl + '/agents.json' + tag).then(r => r.json()).then(p => agents = p);
+    procs.push(fetch(baseUrl + '/agents.json' + tag).then(r => r.json()).then(p => agents = p));
+
+    return Promise.all(procs);
 }
 
 export { radars, securities2 as securityList, clients as clientList, history, agents, strategies, performances, alertHistory, perfSummary };
