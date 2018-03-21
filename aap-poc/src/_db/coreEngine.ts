@@ -134,9 +134,18 @@ export const getRiskReturn = (position: PositionItem[], model: PositionItem[], p
 }
 
 const getPerfContrib = (isin: string[]) => {
+
+    console.log(perfSummary);
+
     let ret: { perf: number, date: string, id: string }[] = [];
     isin.forEach(i => {
-        ret = [...ret, ...perfSummary[i].map(p => ({ ...p, id: i }))]
+        
+
+        ret = [
+            ...ret,
+            ...perfSummary[i].map(p => {
+                return { ...p, id: i };
+            })];
     });
     return ret;
 }
