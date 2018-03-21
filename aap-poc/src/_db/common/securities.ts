@@ -4550,7 +4550,7 @@ const _securities: Security[] = [
     "Maturity": null
   },
   {
-    "IsinCode": "25",
+    "IsinCode": "LU0701928615",
     "SecurityName": "PIONEER MULTI-ASSET REAL RETURN FU",
     "AssetId": "510593",
     "IsFund": "1",

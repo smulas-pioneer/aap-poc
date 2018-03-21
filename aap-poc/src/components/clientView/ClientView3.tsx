@@ -366,7 +366,7 @@ const ClientCard = (props: { client: Client, lang: LangDictionary, color?: Seman
         <Grid.Row>
             <Grid.Column width={16} style={{ margin: 0 }}>
                 <Grid columns="equal">
-                    {renderColumns({ 'Born Date': client.bornDate ||'1972-12-21', 'Entry Date': client.lastAdvicedate, 'Segment': client.segment, 'Branch': client.branch })}
+                    {renderColumns({ 'Birth Date': client.bornDate ||'1972-12-21', 'Entry Date': client.lastAdvicedate, 'Segment': client.segment, 'Branch': client.branch })}
                     {renderColumns({ 'Address': client.address.streetAddress, 'City': client.address.city, 'Tel': client.phone, 'Email': client.email })}
                     {renderColumns({'Risk Profile': client.clientRiskProfile, 'Model': client.modelName, [lang.TIME_HORIZON]: client.timeHorizon , 'Product Appropriateness': client.productAppropriateness})}
                     {renderColumns({  'Project': client.project,'% of Project Accomplishment':`${client.projectAccomplishment}%` ,'% of Discount Fees': `${client.percentageOfDiscountFees}%` }, true)}
@@ -431,7 +431,7 @@ const Fees = (props: { strategy: StrategyItem[], lang: LangDictionary, targetRet
             </Statistic>}
             {props.targetReturn && <Statistic size="mini">
                 <Statistic.Value>{fmt.format(props.targetReturn)}%</Statistic.Value>
-                <Statistic.Label>{lang.TARGET_RESULT} </Statistic.Label>
+                <Statistic.Label>{"EXPECTED RETURN"} </Statistic.Label>
                 <Statistic.Label style={{ fontSize: 10 }}>(prob. 95%)</Statistic.Label>
             </Statistic>}
             {props.targetReturn && <Statistic size="mini">

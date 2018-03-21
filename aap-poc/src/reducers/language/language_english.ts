@@ -111,7 +111,7 @@ export const English: LanguageState = {
             riskAdequacyAlert: { name: 'Risk Adequacy', sentence: 'The risk level of the client’s portfolio exceed the risk level of the model portfolio linked to the MiFID profile of the client' },
             efficencyAlert: { name: 'Efficency', sentence: 'The level of efficiency of the client’s portfolio in terms of expected risk / return is below the relevant model portfolio' },
             consistencyAlert: { name: 'Consistency', sentence: 'The  level of alignment of the client’s portfolio asset allocation compared to the relevant model portfolio is not sufficient' },
-            riskAnalysisAlert: { name: 'Risk Analysis', sentence: 'Client’s  portfolio risk analytics about credit exposure, currency, geographic area and / or economic sector are higher than the model portfolio recommendation' },
+            riskAnalysisAlert: { name: 'Risk Analysis', sentence: 'Client’s  portfolio risk analytics about credit exposure, currency, geographic area are higher than the model portfolio recommendation' },
             concentrationAlert: { name: 'Concentration', sentence: 'Client’s portfolio instrument type is more concentrated than the relevant model portfolio' },
             overlapAlert: { name: 'Overlap', sentence: 'Client’s portfolio consistency with the banks monitored instrument lists is too low' }
         },

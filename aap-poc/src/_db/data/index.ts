@@ -51,11 +51,14 @@ export const loadDatabase = (appName: string) => {
     //SECURITIES
     fetch(baseUrl + '/clients.json'+tag).then(r => r.json()).then(p => {
         clients = p
-        clients[1].modelName="Dynamic";
+        clients[1].modelName="Balanced";
+        clients[1].clientRiskProfile="Dynamic";
         clients[1].name= "Costanzo Bianchi";
+        clients[1].email= "costanzo.bianchi@gmail.com";
         clients[1].bornDate="1968-12-21";
         clients[1].timeHorizon="10 Years";
         clients[1].projectAccomplishment=60;
+        clients[1].project = "Retirement";
     });
 
     //STRATEGIES
