@@ -53,24 +53,25 @@ export class SpotlightResultList extends React.Component<SpotlightResultListProp
     }
 
     render() {
-        const { data, customHeader, lang } = this.props;
+        let { data, customHeader, lang } = this.props;
         this.itemsCount = 0;
-
         return <div>
             {
                 Object.keys(data).map((key, ikey) =>
-                    (
+                    {
+                        const caption = key == 'agents' ? 'advisors': key;
+                        return (
                         <Table striped color={SpotlightResultList.COLORS[ikey]} key={ikey}>
                             <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell style={{ minWidth: 280 }}>{capitalize(key)}{customHeader && customHeader(key, (this.itemsCount - ikey) + 1)}</Table.HeaderCell>
+                                    <Table.HeaderCell style={{ minWidth: 280 }}>{capitalize(caption)}{customHeader && customHeader(key, (this.itemsCount - ikey) + 1)}</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
                             <Table.Body>
                                 {this.renderItems(data[key]!)}
                             </Table.Body>
                         </Table>
-                    )
+                    )}
                 )
             }
             <Segment color="green">{lang.SHOW_ALL}...</Segment>
