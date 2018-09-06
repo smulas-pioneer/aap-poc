@@ -6,6 +6,7 @@ import { ItalyMap } from '../italymaps/ItalyMap';
 import { LangDictionary } from '../../reducers/language/interfaces';
 import { ItalyMapFixed } from '../italymaps/ItalyMapFixed';
 import { Client } from '../../_db/interfaces';
+import { ConfigLayout } from '../../reducers/config';
 
 const { ResponsiveContainer } = require('recharts');
 
@@ -17,13 +18,14 @@ export interface ItalyMapClientsChartProps {
     captions?: {
         clients: string
     }
+    layout: ConfigLayout;
 }
 
 export const ItalyMapClientsChart = (props: ItalyMapClientsChartProps) => {
 
     return (
         <ResponsiveContainer width="100%" height={props.height} >
-            <ItalyMap clients={props.clients} lang={props.lang} />
+            <ItalyMap clients={props.clients} lang={props.lang} layout={props.layout} />
         </ResponsiveContainer>
     )
 }

@@ -1,7 +1,7 @@
 import { createAction, createPromiseAction, createPromiseWithThunkAction } from 'redux-helper';
 import { SearchResult, Client, Transaction, Breakdown, InterviewResult, SpotlightSearchResult, Holding, StrategyItem, SearchParms, SpotlightSearchParms, AlertHistory, Security } from '../_db/interfaces';
 import * as svc from '../_db/service';
-import { UserInfo } from './model';
+import { UserInfo, ConfigJsonModel } from './model';
 import { agents } from '../_db/data/index';
 import { getCurrentUser } from '../reducers/index';
 import { intersection } from 'lodash';
@@ -11,6 +11,8 @@ export enum LoginType {
     Manager,
     Advisor
 }
+
+export const setConfigJson = createAction<ConfigJsonModel>('SET_CONFIGJSON');
 
 export const logoutSuccess = createAction('LOGOUT');
 export const logout = createPromiseAction('LOGOUT_SUCCESS', () => Promise.resolve(true), logoutSuccess);
@@ -56,8 +58,6 @@ export const searchClient = (args: SearchParms) => (dispatch: any, getState: () 
 }
 
 export const getClientSuccess = createAction<Client>('GET_CLIENT_SUCCESS');
-
-
 export const getClientSuggestedTranasactionsSuccess = createAction<Transaction[]>('GET_CLIENT_SUGGESTED_TRANSACTIONS_SUCCESS');
 export const getClientSuggestedTranasactions = createPromiseAction('GET_CLIENT_SUGGESTED_TRANSACTIONS', svc.getSuggestedTransactions, getClientSuggestedTranasactionsSuccess);
 export const getBreakdownsSuccess = createAction<Breakdown[]>('GET_BREAKDOWN_SUCCESS');
@@ -95,7 +95,7 @@ export const getAlertHistory = createPromiseAction('GET_ALERT_HISTORY', svc.getA
 
 export const getClient = createPromiseWithThunkAction('GET_CLIENT', svc.getClient, getClientSuccess, (d, s, r, p) => {
     if (r) {
-        d(getHistory(r.id))   
+        d(getHistory(r.id))
         d(getStrategy(r.id))
     }
 });
@@ -109,7 +109,7 @@ export const addSecurity = createPromiseWithThunkAction('ADD_SECURITY', svc.addS
 export const addHistory = createPromiseWithThunkAction('ADD_HISTORY', svc.addHistory, getClientSuccess, (d, s, r, p) => {
     if (r) {
         d(getHistory(r.id))
-      //  d(getStrategy(r.id))
+        //  d(getStrategy(r.id))
     }
 });
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { appConnector } from 'app-support';
-import { getSearchFilter, selectAlertHistory, getLanguage, getSearchResult } from '../../reducers/index';
+import { getSearchFilter, selectAlertHistory, getLanguage, getSearchResult, getConfigLayout } from '../../reducers/index';
 import { searchClient, getAlertHistory } from '../../actions/index';
 import { SearchParms, SearchResult, Client } from '../../_db/interfaces';
 import { Segment, Icon, Header, Grid, Table, Menu, Popup, SemanticWIDTHS } from 'semantic-ui-react';
@@ -23,7 +23,8 @@ const conn = appConnector<{ uid: string, hideGraphs?: boolean, manager?: boolean
     (s, p) => ({
         data: getSearchResult(s, p.uid),
         filter: getSearchFilter(s, p.uid),
-        lang: getLanguage(s)
+        lang: getLanguage(s),
+        layout: getConfigLayout(s)
     }),
     {
         searchClient
@@ -189,7 +190,7 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
         );
     }
     renderGraphs() {
-        const { hideGraphs, lang, filter, data } = this.props;
+        const { hideGraphs, lang, layout, filter, data } = this.props;
         if (hideGraphs) return null;
         return (
             <Grid columns={filter ? 2 : 1}>
@@ -205,6 +206,7 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
                             <h5>Regions</h5>
                             <ItalyMapClientsChart
                                 lang={lang}
+                                layout={layout}
                                 height={400}
                                 clients={data!.result}
                                 captions={{

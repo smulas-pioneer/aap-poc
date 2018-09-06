@@ -2,7 +2,7 @@ import * as React from 'react';
 import { SearchParms, Client } from '../_db/interfaces';
 import { appConnector } from 'app-support';
 import { searchClient } from '../actions/index';
-import { getSearchResult, getSearchFilter, getLanguage } from '../reducers/index';
+import { getSearchResult, getSearchFilter, getLanguage, getConfigLayout } from '../reducers/index';
 import { SemanticICONS, Statistic, Grid, Segment, SemanticCOLORS, Icon, Menu, Tab, Card } from 'semantic-ui-react';
 import { filterMapItems, FilterMap } from '../actions/model';
 import { TopClient } from './topClientView/index';
@@ -30,7 +30,8 @@ const conn = appConnector<DashboardMgrProps>()(
     (s, p) => ({
         data: getSearchResult(s, p.uid),
         filter: getSearchFilter(s, p.uid),
-        lang: getLanguage(s)
+        lang: getLanguage(s),
+        layout: getConfigLayout(s) 
     }),
     { searchClient }
 )
@@ -97,13 +98,13 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
     // render filter
     renderFilterGraphics(data: Client[]) {
-        const { lang, filter = { Aua: {} } } = this.props;
+        const { lang, layout, filter = { Aua: {} } } = this.props;
         return (
             <Grid columns={2}>
                 <Grid.Column>
                     <Segment>
                         <WidgetTitle title={'Key Figures Map'} shareButtons={['Image', 'Copy']} />
-                        <ItalyMap lang={lang} clients={data} height="524px" />
+                        <ItalyMap lang={lang} clients={data} layout={layout} height="524px" />
                     </Segment>
                 </Grid.Column>
                 <Grid.Column>

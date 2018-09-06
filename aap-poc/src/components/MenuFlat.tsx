@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { appConnectorWithRouter } from 'app-support';
-import { getLanguage, getCurrentUser } from '../reducers/index';
-import { Menu, MenuItemProps, Dropdown, Image, Header } from 'semantic-ui-react';
+import { getLanguage, getCurrentUser, getConfigLayout } from '../reducers/index';
+import { Menu, MenuItemProps, Dropdown, Image } from 'semantic-ui-react';
 import * as Model from '../actions/model';
 import { Link } from "react-router-dom";
 import { LangBar } from './LangBar';
@@ -12,9 +12,11 @@ import { LangDictionary } from '../reducers/language/interfaces';
 import { SpotlightSearchResultItem } from '../_db/interfaces';
 import { isClient, isAgent } from '../_db/utils';
 import { Share } from './Share';
+
 const advisorAvatar = require('./advisorAvatar.png');
 const managerAvatar = require('./managerAvatar.png');
 const logo2 = require('./logo2.png');
+const logoBper = require('./logo-bper.svg');
 
 export interface MenuFlatProps {
 }
@@ -26,7 +28,8 @@ export interface MenuFlatState {
 const conn = appConnectorWithRouter<{}, MenuFlatProps>()(
     (s, p) => ({
         lang: getLanguage(s),
-        user: getCurrentUser(s)
+        user: getCurrentUser(s),
+        layout: getConfigLayout(s)
     }),
     {
         logout
@@ -101,14 +104,15 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
     }
 
     render() {
-        const { spotlightVisible, activeMenuItem } = this.state;
-        const { logout, lang, user } = this.props;
+        const { spotlightVisible } = this.state;
+        const { logout, lang, user, layout } = this.props;
 
         const trigger = this.userOptionsTrigger(user!, lang);
 
-        return (
-            <div style={{ backgroundColor: 'white', borderBottom: 'solid #db2828 thick' }}>
+        const srcLogo = layout.client === 'BPER' ? logoBper : logo2;
 
+        return (
+            <div style={{ backgroundColor: 'white', borderBottom: `solid ${layout.color} thick` }}>
                 <Spotlight
                     onCancel={() => this.toggleSpotlight(false)}
                     onItemNavigate={this.onItemNavigate}
@@ -116,14 +120,9 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
                 />
 
                 <Menu attached secondary >
+                    <img style={{ width: '50px', height: '50px', padding: '4px', ...layout.logoStyle }} src={srcLogo} />
 
-                    <img style={{ width: '50px', height: '50px', padding: '4px' }} src={logo2} />
-
-                    <Menu.Item as={Link} to="/" replace>
-                        <h2 style={{ color: '#005483', fontFamily: 'Helvetica' }} >Advisory Platform</h2>
-                    </Menu.Item>
-
-                    {/*Model.memuItems.map((v: any, i: any) => this.renderItem(v, i, activeMenuItem))*/}
+                    <Menu.Item  replace style={{ width: '50%' }} ><Link to="/" style={{ color: '#005483', fontFamily: 'Helvetica', ...layout.titleStyle }} ><h2>Advisory Platform</h2></Link></Menu.Item>
 
                     <Menu secondary compact floated='right' >
 

@@ -3,7 +3,6 @@ import { getLanguage, isLogged, isManager, getIsReady } from "../reducers/index"
 import * as React from "react";
 import { login, LoginType } from "../actions/index";
 import App from './App';
-import { Button, Card, Icon, Image, Loader } from "semantic-ui-react";
 import { Login } from "./Login";
 
 const conn = appConnectorWithRouter()(

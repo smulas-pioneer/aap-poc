@@ -1,3 +1,5 @@
 {
-    "APPNAME":""
+    "APPNAME":"",
+    "aCLIENT" : "BPER",
+    "CLIENT" : "UCG"
 }

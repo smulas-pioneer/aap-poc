@@ -57,6 +57,10 @@ export const memuItems: MemuItemModel[] = [
 
 export type FilterMapTypes = 'Regions' | 'Alerts' | 'Agents' | 'Aua' | 'AlertType' | 'Segment' | 'Branch' | 'ClientStatus' | 'ClientStatusDuration' | 'RiskProfile';
 
+export interface ConfigJsonModel {
+    APPNAME: string, 
+    CLIENT: string 
+} 
 export interface FilterMap {
     prop: string;
     subprop?: string;
@@ -119,11 +123,9 @@ export const filterMapItems: {[key in FilterMapTypes]: FilterMap } = {
 
     }
 }
-
 export interface SearchFilter {
     [key: string]: { init: number, current: number, isInUse: boolean };
 }
-
 export interface ClientFilters {
     Regions: SearchFilter;
     Alerts: SearchFilter;

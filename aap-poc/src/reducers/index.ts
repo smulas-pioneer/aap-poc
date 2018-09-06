@@ -5,6 +5,7 @@ import * as fromAlerts from './alerts';
 import * as fromLanguage from './language';
 import * as fromSpotlight from './spotlight';
 import * as fromContext from './context';
+import * as fromConfig from './config';
 
 import '../styles/index.css';
 
@@ -14,17 +15,18 @@ export interface AppContext {
 }
 
 export interface AppState {
+    config: fromConfig.ContextState;
     context: fromContext.ContextState;
     search: fromSearch.State;
     client: fromClient.ClientState;
     language: fromLanguage.LanguageState;
     spl: fromSpotlight.State;
-
     alerts: fromAlerts.AlertState;
 }
 
 // Root Reducer
 export default Redux.combineReducers<AppState>({
+    config: fromConfig.default,
     context: fromContext.default,
     search: fromSearch.default,
     client: fromClient.default,
@@ -34,6 +36,9 @@ export default Redux.combineReducers<AppState>({
 });
 
 // Selectors
+export const getConfigJson = (state: AppState) => fromConfig.getConfigJson(state.config);
+export const getConfigLayout = (state: AppState) => fromConfig.getConfigLayout(state.config);
+
 export const isLogged = (state: AppState) => fromContext.isLogged(state.context);
 export const isManager = (state: AppState) => fromContext.isManager(state.context);
 export const getCurrentUser = (state: AppState) => fromContext.getCurrentUser(state.context);
