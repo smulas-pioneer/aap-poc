@@ -17,6 +17,7 @@ const advisorAvatar = require('./advisorAvatar.png');
 const managerAvatar = require('./managerAvatar.png');
 const logo2 = require('./logo2.png');
 const logoBper = require('./logo-bper.svg');
+const logoAmundi = require('./logo-amundi.png');
 
 export interface MenuFlatProps {
 }
@@ -109,7 +110,17 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
 
         const trigger = this.userOptionsTrigger(user!, lang);
 
-        const srcLogo = layout.client === 'BPER' ? logoBper : logo2;
+        let srcLogo = logo2;
+        switch (layout.client) {
+            case 'BPER':
+                srcLogo = logoBper;
+                break;
+            case 'AMUNDI':
+                srcLogo = logoAmundi;
+                break;
+            default:
+                break;
+        }
 
         return (
             <div style={{ backgroundColor: 'white', borderBottom: `solid ${layout.color} thick` }}>
@@ -122,7 +133,7 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
                 <Menu attached secondary >
                     <img style={{ width: '50px', height: '50px', padding: '4px', ...layout.logoStyle }} src={srcLogo} />
 
-                    <Menu.Item  replace style={{ width: '50%' }} ><Link to="/" style={{ color: '#005483', fontFamily: 'Helvetica', ...layout.titleStyle }} ><h2>Advisory Platform.</h2></Link></Menu.Item>
+                    <Menu.Item replace style={{ width: '50%' }} ><Link to="/" style={{ color: '#005483', fontFamily: 'Helvetica', ...layout.titleStyle }} ><h2>Advisory Platform.</h2></Link></Menu.Item>
 
                     <Menu secondary compact floated='right' >
 

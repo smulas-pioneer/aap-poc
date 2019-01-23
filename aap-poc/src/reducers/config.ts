@@ -44,6 +44,14 @@ export default (state: ContextState = defaultState, action: any): ContextState =
                 titleStyle: { width: '100%', textAlign: 'right' },
                 interpolateColors: { from: 'rgb(0, 230, 158)', to: 'rgb(0, 99, 105)' }
             }
+        } else if (newState.configJson.CLIENT && newState.configJson.CLIENT === 'AMUNDI') {
+            newState.configLayout = {
+                client: newState.configJson.CLIENT,
+                color: '#009fe3',
+                logoStyle: { width: '' },
+                titleStyle: { width: '100%', textAlign: 'right' },
+                interpolateColors: { from: 'rgb(0,159,227)', to: 'rgb(12,28,73)' }
+            }
         } else {
             newState.configLayout = defaultState.configLayout;
         }
