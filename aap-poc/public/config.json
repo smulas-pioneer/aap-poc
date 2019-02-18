@@ -1,6 +1,6 @@
 {
     "APPNAME":"",
-    "CLIENT" : "UCG",
+    "aCLIENT" : "UCG",
     "bCLIENT" : "BPER",
-    "aCLIENT" : "AMUNDI"
+    "CLIENT" : "AMUNDI"
 }
