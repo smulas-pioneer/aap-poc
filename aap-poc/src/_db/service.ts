@@ -233,8 +233,9 @@ export const getSuggestion = (args: { id: string, position: Model.StrategyItem[]
     if (isFakeClient(args.id)) {
         const ret = strategies[args.id];
         return Promise.resolve(ce.getSuggestion(args.position, args.axes, args.calculateFromAxes, ret));
+    } else {
+      return Promise.resolve(ce.getSuggestion(args.position, args.axes, args.calculateFromAxes));
     }
-    return Promise.resolve(ce.getSuggestion(args.position, args.axes, args.calculateFromAxes));
 };
 
 export const spotlightSearch = (parms: SpotlightSearchParms): Promise<Model.SpotlightSearchResult> => {
