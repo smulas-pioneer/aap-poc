@@ -16,6 +16,7 @@ import { ItalyMap } from './italymaps/ItalyMap';
 import { WidgetTitle } from './shared/WidgetTitle';
 import { ClientViews } from './clientView/ClientView3';
 import { BreakdownView } from './clientView/BreakdownView';
+import { ClientsView } from './clientsView/ClientsView';
 
 const sprintf = require("sprintf-js").sprintf;
 
@@ -31,7 +32,7 @@ const conn = appConnector<DashboardMgrProps>()(
         data: getSearchResult(s, p.uid),
         filter: getSearchFilter(s, p.uid),
         lang: getLanguage(s),
-        layout: getConfigLayout(s) 
+        layout: getConfigLayout(s)
     }),
     { searchClient }
 )
@@ -222,8 +223,12 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
             {
                 menuItem: this.renderTabItem('MY_ALERTS', 'alarm', 'red'),
                 render: () => <Tab.Pane as={OverflowItem} style={style} content={<AlertsView manager uid={uid} hideGraphs />} />
-            }
-        ]
+            },
+            {
+              menuItem: this.renderTabItem('MY_CLIENTS', 'users', 'blue'),
+              render: () => <Tab.Pane as={OverflowItem} style={style} content={<ClientsView uid={uid} />} />
+          },
+    ]
 
         const info = data.result.reduce<
             { length: number, assetUnder: number, clientAlert: number, mifidAlert: number, acceptedProposals: number, totalProposals: number, rejectedProposals: number, totalBudget: number, totRevenues: number, totalTurnover: number }>(
