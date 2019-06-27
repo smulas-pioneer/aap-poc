@@ -17,7 +17,7 @@ import { formatAua, formatNumber } from '../../_db/utils';
 import { WidgetTitle } from '../shared/WidgetTitle';
 import { icons, historyColors } from '../clientView/HistoryView';
 import { REFERENCE_DATE_TODAY } from '../../_db/common/consts';
-import * as moment from 'moment';
+import moment from 'moment';
 
 const conn = appConnector<{ uid: string, hideGraphs?: boolean, manager?: boolean, showTitle?: boolean, showFilter?: boolean }>()(
     (s, p) => ({

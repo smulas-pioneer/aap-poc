@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { securities as securityList, wrapSecurities, wrapSecurity } from '../common/securities';
 import { Security, StrategyItem, Client, AlertHistory, InterviewResult } from '../common/interfaces';
 import { Radar } from '../interfaces';
@@ -5,7 +6,7 @@ import { updateStrategies } from '../fakedata1';
 
 export const group = <T>(data: T[], key: keyof (T)) => data.reduce(
     (p, c) => {
-        p[key] = c;
+        p[key as string] = c;
         return p;
     },
     {} as { [id: string]: T }
@@ -20,7 +21,6 @@ let strategies: { [isin: string]: StrategyItem[] };
 let alertHistory: AlertHistory[];
 let history: { [isin: string]: InterviewResult[] };
 let agents: string[];
-import * as moment from 'moment';
 
 export const loadDatabase = (appName: string) => {
     const baseUrl = appName === "" ? "" : "/" + appName;

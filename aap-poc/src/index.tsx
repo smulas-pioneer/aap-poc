@@ -15,25 +15,25 @@ const startingState: any = {}
 
 const store = configureStore(reducers.default, /*startingState,*/ true);
 
-loadConfiguration('config.json').then((cfg: { APPNAME: string, CLIENT: string }) => {
+loadConfiguration('config.json').then((_cfg) => {
+  const cfg = _cfg as { APPNAME: string, CLIENT: string };
+  store.dispatch(setConfigJson(cfg));
 
-    store.dispatch(setConfigJson(cfg));
+  render(
+    <div style={{ opacity: 0.9, position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'whitesmoke' }}>
+      <Loader style={{ opacity: 1 }} active size="huge">initializing..</Loader>
+    </div>,
+    document.getElementById('root')
+  );
 
+  loadDatabase(cfg.APPNAME).then(r => {
     render(
-        <div style={{ opacity: 0.9, position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'whitesmoke' }}>
-            <Loader style={{ opacity: 1 }} active size="huge">initializing..</Loader>
-        </div>,
-        document.getElementById('root')
+      <Provider store={store}>
+        <Router>
+          <Root />
+        </Router>
+      </Provider>,
+      document.getElementById('root')
     );
-
-    loadDatabase(cfg.APPNAME).then(r => {
-        render(
-            <Provider store={store}>
-                <Router>
-                    <Root />
-                </Router>
-            </Provider>,
-            document.getElementById('root')
-        );
-    });
+  });
 });

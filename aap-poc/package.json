@@ -13,23 +13,24 @@
     "moment": "^2.19.1",
     "react-event-timeline": "^1.4.0",
     "react-google-charts": "^1.5.5",
-    "react-scripts-ts": "2.8.0",
+    "react-scripts": "^3.0.1",
     "react-slick": "^0.15.4",
     "react-sortable-hoc": "^0.6.8",
-    "react-tooltip": "^3.4.0",
+    "react-tooltip": "^3.10.0",
     "react-vertical-timeline-component": "^2.0.1",
     "recharts": "^1.0.0-alpha.6",
     "regression": "^2.0.0",
     "reselect": "^3.0.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.87.2",
-    "sprintf-js": "^1.1.1"
+    "sprintf-js": "^1.1.1",
+    "typescript": "3.2.1"
   },
   "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
     "docker-build": "./tools/docker-build.sh",
     "docker-deploy": "./tools/docker-deploy.sh"
   },
@@ -41,5 +42,17 @@
   },
   "main": "index.js",
   "repository": "http://github.com/pioneer-investments/mildev-aap-poc",
-  "license": "MIT"
+  "license": "MIT",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

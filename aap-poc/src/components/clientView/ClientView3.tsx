@@ -7,7 +7,7 @@ import { Client, Breakdown, Radar, StrategyItem, RadarStrategyParm, InterviewRes
 import * as ce from '../../_db/coreEngine';
 import { sumBy, startCase, camelCase } from 'lodash';
 
-import { Grid, Segment, Statistic, Card, Button, Table, SemanticICONS, Icon, Feed, Form, Label, Tab, Accordion, Header, SemanticCOLORS, List, Menu, Transition, Checkbox, Modal, Loader, Dimmer } from 'semantic-ui-react';
+import { Grid, Segment, Statistic, Card, Button, Table, SemanticICONS, Icon, Feed, Form, Label, Tab, Accordion, Header, SemanticCOLORS, List, Menu, Transition, Checkbox, Modal, Loader, Dimmer, TabProps } from 'semantic-ui-react';
 import { RadarGraph } from '../RadarGraph';
 import { Holdings, OrderList } from './Holdings';
 import { PerformanceChart } from '../securityView/PerformanceChart';
@@ -473,8 +473,9 @@ export class ClientViews extends React.Component<ClientViewProps, { activeIndex?
   }
   componentDidMount() {
   }
-  handleTabChange(e: any, { activeIndex }: { activeIndex: number }) {
-    this.setState({ activeIndex });
+  handleTabChange(e: any, data: TabProps) {
+    if (typeof (data.activeIndex) == "string") return;
+    this.setState({ activeIndex: data.activeIndex });
   }
   handleBtnChange(activeIndex: number) {
     this.setState({ activeIndex });

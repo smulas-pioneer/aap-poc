@@ -3,7 +3,7 @@ import { sumBy, groupBy } from "lodash";
 import { numArray, rnd } from "./utils";
 import { solve } from "./solver";
 import { performances, perfSummary } from "./data/index";
-import * as moment from 'moment';
+import moment from 'moment';
 import * as math from 'mathjs';
 import { networkInterfaces } from "os";
 import { suggestedPositionExCash, currentPosition, suggestedPosition } from "./common/radarUtils";

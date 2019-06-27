@@ -1,38 +1,38 @@
+import 'react-vertical-timeline-component/style.min.css';
 import { InterviewResult, ClientStateColors } from "../../_db/interfaces";
 import { LangDictionary } from "../../reducers/language/interfaces";
 import * as React from "react";
 import { Card, Table, Label, Icon, Image, SemanticICONS } from "semantic-ui-react";
-import * as moment from 'moment';
+import moment from 'moment';
 import IconButton from "../shared/IconButton/index";
 const { Timeline, TimelineEvent } = require('react-event-timeline');
 
 const { VerticalTimeline, VerticalTimelineElement } = require('react-vertical-timeline-component');
-import 'react-vertical-timeline-component/style.min.css';
 
 interface HistoryViewProps {
-    history: InterviewResult[]
-    lang: LangDictionary,
-    height?: number;
+  history: InterviewResult[]
+  lang: LangDictionary,
+  height?: number;
 }
 export const historyColors: { [id: string]: 'green' | '#db2828' | 'olive' | '#2185CB' | 'blue' | 'red' | 'orange' } = {
-    ACCEPTED: 'green',
-    REJECTED: '#db2828',
-    ONGOING: 'olive',
-    ONHOLD: '#2185CB',
-    ...ClientStateColors as any
+  ACCEPTED: 'green',
+  REJECTED: '#db2828',
+  ONGOING: 'olive',
+  ONHOLD: '#2185CB',
+  ...ClientStateColors as any
 }
 
 export const icons: { [id: string]: SemanticICONS } = {
-    ACCEPTED: 'check',
-    REJECTED: 'alarm',
-    ONGOING: 'wait',
-    ONHOLD: 'wait',
-    'NO ALERT': 'check',
-    'REGULATOR ALERT': 'alarm',
-    'GUIDELINE ALERT': 'alarm',
-    'ON HOLD': 'remove',
-    'PENDING PROPOSAL': 'edit',
-    'PENDING EXECUTION': 'setting',
+  ACCEPTED: 'check',
+  REJECTED: 'alarm',
+  ONGOING: 'wait',
+  ONHOLD: 'wait',
+  'NO ALERT': 'check',
+  'REGULATOR ALERT': 'alarm',
+  'GUIDELINE ALERT': 'alarm',
+  'ON HOLD': 'remove',
+  'PENDING PROPOSAL': 'edit',
+  'PENDING EXECUTION': 'setting',
 }
 
 // export const HistoryView = ({ history, lang }: HistoryViewProps) => {
@@ -91,27 +91,27 @@ export const icons: { [id: string]: SemanticICONS } = {
 // }
 
 export const HistoryViewTimelineEvent = ({ history, lang, height }: HistoryViewProps) => {
-    //<Image src={images[item.status]} size='small' />
-    return (
-        <div style={{ overflowY: 'auto', overflowX: 'hidden', height }}>
-            <Timeline>
-                {history.reduce((memo, item, ix) => {
-                    memo.unshift(
-                        <TimelineEvent key={ix}
-                            title=''
-                            createdAt={moment(item.date).format(lang.DATE_FORMAT)}
-                            icon={<Icon name={icons[item.status]} size="large" style={{ margin: 0 }} />}
-                            iconColor={historyColors[item.status]}
-                            container="card"
-                            cardHeaderStyle={{ backgroundColor: historyColors[item.status] }}
-                        >
-                            <h3>{lang.STATUS}: {lang[item.status]}</h3>
-                            <p>{item.notes}</p>
-                        </TimelineEvent>
-                    );
-                    return memo;
-                }, [] = [] as any)}
-            </Timeline>
-        </div>
-    )
+  //<Image src={images[item.status]} size='small' />
+  return (
+    <div style={{ overflowY: 'auto', overflowX: 'hidden', height }}>
+      <Timeline>
+        {history.reduce((memo, item, ix) => {
+          memo.unshift(
+            <TimelineEvent key={ix}
+              title=''
+              createdAt={moment(item.date).format(lang.DATE_FORMAT)}
+              icon={<Icon name={icons[item.status]} size="large" style={{ margin: 0 }} />}
+              iconColor={historyColors[item.status]}
+              container="card"
+              cardHeaderStyle={{ backgroundColor: historyColors[item.status] }}
+            >
+              <h3>{lang.STATUS}: {lang[item.status]}</h3>
+              <p>{item.notes}</p>
+            </TimelineEvent>
+          );
+          return memo;
+        }, [] = [] as any)}
+      </Timeline>
+    </div>
+  )
 }

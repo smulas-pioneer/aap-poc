@@ -1,11 +1,11 @@
-import { appConnector, appConnectorWithRouter } from "app-support";
+import { appConnector } from "app-support";
 import { getLanguage, isLogged, isManager, getIsReady } from "../reducers/index";
 import * as React from "react";
 import { login, LoginType } from "../actions/index";
 import App from './App';
 import { Login } from "./Login";
 
-const conn = appConnectorWithRouter()(
+const conn = appConnector()(
     (s, p) => ({
         logged: isLogged(s),
         manager: isManager(s),

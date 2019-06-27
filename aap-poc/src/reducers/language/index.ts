@@ -8,16 +8,16 @@ export { LanguageState };
 
 // Root Reducer
 export default (state: LanguageState = English, action: any): LanguageState => {
-    if (setLanguage.matchAction(action)) {
-        if (action.payload === 'it') {
-            return Italiano;
-        } else if ( action.payload ==='gb') {
-            return English;
-        } else if ( action.payload ==='de') {
-            return German;
-        }
+  if (setLanguage.matchAction(action)) {
+    if (action.payload === 'it') {
+      return Italiano;
+    } else if (action.payload === 'gb') {
+      return English;
+    } else if (action.payload === 'de') {
+      return German;
     }
-    return state;
+  }
+  return state;
 };
 
 // Selectors
