@@ -10,7 +10,7 @@ import Dashboard from './Dashboard';
 import { AlertsView } from './alertsView/AlertsView';
 import { ManagerView } from './managerView/managerView';
 import { DashboardMgr } from './DashboardMgr';
-import { ItalyMap } from './italymaps/ItalyMap';
+import { ItalyMap } from './maps/italy/ItalyMap';
 
 interface IAppProps {
     manager?: boolean

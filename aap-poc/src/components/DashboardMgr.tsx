@@ -12,7 +12,7 @@ import { ManagerView } from './managerView/managerView';
 import { AlertsView } from './alertsView/AlertsView';
 import { formatAua, formatNumber } from '../_db/utils';
 import { ClientFilter } from './shared/ClientFilter';
-import { ItalyMap } from './italymaps/ItalyMap';
+import { ItalyMap } from './maps/italy/ItalyMap';
 import { WidgetTitle } from './shared/WidgetTitle';
 import { ClientViews } from './clientView/ClientView3';
 import { BreakdownView } from './clientView/BreakdownView';

@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { LangDictionary } from "../../reducers/language/interfaces";
+import { LangDictionary } from "../../../reducers/language/interfaces";
 import { AreaValue } from './ItalyMap';
 
 import { Label } from 'semantic-ui-react';
-import { formatAua, } from '../../_db/utils';
-import { getMapOptionTypeCaption } from '../../commonUtils';
-import { IndicatorOptionsType, MapLegend } from '../../actions/model';
+import { formatAua, } from '../../../_db/utils';
+import { getMapOptionTypeCaption } from '../../../commonUtils';
+import { IndicatorOptionsType, MapLegend } from '../../../actions/model';
 import { Dictionary } from 'lodash';
 const { Legend } = require('recharts');
 

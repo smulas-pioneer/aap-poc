@@ -13,18 +13,18 @@ import { Area7 } from './Area7';
 import { Boundaries } from './Boundaries';
 import { Marker } from './Marker';
 import { ColorsLegend } from './ColorsLegend';
-import { SearchFilter, IndicatorOptionsType, MapLegend } from '../../actions/model';
+import { SearchFilter, IndicatorOptionsType, MapLegend } from '../../../actions/model';
 
 import { groupBy, Dictionary, countBy, sumBy, uniqBy } from 'lodash';
-import { LangDictionary } from '../../reducers/language/interfaces';
+import { LangDictionary } from '../../../reducers/language/interfaces';
 import { MapOptions } from './MapOptions';
-import { Client } from '../../_db/interfaces';
-import { rnd, formatAua } from '../../_db/utils';
+import { Client } from '../../../_db/interfaces';
+import { rnd, formatAua } from '../../../_db/utils';
 import { SingleAreaLegend } from './SingleAreaLegend';
-import { ClientCard } from '../clientsView/ClientCard';
-import { getMapOptionTypeCaption } from '../../commonUtils';
+import { ClientCard } from '../../clientsView/ClientCard';
+import { getMapOptionTypeCaption } from '../../../commonUtils';
 import { FillAreaLegend } from './FillAreaLegend';
-import { ConfigLayout } from '../../reducers/config';
+import { ConfigLayout } from '../../../reducers/config';
 import { isArray } from 'util';
 
 export interface ItalyMapProps {
@@ -87,7 +87,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
             [92, 9, 0],
             [50, 5, 0]
         ];
-        
+
         this.colors = this.interpolateColors('rgb(0, 230, 158)', 'rgb(0, 99, 105)', 10);
 
         */

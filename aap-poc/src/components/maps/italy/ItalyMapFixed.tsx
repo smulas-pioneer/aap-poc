@@ -7,8 +7,8 @@ import { Area4 } from './Area4';
 import { Area5 } from './Area5';
 import { Area6 } from './Area6';
 import { Area7 } from './Area7';
-import { SearchFilter } from '../../actions/model';
-import { ManagerView } from '../managerView/managerView';
+import { SearchFilter } from '../../../actions/model';
+import { ManagerView } from '../../managerView/managerView';
 const { Legend, ResponsiveContainer } = require('recharts');
 
 export interface ItalyMapProps {

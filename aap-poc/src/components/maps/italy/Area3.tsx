@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { MouseEventHandler } from 'react';
-import { AreaMapProps } from '../shared/AreaMapProps';
+import { AreaMapProps } from '../../shared/AreaMapProps';
 import { Marker } from './Marker';
 
 export const Area3 = ({ htmlTooltip, onClick, fill, color, percentage }: AreaMapProps) => (
