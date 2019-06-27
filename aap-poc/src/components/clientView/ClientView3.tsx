@@ -193,7 +193,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
       },
       PerfContr: {
         title: 'Perf. Contr.',
-        icon: 'bar graph',
+        icon: 'chart bar outline',
         charts: radar && [
           {
             title: 'Perf. Contr.',
@@ -224,7 +224,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
       const element = (memo[prop] || {
         title: prop,
-        icon: chartView === "pie" ? 'pie graph' : 'bar graph',
+        icon: chartView === "pie" ? 'pie graph' : 'chart bar outline',
         charts: []
       });
 

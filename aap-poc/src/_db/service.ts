@@ -37,7 +37,6 @@ const checkAlerts = (alertToCheck: string[] | undefined, breaks: string[]) => {
 }
 
 export const searchClient = (parms: Model.SearchParms, visibility?: string[]): Promise<Model.SearchResult> => {
-  console.log(parms);
   let theList = clientList;
   if (visibility && visibility.length) theList = theList.filter(c => arrayContains(visibility, c.agent));
   if (parms.onlyWithAlerts) theList = theList.filter(r => r.radar.numOfAlerts);

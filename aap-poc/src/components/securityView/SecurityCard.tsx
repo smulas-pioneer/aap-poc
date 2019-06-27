@@ -56,7 +56,7 @@ export const SecurityCard = ({ security, lang }: { security: Security } & WithLa
                     <Grid>
                         <Grid.Row columns={2} verticalAlign="middle">
                             <Grid.Column textAlign="center"><Icon size="massive" name="line graph" color="blue"/></Grid.Column>
-                            <Grid.Column textAlign="center"><Icon size="massive" name="bar graph" color="grey"/></Grid.Column>
+                            <Grid.Column textAlign="center"><Icon size="massive" name="chart bar outline" color="grey"/></Grid.Column>
                         </Grid.Row>
                         <Grid.Row columns={2} verticalAlign="middle">
                             <Grid.Column textAlign="center"><Icon size="massive" name="pie graph" color="brown" /></Grid.Column>
