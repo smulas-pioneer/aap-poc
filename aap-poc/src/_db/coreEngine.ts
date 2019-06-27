@@ -190,6 +190,7 @@ export const getPositionPerformance = (position: PositionItem[], period: Perform
     return {
       date: i.date,
       perf: keys.reduce((prev, curr) => {
+
         return prev + perfCompo[curr][ix].perf * weights[curr];
       }, 0)
     }
