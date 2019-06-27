@@ -11,7 +11,7 @@ export interface MenuPaginationProps {
 export class MenuPagination extends React.Component<MenuPaginationProps>{
 
   private normalizeNumber = (number: any, min: number, max: number, defaultValue: any) => {
-    if (number == undefined || number == null || isNaN(number)) {
+    if (number === undefined || number === null || isNaN(number)) {
       return defaultValue;
     }
 

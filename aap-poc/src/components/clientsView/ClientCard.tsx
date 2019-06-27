@@ -2,7 +2,7 @@ import { Client, Radar, ClientStateColors } from "../../_db/interfaces";
 import { LangDictionary } from "../../reducers/language/interfaces";
 import * as React from "react";
 import { Icon, SemanticICONS, Card, Table, Header, Label, Statistic } from "semantic-ui-react";
-import { Link } from "app-support";
+import { Link } from "react-router-dom";
 
 const fmt = (num: number) => {
     if (num >= 1000000) return (Math.ceil(num / 100000) / 10).toString() + "M";
@@ -26,7 +26,7 @@ const stats = (aua: number, region: string) => (
 const numberOfAlerts = (client: Client) => {
     const color = ClientStateColors[client.clientStatus];
     return (
-        <Label corner color={color == "#2185d0" ? "blue" : color as any}>
+        <Label corner color={color === "#2185d0" ? "blue" : color as any}>
             <div style={{ marginLeft: 20, marginTop: 10 }}>{client.radar.numOfAlerts || ''}
             </div>
         </Label>

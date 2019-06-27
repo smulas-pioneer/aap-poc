@@ -15,7 +15,7 @@ export const getRndItem = <T>(data: T[]) => {
     return data[rnd(0, data.length - 1)];
 }
 
-export function hasFlag<TFlags extends number>(testFlag: TFlags, flag: TFlags) { return (testFlag & flag) == flag; }
+export function hasFlag<TFlags extends number>(testFlag: TFlags, flag: TFlags) { return (testFlag & flag) === flag; }
 
 export function isClient(item: SpotlightSearchResultItem): item is Client {
     return (item as Client).agent !== undefined;
@@ -61,7 +61,7 @@ export const getAgentViewsFromClients = (clients: Client[]): AgentView[] => {
 }
 
 export const processHoldingsSuggestions = (holdings: Holding[], suggestionType: 'Q' | 'W') => {
-    if (suggestionType == 'Q') {
+    if (suggestionType === 'Q') {
         const r = holdings.map(h => {
             const p = h.amount / h.quantity;
             return {

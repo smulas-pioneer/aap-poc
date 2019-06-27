@@ -68,7 +68,7 @@ export const searchClient = (parms: Model.SearchParms, visibility?: string[]): P
 export const getClient = (parms: { id: string }): Promise<Model.Client> => {
 
   let c = clientList.find(c => c.id === parms.id)!;
-  //c.holdings = c.holdings.map(r => ({ ...r, security: securityList.find(i => i.IsinCode == r.securityId)! }));
+  //c.holdings = c.holdings.map(r => ({ ...r, security: securityList.find(i => i.IsinCode === r.securityId)! }));
   return Promise.resolve(c);
 };
 /*
@@ -90,7 +90,7 @@ export const getSuggestedTransactions = (args: { holdings: Model.Holding[], prop
   const sell = numArray(nBuy).map(i => {
     const sec = getRndItem(args!.holdings);
     return {
-      security: securityList.find(i => i.IsinCode == sec.securityId),
+      security: securityList.find(i => i.IsinCode === sec.securityId),
       quantity: rnd(1, sec.quantity),
       type: "SELL"
     } as Model.Transaction
@@ -167,7 +167,7 @@ const aggToBreakdown = (data: Aggregation[], key: string): Model.Breakdown => {
   );
 
   const tot = Object.keys(d).reduce((a, b) => a + d[b], 0);
-  const fn = key.toLowerCase() == "rating" ? top10Rating : top10;
+  const fn = key.toLowerCase() === "rating" ? top10Rating : top10;
   return {
     attributeName: key,
     weight: 1,
@@ -259,8 +259,8 @@ export const spotlightSearch = (parms: SpotlightSearchParms): Promise<Model.Spot
       age = getAgentViewsFromClients(clientList.filter(c => arrayContains(parms.agents, c.agent)).filter(c => c.agent.toLowerCase().indexOf(filter) !== -1));
     }
     if (hasFlag(cc, SpotlightContext.Security)) {
-      sec = securityList.filter((s, ix) => ix != 0
-        && (!parms.macroAssetClass || s.MacroAssetClass == parms.macroAssetClass)
+      sec = securityList.filter((s, ix) => ix !== 0
+        && (!parms.macroAssetClass || s.MacroAssetClass === parms.macroAssetClass)
         &&
         (s.SecurityName.toLowerCase().indexOf(filter) !== -1 ||
           s.IsinCode.toLowerCase().indexOf(filter) !== -1)
@@ -280,7 +280,7 @@ export const getRandomSecurities = (max: number, except: string[]): Model.Securi
   return numArray(max).map(r => {
     const ix = rnd(1, securityList.length - 1);
     return securityList[ix]
-  }).filter(s => !except.find(i => i == s.IsinCode));
+  }).filter(s => !except.find(i => i === s.IsinCode));
 }
 
 export const getSuggestedAllocation = (args: {
@@ -303,7 +303,7 @@ export const getAlertHistory = () => {
 
 export const addSecurity = ({ securityId, clientId }: { securityId: string, clientId: string }) => {
   const h: StrategyItem = {
-    security: securityList.find(s => s.IsinCode == securityId)!,
+    security: securityList.find(s => s.IsinCode === securityId)!,
     currentAmount: 0,
     currentPrice: 1,
     currentQuantity: 0,

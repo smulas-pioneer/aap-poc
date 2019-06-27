@@ -130,7 +130,7 @@ export class ItalyMapFixed extends React.Component<ItalyMapProps, ItalyMapState>
             </Transition>
             <Transition visible={showRegion} animation="scale" duration={600} onComplete={(_, e) => { !showRegion && this.setState(prev => ({ mapIndex: prev.requestMapIndex })) }} >
                 <svg version="1.2" id="aap-italy" baseProfile="tiny" x="0px" y="0px" width="100%" height="100%" viewBox="-832 802.4417725 334.8026428 396.5582275" onClick={() => this.setState({ requestMapIndex: undefined })}>
-                    {this.retAreaById(this.state.mapIndex!, { fill: true, color: this.state.mapIndex != undefined ? av[this.state.mapIndex].color : '#CECCCC' })}
+                    {this.retAreaById(this.state.mapIndex!, { fill: true, color: this.state.mapIndex !== undefined ? av[this.state.mapIndex].color : '#CECCCC' })}
                 </svg>
             </Transition>
         </div >

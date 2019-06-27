@@ -44,7 +44,7 @@ export const loadDatabase = (appName: string) => {
     //SECURITIES
     procs.push(fetch(baseUrl + '/securities2.json' + tag).then(r => r.json()).then(p => {
         securities2 =
-            (securityList).map((p: any) => ({ ...p, blacklisted: p.Rating == "BBB" && p.Sector == "Utilities" }))
+            (securityList).map((p: any) => ({ ...p, blacklisted: p.Rating === "BBB" && p.Sector === "Utilities" }))
                 .concat(p)
                 .map((r: any) => ({
                     ...r, pushed:

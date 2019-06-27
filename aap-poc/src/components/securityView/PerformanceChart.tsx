@@ -87,10 +87,10 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
   }
 
   componentWillReceiveProps(next: PerformanceChartProps) {
-    if (next.data && next.data[next.data.length - 1].perf != this.state.data[this.state.data.length - 1].perf) {
+    if (next.data && next.data[next.data.length - 1].perf !== this.state.data[this.state.data.length - 1].perf) {
       this.setData({ data: next.data })
     }
-    if (next.version != this.props.version) {
+    if (next.version !== this.props.version) {
       const targetReturn = this.returnFor95(next.clientTimeHorizon || '18 Months');
       this.setState({
         target_Return: targetReturn.toString(),
@@ -105,11 +105,11 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
     const { data = this.props.data, period = this.state.period, actualData = this.props.actualData || this.props.data } = args
 
     const maxDate = moment(data[data.length - 1].date);
-    const minDate = period == '1M' ? maxDate.subtract(1, 'month') :
-      period == '3M' ? maxDate.subtract(3, 'month') :
-        period == '6M' ? maxDate.subtract(6, 'month') :
-          period == '1Y' ? maxDate.subtract(1, 'year') :
-            period == 'YTD' ? moment([maxDate.year(), 0, 1]) : moment(data[0].date);
+    const minDate = period === '1M' ? maxDate.subtract(1, 'month') :
+      period === '3M' ? maxDate.subtract(3, 'month') :
+        period === '6M' ? maxDate.subtract(6, 'month') :
+          period === '1Y' ? maxDate.subtract(1, 'year') :
+            period === 'YTD' ? moment([maxDate.year(), 0, 1]) : moment(data[0].date);
     const minDateStr = minDate.format('YYYY-MM-DD');
     const filteredActuals = actualData.filter(p => p.date >= minDateStr);
 
@@ -158,7 +158,7 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
-    if (data.length == 0) return null;
+    if (data.length === 0) return null;
 
     // OPTIONALS
     const perf = actualData && fmt.format(100 * (actualData[actualData.length - 1].perf! - initalPerf));
@@ -220,12 +220,12 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
       {advancedView && <Grid size="mini"><Grid.Row columns="2" >
         <Grid.Column textAlign="center">
           <Button.Group size="mini">
-            <Button active={period == '1M'} size="tiny" content="1m" onClick={() => this.setData({ period: '1M' })} />
-            <Button active={period == '3M'} size="tiny" content="3m" onClick={() => this.setData({ period: '3M' })} />
-            <Button active={period == '6M'} size="tiny" content="6m" onClick={() => this.setData({ period: '6M' })} />
-            <Button active={period == 'YTD'} size="tiny" content="YTD" onClick={() => this.setData({ period: 'YTD' })} />
-            <Button active={period == '1Y'} size="tiny" content="1Y" onClick={() => this.setData({ period: '1Y' })} />
-            <Button active={period == 'All'} size="tiny" content="All" onClick={() => this.setData({ period: 'All' })} />
+            <Button active={period === '1M'} size="tiny" content="1m" onClick={() => this.setData({ period: '1M' })} />
+            <Button active={period === '3M'} size="tiny" content="3m" onClick={() => this.setData({ period: '3M' })} />
+            <Button active={period === '6M'} size="tiny" content="6m" onClick={() => this.setData({ period: '6M' })} />
+            <Button active={period === 'YTD'} size="tiny" content="YTD" onClick={() => this.setData({ period: 'YTD' })} />
+            <Button active={period === '1Y'} size="tiny" content="1Y" onClick={() => this.setData({ period: '1Y' })} />
+            <Button active={period === 'All'} size="tiny" content="All" onClick={() => this.setData({ period: 'All' })} />
           </Button.Group>
         </Grid.Column>
         <Grid.Column textAlign="center">

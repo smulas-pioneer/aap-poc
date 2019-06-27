@@ -43,24 +43,24 @@ export class Holdings extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps(next: Props) {
-    if (JSON.stringify(next.holdings) != JSON.stringify(this.props.holdings)) {
+    if (JSON.stringify(next.holdings) !== JSON.stringify(this.props.holdings)) {
       this.setState({ holdings: next.holdings, changedIsin: [] })
     }
   }
   handleItemChanged = (item: StrategyItem, ix: number) => {
     let holdings = [...this.state.holdings];
     holdings[ix] = item;
-    const originalValue = this.props.holdings.find(i => i.security.IsinCode == item.security.IsinCode);
-    const changed = originalValue == undefined || originalValue.suggestedDelta != item.suggestedDelta || originalValue.suggestionAccepted != item.suggestionAccepted;
+    const originalValue = this.props.holdings.find(i => i.security.IsinCode === item.security.IsinCode);
+    const changed = originalValue === undefined || originalValue.suggestedDelta !== item.suggestedDelta || originalValue.suggestionAccepted !== item.suggestionAccepted;
     const changedIsin = changed
-      ? this.state.changedIsin.filter(p => p != item.security.IsinCode).concat(item.security.IsinCode)
-      : this.state.changedIsin.filter(p => p != item.security.IsinCode)
+      ? this.state.changedIsin.filter(p => p !== item.security.IsinCode).concat(item.security.IsinCode)
+      : this.state.changedIsin.filter(p => p !== item.security.IsinCode)
 
     this.setState({
       holdings,
       changedIsin
     }, () => {
-      this.props.onSomethingChanged(changedIsin.filter(i => i != 'CASH').length > 0);
+      this.props.onSomethingChanged(changedIsin.filter(i => i !== 'CASH').length > 0);
     });
 
   }
@@ -69,17 +69,17 @@ export class Holdings extends React.Component<Props, State> {
     let holdings = this.state.holdings.map(h => (
       {
         ...h,
-        suggestionAccepted: h.suggestedDelta != 0 ? accept : false,
+        suggestionAccepted: h.suggestedDelta !== 0 ? accept : false,
       }));
     const changedIsin = holdings.filter(i => {
-      const pr = this.props.holdings.find(h => h.security.IsinCode == i.security.IsinCode);
-      return pr == undefined || pr.suggestedDelta != i.suggestedDelta || pr.suggestionAccepted != i.suggestionAccepted;
+      const pr = this.props.holdings.find(h => h.security.IsinCode === i.security.IsinCode);
+      return pr === undefined || pr.suggestedDelta !== i.suggestedDelta || pr.suggestionAccepted !== i.suggestionAccepted;
     }).map(h => h.security.IsinCode);
     this.setState({
       holdings,
       changedIsin
     }, () => {
-      this.props.onSomethingChanged(changedIsin.filter(i => i != 'CASH').length > 0);
+      this.props.onSomethingChanged(changedIsin.filter(i => i !== 'CASH').length > 0);
     })
   }
 
@@ -147,12 +147,12 @@ export class Holdings extends React.Component<Props, State> {
     const fmt = formatNumber(lang.NUMBER_FORMAT);
     const tot = sumBy(holdings, t => t.currentAmount);
     const accepted = holdings.slice(1).filter(a => a.suggestionAccepted).length;
-    const proposed = holdings.slice(1).filter(a => a.suggestedDelta != 0).length;
-    const canSelectAll = accepted != proposed;
+    const proposed = holdings.slice(1).filter(a => a.suggestedDelta !== 0).length;
+    const canSelectAll = accepted !== proposed;
 
-    const somethingIsChanged = this.state.changedIsin.filter(i => i != 'CASH').length == 0;
-    const acceptAll = !(accepted == proposed);
-    const isValid = finalWeight.filter(h => h.weight < -0.001 || h.weight > 1).length == 0;
+    const somethingIsChanged = this.state.changedIsin.filter(i => i !== 'CASH').length === 0;
+    const acceptAll = !(accepted === proposed);
+    const isValid = finalWeight.filter(h => h.weight < -0.001 || h.weight > 1).length === 0;
     return (
       <div >
         {
@@ -172,7 +172,7 @@ export class Holdings extends React.Component<Props, State> {
             searchText=""
             context="Security"
             limit={12}
-            macroAssetClass={holdings.find(s => s.security.IsinCode == this.state.changingSecurity)!.security.MacroAssetClass}
+            macroAssetClass={holdings.find(s => s.security.IsinCode === this.state.changingSecurity)!.security.MacroAssetClass}
             visible
           />
         }
@@ -265,12 +265,12 @@ export class Holdings extends React.Component<Props, State> {
           <Table.Body style={{ overflow: 'visible' }}>
             {
               holdings.map((t, i) => {
-                const show = t.currentQuantity != 0;
+                const show = t.currentQuantity !== 0;
                 const suggWeight = finalWeight[i].weight
-                const factor = this.state.mode == 'Weight' ? 1
-                  : this.state.mode == 'Quantity' ? tot / t.currentPrice / 100
+                const factor = this.state.mode === 'Weight' ? 1
+                  : this.state.mode === 'Quantity' ? tot / t.currentPrice / 100
                     : tot / 100;
-                return (!t.newSecurity && t.currentQuantity == 0 && t.suggestedDelta == 0) ? null :
+                return (!t.newSecurity && t.currentQuantity === 0 && t.suggestedDelta === 0) ? null :
                   <Table.Row key={i}>
                     <Table.Cell>
                       {t.security.blacklisted && <Icon size="large" color="black" name='thumbs down' />}
@@ -289,7 +289,7 @@ export class Holdings extends React.Component<Props, State> {
                     <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
                     <Table.Cell textAlign="right">{show && fmt(t.currentAmount)}</Table.Cell>
                     <Table.Cell textAlign="right">{show && fmt(t.currentWeight * 100, 0)} </Table.Cell>
-                    <Table.Cell textAlign="left" warning={i != 0 && this.state.changedIsin.indexOf(t.security.IsinCode) > -1}>
+                    <Table.Cell textAlign="left" warning={i !== 0 && this.state.changedIsin.indexOf(t.security.IsinCode) > -1}>
                       <HoldingWeigthControl factor={factor} data={t} onChange={(item) => this.handleItemChanged(item, i)} />
                     </Table.Cell>
                     {somethingIsChanged &&
@@ -341,7 +341,7 @@ export const OrderList = (props: { data: StrategyItem[], lang: LangDictionary })
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {data.filter(i => i.suggestedDelta != 0 && !i.isCash).map((item, ix) => {
+        {data.filter(i => i.suggestedDelta !== 0 && !i.isCash).map((item, ix) => {
           return <Table.Row key={ix}>
             <Table.Cell >{item.security.IsinCode} </Table.Cell>
             <Table.Cell >{item.security.SecurityName} </Table.Cell>

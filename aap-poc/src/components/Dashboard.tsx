@@ -163,7 +163,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
 
     // lang
     alertsDetail = (numOfAlerts: string) => sprintf(this.props.lang.DB_ALERTS_DETAIL, numOfAlerts);
-    percDetail = (value: number | undefined, from: string, period: 'Y' | 'M' | 'D', info?: string) => sprintf(this.props.lang.DB_PERC_DETAIL, (value ? value + '% ' : ''), (info ? info + ' ' : ''), from, period == 'Y' ? this.props.lang.YEAR : period == 'M' ? this.props.lang.MONTH : this.props.lang.DAY);
+    percDetail = (value: number | undefined, from: string, period: 'Y' | 'M' | 'D', info?: string) => sprintf(this.props.lang.DB_PERC_DETAIL, (value ? value + '% ' : ''), (info ? info + ' ' : ''), from, period === 'Y' ? this.props.lang.YEAR : period === 'M' ? this.props.lang.MONTH : this.props.lang.DAY);
 
     renderTabItem(langProps: string, icon: SemanticICONS, color: SemanticCOLORS) {
         return (<Menu.Item name={this.props.lang[langProps]} key={langProps}>
@@ -197,8 +197,8 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
         const info = data.result.reduce<
             { length: number, assetUnder: number, clientAlert: number, mifidAlert: number, acceptedProposals: number, totalProposals: number, pendingProposals: number, pendingExecution: number, totalBudget: number, totRevenues: number, totalTurnover: number }>(
                 (ret, v, i) => {
-                    const isPP = v.clientStatus == 'PENDING PROPOSAL';
-                    const isPE = v.clientStatus == 'PENDING EXECUTION';
+                    const isPP = v.clientStatus === 'PENDING PROPOSAL';
+                    const isPE = v.clientStatus === 'PENDING EXECUTION';
 
                     ret.length += 1;
                     ret.totalBudget += v.budget;
@@ -209,7 +209,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                     ret.pendingExecution += isPE ? 1 : 0;
                     ret.assetUnder += v.aua;
                     ret.clientAlert += v.radar.numOfAlerts > 0 ? 1 : 0;
-                    ret.mifidAlert += v.radar.riskAdequacyAlert != 'green' ? 1 : 0;
+                    ret.mifidAlert += v.radar.riskAdequacyAlert !== 'green' ? 1 : 0;
                     ret.totalTurnover += v.turnover;
                     return ret;
                 },

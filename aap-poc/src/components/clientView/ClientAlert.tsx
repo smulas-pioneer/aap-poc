@@ -29,10 +29,10 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
             : null;
     }
 
-    const alertTitle = radar.numOfAlerts == 0 ? lang.NO_ALERTS
+    const alertTitle = radar.numOfAlerts === 0 ? lang.NO_ALERTS
         : `${lang.ALERT.name}${radar.numOfAlerts ? ` : ${radar.numOfAlerts} ${lang.ALERT.sentence}` : ''}`
 
-    const actualTitle = props.client.clientStatus == 'ON HOLD'
+    const actualTitle = props.client.clientStatus === 'ON HOLD'
         ? lang.ONHOLD + ' (' + alertTitle + ')'
         : alertTitle
 

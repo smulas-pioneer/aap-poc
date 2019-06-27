@@ -2,7 +2,8 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import * as reducers from './reducers';
-import { configureStore, HashRouter as Router, loadConfiguration } from 'app-support';
+import { configureStore, loadConfiguration } from 'app-support';
+import {HashRouter as Router} from'react-router-dom';
 import './styles/index.css';
 import 'semantic-ui-css/semantic.min.css';
 import './styles/hovereffect.css';
@@ -11,7 +12,6 @@ import { loadDatabase } from './_db/data';
 import { Loader } from 'semantic-ui-react';
 import { setConfigJson } from "./actions/index";
 
-const startingState: any = {}
 
 const store = configureStore(reducers.default, /*startingState,*/ true);
 

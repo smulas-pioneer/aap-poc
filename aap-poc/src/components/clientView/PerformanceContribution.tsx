@@ -39,7 +39,7 @@ export class PerformanceContributionGraph extends React.Component<PerformanceCon
 
         let ids = {};
         this.props.data.forEach(d => {
-            Object.keys(d).filter(k => k != 'year').forEach(i => {
+            Object.keys(d).filter(k => k !== 'year').forEach(i => {
                 ids[i] = true;
             });
         });

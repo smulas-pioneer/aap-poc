@@ -27,7 +27,7 @@ export class ClientsViewFilterText extends React.Component<ClientsViewFilterText
     }, 400);
 
     componentWillReceiveProps(next: any) {
-        if (next.filter != this.state.filter) {
+        if (next.filter !== this.state.filter) {
             this.setState(next);
         }
     }

@@ -2,7 +2,7 @@ import { Client } from "../../_db/interfaces";
 import { LangDictionary } from "../../reducers/language/interfaces";
 import * as React from "react";
 import { Icon, SemanticICONS, Card, Table, Header, Label, Statistic } from "semantic-ui-react";
-import { Link } from "app-support";
+import { Link } from "react-router-dom";
 import { sumBy } from "lodash";
 import { getRegionsByClients } from "../../_db/utils";
 

@@ -167,10 +167,10 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
                                             <small style={{color:'grey'}}>{moment(REFERENCE_DATE_TODAY).to(moment(client.clientStatusAge))}</small>
                                         </Table.Cell>
                                         <Table.Cell>{client.clientRiskProfile}</Table.Cell>
-                                        <Table.Cell>{client.regulatoryIndicator == 0 ? '' : fmt(client.regulatoryIndicator, 1)}</Table.Cell>
-                                        <Table.Cell>{client.guidelineIndicator == 0 ? '' : fmt(client.guidelineIndicator, 1)}</Table.Cell>
-                                        <Table.Cell>{client.aboveGuidelines == 0 ? '' : fmt(client.aboveGuidelines, 1)}</Table.Cell>
-                                        <Table.Cell>{client.belowGuidelines == 0 ? '' : fmt(client.belowGuidelines, 1)}</Table.Cell>
+                                        <Table.Cell>{client.regulatoryIndicator === 0 ? '' : fmt(client.regulatoryIndicator, 1)}</Table.Cell>
+                                        <Table.Cell>{client.guidelineIndicator === 0 ? '' : fmt(client.guidelineIndicator, 1)}</Table.Cell>
+                                        <Table.Cell>{client.aboveGuidelines === 0 ? '' : fmt(client.aboveGuidelines, 1)}</Table.Cell>
+                                        <Table.Cell>{client.belowGuidelines === 0 ? '' : fmt(client.belowGuidelines, 1)}</Table.Cell>
 
                                     </Table.Row>
                                 )

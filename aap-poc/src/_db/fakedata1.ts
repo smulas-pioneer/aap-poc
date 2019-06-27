@@ -32,9 +32,9 @@ export const updateStrategies = () => {
 }
 
 const updateStrategy = (id: string) => {
-    const c = id == "0" ? case1 :
-        id == "1" ? case2 :
-            id == "2" ? case3 :
+    const c = id === "0" ? case1 :
+        id === "1" ? case2 :
+            id === "2" ? case3 :
                 null;
     if (c) {
         strategies[id].forEach(p => {

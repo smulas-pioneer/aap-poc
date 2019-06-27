@@ -5,12 +5,10 @@ import { ClientsView } from './clientsView/ClientsView';
 import { ClientView } from './clientView/ClientView3';
 
 import MenuFlat from './MenuFlat';
-import HomePage from './HomePage';
 import Dashboard from './Dashboard';
 import { AlertsView } from './alertsView/AlertsView';
 import { ManagerView } from './managerView/managerView';
 import { DashboardMgr } from './DashboardMgr';
-import { ItalyMap } from './maps/italy/ItalyMap';
 
 interface IAppProps {
     manager?: boolean
@@ -21,7 +19,7 @@ class App extends React.Component<IAppProps, {}> {
         const { manager } = this.props;
         return (
             <div className="app" style={{ backgroundColor: '#f8f5f5', height: '100vh', width: '100%', position: 'absolute', top: 0, bottom: 0 }}>
-            <Route path="/" component={(p: RouteComponentProps<any>) => <MenuFlat history={p.history}/>}/>
+            <Route exact={false} path="/" component={(p: RouteComponentProps<any>) => <MenuFlat history={p.history}/>}/>
             <Segment basic style={{ marginTop: 0, height: '95%' }}>
                     {/* <Route exact path="/" component={(p: any) => <HomePage />} />
                     <Route exact path="/homepage" component={(p: any) => <HomePage />} /> */}

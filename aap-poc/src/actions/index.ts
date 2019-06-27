@@ -72,7 +72,7 @@ export const spotlightSearch = (args: SpotlightSearchParms) => (dispatch: any, g
     svc.spotlightSearch(
         {
             ...args,
-            agents: fltAgents.length == 0 ? usr.agents : intersection(fltAgents, usr.agents)
+            agents: fltAgents.length === 0 ? usr.agents : intersection(fltAgents, usr.agents)
         })
         .then((r: any) => dispatch(spotlightSearchSuccess(r)));
 }

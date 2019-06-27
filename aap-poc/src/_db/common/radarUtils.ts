@@ -80,10 +80,10 @@ export const createRadarSync = (guideLines: RadarItem,
     }
 
     const alerts = [data.concentrationAlert, data.consistencyAlert, data.efficencyAlert, data.riskAdequacyAlert, data.riskAnalysisAlert, data.overlapAlert];
-    const reds = alerts.filter(r => r == 'red').length;
-    const oranges = alerts.filter(r => r == 'orange').length;
+    const reds = alerts.filter(r => r === 'red').length;
+    const oranges = alerts.filter(r => r === 'orange').length;
     const numOfAlerts = reds + oranges;
-    const color = numOfAlerts == 0 ? 'green' : reds == 0 ? 'orange' : 'red';
+    const color = numOfAlerts === 0 ? 'green' : reds === 0 ? 'orange' : 'red';
 
     const f= (n:number) => n/20
 
@@ -140,14 +140,14 @@ const radarToAlertHistory = (clients: Client[], date: string): AlertHistory2 => 
         clients.map(c => c.radar)
             .map(radar => Object.keys(radar)
                 .filter(k => endsWith(k, 'Alert'))
-                .filter(k => radar[k] == color).length)
+                .filter(k => radar[k] === color).length)
         , v => v);
 
     const countMifid = (color: string) => sumBy(
         clients.map(c => c.radar)
             .map(radar => Object.keys(radar)
-                .filter(k => k == ('RiskAdequacyAlert'))
-                .filter(k => radar[k] == color).length)
+                .filter(k => k === ('RiskAdequacyAlert'))
+                .filter(k => radar[k] === color).length)
         , v => v);
 
     const totAlerts = clients.length * 6;

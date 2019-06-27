@@ -26,7 +26,7 @@ const getSuggestion1 = (position: StrategyItem[], axes: RadarStrategyParm, calcu
     const w = suggestedPositionExCash(newPos)
     const delta = sumBy(w, s => s.weight) - 1;
     const cp = position.find(p => p.isCash)!
-    const cashPosition = { ...cp, suggestedDelta: -delta, suggestionAccepted: delta != 0 };
+    const cashPosition = { ...cp, suggestedDelta: -delta, suggestionAccepted: delta !== 0 };
     const secPositions = position.filter(p => !p.isCash);
     return [cashPosition, ...secPositions]
   }
@@ -45,7 +45,7 @@ const fixCash = (strategy: StrategyItem[]) => {
 
 const acceptAll = (forced: StrategyItem[]) => {
   return forced.map(s => {
-    return { ...s, suggestionAccepted: s.suggestedDelta != 0 ? true : false }
+    return { ...s, suggestionAccepted: s.suggestedDelta !== 0 ? true : false }
   });
 }
 
@@ -93,11 +93,11 @@ const performanceForPeriod = (isin: string, period: PerformancePeriod) => {
     return [];
   }
   const maxDate = moment(data[data.length - 1].date);
-  const minDate = period == '1M' ? maxDate.subtract(1, 'month') :
-    period == '3M' ? maxDate.subtract(3, 'month') :
-      period == '6M' ? maxDate.subtract(6, 'month') :
-        period == '1Y' ? maxDate.subtract(1, 'year') :
-          period == 'YTD' ? moment([maxDate.year(), 0, 1]) : moment(data[0].date);
+  const minDate = period === '1M' ? maxDate.subtract(1, 'month') :
+    period === '3M' ? maxDate.subtract(3, 'month') :
+      period === '6M' ? maxDate.subtract(6, 'month') :
+        period === '1Y' ? maxDate.subtract(1, 'year') :
+          period === 'YTD' ? moment([maxDate.year(), 0, 1]) : moment(data[0].date);
   const minDateStr = minDate.format('YYYY-MM-DD');
   const filteredData = data.filter(p => p.date >= minDateStr);
   return filteredData.map(p => ({
@@ -154,7 +154,7 @@ const getPerfContrib = (isin: string[]) => {
 }
 
 export const getPerfContribution = (position: PositionItem[]) => {
-  const filteredPos = position.filter(w => w.weight != 0);
+  const filteredPos = position.filter(w => w.weight !== 0);
   const keys = filteredPos.map(p => p.security.IsinCode);
   const weights = filteredPos.reduce((prev, curr) => {
     prev[curr.security.IsinCode] = curr.weight;
@@ -165,7 +165,7 @@ export const getPerfContribution = (position: PositionItem[]) => {
   const gPerf = groupBy(perfCompo, g => g.date);
   const ret = Object.keys(gPerf).map(k => {
     const o = gPerf[k].reduce((pr, cu) => {
-      const secNameRes = securityList.find(sec => sec.IsinCode == cu.id);
+      const secNameRes = securityList.find(sec => sec.IsinCode === cu.id);
       const secName = secNameRes ? secNameRes.SecurityName : cu.id;
       pr[secName] = cu.perf * weights[cu.id] * 100;
       return pr;
@@ -178,7 +178,7 @@ export const getPerfContribution = (position: PositionItem[]) => {
 
 
 export const getPositionPerformance = (position: PositionItem[], period: PerformancePeriod = 'All') => {
-  const filteredPos = position.filter(w => w.weight != 0);
+  const filteredPos = position.filter(w => w.weight !== 0);
   const keys = filteredPos.map(p => p.security.IsinCode);
   const weights = filteredPos.reduce((prev, curr) => {
     prev[curr.security.IsinCode] = curr.weight;

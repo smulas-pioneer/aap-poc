@@ -39,7 +39,7 @@ export class SuggestedTransactions extends React.Component<Props, State> {
                                 <Table.Cell>{t.security.SecurityName}</Table.Cell>
                                 <Table.Cell>{t.security.MacroAssetClass}</Table.Cell>
                                 <Table.Cell textAlign="right">{fmt.format(t.quantity)}</Table.Cell>
-                                <Table.Cell><Label color={t.type == "BUY" ? 'green' : 'orange'}>{t.type}</Label></Table.Cell>
+                                <Table.Cell><Label color={t.type === "BUY" ? 'green' : 'orange'}>{t.type}</Label></Table.Cell>
                             </Table.Row>
                         })
                     }

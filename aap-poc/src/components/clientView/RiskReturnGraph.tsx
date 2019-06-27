@@ -31,8 +31,8 @@ export class RiskReturnGraph extends React.Component<RiskReturnChartProps, RiskR
     render() {
         const { scatterShapeCustom } = this.state;
 
-        const model = this.props.data.filter(p => p.id == 'Model');
-        const portfolio = this.props.data.filter(p => p.id == 'Portfolio');
+        const model = this.props.data.filter(p => p.id === 'Model');
+        const portfolio = this.props.data.filter(p => p.id === 'Portfolio');
         const data = this.props.data.filter(p => p.id !== 'Model' && p.id !== 'Portfolio');
 
         return <div>
@@ -80,4 +80,4 @@ const renderTooltip = (props: any) => {
         </Segment>
     }
     return null;
-} 
+}

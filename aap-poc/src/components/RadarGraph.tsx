@@ -24,7 +24,7 @@ export const RadarGraph = (props: {
 
   const d = props.data;
 
-  const alertColors = props.alertsAbout == 'actual' ? {
+  const alertColors = props.alertsAbout === 'actual' ? {
     consistency: getRAG(d.actual.consistency, d.limits.consistency, false),
     overlap: getRAG(d.actual.overlap, d.limits.overlap, false),
     efficency: getRAG(d.actual.efficency, d.limits.efficency, false),
@@ -115,9 +115,9 @@ export const RadarGraph = (props: {
       <RadarChart cx='50%' cy='50%' width={props.width} height={props.height} data={data} outerRadius={'85%'} isAnimationActive startWithAnimation >
         <Legend height={1} verticalAlign="bottom" />
         {/*<Radar name="Limits" dataKey="limits" stroke="blue" fill="#D10505" fillOpacity={0} />*/}
-        <Radar name="Actuals" dataKey="actual" stroke="orange" fill="#ff8c00" fillOpacity={props.alertsAbout == 'actual' ? 0.5 : 0.25} dot />
+        <Radar name="Actuals" dataKey="actual" stroke="orange" fill="#ff8c00" fillOpacity={props.alertsAbout === 'actual' ? 0.5 : 0.25} dot />
         <Radar name="Guidelines" dataKey="guideLines" stroke="red" strokeWidth={2} fill="# 00f" fillOpacity={0} />
-        <Radar name="Proposed" dataKey="proposed" stroke="green" fill="#32cd32" fillOpacity={props.alertsAbout == 'proposed' ? 0.3 : 0.05} dot />
+        <Radar name="Proposed" dataKey="proposed" stroke="green" fill="#32cd32" fillOpacity={props.alertsAbout === 'proposed' ? 0.3 : 0.05} dot />
         <PolarGrid />
         <PolarRadiusAxis angle={30} />
         <PolarAngleAxis dataKey="subject" tick={<CustomizedShape axes={props.axes} names={alertNames} colors={alertColors} onClickShape={props.onClickShape} />} />
@@ -130,18 +130,18 @@ const CustomizedShape = (props: any) => {
   let { x, y, axes, onClickShape, textAnchor, names, colors } = props;
   const value = props.payload.value;
   const KK = 5;
-  x = (value == 'efficency' || value == 'consistency' || value == 'riskAnalysis') ? x + KK : x - KK;
-  if (value == 'concentration' || value == 'riskAnalysis') y = y + KK;
-  if (value == 'efficency' || value == 'riskAdequacy') y = y - KK;
+  x = (value === 'efficency' || value === 'consistency' || value === 'riskAnalysis') ? x + KK : x - KK;
+  if (value === 'concentration' || value === 'riskAnalysis') y = y + KK;
+  if (value === 'efficency' || value === 'riskAdequacy') y = y - KK;
 
 
   const color = colors[value];
   const selected = axes[value];
   const alarmed = color !== "green";
 
-  const actualX = selected || alarmed ? (textAnchor == "start" ? x + 15 : x - 15) : x;
+  const actualX = selected || alarmed ? (textAnchor === "start" ? x + 15 : x - 15) : x;
   const actualY = y + 5;
-  const selectable = onClickShape && value != 'riskAdequacy';
+  const selectable = onClickShape && value !== 'riskAdequacy';
   const selectableClass = selectable ? "selectable" : undefined;
   return (
     <g style={{ cursor: selectable ? 'pointer' : 'not-allowed' }} onClick={() => selectable && onClickShape(value)} className={selectableClass} >

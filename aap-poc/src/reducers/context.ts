@@ -23,8 +23,8 @@ export default (state: ContextState = defaultState, action: any): ContextState =
     return state;
 };
 
-export const isManager = (state: ContextState) => state.user != undefined && state.user.isManager;
-export const isLogged = (state: ContextState) => state.user != undefined;
+export const isManager = (state: ContextState) => state.user !== undefined && state.user.isManager;
+export const isLogged = (state: ContextState) => state.user !== undefined;
 export const getCurrentUser = (state: ContextState) => state.user;
 
 export const getIsReady = (state:ContextState) => state.ready;

@@ -23,7 +23,7 @@ export class SpotlightResultList extends React.Component<SpotlightResultListProp
     return (
       <SpotlightResultListItem
         key={index}
-        active={this.props.active == index}
+        active={this.props.active === index}
         item={item}
         onClick={() => this.props.onItemSelect(index, item)}
         onNavigate={() => this.props.onItemNavigate(index, item)}
@@ -58,7 +58,7 @@ export class SpotlightResultList extends React.Component<SpotlightResultListProp
     return <div>
       {
         Object.keys(data).map((key, ikey) => {
-          const caption = key == 'agents' ? 'advisors' : key;
+          const caption = key === 'agents' ? 'advisors' : key;
           return (
             <Table striped color={SpotlightResultList.COLORS[ikey]} key={ikey}>
               <Table.Header>

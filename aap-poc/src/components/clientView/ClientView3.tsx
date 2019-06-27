@@ -79,7 +79,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
       setTimeout(() => {
         this.selectAllAxes();
         // Accept All Suggestions on Enter.
-        //this.handleOnChange(this.state.strategy.map(s => ({ ...s, suggestionAccepted: s.suggestedDelta != 0 ? true : false })));
+        //this.handleOnChange(this.state.strategy.map(s => ({ ...s, suggestionAccepted: s.suggestedDelta !== 0 ? true : false })));
       }, 500);
     }
   }
@@ -474,7 +474,7 @@ export class ClientViews extends React.Component<ClientViewProps, { activeIndex?
   componentDidMount() {
   }
   handleTabChange(e: any, data: TabProps) {
-    if (typeof (data.activeIndex) == "string") return;
+    if (typeof (data.activeIndex) === "string") return;
     this.setState({ activeIndex: data.activeIndex });
   }
   handleBtnChange(activeIndex: number) {

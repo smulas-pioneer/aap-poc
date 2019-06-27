@@ -109,7 +109,7 @@ class SpotlightInputCompo extends conn.StatefulCompo<SpotlightInputState> {
     return (
       <SpotlightResultListItem
         key={index}
-        active={this.state.activePosition == index}
+        active={this.state.activePosition === index}
         item={item}
         onClick={() => this.setActivePosition(index)}
         onNavigate={() => this.onItemNavigate(item)}
