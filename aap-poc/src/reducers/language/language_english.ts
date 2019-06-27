@@ -106,7 +106,7 @@ export const English: LanguageState = {
             interviews: 'Interviews'
         },
         NO_ALERTS: 'No Alerts',
-        ALERT: { name: 'Alerts', sentence: 'monitoring indicators breached' },
+        ALERT: { name: 'Health Check', sentence: 'monitoring indicators breached' },
         ALERTS: {
             riskAdequacyAlert: { name: 'Risk Adequacy', sentence: 'The risk level of the client’s portfolio exceed the risk level of the model portfolio linked to the MiFID profile of the client' },
             efficencyAlert: { name: 'Efficency', sentence: 'The level of efficiency of the client’s portfolio in terms of expected risk / return is below the relevant model portfolio' },
