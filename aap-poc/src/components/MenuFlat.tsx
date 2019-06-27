@@ -123,7 +123,7 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
         }
 
         return (
-            <div style={{ backgroundColor: 'white', borderBottom: `solid ${layout.color} thick` }}>
+            <div style={{borderBottom: `solid ${layout.color} thick` }}>
                 <Spotlight
                     onCancel={() => this.toggleSpotlight(false)}
                     onItemNavigate={this.onItemNavigate}
@@ -154,12 +154,6 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
                             </Dropdown.Menu>
                         </Dropdown>
                     </Menu>
-
-                    {/* <Menu.Item>
-                        <span style={{ marginRight: 5 }}>v {process.env.REACT_APP_VERSION} </span>
-                        <LangBar />
-                    </Menu.Item>
-                    {this.renderSpotlightItem()} */}
                 </Menu>
             </div>
         );

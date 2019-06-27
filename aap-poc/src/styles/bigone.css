@@ -1,0 +1,33 @@
+:root {
+    --background-app: black;
+    --background-segment: #272f38;
+}
+
+html,
+.app,
+.app>* {
+    background: var(--background-app);
+}
+
+.app>div>.ui.attached.menu {
+    border: none
+}
+
+.grid-advanced.grid-header-fix {
+    grid-template-rows: 120px auto;
+}
+
+/*
+.ui.segment {
+    background: var(--background-segment);
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.3);
+}
+
+.ui.card {
+    background: black;
+    border: none;
+    box-shadow: none
+}
+
+
+*/

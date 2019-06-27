@@ -3,13 +3,17 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import * as reducers from './reducers';
 import { configureStore, HashRouter as Router, loadConfiguration } from 'app-support';
-import './styles/index.css';
-import 'semantic-ui-css/semantic.min.css';
-import './styles/hovereffect.css';
 import { Root } from './components/Root';
 import { loadDatabase } from './_db/data';
 import { Loader } from 'semantic-ui-react';
 import { setConfigJson } from "./actions/index";
+
+import 'semantic-ui-css/semantic.min.css';
+import './styles/hovereffect.css';
+import './styles/index.css';
+import './styles/bigone.css';
+import './styles/bigone-gen.css';
+
 
 const startingState: any = {}
 

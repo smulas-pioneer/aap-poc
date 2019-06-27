@@ -1,10 +1,12 @@
+html {
+    background: #f8f5f5;
+}
+
 .ui.dimmer {
     background-color: rgba(0, 0, 0, .55) !important;
 }
 
-
 /* grid-advanced */
-
 .grid-advanced {
     margin: 0;
     display: grid;
@@ -137,9 +139,6 @@
     display: block;
 }
 
-html {
-    background: #f8f5f5
-}
 
 
 svg .area:not(.unselectable),
