@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { LangDictionary } from "../../reducers/language/interfaces";
+import { LangDictionary } from "../../../reducers/language/interfaces";
 import { AreaValue } from './ItalyMap';
 
 import { Label } from 'semantic-ui-react';
-import { formatAua, } from '../../_db/utils';
-import { getMapOptionTypeCaption } from '../../commonUtils';
-import { IndicatorOptionsType } from '../../actions/model';
+import { formatAua, } from '../../../_db/utils';
+import { getMapOptionTypeCaption } from '../../../commonUtils';
+import { IndicatorOptionsType } from '../../../actions/model';
 
 export const SingleAreaLegend = ({ type, value, lang }: { type: IndicatorOptionsType, value: AreaValue, lang: LangDictionary }) => {
     if (!value) return null;

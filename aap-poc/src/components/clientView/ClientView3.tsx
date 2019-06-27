@@ -22,7 +22,7 @@ import { createRadarFromStrategy, suggestedPosition, currentPosition, modelPosit
 import { WidgetTitle } from '../shared/WidgetTitle';
 import { radars } from '../../_db/data';
 import { Model } from './Model';
-import { ColorsLegend } from '../italymaps/ColorsLegend';
+import { ColorsLegend } from '../maps/italy/ColorsLegend';
 import { ClientAlert } from './ClientAlert';
 
 const conn = appConnector<{ id: string }>()(
