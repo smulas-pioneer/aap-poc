@@ -1,3 +1,4 @@
+import * as React from "react";
 import { appConnector } from 'app-support';
 import { getLanguage, getCurrentUser, getConfigLayout } from '../reducers/index';
 import { Menu, MenuItemProps, Dropdown, Image } from 'semantic-ui-react';
