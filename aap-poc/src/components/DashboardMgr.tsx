@@ -93,7 +93,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 {value}
             </Statistic.Value>
             <br />
-            {sublabel && <Statistic.Label><span style={color && { color: color }}>{sublabel}</span></Statistic.Label>}
+            {sublabel && <Statistic.Label><span style={color && { color: color==='green' ? '#2ecc40' :color  }}>{sublabel}</span></Statistic.Label>}
         </Statistic>);
     }
 
@@ -111,7 +111,6 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 <Grid.Column>
                     <Segment>
                     <ClientViews graphs={this.createGraphs()} lang={lang} mode="tab" defaultIndex={0} hideTitle />
-                    {/*this.renderFilterGraphItem(1, filterMapItems.Aua, filter.Aua)*/}
                     </Segment>
                 </Grid.Column>
                 <Grid.Column width={16}>

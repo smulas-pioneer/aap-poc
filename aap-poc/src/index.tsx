@@ -12,6 +12,14 @@ import { loadDatabase } from './_db/data';
 import { Loader } from 'semantic-ui-react';
 import { setConfigJson } from "./actions/index";
 
+import 'semantic-ui-css/semantic.min.css';
+import './styles/hovereffect.css';
+import './styles/index.css';
+import './styles/bigone.css';
+import './styles/bigone-gen.css';
+
+
+const startingState: any = {}
 
 const store = configureStore(reducers.default, /*startingState,*/ true);
 
