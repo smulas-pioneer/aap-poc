@@ -1,9 +1,3 @@
-export interface LanguageState {
-    id: 'it' | 'gb' | 'de',
-    name: string,
-    dictionary: LangDictionary
-}
-
 export interface LangDictionary {
     AMUNDI_ADVISORY_PLATFORM: string,
     // homepage

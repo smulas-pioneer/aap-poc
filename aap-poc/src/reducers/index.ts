@@ -11,28 +11,28 @@ import '../styles/index.css';
 
 // Store Model
 export interface AppContext {
-    store: Redux.Store<AppState>;
+  store: Redux.Store<AppState>;
 }
 
 export interface AppState {
-    config: fromConfig.ContextState;
-    context: fromContext.ContextState;
-    search: fromSearch.State;
-    client: fromClient.ClientState;
-    language: fromLanguage.LanguageState;
-    spl: fromSpotlight.State;
-    alerts: fromAlerts.AlertState;
+  config: fromConfig.ContextState;
+  context: fromContext.ContextState;
+  search: fromSearch.State;
+  client: fromClient.ClientState;
+  language: fromLanguage.LanguageState;
+  spl: fromSpotlight.State;
+  alerts: fromAlerts.AlertState;
 }
 
 // Root Reducer
 export default Redux.combineReducers<AppState>({
-    config: fromConfig.default,
-    context: fromContext.default,
-    search: fromSearch.default,
-    client: fromClient.default,
-    language: fromLanguage.default,
-    spl: fromSpotlight.default,
-    alerts: fromAlerts.default,
+  config: fromConfig.default,
+  context: fromContext.default,
+  search: fromSearch.default,
+  client: fromClient.default,
+  language: fromLanguage.default,
+  spl: fromSpotlight.default,
+  alerts: fromAlerts.default,
 });
 
 // Selectors
@@ -61,4 +61,4 @@ export const getHistory = (state: AppState) => fromClient.getHistory(state.clien
 export const selectStrategy = (state: AppState) => fromClient.selectStrategy(state.client);
 
 export const selectAlertHistory = (state: AppState) => fromSearch.getAlertHistory(state.search);
-export const getIsReady = (state:AppState) => fromContext.getIsReady(state.context);
+export const getIsReady = (state: AppState) => fromContext.getIsReady(state.context);
