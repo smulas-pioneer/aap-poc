@@ -4,7 +4,7 @@ import { English } from './language_english';
 import { Italiano } from './language_italiano';
 import { German } from './language_german';
 import { setLanguage } from '../../actions/index';
-export { LanguageState };
+// export { LanguageState };
 
 // Root Reducer
 export default (state: LanguageState = English, action: any): LanguageState => {
