@@ -9,8 +9,8 @@ export interface ClientListProps {
 }
 
 export const ClientList = (props: ClientListProps & WithLang) => {
-
-    const cards = props.data.map(client => <ClientCard key={client.id} client={client} {...props} />);
+    const data = props.data.slice(0,100);
+    const cards = data.map(client => <ClientCard key={client.id} client={client} {...props} />);
 
     return <div className="clients-list">
         <Responsive {...Responsive.onlyMobile}>

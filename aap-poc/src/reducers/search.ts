@@ -53,7 +53,7 @@ export default (state: State = defaultState, action: any): State => {
             },
             alertHistory: {
                 ...state.alertHistory,
-                [uid]: uid == 'alerts' || uid == 'dashboard' ? calculateAlertHistory(action.payload.result) : undefined
+                [uid]: uid === 'alerts' || uid === 'dashboard' ? calculateAlertHistory(action.payload.result) : undefined
             }
         };
     } else if (logoutSuccess.matchAction(action)) {

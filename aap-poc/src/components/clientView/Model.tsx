@@ -52,7 +52,7 @@ export class Model extends React.Component<Props, State> {
                     <Table.Body style={{ overflow: 'visible' }}>
                         {
                             holdings.map((t, i) => {
-                                return (t.modelWeight == 0) ? null :
+                                return (t.modelWeight === 0) ? null :
                                     <Table.Row key={i}>
                                         <Table.Cell>
                                             {t.security.blacklisted && <Icon size="large" color="black" name='thumbs down' />}

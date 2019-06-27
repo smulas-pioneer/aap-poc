@@ -1,6 +1,6 @@
 import { PositionItem, RadarItem, StrategyItem, RadarStrategyParm, Breakdown, Alert, Radar, PerformancePeriod, Client, AlertHistory2, TimeHorizon } from "./interfaces";
 import { sumBy, groupBy, endsWith, sum } from "lodash";
-import * as moment from 'moment';
+import moment from 'moment';
 import * as math from 'mathjs';
 import { networkInterfaces } from "os";
 import { REFERENCE_DATE_TODAY } from "./consts";
@@ -80,10 +80,10 @@ export const createRadarSync = (guideLines: RadarItem,
     }
 
     const alerts = [data.concentrationAlert, data.consistencyAlert, data.efficencyAlert, data.riskAdequacyAlert, data.riskAnalysisAlert, data.overlapAlert];
-    const reds = alerts.filter(r => r == 'red').length;
-    const oranges = alerts.filter(r => r == 'orange').length;
+    const reds = alerts.filter(r => r === 'red').length;
+    const oranges = alerts.filter(r => r === 'orange').length;
     const numOfAlerts = reds + oranges;
-    const color = numOfAlerts == 0 ? 'green' : reds == 0 ? 'orange' : 'red';
+    const color = numOfAlerts === 0 ? 'green' : reds === 0 ? 'orange' : 'red';
 
     const f= (n:number) => n/20
 
@@ -97,9 +97,9 @@ export const createRadarSync = (guideLines: RadarItem,
     ]
     const aboveGuidelines = f(distances.filter(d=>d> 0).reduce((a,b)=>a+b,0));
     const belowGuidelines = f(distances.filter(d=>d< 0).reduce((a,b)=>a+b,0));
-    return { ...data, numOfAlerts, color, 
+    return { ...data, numOfAlerts, color,
 
-                belowGuidelines, 
+                belowGuidelines,
                 aboveGuidelines,
                  regulatoryIndicator };
 
@@ -140,14 +140,14 @@ const radarToAlertHistory = (clients: Client[], date: string): AlertHistory2 => 
         clients.map(c => c.radar)
             .map(radar => Object.keys(radar)
                 .filter(k => endsWith(k, 'Alert'))
-                .filter(k => radar[k] == color).length)
+                .filter(k => radar[k] === color).length)
         , v => v);
 
     const countMifid = (color: string) => sumBy(
         clients.map(c => c.radar)
             .map(radar => Object.keys(radar)
-                .filter(k => k == ('RiskAdequacyAlert'))
-                .filter(k => radar[k] == color).length)
+                .filter(k => k === ('RiskAdequacyAlert'))
+                .filter(k => radar[k] === color).length)
         , v => v);
 
     const totAlerts = clients.length * 6;

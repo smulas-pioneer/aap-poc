@@ -5,12 +5,10 @@ import { ClientsView } from './clientsView/ClientsView';
 import { ClientView } from './clientView/ClientView3';
 
 import MenuFlat from './MenuFlat';
-import HomePage from './HomePage';
 import Dashboard from './Dashboard';
 import { AlertsView } from './alertsView/AlertsView';
 import { ManagerView } from './managerView/managerView';
 import { DashboardMgr } from './DashboardMgr';
-import { ItalyMap } from './italymaps/ItalyMap';
 
 interface IAppProps {
     manager?: boolean

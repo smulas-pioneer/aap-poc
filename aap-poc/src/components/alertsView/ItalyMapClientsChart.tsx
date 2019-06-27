@@ -2,9 +2,9 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import { minBy } from 'lodash';
 import { ClientFilters, SearchFilter } from '../../actions/model';
-import { ItalyMap } from '../italymaps/ItalyMap';
+import { ItalyMap } from '../maps/italy/ItalyMap';
 import { LangDictionary } from '../../reducers/language/interfaces';
-import { ItalyMapFixed } from '../italymaps/ItalyMapFixed';
+import { ItalyMapFixed } from '../maps/italy//ItalyMapFixed';
 import { Client } from '../../_db/interfaces';
 import { ConfigLayout } from '../../reducers/config';
 

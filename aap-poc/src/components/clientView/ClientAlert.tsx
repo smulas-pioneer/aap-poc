@@ -3,7 +3,7 @@ import { LangDictionary } from "../../reducers/language/interfaces";
 import { List, Segment, Header, Icon, Accordion } from "semantic-ui-react";
 import * as React from 'react';
 import { REFERENCE_DATE_TODAY } from "../../_db/common/consts";
-import * as moment from 'moment';
+import moment from 'moment';
 
 export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client: Client, onOpenHistory: () => void }) => {
     const { radar, lang } = props;
@@ -21,7 +21,7 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
                     </p>
                     {/* <Statistic size="mini" color={value}  >
                         <Statistic.Value as="p" style={{ textAlign: 'left' }}  >
-                            
+
                         </Statistic.Value>
                     </Statistic> */}
                 </List.Content>
@@ -29,10 +29,10 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
             : null;
     }
 
-    const alertTitle = radar.numOfAlerts == 0 ? lang.NO_ALERTS
+    const alertTitle = radar.numOfAlerts === 0 ? lang.NO_ALERTS
         : `${lang.ALERT.name}${radar.numOfAlerts ? ` : ${radar.numOfAlerts} ${lang.ALERT.sentence}` : ''}`
 
-    const actualTitle = props.client.clientStatus == 'ON HOLD'
+    const actualTitle = props.client.clientStatus === 'ON HOLD'
         ? lang.ONHOLD + ' (' + alertTitle + ')'
         : alertTitle
 

@@ -1,4 +1,4 @@
-import { LanguageState } from './interfaces';
+import { LanguageState } from '.';
 
 export const Italiano: LanguageState = {
     id: 'it',

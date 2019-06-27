@@ -18,7 +18,7 @@ export const logoutSuccess = createAction('LOGOUT');
 export const logout = createPromiseAction('LOGOUT_SUCCESS', () => Promise.resolve(true), logoutSuccess);
 export const loginSuccess = createAction<UserInfo>('LOGIN_SUCCESS');
 
-export const login = createPromiseAction('LOGIN', (lt: LoginType) => {
+export const login = createPromiseAction('LOGIN', (lt: LoginType | undefined) => {
     const getValidAgent = (): string => {
         const rndAge = 0;// Math.floor((Math.random() * agents.length)) + 1;
         const agent = agents[rndAge];
@@ -72,7 +72,7 @@ export const spotlightSearch = (args: SpotlightSearchParms) => (dispatch: any, g
     svc.spotlightSearch(
         {
             ...args,
-            agents: fltAgents.length == 0 ? usr.agents : intersection(fltAgents, usr.agents)
+            agents: fltAgents.length === 0 ? usr.agents : intersection(fltAgents, usr.agents)
         })
         .then((r: any) => dispatch(spotlightSearchSuccess(r)));
 }

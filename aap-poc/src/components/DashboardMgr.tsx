@@ -12,10 +12,11 @@ import { ManagerView } from './managerView/managerView';
 import { AlertsView } from './alertsView/AlertsView';
 import { formatAua, formatNumber } from '../_db/utils';
 import { ClientFilter } from './shared/ClientFilter';
-import { ItalyMap } from './italymaps/ItalyMap';
+import { ItalyMap } from './maps/italy/ItalyMap';
 import { WidgetTitle } from './shared/WidgetTitle';
 import { ClientViews } from './clientView/ClientView3';
 import { BreakdownView } from './clientView/BreakdownView';
+import { ClientsView } from './clientsView/ClientsView';
 
 const sprintf = require("sprintf-js").sprintf;
 
@@ -31,7 +32,7 @@ const conn = appConnector<DashboardMgrProps>()(
         data: getSearchResult(s, p.uid),
         filter: getSearchFilter(s, p.uid),
         lang: getLanguage(s),
-        layout: getConfigLayout(s) 
+        layout: getConfigLayout(s)
     }),
     { searchClient }
 )
@@ -166,7 +167,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
     // lang
     alertsDetail = (numOfAlerts: string) => sprintf(this.props.lang.DB_ALERTS_DETAIL, numOfAlerts);
-    percDetail = (value: number | undefined, from: string, period: 'Y' | 'M' | 'D', info?: string) => sprintf(this.props.lang.DB_PERC_DETAIL, (value ? value + '% ' : ''), (info ? info + ' ' : ''), from, period == 'Y' ? this.props.lang.YEAR : period == 'M' ? this.props.lang.MONTH : this.props.lang.DAY);
+    percDetail = (value: number | undefined, from: string, period: 'Y' | 'M' | 'D', info?: string) => sprintf(this.props.lang.DB_PERC_DETAIL, (value ? value + '% ' : ''), (info ? info + ' ' : ''), from, period === 'Y' ? this.props.lang.YEAR : period === 'M' ? this.props.lang.MONTH : this.props.lang.DAY);
 
     renderTabItem(langProps: string, icon: SemanticICONS, color: SemanticCOLORS) {
         return (<Menu.Item name={this.props.lang[langProps]} key={langProps}>
@@ -221,8 +222,12 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
             {
                 menuItem: this.renderTabItem('MY_ALERTS', 'alarm', 'red'),
                 render: () => <Tab.Pane as={OverflowItem} style={style} content={<AlertsView manager uid={uid} hideGraphs />} />
-            }
-        ]
+            },
+            {
+              menuItem: this.renderTabItem('MY_CLIENTS', 'users', 'blue'),
+              render: () => <Tab.Pane as={OverflowItem} style={style} content={<ClientsView uid={uid} />} />
+          },
+    ]
 
         const info = data.result.reduce<
             { length: number, assetUnder: number, clientAlert: number, mifidAlert: number, acceptedProposals: number, totalProposals: number, rejectedProposals: number, totalBudget: number, totRevenues: number, totalTurnover: number }>(
@@ -234,7 +239,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 ret.totalProposals += v.numOfInterviews/2;
                 ret.assetUnder += v.aua;
                 ret.clientAlert += v.radar.numOfAlerts > 0 ? 1 : 0;
-                ret.mifidAlert += v.radar.riskAdequacyAlert != 'green' ? 1 : 0;
+                ret.mifidAlert += v.radar.riskAdequacyAlert !== 'green' ? 1 : 0;
                 ret.totalTurnover += v.turnover;
                 return ret;
             },

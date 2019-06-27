@@ -87,7 +87,7 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
             const sumOngoingFees = sumBy(grouped[key], c => c.ongoingFees);
             const sumBudget = sumBy(grouped[key], c => c.budget);
             const sumTurnover = sumBy(grouped[key], c => c.turnover) / grouped[key].length;
-         //   const sumAllocation = sumBy(grouped[key], c => c.allocationKPI) / grouped[key].length;            
+         //   const sumAllocation = sumBy(grouped[key], c => c.allocationKPI) / grouped[key].length;
             let first = grouped[key][0];
             recs.push({
                 country: first.country,
@@ -123,7 +123,7 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
         if (e.Group !== undefined) newState.currentGroup = e.Group;
         if (e.Indicator !== undefined) newState.currentIndicator = e.Indicator;
         newState.currentData = this.calculateData(this.props.clients, newState.currentGroup, newState.currentIndicator);
-        this.setState(prev => newState);
+        this.setState(prev => newState as any);
     }
 
     render() {

@@ -18,7 +18,7 @@ export const AxesSelection = (props: AxesSelectionProps) => {
     }
 
     const Item = (props: { name: string, data: RadarStrategyParm, radar: Radar }) => {
-        const isActive = props.data[props.name] == true;
+        const isActive = props.data[props.name] === true;
         const style: React.CSSProperties = isActive
             ? { color: 'black', fontWeight: 'bold' }
             : { color: 'lightgrey' }
@@ -40,7 +40,7 @@ export const AxesSelection = (props: AxesSelectionProps) => {
                 {Math.round(props.radar.proposed[props.name] * 100) / 100}
             </Table.Cell>
             <Table.Cell textAlign="center">
-                {delta != 0 && <Icon name={delta > 0 ? 'triangle up' : 'triangle down'} color={delta > 0 ? 'green' : 'red'} />}
+                {delta !== 0 && <Icon name={delta > 0 ? 'triangle up' : 'triangle down'} color={delta > 0 ? 'green' : 'red'} />}
             </Table.Cell>
 
         </Table.Row>

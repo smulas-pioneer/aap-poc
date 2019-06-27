@@ -19,7 +19,7 @@ const getStrategyItem = (factor: number, s: StrategyItem, value: number, suggest
     return { ...s, suggestedDelta: (value / 100 / factor) - s.currentWeight, suggestionAccepted };
 }
 
-const isDiff = (a: number, b: number) => Math.round(a * 1000) != Math.round(b * 1000);
+const isDiff = (a: number, b: number) => Math.round(a * 1000) !== Math.round(b * 1000);
 
 export class HoldingWeigthControl extends React.Component<EditCellProps, EditCellState> {
     state = {
@@ -50,7 +50,7 @@ export class HoldingWeigthControl extends React.Component<EditCellProps, EditCel
     }
 
     handleOnChange = (value: string) => {
-        const item = { ...this.state.item, suggestedDelta: value == '' ? 0 : this.state.item.suggestedDelta }
+        const item = { ...this.state.item, suggestedDelta: value === '' ? 0 : this.state.item.suggestedDelta }
 
         this.setState({ value, item }, () => {
             this.handleAccept(item.suggestionAccepted);
@@ -70,7 +70,7 @@ export class HoldingWeigthControl extends React.Component<EditCellProps, EditCel
             onClick: () => this.handleAccept(!suggestionAccepted)
         }
         const suggested = getValue(this.props.factor, this.props.data).toString();
-        const showValue = suggestedDelta != 0 || (suggested !== this.state.value && this.state.value !== '');
+        const showValue = suggestedDelta !== 0 || (suggested !== this.state.value && this.state.value !== '');
         const showAction = showValue && this.state.value !== '';
 
         return !isCash && <Input
@@ -78,7 +78,7 @@ export class HoldingWeigthControl extends React.Component<EditCellProps, EditCel
             size="mini"
             style={{color: suggestionAccepted ? 'red' : 'ligthgrey'}}
             value={showValue ? this.state.value : ''}
-            onChange={(a, b) => this.handleOnChange(b.value)}    
+            onChange={(a, b) => this.handleOnChange(b.value)}
             action={showAction && action}
         />
     }

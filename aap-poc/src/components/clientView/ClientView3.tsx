@@ -7,7 +7,7 @@ import { Client, Breakdown, Radar, StrategyItem, RadarStrategyParm, InterviewRes
 import * as ce from '../../_db/coreEngine';
 import { sumBy, startCase, camelCase } from 'lodash';
 
-import { Grid, Segment, Statistic, Card, Button, Table, SemanticICONS, Icon, Feed, Form, Label, Tab, Accordion, Header, SemanticCOLORS, List, Menu, Transition, Checkbox, Modal, Loader, Dimmer } from 'semantic-ui-react';
+import { Grid, Segment, Statistic, Card, Button, Table, SemanticICONS, Icon, Feed, Form, Label, Tab, Accordion, Header, SemanticCOLORS, List, Menu, Transition, Checkbox, Modal, Loader, Dimmer, TabProps } from 'semantic-ui-react';
 import { RadarGraph } from '../RadarGraph';
 import { Holdings, OrderList } from './Holdings';
 import { PerformanceChart } from '../securityView/PerformanceChart';
@@ -22,7 +22,7 @@ import { createRadarFromStrategy, suggestedPosition, currentPosition, modelPosit
 import { WidgetTitle } from '../shared/WidgetTitle';
 import { radars } from '../../_db/data';
 import { Model } from './Model';
-import { ColorsLegend } from '../italymaps/ColorsLegend';
+import { ColorsLegend } from '../maps/italy/ColorsLegend';
 import { ClientAlert } from './ClientAlert';
 
 const conn = appConnector<{ id: string }>()(
@@ -79,7 +79,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
       setTimeout(() => {
         this.selectAllAxes();
         // Accept All Suggestions on Enter.
-        //this.handleOnChange(this.state.strategy.map(s => ({ ...s, suggestionAccepted: s.suggestedDelta != 0 ? true : false })));
+        //this.handleOnChange(this.state.strategy.map(s => ({ ...s, suggestionAccepted: s.suggestedDelta !== 0 ? true : false })));
       }, 500);
     }
   }
@@ -193,7 +193,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
       },
       PerfContr: {
         title: 'Perf. Contr.',
-        icon: 'bar graph',
+        icon: 'chart bar outline',
         charts: radar && [
           {
             title: 'Perf. Contr.',
@@ -224,7 +224,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
       const element = (memo[prop] || {
         title: prop,
-        icon: chartView === "pie" ? 'pie graph' : 'bar graph',
+        icon: chartView === "pie" ? 'pie graph' : 'chart bar outline',
         charts: []
       });
 
@@ -473,8 +473,9 @@ export class ClientViews extends React.Component<ClientViewProps, { activeIndex?
   }
   componentDidMount() {
   }
-  handleTabChange(e: any, { activeIndex }: { activeIndex: number }) {
-    this.setState({ activeIndex });
+  handleTabChange(e: any, data: TabProps) {
+    if (typeof (data.activeIndex) === "string") return;
+    this.setState({ activeIndex: data.activeIndex });
   }
   handleBtnChange(activeIndex: number) {
     this.setState({ activeIndex });

@@ -1,7 +1,7 @@
 {
     "$schema": "http://json.schemastore.org/tslint.json",
     "extends": [],
-    "rulesz": {
+    "rulesZ": {
         "align": [
             true,
             "parameters",

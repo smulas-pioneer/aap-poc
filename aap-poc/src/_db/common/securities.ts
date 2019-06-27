@@ -7003,7 +7003,7 @@ export const wrapSecurity = (s: any) => {
     ...s,
     Currency: dictCur[s.Currency] || s.Currency,
     MicroAssetClass: dictMI[s.MicroAssetClass] || s.MicroAssetClass,
-    MacroAssetClass: s.MacroAssetClass == "Balanced" ? "Balanced" : dictMA2[s.MicroAssetClass] || s.MacroAssetClass,
+    MacroAssetClass: s.MacroAssetClass === "Balanced" ? "Balanced" : dictMA2[s.MicroAssetClass] || s.MacroAssetClass,
     Region: s.Region && wRegion[s.Region.toLowerCase()] || s.Region
   }
 }
@@ -7014,7 +7014,7 @@ export const wrapSecurities = (secs: any) => secs.map(wrapSecurity);
 let cntOther = 0;
 
 export const securities = wrapSecurities(_securities.filter(s => {
-  if (s.MacroAssetClass == "Balanced") return true;
+  if (s.MacroAssetClass === "Balanced") return true;
   if (s.MicroAssetClass !== 'Other') return true;
   cntOther++;
   return cntOther < 10;
