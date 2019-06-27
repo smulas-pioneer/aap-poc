@@ -123,13 +123,14 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
     const cb = () => this.setState({ firstSimulation: false, processing: undefined, somethingIsChanged: false }, () => {
       this.props.getSuggestions({ id: this.props.client!.id, position: strategy, axes: this.state.axes, calculateFromAxes: false });
     })
-
+    cb();
+    /*
     if (this.state.firstSimulation) {
       cb();
     } else {
       this.setState({ processing: 'New Simulation' }, () => setTimeout(cb, 250));
     }
-
+*/
   }
 
 
