@@ -18,6 +18,7 @@ import { ClientViews, ClientViewsNew } from './clientView/ClientView3';
 import { BreakdownView } from './clientView/BreakdownView';
 import { ClientsView } from './clientsView/ClientsView';
 import { EuropaMap } from './maps/europe/EuropeMap';
+import { getIsOnlyItaly } from '../reducers';
 
 const sprintf = require("sprintf-js").sprintf;
 
@@ -35,7 +36,8 @@ const conn = appConnector<DashboardMgrProps>()(
     data: getSearchResult(s, p.uid),
     filter: getSearchFilter(s, p.uid),
     lang: getLanguage(s),
-    layout: getConfigLayout(s)
+    layout: getConfigLayout(s),
+    isOnlyItaly: getIsOnlyItaly(s, p.uid)
   }),
   { searchClient }
 )
@@ -109,7 +111,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
           <Segment>
             <WidgetTitle title={'Key Figures Map'} shareButtons={['Image', 'Copy']} />
             {/* <ItalyMap lang={lang} clients={data} layout={layout} height="524px" /> */}
-            <EuropaMap lang={lang} clients={data} layout={layout} height="524px" />
+            <EuropaMap lang={lang} clients={data} layout={layout} height="524px" isOnlyItaly={this.props.isOnlyItaly} />
           </Segment>
         </Grid.Column>
         <Grid.Column>
@@ -283,7 +285,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
             <ClientFilter
               searchPlaceholder={lang.ENTER_FILTER_TEXT}
               data={filter}
-              filterMaps={['Regions', 'Branch', 'Agents', 'Aua', 'Segment', 'RiskProfile']}
+              filterMaps={['Countries', 'Regions', 'Branch', 'Agents', 'Aua', 'Segment', 'RiskProfile']}
               filterValue={data.parms}
               onChange={this.handleOnChangeFilter}
             />

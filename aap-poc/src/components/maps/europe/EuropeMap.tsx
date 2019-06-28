@@ -24,6 +24,7 @@ export interface EuropeMapProps {
   clients: Client[]
   width?: number | string;
   height?: number | string;
+  isOnlyItaly?: boolean;
 }
 
 export interface EuropeMapState {
@@ -200,8 +201,11 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
 
   render() {
     const { type, areaValues, countWithValues } = this.state.values;
-    const showEurope = this.state.requestMapIndex === undefined && this.state.mapIndex === undefined;
-    const showNation = this.state.requestMapIndex !== undefined && this.state.mapIndex !== undefined;
+
+    const showEurope = !this.props.isOnlyItaly;
+    const showItaly = this.props.isOnlyItaly;
+
+    //this.state.requestMapIndex !== undefined && this.state.mapIndex !== undefined;
     const { lang } = this.props;
 
     return (
@@ -211,6 +215,7 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
             <ColorsLegend type={type} values={areaValues} lang={lang} />
             <Europe
               className="nations"
+              width={520}
               height={450}
               paths={
                 EuropaMap.AREA_MAP_INDEX.map((val, idx) => {
@@ -229,7 +234,7 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
           </div>
         </Transition>
 
-        <Transition visible={showNation} animation="fade" duration={350} onComplete={(_, e) => { !showNation && this.setState(prev => ({ mapIndex: prev.requestMapIndex })) }} >
+        <Transition visible={showItaly} animation="fade" duration={350} onComplete={(_, e) => { !showItaly && this.setState(prev => ({ mapIndex: prev.requestMapIndex })) }} >
           <div style={{ width: "100%", height: "100%" }}>
             <ItalyMap clients={this.props.clients} lang={this.props.lang} layout={this.props.layout} height="524px" />
           </div>
