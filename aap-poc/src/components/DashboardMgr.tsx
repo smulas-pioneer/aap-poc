@@ -14,9 +14,12 @@ import { formatAua, formatNumber } from '../_db/utils';
 import { ClientFilter } from './shared/ClientFilter';
 import { ItalyMap } from './maps/italy/ItalyMap';
 import { WidgetTitle } from './shared/WidgetTitle';
-import { ClientViews, ClientViewsNew } from './clientView/ClientView3';
+import { ClientViews } from './clientView/ClientView3';
 import { BreakdownView } from './clientView/BreakdownView';
 import { ClientsView } from './clientsView/ClientsView';
+import { SliderGraph } from './clientView/SliderGraph';
+import { EuropaMap } from './maps/europe/EuropeMap';
+import { getIsOnlyItaly } from '../reducers';
 
 const sprintf = require("sprintf-js").sprintf;
 
@@ -34,7 +37,8 @@ const conn = appConnector<DashboardMgrProps>()(
         data: getSearchResult(s, p.uid),
         filter: getSearchFilter(s, p.uid),
         lang: getLanguage(s),
-        layout: getConfigLayout(s)
+        layout: getConfigLayout(s),
+        isOnlyItaly: getIsOnlyItaly(s, p.uid)
     }),
     { searchClient }
 )
@@ -107,12 +111,13 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 <Grid.Column>
                     <Segment>
                         <WidgetTitle title={'Key Figures Map'} shareButtons={['Image', 'Copy']} />
-                        <ItalyMap lang={lang} clients={data} layout={layout} height="524px" />
+                        {/* <ItalyMap lang={lang} clients={data} layout={layout} height="524px" /> */}
+                        <EuropaMap lang={lang} clients={data} layout={layout} height="524px" isOnlyItaly={this.props.isOnlyItaly} />
                     </Segment>
                 </Grid.Column>
                 <Grid.Column>
-                    <Segment>
-                        <ClientViews graphs={this.createGraphs()} lang={lang} mode="tab" defaultIndex={0} hideTitle />
+                    <Segment style={{ height: '100%' }}>
+                        <SliderGraph graphs={this.createGraphs()} lang={lang} defaultIndex={0} hideTitle />
                     </Segment>
                 </Grid.Column>
                 <Grid.Column width={16}>
@@ -157,12 +162,8 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 return memo;
             }, [] = [] as any);
 
-        var arrayValues = this.state.searchParms[searchprop];
 
-        return (
-            <Segment>
-                <CustomPieChart width={500} height={500} data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
-            </Segment>
+        return (<CustomPieChart width={50} height={50} responsiveHeight="100%" data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
         );
     }
 
@@ -197,7 +198,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 icon: 'line chart',
                 charts: [
                     {
-                        chart: <BreakdownView breakdown={b} width={500} height={500} />
+                        chart: <BreakdownView breakdown={b} width={50} height={50} responsiveHeight="100%" />
                     }]
             }
         });
@@ -214,19 +215,19 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         const panes = [
             {
                 menuItem: this.renderTabItem('DASHBOARD', 'pie graph', 'green'),
-                render: () => <Tab.Pane as={OverflowItem} style={style} content={this.renderFilterGraphics(data.result)} />
+                render: () => <Tab.Pane as={"div"} style={style} content={this.renderFilterGraphics(data.result)} />
             },
             {
                 menuItem: this.renderTabItem('MY_PORTFOLIOS', 'users', 'blue'),
-                render: () => <Tab.Pane as={OverflowItem} style={style} content={<ManagerView uid={uid} />} />
+                render: () => <Tab.Pane as={"div"} style={style} content={<ManagerView uid={uid} />} />
             },
             {
                 menuItem: this.renderTabItem('MY_ALERTS', 'alarm', 'red'),
-                render: () => <Tab.Pane as={OverflowItem} style={style} content={<AlertsView manager uid={uid} hideGraphs />} />
+                render: () => <Tab.Pane as={"div"} style={style} content={<AlertsView manager uid={uid} hideGraphs />} />
             },
             {
                 menuItem: this.renderTabItem('MY_CLIENTS', 'users', 'blue'),
-                render: () => <Tab.Pane as={OverflowItem} style={style} content={<ClientsView uid={uid} />} />
+                render: () => <Tab.Pane as={"div"} style={style} content={<ClientsView uid={uid} />} />
             },
         ]
 
@@ -273,7 +274,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                     </Grid>
                 </Segment>
                 <AdvancedGrid className="grid-filter-right">
-                    <Segment as={OverflowColumn} >
+                    <Segment as={OverflowColumn}>
                         <Tab menu={{ pointing: true, secondary: true }} panes={panes} style={{ height: '95%' }} />
                     </Segment>
                     <Segment style={{ margin: 0 }}>
@@ -281,7 +282,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                         <ClientFilter
                             searchPlaceholder={lang.ENTER_FILTER_TEXT}
                             data={filter}
-                            filterMaps={['Regions', 'Branch', 'Agents', 'Aua', 'Segment', 'RiskProfile']}
+                            filterMaps={['Countries', 'Regions', 'Branch', 'Agents', 'Aua', 'Segment', 'RiskProfile']}
                             filterValue={data.parms}
                             onChange={this.handleOnChangeFilter}
                         />

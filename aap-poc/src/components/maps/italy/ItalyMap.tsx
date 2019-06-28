@@ -10,12 +10,12 @@ import { Area6 } from './Area6';
 import { Area7 } from './Area7';
 import { Boundaries } from './Boundaries';
 import { Marker } from './Marker';
-import { ColorsLegend } from './ColorsLegend';
+import { ColorsLegend } from './../../shared/ColorsLegend';
 import { SearchFilter, IndicatorOptionsType, MapLegend } from '../../../actions/model';
 
 import { groupBy, Dictionary, countBy, sumBy, uniqBy } from 'lodash';
 import { LangDictionary } from '../../../reducers/language/interfaces';
-import { MapOptions } from './MapOptions';
+import { MapOptions } from '../../shared/MapOptions';
 import { Client } from '../../../_db/interfaces';
 import { rnd, formatAua } from '../../../_db/utils';
 import { SingleAreaLegend } from './SingleAreaLegend';
@@ -24,6 +24,7 @@ import { getMapOptionTypeCaption } from '../../../commonUtils';
 import { FillAreaLegend } from './FillAreaLegend';
 import { ConfigLayout } from '../../../reducers/config';
 import { isArray } from 'util';
+import { AreaValue } from '../../shared/AreaMapProps';
 
 const { Legend, ResponsiveContainer } = require('recharts');
 const ReactTooltip = require('react-tooltip');
@@ -40,13 +41,6 @@ export interface ItalyMapState {
   mapIndex: number | undefined;
   requestMapIndex: number | undefined;
   values: { type: IndicatorOptionsType, areaValues: AreaValue[], countWithValues: number };
-}
-
-export interface AreaValue {
-  key: string,
-  value: number,
-  perc: number,
-  color: string
 }
 
 export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
@@ -94,7 +88,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
     */
 
     this.MAX_COLORS_LEN = this.colors.length - 1;
-    this.LAST_COLOR = 'whitesmoke';
+    this.LAST_COLOR = 'dimgray';// 'whitesmoke';
 
     this.state = {
       mapIndex: undefined,
@@ -201,7 +195,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
         key,
         value,
         perc,
-        color: color !== undefined ? `rgb(${color[0]}, ${color[1]}, ${color[2]}` : this.LAST_COLOR
+        color: color !== undefined ? `rgb(${color[0]}, ${color[1]}, ${color[2]})` : this.LAST_COLOR
       });
       return acc;
     }, [] as AreaValue[]

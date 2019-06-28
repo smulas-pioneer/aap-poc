@@ -9,8 +9,8 @@ const Colors = {
     RED: "#E6325E",
     GRAY: "#3B7296",
     GREEN: "#39B2B6",
-    VIOLET : "#ED00EE",
-    GREENDARK : "#003F03",
+    VIOLET: "#ED00EE",
+    GREENDARK: "#003F03",
     YELLOW: '#D5D300',
     PINK: '#DA98D2',
     ACQUA: 'aqua'
@@ -18,14 +18,15 @@ const Colors = {
 
 
 export interface CustomChartProps {
-    data: any[],
-    dataKey: string,
-    nameKey: string,
-    width: number,
-    height: number,
-    responsiveHeight?: number | string
-
-    color?:string
+    data: any[];
+    dataKey: string;
+    nameKey: string;
+    width: number;
+    height: number;
+    color?: string;
+    legend?: boolean;
+    caption?: boolean;
+    responsiveHeight?: number | string;
 }
 
 export interface CustomPieProps extends CustomChartProps {
@@ -74,7 +75,6 @@ export class CustomPieChart extends React.Component<CustomPieProps, CustomChartS
     }
 
     renderLabel = (props: any) => {
-        //return this.renderActiveShape(props);
         return props.isActive ? this.renderActiveShape(props) : this.renderShape(props);
     }
 
@@ -121,7 +121,7 @@ export class CustomPieChart extends React.Component<CustomPieProps, CustomChartS
 
     render() {
         const colors = Object.keys(Colors).map(k => Colors[k]);
-        const { width, height, responsiveHeight, onClick, filterKey, ...pieProps } = this.props;
+        const { width, height, responsiveHeight, onClick, filterKey, legend = true, caption = true, ...pieProps } = this.props;
 
         const allowFilter = filterKey !== undefined ? true : false;
 
@@ -134,7 +134,7 @@ export class CustomPieChart extends React.Component<CustomPieProps, CustomChartS
             const fill = entry.fillColor || (colors[key % colors.length])
             const fillOpacity = entry.fillColorOpacity || (allowFilter ? (isActive ? '1' : '0.4') : '1');
 
-            if (name && entry[this.props.dataKey])  {
+            if (name && entry[this.props.dataKey]) {
                 legendPayload.push({ value: name, id: key, type: 'rect', color: fill });
             }
 
@@ -153,8 +153,8 @@ export class CustomPieChart extends React.Component<CustomPieProps, CustomChartS
         return (
             <CustomResponsiveContainer height={responsiveHeight || height}>
                 <PieChart width={width} height={height}>
-                    <Legend layout="horizontal" verticalAlign="bottom" payload={legendPayload} />
-                    <Pie {...pieProps} onClick={this.onCellClick} cx={'50%'} cy={'50%'} innerRadius={'55%'} outerRadius={'85%'} label={this.renderLabel} labelLine={false} >
+                    {legend && <Legend layout="horizontal" verticalAlign="bottom" payload={legendPayload} />}
+                    <Pie {...pieProps} onClick={this.onCellClick} cx={'50%'} cy={'50%'} innerRadius={'55%'} outerRadius={'85%'} label={caption && this.renderLabel} labelLine={false} >
                         {cellPayload}
                     </Pie>
                 </ PieChart >
@@ -176,7 +176,7 @@ export class CustomComposedChart extends React.Component<CustomChartProps, Custo
         if (percentLabel === '0') return null;
 
         const actualX = value < 0 ? x : width > 150 ? x + width - 50 : x + width + 3;
-        const color = width > 150 ? 'white' : 'black';
+        const color = 'white';
 
         return <text className="recharts-text recharts-bar-label" fill={color} x={x} y={Math.round(y + 14)} width={width} height={height} fontSize={12} textAnchor={'start'}        >
             <tspan x={actualX} >
@@ -186,15 +186,15 @@ export class CustomComposedChart extends React.Component<CustomChartProps, Custo
     }
 
     render() {
-        const { data, width, height, responsiveHeight, dataKey, nameKey } = this.props;
-        const color =this.props.color || getRndItem(Object.keys(Colors).map(k => Colors[k]));
+        const { data, width, height, responsiveHeight, dataKey, nameKey, legend = true, caption = true } = this.props;
+        const color = this.props.color || getRndItem(Object.keys(Colors).map(k => Colors[k]));
         return (
             <CustomResponsiveContainer height={responsiveHeight || height}>
                 <ComposedChart layout="vertical" height={height} width={width} data={data} margin={{ top: 5, right: 5, bottom: 5, left: 5 }} >
                     <XAxis type="number" hide />
-                    <YAxis dataKey={nameKey} type="category" width={width / 3} />
+                    <YAxis dataKey={nameKey} type="category" width={100} hide={!caption}/>
                     <CartesianGrid stroke='#f5f5f5' />
-                    <Bar dataKey={dataKey} name={nameKey} barSize={20} fill={color} label={this.renderCustomizedLabel} />
+                    <Bar dataKey={dataKey} name={nameKey} barSize={20} fill={color} label={caption && this.renderCustomizedLabel} />
                 </ComposedChart>
             </CustomResponsiveContainer>
         );

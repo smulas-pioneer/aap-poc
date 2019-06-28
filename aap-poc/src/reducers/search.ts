@@ -6,64 +6,74 @@ import { createSelector } from 'reselect';
 import { intersection } from 'lodash';
 import { access } from 'fs';
 import { calculateAlertHistory } from '../_db/common/radarUtils';
+import { returnStatement } from '@babel/types';
 
 export interface State {
-    result: {
-        [uid: string]: SearchResult | undefined
-    };
-    filter: {
-        [uid: string]: Model.ClientFilters | undefined
-    };
-    agentView: {
-        [uid: string]: { parms: SearchParms, result: AgentView[] | undefined }
-    };
+  result: {
+    [uid: string]: SearchResult | undefined
+  };
+  filter: {
+    [uid: string]: Model.ClientFilters | undefined
+  };
+  agentView: {
+    [uid: string]: { parms: SearchParms, result: AgentView[] | undefined }
+  };
 
-    alertHistory: {
-        [uid: string]: AlertHistory2[] | undefined
-    }
+  alertHistory: {
+    [uid: string]: AlertHistory2[] | undefined
+  }
 }
 
 const defaultState: State = {
-    result: {},
-    filter: {},
-    agentView: {},
-    alertHistory: {}
+  result: {},
+  filter: {},
+  agentView: {},
+  alertHistory: {}
 };
 
 // Root Reducer
 export default (state: State = defaultState, action: any): State => {
-    if (searchClientSuccess.matchAction(action)) {
-        const uid = action.payload.parms.uid;
-        return {
-            ...state,
-            result: {
-                ...state.result,
-                [uid]: action.payload
-            },
-            filter: {
-                ...state.filter,
-                [uid]: Model.createFilterAdv(action.payload.result, action.payload.parms, state.filter && state.filter[uid])
-            },
-            agentView: {
-                ...state.agentView,
-                [uid]: {
-                    parms: action.payload.parms,
-                    result: getAgentViewsFromClients(action.payload.result)
-                }
-            },
-            alertHistory: {
-                ...state.alertHistory,
-                [uid]: uid === 'alerts' || uid === 'dashboard' ? calculateAlertHistory(action.payload.result) : undefined
-            }
-        };
-    } else if (logoutSuccess.matchAction(action)) {
-        return defaultState;
-    }
-    return state;
+  if (searchClientSuccess.matchAction(action)) {
+    const uid = action.payload.parms.uid;
+    return {
+      ...state,
+      result: {
+        ...state.result,
+        [uid]: action.payload
+      },
+      filter: {
+        ...state.filter,
+        [uid]: Model.createFilterAdv(action.payload.result, action.payload.parms, state.filter && state.filter[uid])
+      },
+      agentView: {
+        ...state.agentView,
+        [uid]: {
+          parms: action.payload.parms,
+          result: getAgentViewsFromClients(action.payload.result)
+        }
+      },
+      alertHistory: {
+        ...state.alertHistory,
+        [uid]: uid === 'alerts' || uid === 'dashboard' ? calculateAlertHistory(action.payload.result) : undefined
+      }
+    };
+  } else if (logoutSuccess.matchAction(action)) {
+    return defaultState;
+  }
+  return state;
 };
 
+export const getIsOnlyItaly = (state: State, uid: string) => {
+  const x = getSearchParms(state, uid);
+  const countries = x && x['countries'];
+  var ret = false;
+  if (countries) {
+    ret = countries.length === 1 && countries[0] === 'Italy';
+  }
+  return ret;
+}
 export const getSearchResult = (state: State, uid: string) => state.result[uid];
 export const getSearchFilter = (state: State, uid: string) => state.filter[uid];
 export const getAgentView = (state: State, uid: string) => state.agentView[uid];
-export const getSearchParms = (state: State, uid: string) => state.result[uid] && state.result[uid]!.parms;
+export const getSearchParms = (state: State, uid: string) => state.result && state.result[uid] && state.result[uid]!.parms;
 export const getAlertHistory = (state: State) => state.alertHistory['alerts'];
