@@ -9,7 +9,8 @@ import { sumBy, startCase, camelCase } from 'lodash';
 
 import { Grid, Segment, Statistic, Card, Button, Table, SemanticICONS, Icon, Feed, Form, Label, Tab, Accordion, Header, SemanticCOLORS, List, Menu, Transition, Checkbox, Modal, Loader, Dimmer, TabProps } from 'semantic-ui-react';
 import { RadarGraph } from '../RadarGraph';
-import { Holdings, OrderList } from './Holdings';
+import { Holdings } from './Holdings';
+import { OrderList } from "./OrderList";
 import { PerformanceChart } from '../securityView/PerformanceChart';
 import { RiskReturnGraph } from './RiskReturnGraph';
 import { BreakdownView } from './BreakdownView';
@@ -194,7 +195,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
       },
       PerfContr: {
         title: 'Perf. Contr.',
-        icon: 'chart bar outline',
+        icon: 'area graph',
         charts: radar && [
           {
             title: 'Perf. Contr.',
@@ -225,7 +226,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
       const element = (memo[prop] || {
         title: prop,
-        icon: chartView === "pie" ? 'pie graph' : 'chart bar outline',
+        icon: chartView === "pie" ? 'pie graph' : 'chart bar',
         charts: []
       });
 
@@ -510,7 +511,9 @@ export class ClientViews extends React.Component<ClientViewProps, { activeIndex?
 
     const panes = graphs.reduce((memo, item, ix) => {
       if (item.charts && item.charts.length) {
+        console.log(item.icon);
         memo.push(
+
           <Button key={ix} size="mini" active={ix === activeIndex} onClick={() => this.handleBtnChange(ix)} >
             <Icon name={item.icon as any} />
             <br /> <br />{item.title}
