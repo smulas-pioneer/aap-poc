@@ -8,7 +8,8 @@ import * as ce from '../../_db/coreEngine';
 import { sumBy } from 'lodash';
 import { Grid, Segment, Statistic, Button, Icon, Tab, SemanticCOLORS, Menu, Modal, Loader, TabProps } from 'semantic-ui-react';
 import { RadarGraph } from '../RadarGraph';
-import { Holdings, } from './Holdings';
+import { Holdings } from './Holdings';
+import { OrderList } from "./OrderList";
 import { PerformanceChart } from '../securityView/PerformanceChart';
 import { RiskReturnGraph } from './RiskReturnGraph';
 import { BreakdownView } from './BreakdownView';
@@ -196,7 +197,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
       },
       PerfContr: {
         title: 'Perf. Contr.',
-        icon: 'chart bar outline',
+        icon: 'area graph',
         charts: radar && [
           {
             title: 'Perf. Contr.',
@@ -227,7 +228,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
       const element = (memo[prop] || {
         title: prop,
-        icon: chartView === "pie" ? 'pie graph' : 'chart bar outline',
+        icon: chartView === "pie" ? 'pie graph' : 'chart bar',
         charts: []
       });
 
@@ -512,7 +513,9 @@ export class ClientViews extends React.Component<ClientViewProps, { activeIndex?
 
     const panes = graphs.reduce((memo, item, ix) => {
       if (item.charts && item.charts.length) {
+        console.log(item.icon);
         memo.push(
+
           <Button key={ix} size="mini" active={ix === activeIndex} onClick={() => this.handleBtnChange(ix)} >
             <Icon name={item.icon as any} />
             <br /> <br />{item.title}

@@ -1,6 +1,6 @@
 {
   "name": "aap-poc",
-  "version": "1.0.68",
+  "version": "1.0.72",
   "homepage": ".",
   "private": true,
   "dependencies": {
@@ -41,7 +41,8 @@
     "@types/mathjs": "^0.0.35",
     "@types/react-slick": "^0.14.1",
     "@types/react-sortable-hoc": "^0.6.0",
-    "@types/react-tooltip": "^3.3.2"
+    "@types/react-tooltip": "^3.3.2",
+    "tslint": "^5.18.0"
   },
   "main": "index.js",
   "repository": "http://github.com/pioneer-investments/mildev-aap-poc",
