@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { StrategyItem } from '../../_db/interfaces';
 import { Input } from 'semantic-ui-react';
-import { setTimeout } from 'timers';
 
 interface EditCellState {
     item: StrategyItem,
@@ -20,6 +19,7 @@ const getStrategyItem = (factor: number, s: StrategyItem, value: number, suggest
 }
 
 const isDiff = (a: number, b: number) => Math.round(a * 1000) !== Math.round(b * 1000);
+
 
 export class HoldingWeigthControl extends React.Component<EditCellProps, EditCellState> {
     state = {
