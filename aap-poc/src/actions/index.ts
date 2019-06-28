@@ -11,13 +11,10 @@ export enum LoginType {
     Manager,
     Advisor
 }
-
 export const setConfigJson = createAction<ConfigJsonModel>('SET_CONFIGJSON');
-
 export const logoutSuccess = createAction('LOGOUT');
 export const logout = createPromiseAction('LOGOUT_SUCCESS', () => Promise.resolve(true), logoutSuccess);
 export const loginSuccess = createAction<UserInfo>('LOGIN_SUCCESS');
-
 export const login = createPromiseAction('LOGIN', (lt: LoginType | undefined) => {
     const getValidAgent = (): string => {
         const rndAge = 0;// Math.floor((Math.random() * agents.length)) + 1;
@@ -56,13 +53,11 @@ export const searchClient = (args: SearchParms) => (dispatch: any, getState: () 
     const usr = getCurrentUser(s)!;
     svc.searchClient(args, usr.agents).then(r => dispatch(searchClientSuccess(r)));
 }
-
 export const getClientSuccess = createAction<Client>('GET_CLIENT_SUCCESS');
 export const getClientSuggestedTranasactionsSuccess = createAction<Transaction[]>('GET_CLIENT_SUGGESTED_TRANSACTIONS_SUCCESS');
 export const getClientSuggestedTranasactions = createPromiseAction('GET_CLIENT_SUGGESTED_TRANSACTIONS', svc.getSuggestedTransactions, getClientSuggestedTranasactionsSuccess);
 export const getBreakdownsSuccess = createAction<Breakdown[]>('GET_BREAKDOWN_SUCCESS');
 export const getBreakdowns = createPromiseAction('GET_BREAKDOWN', svc.getBreakdown, getBreakdownsSuccess);
-
 export const spotlightSearchSuccess = createAction<SpotlightSearchResult>('SPL_SEARCH_SUCCESS');
 export const spotlightSearch = (args: SpotlightSearchParms) => (dispatch: any, getState: () => any) => {
     const s = getState();
@@ -76,23 +71,15 @@ export const spotlightSearch = (args: SpotlightSearchParms) => (dispatch: any, g
         })
         .then((r: any) => dispatch(spotlightSearchSuccess(r)));
 }
-
 export const getHistorySuccess = createAction<InterviewResult[]>('GET_HISTORY_SUCCESS');
 export const getHistory = createPromiseAction('GET_HISTORY', svc.getHistory, getHistorySuccess);
-
 export const getSuggestedAllocationSuccess = createAction<Holding[]>('GET_SUGGESTED_ALLOC_SUCCESS');
 export const getSuggestedAllocation = createPromiseAction('GET_SUGGESTED_ALLOC', svc.getSuggestedAllocation, getSuggestedAllocationSuccess);
-
 export const getStrategySuccess = createAction<StrategyItem[]>('GET_STRATEGY_SUCCESS');
 export const getStrategy = createPromiseAction('GET_STRATEGY', svc.getStrategy, getStrategySuccess);
-
 export const getSuggestions = createPromiseAction('GET_SUGGESTIONS', svc.getSuggestion, getStrategySuccess);
-
 export const getAlertHistorySuccess = createAction<AlertHistory[]>('GET_ALERT_HISTORY_SUCCESS');
 export const getAlertHistory = createPromiseAction('GET_ALERT_HISTORY', svc.getAlertHistory, getAlertHistorySuccess);
-
-
-
 export const getClient = createPromiseWithThunkAction('GET_CLIENT', svc.getClient, getClientSuccess, (d, s, r, p) => {
     if (r) {
         d(getHistory(r.id))
@@ -105,12 +92,10 @@ export const addSecurity = createPromiseWithThunkAction('ADD_SECURITY', svc.addS
         // d(getStrategy(r.id))
     }
 });
-
 export const addHistory = createPromiseWithThunkAction('ADD_HISTORY', svc.addHistory, getClientSuccess, (d, s, r, p) => {
     if (r) {
         d(getHistory(r.id))
         //  d(getStrategy(r.id))
     }
 });
-
 export const ready = createAction<boolean>('READY');
