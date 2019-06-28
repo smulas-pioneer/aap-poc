@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { IndicatorOptionsType } from '../../../actions/model';
+import { IndicatorOptionsType } from '../../actions/model';
 
 import { groupBy } from 'lodash';
-import { LangDictionary } from '../../../reducers/language/interfaces';
-import { formatAua } from '../../../_db/utils';
+import { LangDictionary } from '../../reducers/language/interfaces';
+import { formatAua } from '../../_db/utils';
 import { Popup } from 'semantic-ui-react';
-import { getMapOptionTypeCaption } from '../../../commonUtils';
-import { AreaValue } from '../../shared/AreaMapProps';
+import { getMapOptionTypeCaption } from '../../commonUtils';
+import { AreaValue } from './AreaMapProps';
 
 
 export const ColorsLegend = ({ type, values, lang }: { type: IndicatorOptionsType, values: AreaValue[], lang: LangDictionary }) => {

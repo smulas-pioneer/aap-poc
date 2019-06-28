@@ -13,8 +13,11 @@ import { AreaValue } from "../../shared/AreaMapProps";
 import { uniqBy, countBy, sumBy } from "lodash";
 import { Transition, Segment } from "semantic-ui-react";
 import { ItalyMap } from "../italy/ItalyMap";
+import { ColorsLegend } from './../../shared/ColorsLegend';
+import { formatAua } from "../../../_db/utils";
+import { getMapOptionTypeCaption } from "../../../commonUtils";
+import { MapOptions } from "../../shared/MapOptions";
 const ReactTooltip = require('react-tooltip');
-
 export interface EuropeMapProps {
   lang: LangDictionary,
   layout: ConfigLayout,
@@ -29,8 +32,11 @@ export interface EuropeMapState {
   values: { type: IndicatorOptionsType, areaValues: AreaValue[], countWithValues: number };
 }
 
+type MANAGED_COUNTRIES = 'Italy' | 'Luxemburg' | 'Austria' | 'Germany';
+
 export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
-  static AREA_MAP_INDEX = ['Italia', 'Lussemburgo', 'Austria', 'Germania'];
+
+  static AREA_MAP_INDEX: MANAGED_COUNTRIES[] = ['Italy', 'Luxemburg', 'Austria', 'Germany'];
   colors: number[][];
   MAX_COLORS_LEN = 0;
 
@@ -42,7 +48,8 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
     this.calculateAreaValues = this.calculateAreaValues.bind(this);
     this.interpolateColor = this.interpolateColor.bind(this);
     this.interpolateColors = this.interpolateColors.bind(this);
-    //this.onMapOptionsChange = this.onMapOptionsChange.bind(this);
+    this.onMapOptionsChange = this.onMapOptionsChange.bind(this);
+    this.getTooltipText = this.getTooltipText.bind(this);
     this.colors = this.interpolateColors('rgb(255, 192, 77)', 'rgb(2, 2, 234)', 10);
 
     const { layout: { interpolateColors } } = props;
@@ -55,12 +62,17 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
       }
     }
     this.MAX_COLORS_LEN = this.colors.length - 1;
-    this.LAST_COLOR = 'whitesmoke';
+    this.LAST_COLOR = 'dimgray';
     this.state = {
       mapIndex: undefined,
       requestMapIndex: undefined,
       values: this.calculateAreaValues(props.clients)
     };
+  }
+
+  onMapOptionsChange(option: IndicatorOptionsType) {
+    const newValues = this.calculateAreaValues(this.props.clients, option);
+    this.setState(prev => ({ values: newValues }));
   }
 
   interpolateColor(color1: number[], color2: number[], factor: number) {
@@ -91,41 +103,41 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
     this.setState(prev => ({ values }));
   }
 
-  calculateAreaValues(clients: Client[], type: IndicatorOptionsType = IndicatorOptionsType.clients, nationFilter?: string) {
+  calculateAreaValues(clients: Client[], type: IndicatorOptionsType = IndicatorOptionsType.clients, countryFilter?: string) {
     // distinct clietns by id
     let ds = uniqBy(clients, c => c.id);
-    if (nationFilter) ds = ds.filter(d => d.address.region === nationFilter);
+    if (countryFilter) ds = ds.filter(d => d.country === countryFilter);
 
     // reduce to area : count of
     let values: any = {}; EuropaMap.AREA_MAP_INDEX.forEach(v => values[v] = 0);
 
     switch (type) {
       case IndicatorOptionsType.clients: {
-        const countByRegion = countBy(ds, c => c.address.region);
-        EuropaMap.AREA_MAP_INDEX.forEach(area => values[area] = countByRegion[area]);
+        const countByCountry = countBy(ds, c => c.country);
+        EuropaMap.AREA_MAP_INDEX.forEach(area => values[area] = countByCountry[area]);
         break;
       }
       case IndicatorOptionsType.aua: {
         EuropaMap.AREA_MAP_INDEX.forEach(area => {
-          values[area] = sumBy(ds.filter(c => c.address.region === area), c => c.aua);
+          values[area] = sumBy(ds.filter(c => c.country === area), c => c.aua);
         });
         break;
       }
       case IndicatorOptionsType.alerts: {
         EuropaMap.AREA_MAP_INDEX.forEach(area => {
-          values[area] = ds.filter(c => c.address.region === area && c.radar.numOfAlerts > 0).length;
+          values[area] = ds.filter(c => c.country === area && c.radar.numOfAlerts > 0).length;
         });
         break;
       }
       case IndicatorOptionsType.proposals: {
         EuropaMap.AREA_MAP_INDEX.forEach(area => {
-          values[area] = sumBy(ds.filter(c => c.address.region === area), c => c.numOfInterviews);
+          values[area] = sumBy(ds.filter(c => c.country === area), c => c.numOfInterviews);
         });
         break;
       }
       case IndicatorOptionsType.acceptedProposals: {
         EuropaMap.AREA_MAP_INDEX.forEach(area => {
-          values[area] = sumBy(ds.filter(c => c.address.region === area), c => c.numOfAcceptedProposal);
+          values[area] = sumBy(ds.filter(c => c.country === area), c => c.numOfAcceptedProposal);
         });
         break;
       }
@@ -161,22 +173,29 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
         key,
         value,
         perc,
-        color: color !== undefined ? `rgb(${color[0]}, ${color[1]}, ${color[2]}` : this.LAST_COLOR
+        color: color !== undefined ? `rgb(${color[0]}, ${color[1]}, ${color[2]})` : this.LAST_COLOR
       });
       return acc;
     }, [] as AreaValue[]
     );
     return { type, areaValues, countWithValues };
   }
-  getAreaByName(name: string, props?: { color?: string, onClick?: () => void, percentage?: number, htmlTooltip?: string }) {
+  getAreaByName(name: MANAGED_COUNTRIES, props?: { color?: string, onClick?: () => void, percentage?: number, htmlTooltip?: string }) {
     switch (name) {
-      case 'Italia': return <Italy key={name} {...props} />
-      case 'Lussemburgo': return <Luxemburg key={name} {...props} />
+      case 'Italy': return <Italy key={name} {...props} />
+      case 'Luxemburg': return <Luxemburg key={name} {...props} />
       case 'Austria': return <Austria key={name} {...props} />
-      case 'Germania': return <Germany key={name} {...props} />
+      case 'Germany': return <Germany key={name} {...props} />
       default:
         return null;
     }
+  }
+
+  getTooltipText(area: string, option: IndicatorOptionsType, value: number) {
+    let formattedValue = value.toString();
+    if (option === IndicatorOptionsType.aua) formattedValue = formatAua(value);
+    let ret = `<h4>${area}</h4><hr/><p>${getMapOptionTypeCaption(option, this.props.lang)}: ${formattedValue}</p>`;
+    return ret;
   }
 
   render() {
@@ -189,18 +208,24 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
       <div style={{ width: this.props.width, height: this.props.height }}>
         <Transition visible={showEurope} animation='fade up' duration={350} onComplete={(_, e) => { !showEurope && this.setState(prev => ({ mapIndex: prev.requestMapIndex })) }} >
           <div style={{ width: "100%", height: "100%" }}>
-            <Europe className="nations"
+            <ColorsLegend type={type} values={areaValues} lang={lang} />
+            <Europe
+              className="nations"
+              height={450}
               paths={
                 EuropaMap.AREA_MAP_INDEX.map((val, idx) => {
                   const aValue = areaValues[idx];
+                  const htmlTooltip = aValue.value !== 0 ? this.getTooltipText(aValue.key, type, aValue.value) : undefined;
                   return this.getAreaByName(val, {
                     color: aValue.color,
-                    onClick: () => this.setState({ requestMapIndex: idx })
+                    onClick: () => this.setState({ requestMapIndex: idx }),
+                    htmlTooltip
                   })
                 })
               }
             />
-            <ReactTooltip html type='info' delayShow={countWithValues > 1 ? 600 : 100} place="bottom" />
+            <MapOptions onChange={e => this.onMapOptionsChange(e)} lang={lang} />
+            <ReactTooltip html type='info' delayShow={600} place="bottom" />
           </div>
         </Transition>
 
