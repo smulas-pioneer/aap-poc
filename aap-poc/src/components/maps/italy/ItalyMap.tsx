@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-
 import { Transition, Popup, Header, Label } from 'semantic-ui-react';
 import { Area1 } from './Area1';
 import { Area2 } from './Area2';
@@ -282,7 +281,6 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
     let regionLegend: MapLegend<string | number> | undefined = undefined;
 
     if (showRegion) regionLegend = this.createRegionLegendData();
-
 
     return (
       <div style={{ width: this.props.width, height: this.props.height }}>
