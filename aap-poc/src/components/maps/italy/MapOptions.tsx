@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { LangDictionary } from '../../../reducers/language/interfaces';
-import { Button } from 'semantic-ui-react';
+import { Button, Menu, Divider } from 'semantic-ui-react';
 import { IndicatorOptionsType } from '../../../actions/model';
 
 export interface MapOptionsProps {
@@ -36,13 +36,7 @@ export class MapOptions extends React.Component<MapOptionsProps, MapOptionsState
   renderButton(type: IndicatorOptionsType, caption: string) {
     const isActive = this.state.activeOption === type;
     return (
-      <Button
-        key={type}
-        size="tiny"
-        active={isActive}
-        color={isActive ? 'green' : undefined}
-        onClick={() => this.setOption(type)} >{caption}
-      </Button>
+      <Menu.Item key={type} active={isActive} onClick={() => this.setOption(type)} >{caption}</Menu.Item>
     );
   }
 
@@ -60,9 +54,11 @@ export class MapOptions extends React.Component<MapOptionsProps, MapOptionsState
 
     return (
       <div>
-        <Button.Group fluid >
+        <Divider />
+        <Menu fluid widths={buttons.length} color={'teal'}>
           {buttons.map(b => this.renderButton(b[0], b[1]))}
-        </Button.Group>
+        </Menu>
+        <Divider />
       </div>
     )
   }

@@ -86,14 +86,14 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
     // render statistic
     renderItem(value: any, label?: string, sublabel?: any, valueIcon?: SemanticICONS, color?: SemanticCOLORS) {
-        return (<Statistic size="small" color='blue' >
+        return (<Statistic size="tiny" color='blue' >
             {label && <Statistic.Label>{label}</Statistic.Label>}
             <Statistic.Value>
                 {valueIcon && <Icon name={valueIcon} color={color} />}
                 {value}
             </Statistic.Value>
             <br />
-            {sublabel && <Statistic.Label><span style={color && { color: color==='green' ? '#2ecc40' :color  }}>{sublabel}</span></Statistic.Label>}
+            {sublabel && <Statistic.Label><span style={color && { color: color === 'green' ? '#2ecc40' : color }}>{sublabel}</span></Statistic.Label>}
         </Statistic>);
     }
 
@@ -110,7 +110,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 </Grid.Column>
                 <Grid.Column>
                     <Segment>
-                    <ClientViews graphs={this.createGraphs()} lang={lang} mode="tab" defaultIndex={0} hideTitle />
+                        <ClientViews graphs={this.createGraphs()} lang={lang} mode="tab" defaultIndex={0} hideTitle />
                     </Segment>
                 </Grid.Column>
                 <Grid.Column width={16}>
@@ -159,7 +159,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
         return (
             <Segment>
-               {/*} <WidgetTitle title={header} shareButtons={['Image', 'Copy']} />*/}
+                {/*} <WidgetTitle title={header} shareButtons={['Image', 'Copy']} />*/}
                 <CustomPieChart width={500} height={500} data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
             </Segment>
         );
@@ -192,13 +192,13 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
         const bd = this.props.data!.breakdowns.map(b => {
             return {
-                    title: b.attributeName,
-                    icon: 'line chart',
-                    charts: [
-                        {
-                            chart: <BreakdownView breakdown={b} width={500} height={500} />
-                        }]
-                }
+                title: b.attributeName,
+                icon: 'line chart',
+                charts: [
+                    {
+                        chart: <BreakdownView breakdown={b} width={500} height={500} />
+                    }]
+            }
         });
         return Object.keys(graphs).map((v) => graphs[v]).concat(bd);
     }
@@ -224,26 +224,26 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 render: () => <Tab.Pane as={OverflowItem} style={style} content={<AlertsView manager uid={uid} hideGraphs />} />
             },
             {
-              menuItem: this.renderTabItem('MY_CLIENTS', 'users', 'blue'),
-              render: () => <Tab.Pane as={OverflowItem} style={style} content={<ClientsView uid={uid} />} />
-          },
-    ]
+                menuItem: this.renderTabItem('MY_CLIENTS', 'users', 'blue'),
+                render: () => <Tab.Pane as={OverflowItem} style={style} content={<ClientsView uid={uid} />} />
+            },
+        ]
 
         const info = data.result.reduce<
             { length: number, assetUnder: number, clientAlert: number, mifidAlert: number, acceptedProposals: number, totalProposals: number, rejectedProposals: number, totalBudget: number, totRevenues: number, totalTurnover: number }>(
-            (ret, v, i) => {
-                ret.length += 1;
-                ret.totalBudget += v.budget;
-                ret.totRevenues += v.ongoingFees + v.upfrontFees;
-                ret.acceptedProposals += v.numOfAcceptedProposal/2;
-                ret.totalProposals += v.numOfInterviews/2;
-                ret.assetUnder += v.aua;
-                ret.clientAlert += v.radar.numOfAlerts > 0 ? 1 : 0;
-                ret.mifidAlert += v.radar.riskAdequacyAlert !== 'green' ? 1 : 0;
-                ret.totalTurnover += v.turnover;
-                return ret;
-            },
-            { length: 0, assetUnder: 0, clientAlert: 0, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0, rejectedProposals: 0, totalBudget: 0, totRevenues: 0, totalTurnover:  0});
+                (ret, v, i) => {
+                    ret.length += 1;
+                    ret.totalBudget += v.budget;
+                    ret.totRevenues += v.ongoingFees + v.upfrontFees;
+                    ret.acceptedProposals += v.numOfAcceptedProposal / 2;
+                    ret.totalProposals += v.numOfInterviews / 2;
+                    ret.assetUnder += v.aua;
+                    ret.clientAlert += v.radar.numOfAlerts > 0 ? 1 : 0;
+                    ret.mifidAlert += v.radar.riskAdequacyAlert !== 'green' ? 1 : 0;
+                    ret.totalTurnover += v.turnover;
+                    return ret;
+                },
+                { length: 0, assetUnder: 0, clientAlert: 0, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0, rejectedProposals: 0, totalBudget: 0, totRevenues: 0, totalTurnover: 0 });
 
 
         return (
@@ -254,14 +254,11 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                             {this.renderItem(fmt(info.length), lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
-                            {this.renderItem(formatAua(info.assetUnder, fmt), lang.DB_ASSET_ADVISE,  this.percDetail(15, '1', 'Y'), undefined, 'green')}
+                            {this.renderItem(formatAua(info.assetUnder, fmt), lang.DB_ASSET_ADVISE, this.percDetail(15, '1', 'Y'), undefined, 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
                             {this.renderItem(<span style={{ color: 'red' }}>{fmt(info.clientAlert)}</span>, lang.DB_CLIENTS_ALERTS, this.alertsDetail(fmt(info.mifidAlert)))}
                         </Grid.Column>
-                        {/* <Grid.Column textAlign="center">
-                            {this.renderItem(info.interviews, lang.DB_INTERVIEWS, this.percDetail(undefined, '1', 'M'))}
-                        </Grid.Column> */}
                         <Grid.Column textAlign="center">
                             {this.renderItem(fmt(info.totalBudget) + "€", lang.BUDGET, Math.round(100 * (info.totRevenues / info.totalBudget)).toString() + '% accomplished YTD', undefined, 'green')}
                         </Grid.Column>
@@ -275,9 +272,9 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                     </Grid>
                 </Segment>
                 <AdvancedGrid className="grid-filter-right">
-                    <Card as={OverflowColumn} fluid>
+                    <Segment as={OverflowColumn} >
                         <Tab menu={{ pointing: true, secondary: true }} panes={panes} style={{ height: '95%' }} />
-                    </Card>
+                    </Segment>
                     <Segment style={{ margin: 0 }}>
                         <WidgetTitle title={lang.FILTER} />
                         <ClientFilter

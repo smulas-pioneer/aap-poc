@@ -1164,7 +1164,6 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
     text-align: center;
     text-decoration: none;
     border-radius: .28571429rem;
-    box-shadow: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -1175,10 +1174,14 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
     -webkit-tap-highlight-color: transparent
 }
 
+.ui.button,
+.ui.button:hover {
+    box-shadow: inset 0 0 0 1px transparent, inset 0 0 0 0 rgba(34, 36, 38, .15)
+}
+
 .ui.button:hover {
     background-color: #cacbcd;
     background-image: none;
-    box-shadow: none;
     color: rgba(0, 0, 0, .8)
 }
 
@@ -4752,7 +4755,7 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
 
 .ui.buttons:not(.basic):not(.inverted)>.button,
 .ui.buttons>.ui.button:not(.basic):not(.inverted) {
-    box-shadow: none
+    box-shadow: inset 0 0 0 1px transparent, inset 0 0 0 0 rgba(34, 36, 38, .15)
 }
 
 .ui.buttons .button:first-child {
@@ -13177,7 +13180,7 @@ img.ui.bordered.image {
     font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif;
     padding: .67857143em 1em;
     background: #272f38;
-    border: none;
+    border: 1px solid rgba(34, 36, 38, .15);
     color: #fff;
     border-radius: .28571429rem;
     -webkit-transition: box-shadow .1s ease, border-color .1s ease;
@@ -13602,7 +13605,7 @@ img.ui.bordered.image {
     color: rgba(0, 0, 0, .6);
     text-transform: none;
     font-weight: 700;
-    border: none;
+    border: 0 solid transparent;
     border-radius: .28571429rem;
     -webkit-transition: background .1s ease;
     transition: background .1s ease
@@ -16292,11 +16295,11 @@ ol.ui.horizontal.list li:before {
 .ui.segment {
     position: relative;
     background: #272f38;
-    box-shadow: none;
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15);
     margin: 1rem 0;
     padding: 1em;
     border-radius: .28571429rem;
-    border: none
+    border: 1px solid rgba(34, 36, 38, .15)
 }
 
 .ui.segment:first-child {
@@ -16360,8 +16363,8 @@ ol.ui.horizontal.list li:before {
 
 .ui.basic.table.segment {
     background: #272f38;
-    border: none;
-    box-shadow: none
+    border: 1px solid rgba(34, 36, 38, .15);
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15)
 }
 
 .ui[class*="very basic"].table.segment {
@@ -16443,7 +16446,7 @@ ol.ui.horizontal.list li:before {
     left: 0;
     position: absolute;
     width: 100%;
-    border: none;
+    border: 1px solid rgba(34, 36, 38, .15);
     box-shadow: ""
 }
 
@@ -16564,8 +16567,8 @@ ol.ui.horizontal.list li:before {
     flex-direction: column;
     position: relative;
     margin: 1rem 0;
-    border: none;
-    box-shadow: none;
+    border: 1px solid rgba(34, 36, 38, .15);
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15);
     border-radius: .28571429rem
 }
 
@@ -16585,7 +16588,7 @@ ol.ui.horizontal.list li:before {
     width: auto;
     box-shadow: none;
     border: none;
-    border-top: none
+    border-top: 1px solid rgba(34, 36, 38, .15)
 }
 
 .ui.segments:not(.horizontal)>.segment:first-child {
@@ -16602,7 +16605,7 @@ ol.ui.horizontal.list li:before {
     bottom: 0;
     margin-top: 0;
     margin-bottom: 0;
-    box-shadow: none, none;
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15), none;
     border-radius: 0 0 .28571429rem .28571429rem
 }
 
@@ -16611,7 +16614,7 @@ ol.ui.horizontal.list li:before {
 }
 
 .ui.segments>.ui.segments {
-    border-top: none;
+    border-top: 1px solid rgba(34, 36, 38, .15);
     margin: 1rem
 }
 
@@ -16630,10 +16633,10 @@ ol.ui.horizontal.list li:before {
     border-radius: 0;
     padding: 0;
     background-color: #272f38;
-    box-shadow: none;
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15);
     margin: 1rem 0;
     border-radius: .28571429rem;
-    border: none
+    border: 1px solid rgba(34, 36, 38, .15)
 }
 
 .ui.segments>.horizontal.segments {
@@ -16642,7 +16645,7 @@ ol.ui.horizontal.list li:before {
     border-radius: 0;
     border: none;
     box-shadow: none;
-    border-top: none
+    border-top: 1px solid rgba(34, 36, 38, .15)
 }
 
 .ui.horizontal.segments>.segment {
@@ -16969,7 +16972,7 @@ ol.ui.horizontal.list li:before {
     margin-top: 0;
     top: 0;
     margin-bottom: 1rem;
-    box-shadow: none, none;
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15), none;
     border-radius: 0 0 .28571429rem .28571429rem
 }
 
@@ -20390,8 +20393,6 @@ ol.ui.horizontal.list li:before {
     }
 }
 
-@secondary PointingHoverTextColor:@menu-forecolor: ;
-
 .ui.text.menu,
 .ui.text.vertical.menu {
     background: #272f38 !important
@@ -20416,8 +20417,8 @@ ol.ui.horizontal.list li:before {
     font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif;
     background: #272f38;
     font-weight: 400;
-    border: none;
-    box-shadow: none;
+    border: 1px solid rgba(34, 36, 38, .15);
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15);
     border-radius: .28571429rem;
     min-height: 2.85714286em
 }
@@ -20575,6 +20576,8 @@ ol.ui.horizontal.list li:before {
     text-align: left;
     font-size: 1em !important;
     padding: .78571429em 1.14285714em !important;
+    background: #272f38 !important;
+    color: #fff !important;
     text-transform: none !important;
     font-weight: 400 !important;
     box-shadow: none !important;
@@ -20582,13 +20585,8 @@ ol.ui.horizontal.list li:before {
     transition: none !important
 }
 
-.ui.menu .ui.dropdown .menu>.item,
-.ui.menu .ui.dropdown .menu>.item:hover {
-    background: #272f38 !important;
-    color: #fff !important
-}
-
 .ui.menu .ui.dropdown .menu>.active.item,
+.ui.menu .ui.dropdown .menu>.item:hover,
 .ui.menu .ui.dropdown .menu>.selected.item {
     background: #272f38 !important;
     color: #6dffff !important
@@ -20724,14 +20722,14 @@ ol.ui.horizontal.list li:before {
 .ui.menu .link.item:hover,
 .ui.menu a.item:hover {
     cursor: pointer;
-    background: rgba(0, 0, 0, .03);
-    color: #fff
+    background: #272f38;
+    color: #6dffff
 }
 
 .ui.link.menu .item:active,
 .ui.menu .link.item:active,
 .ui.menu a.item:active {
-    background: rgba(0, 0, 0, .03);
+    background: #272f38;
     color: #fff
 }
 
@@ -20748,7 +20746,7 @@ ol.ui.horizontal.list li:before {
 
 .ui.menu .active.item:hover,
 .ui.vertical.menu .active.item:hover {
-    background-color: rgba(0, 0, 0, .05);
+    background-color: #272f38;
     color: #6dffff
 }
 
@@ -20781,7 +20779,7 @@ ol.ui.horizontal.list li:before {
     display: block;
     flex-direction: column;
     background: #272f38;
-    box-shadow: none
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15)
 }
 
 .ui.vertical.menu .item {
@@ -20842,7 +20840,7 @@ ol.ui.horizontal.list li:before {
 
 .ui.vertical.menu .item .menu .link.item:hover,
 .ui.vertical.menu .item .menu a.item:hover {
-    color: rgba(0, 0, 0, .85)
+    color: #6dffff
 }
 
 .ui.vertical.menu .menu .item:before {
@@ -21086,7 +21084,7 @@ ol.ui.horizontal.list li:before {
 .ui.secondary.menu .link.item:hover,
 .ui.secondary.menu a.item:hover {
     background: rgba(0, 0, 0, .05);
-    color: rgba(0, 0, 0, .95)
+    color: #6dffff
 }
 
 .ui.secondary.menu .active.item {
@@ -21188,7 +21186,7 @@ ol.ui.horizontal.list li:before {
 .ui.secondary.pointing.menu .link.item:hover,
 .ui.secondary.pointing.menu a.item:hover {
     background-color: transparent;
-    color: #fff
+    color: #6dffff
 }
 
 .ui.secondary.pointing.menu .dropdown.item:active,
@@ -21201,13 +21199,13 @@ ol.ui.horizontal.list li:before {
 .ui.secondary.pointing.menu .active.item {
     background-color: transparent;
     box-shadow: none;
-    border-color: #000;
+    border-color: #6dffff;
     font-weight: 700;
     color: #6dffff
 }
 
 .ui.secondary.pointing.menu .active.item:hover {
-    border-color: #000;
+    border-color: #6dffff;
     color: #6dffff
 }
 
@@ -21232,7 +21230,7 @@ ol.ui.horizontal.list li:before {
 }
 
 .ui.secondary.vertical.pointing.menu .active.item {
-    border-color: #000
+    border-color: #6dffff
 }
 
 .ui.secondary.inverted.pointing.menu {
@@ -22059,7 +22057,7 @@ ol.ui.horizontal.list li:before {
     margin-top: 0;
     top: 0;
     margin-bottom: 1rem;
-    box-shadow: none, none;
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15), none;
     border-radius: 0 0 .28571429rem .28571429rem
 }
 
@@ -22173,7 +22171,7 @@ ol.ui.horizontal.list li:before {
     -webkit-transition: opacity .1s ease, color .1s ease, background .1s ease, box-shadow .1s ease;
     transition: opacity .1s ease, color .1s ease, background .1s ease, box-shadow .1s ease;
     border-radius: .28571429rem;
-    box-shadow: none
+    box-shadow: inset 0 0 0 1px rgba(34, 36, 38, .22), 0 0 0 0 transparent
 }
 
 .ui.message:first-child {
@@ -22609,7 +22607,7 @@ ol.ui.horizontal.list li:before {
     width: 100%;
     background: #272f38;
     margin: 1em 0;
-    border: none;
+    border: 1px solid #dcddde;
     box-shadow: none;
     border-radius: .28571429rem;
     text-align: left;
@@ -22638,16 +22636,16 @@ ol.ui.horizontal.list li:before {
 
 .ui.table thead th {
     cursor: auto;
-    background: #f9fafb;
+    background: #272f38;
     text-align: inherit;
-    color: #fff;
+    color: #6dffff;
     padding: .92857143em .78571429em;
     vertical-align: inherit;
     font-style: none;
     font-weight: 700;
     text-transform: none;
-    border-bottom: 1px solid rgba(34, 36, 38, .1);
-    border-left: none
+    border-bottom: 1px solid #dcddde;
+    border-left: 1px solid #dcddde
 }
 
 .ui.table thead tr>th:first-child {
@@ -22672,8 +22670,8 @@ ol.ui.horizontal.list li:before {
 
 .ui.table tfoot th {
     cursor: auto;
-    border-top: 1px solid rgba(34, 36, 38, .15);
-    background: #f9fafb;
+    border-top: 1px solid #dcddde;
+    background: #272f38;
     text-align: inherit;
     color: #fff;
     padding: .78571429em;
@@ -22700,7 +22698,7 @@ ol.ui.horizontal.list li:before {
 }
 
 .ui.table tr td {
-    border-top: 1px solid rgba(34, 36, 38, .1)
+    border-top: 1px solid #dcddde
 }
 
 .ui.table tr:first-child td {
@@ -22708,7 +22706,7 @@ ol.ui.horizontal.list li:before {
 }
 
 .ui.table tbody+tbody tr:first-child td {
-    border-top: 1px solid rgba(34, 36, 38, .1)
+    border-top: 1px solid #dcddde
 }
 
 .ui.table td {
@@ -22793,14 +22791,10 @@ ol.ui.horizontal.list li:before {
     border-collapse: collapse
 }
 
+.ui.structured.sortable.table thead th,
 .ui.structured.table thead th {
-    border-left: none;
-    border-right: none
-}
-
-.ui.structured.sortable.table thead th {
-    border-left: 1px solid rgba(34, 36, 38, .15);
-    border-right: 1px solid rgba(34, 36, 38, .15)
+    border-left: 1px solid #dcddde;
+    border-right: 1px solid #dcddde
 }
 
 .ui.structured.basic.table th {
@@ -22810,23 +22804,23 @@ ol.ui.horizontal.list li:before {
 
 .ui.structured.celled.table tr td,
 .ui.structured.celled.table tr th {
-    border-left: 1px solid rgba(34, 36, 38, .1);
-    border-right: 1px solid rgba(34, 36, 38, .1)
+    border-left: 1px solid #dcddde;
+    border-right: 1px solid #dcddde
 }
 
 .ui.definition.table thead:not(.full-width) th:first-child {
     pointer-events: none;
-    background: transparent;
+    background: #272f38;
     font-weight: 400;
-    color: rgba(0, 0, 0, .4);
+    color: #272f38;
     box-shadow: -1px -1px 0 1px #fff
 }
 
 .ui.definition.table tfoot:not(.full-width) th:first-child {
     pointer-events: none;
-    background: transparent;
-    font-weight: rgba(0, 0, 0, .4);
-    color: normal;
+    background: #272f38;
+    font-weight: #272f38;
+    color: #6dffff;
     box-shadow: 1px 1px 0 1px #fff
 }
 
@@ -22842,7 +22836,7 @@ ol.ui.horizontal.list li:before {
 .ui.definition.table tr td:first-child:not(.ignored) {
     background: rgba(0, 0, 0, .03);
     font-weight: 700;
-    color: rgba(0, 0, 0, .95);
+    color: #6dffff;
     text-transform: "";
     box-shadow: "";
     text-align: "";
@@ -22854,7 +22848,7 @@ ol.ui.horizontal.list li:before {
 .ui.definition.table td:nth-child(2),
 .ui.definition.table tfoot:not(.full-width) th:nth-child(2),
 .ui.definition.table thead:not(.full-width) th:nth-child(2) {
-    border-left: 1px solid rgba(34, 36, 38, .15)
+    border-left: 1px solid #dcddde
 }
 
 .ui.table td.positive,
@@ -22887,9 +22881,9 @@ ol.ui.horizontal.list li:before {
 
 .ui.table td.active,
 .ui.table tr.active {
-    box-shadow: inset 0 0 0 #fff;
-    background: #e0e0e0 !important;
-    color: #fff !important
+    box-shadow: inset 0 0 0 #272f38;
+    background: #6dffff !important;
+    color: #272f38 !important
 }
 
 .ui.table tr.disabled:hover,
@@ -22897,7 +22891,7 @@ ol.ui.horizontal.list li:before {
 .ui.table tr:hover td.disabled,
 .ui.table tr td.disabled {
     pointer-events: none;
-    color: rgba(40, 40, 40, .3)
+    color: #dcddde
 }
 
 @media only screen and (max-width:991px) {
@@ -22987,7 +22981,7 @@ ol.ui.horizontal.list li:before {
 
 .ui.selectable.table tbody tr:hover,
 .ui.table tbody tr td.selectable:hover {
-    background: rgba(0, 0, 0, .05) !important;
+    background: #efefef !important;
     color: rgba(0, 0, 0, .95) !important
 }
 
@@ -23024,8 +23018,8 @@ ol.ui.horizontal.list li:before {
 .ui.selectable.table tr.active:hover,
 .ui.selectable.table tr:hover td.active,
 .ui.table tr td.selectable.active:hover {
-    background: #e0e0e0 !important;
-    color: #fff !important
+    background: #6dffff !important;
+    color: #272f38 !important
 }
 
 .ui.selectable.table tr.positive:hover,
@@ -23363,7 +23357,7 @@ ol.ui.horizontal.list li:before {
 .ui.sortable.table thead th {
     cursor: pointer;
     white-space: nowrap;
-    border-left: 1px solid rgba(34, 36, 38, .15);
+    border-left: 1px solid #dcddde;
     color: #fff
 }
 
@@ -23402,7 +23396,7 @@ ol.ui.horizontal.list li:before {
 
 .ui.sortable.table th.disabled:hover {
     cursor: auto;
-    color: rgba(40, 40, 40, .3)
+    color: #dcddde
 }
 
 .ui.sortable.table thead th:hover {
@@ -23480,8 +23474,8 @@ ol.ui.horizontal.list li:before {
 }
 
 .ui.basic.table {
-    background: transparent;
-    border: 1px solid rgba(34, 36, 38, .15);
+    background: #272f38;
+    border: 1px solid #dcddde;
     box-shadow: none
 }
 
@@ -23532,7 +23526,7 @@ ol.ui.horizontal.list li:before {
 
 .ui.celled.table tr td,
 .ui.celled.table tr th {
-    border-left: 1px solid rgba(34, 36, 38, .1)
+    border-left: 1px solid #dcddde
 }
 
 .ui.celled.table tr td:first-child,
@@ -23794,7 +23788,7 @@ ol.ui.horizontal.list li:before {
     padding: 0;
     border: none;
     border-radius: .28571429rem;
-    box-shadow: none;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
     -webkit-transition: box-shadow .1s ease, -webkit-transform .1s ease;
     transition: box-shadow .1s ease, -webkit-transform .1s ease;
     transition: box-shadow .1s ease, transform .1s ease;
@@ -28204,7 +28198,7 @@ select.ui.dropdown {
     text-align: left;
     background: #272f38;
     border: none;
-    box-shadow: none;
+    box-shadow: 1px 3px 3px 0 rgba(0, 0, 0, .2), 1px 3px 15px 2px rgba(0, 0, 0, .2);
     -webkit-transform-origin: 50% 25%;
     transform-origin: 50% 25%;
     flex: 0 0 auto;
@@ -28744,7 +28738,7 @@ select.ui.dropdown {
     margin: 0;
     padding: .75em 1em;
     background: #272f38;
-    box-shadow: none;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .2);
     font-size: 1rem;
     text-align: center;
     color: #fff;
@@ -28844,7 +28838,7 @@ a.ui.nag {
     min-width: -moz-min-content;
     min-width: min-content;
     z-index: 1900;
-    border: none;
+    border: 1px solid #d4d4d5;
     line-height: 1.4285em;
     max-width: 250px;
     background: #272f38;
@@ -28853,7 +28847,7 @@ a.ui.nag {
     font-style: normal;
     color: #fff;
     border-radius: .28571429rem;
-    box-shadow: none
+    box-shadow: 0 2px 4px 0 rgba(34, 36, 38, .12), 0 2px 10px 0 rgba(34, 36, 38, .15)
 }
 
 .ui.popup>.header {
@@ -28907,7 +28901,7 @@ a.ui.nag {
     text-transform: none;
     text-align: left;
     white-space: nowrap;
-    border: none;
+    border: 1px solid #d4d4d5;
     line-height: 1.4285em;
     max-width: none;
     padding: .833em 1em;
@@ -28915,7 +28909,7 @@ a.ui.nag {
     font-style: normal;
     color: #fff;
     border-radius: .28571429rem;
-    box-shadow: none;
+    box-shadow: 0 2px 4px 0 rgba(34, 36, 38, .12), 0 2px 10px 0 rgba(34, 36, 38, .15);
     z-index: 1
 }
 
@@ -30680,7 +30674,7 @@ body.pushable>.pusher {
 .ui.left.visible.sidebar,
 .ui.right.visible.sidebar,
 .ui.top.visible.sidebar {
-    box-shadow: none
+    box-shadow: 0 0 20px rgba(34, 36, 38, .15)
 }
 
 .ui.visible.left.sidebar~.fixed,
