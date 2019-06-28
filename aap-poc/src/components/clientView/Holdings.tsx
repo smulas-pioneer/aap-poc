@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StrategyItem, Security, Radar, RadarStrategyParm, ClientState } from '../../_db/interfaces';
-import { Table, Menu, Icon, Dropdown } from 'semantic-ui-react';
+import { Table, Menu, Icon, Dropdown, Modal, Segment, Input, Button, Message } from 'semantic-ui-react';
 import { LangDictionary } from '../../reducers/language/interfaces';
 import { HoldingWeigthControl } from './HoldingWeightControl';
 import { sumBy } from 'lodash';
@@ -26,75 +26,59 @@ interface Props {
   axes: RadarStrategyParm,
 
 }
-interface State {
-  addingSecurity: boolean,
-  mode: 'Weight' | 'Quantity' | 'Amount',
 
-  holdings: StrategyItem[],
-  changedIsin: string[],
+export const Holdings = (props: Props) => {
+  const [addingSecurity, setAddingSecurity] = React.useState(false);
+  const [changingSecurity, setChangingSecurity] = React.useState<string | undefined>(undefined);
+  const [mode, setMode] = React.useState<'Weight' | 'Quantity' | 'Amount'>('Weight');
+  const [holdings, setHoldings] = React.useState(props.holdings);
+  const [currentHolding, setCurrentHolding] = React.useState<StrategyItem | undefined>(undefined);
+  //  const [changedIsin, setChangedIsin] = React.useState<string[]>([]);
 
-  changingSecurity: string | undefined;
-
-}
-
-export class Holdings extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { addingSecurity: false, mode: 'Weight', holdings: props.holdings, changedIsin: [], changingSecurity: undefined }
-  }
-
-  componentWillReceiveProps(next: Props) {
-    if (JSON.stringify(next.holdings) !== JSON.stringify(this.props.holdings)) {
-      this.setState({ holdings: next.holdings, changedIsin: [] })
+  React.useEffect(() => {
+    if (JSON.stringify(holdings) !== JSON.stringify(props.holdings)) {
+      setHoldings(props.holdings);
     }
-  }
+  }, [props.holdings]);
 
-  handleOnSimulate = () => {
-    this.props.onChange(this.state.holdings);
-    //this.props.onToggleSimulation(!this.props.isInSimulationMode);
-  }
 
-  handleItemChanged = (item: StrategyItem, ix: number) => {
-    let holdings = [...this.state.holdings];
-    holdings[ix] = item;
-    const originalValue = this.props.holdings.find(i => i.security.IsinCode === item.security.IsinCode);
+  React.useEffect(() => {
+    //    props.onSomethingChanged(changedIsin.filter(i => i !== 'CASH').length > 0);
+    if (JSON.stringify(holdings) !== JSON.stringify(props.holdings)) {
+      props.onChange(holdings);
+    }
+  }, [
+      holdings
+    ]);
+
+
+  const handleItemChanged = (item: StrategyItem, ix: number) => {
+    let holdingsCopy = [...holdings];
+    holdingsCopy[ix] = item;
+    const originalValue = props.holdings.find(i => i.security.IsinCode === item.security.IsinCode);
     const changed = originalValue === undefined || originalValue.suggestedDelta !== item.suggestedDelta || originalValue.suggestionAccepted !== item.suggestionAccepted;
-    const changedIsin = changed
-      ? this.state.changedIsin.filter(p => p !== item.security.IsinCode).concat(item.security.IsinCode)
-      : this.state.changedIsin.filter(p => p !== item.security.IsinCode)
 
-    this.setState({
-      holdings,
-      changedIsin
-    }, () => {
-      this.props.onSomethingChanged(changedIsin.filter(i => i !== 'CASH').length > 0);
-      this.props.onChange(holdings);
-    });
-
+    setHoldings(holdingsCopy);
   }
 
-  handleAcceptAll = (accept: boolean) => {
-    let holdings = this.state.holdings.map(h => (
+  const handleAcceptAll = (accept: boolean) => {
+    let holdingsCopy = holdings.map(h => (
       {
         ...h,
         suggestionAccepted: h.suggestedDelta !== 0 ? accept : false,
       }));
-    const changedIsin = holdings.filter(i => {
-      const pr = this.props.holdings.find(h => h.security.IsinCode === i.security.IsinCode);
+    const changedIsinNewValue = holdingsCopy.filter(i => {
+      const pr = props.holdings.find(h => h.security.IsinCode === i.security.IsinCode);
       return pr === undefined || pr.suggestedDelta !== i.suggestedDelta || pr.suggestionAccepted !== i.suggestionAccepted;
     }).map(h => h.security.IsinCode);
-    this.setState({
-      holdings,
-      changedIsin
-    }, () => {
-      this.props.onSomethingChanged(changedIsin.filter(i => i !== 'CASH').length > 0);
-    })
+
+    setHoldings(holdingsCopy);
   }
 
 
-  handleChangeSecurity = (security: Security) => {
-    let holdings = this.state.holdings.map(h => {
-      return h.security.IsinCode !== this.state.changingSecurity ? h : {
+  const handleChangeSecurity = (security: Security) => {
+    let holdingsCopy = holdings.map(h => {
+      return h.security.IsinCode !== changingSecurity ? h : {
         security,
         currentAmount: 0,
         currentPrice: 1,
@@ -110,13 +94,11 @@ export class Holdings extends React.Component<Props, State> {
       }
     });
 
-    this.setState({
-      changingSecurity: undefined,
-      holdings
-    })
+    setHoldings(holdingsCopy);
+    setChangingSecurity(changingSecurity);
   }
 
-  handleOnAddSecurity = (security: Security) => {
+  const handleOnAddSecurity = (security: Security) => {
     const h: StrategyItem = {
       security,
       currentAmount: 0,
@@ -132,194 +114,225 @@ export class Holdings extends React.Component<Props, State> {
       newSecurity: true,
     }
 
-    this.setState({
-      addingSecurity: false,
-      holdings: [...this.state.holdings, h]
-    })
+    setAddingSecurity(false);
+    setHoldings([...holdings, h])
   }
 
-  handleOnAddHistory = (status: ClientState | null, notes?: string) => {
-    const { onAddHistory } = this.props;
-    onAddHistory!({ clientId: this.props.clientId, notes: notes || this.props.lang.PROPOSAL_VALIDATION.title, status: status || this.props.clientState });
+  const handleOnAddHistory = (status: ClientState | null, notes?: string) => {
+    const { onAddHistory } = props;
+    onAddHistory!({ clientId: props.clientId, notes: notes || props.lang.PROPOSAL_VALIDATION.title, status: status || props.clientState });
   }
 
+  const { lang } = props;
+  const finalWeight = suggestedPosition(holdings);
+  const fmt = formatNumber(lang.NUMBER_FORMAT);
+  const tot = sumBy(holdings, t => t.currentAmount);
+  const accepted = holdings.slice(1).filter(a => a.suggestionAccepted).length;
+  const proposed = holdings.slice(1).filter(a => a.suggestedDelta !== 0).length;
+  const canSelectAll = accepted !== proposed;
+  const acceptAll = !(accepted === proposed);
+  const isValid = finalWeight.filter(h => h.weight < -0.001 || h.weight > 1).length === 0;
 
-  render() {
-    const { lang } = this.props;
-    const { holdings } = this.state;
-    const finalWeight = suggestedPosition(holdings);
-    const fmt = formatNumber(lang.NUMBER_FORMAT);
-    const tot = sumBy(holdings, t => t.currentAmount);
-    const accepted = holdings.slice(1).filter(a => a.suggestionAccepted).length;
-    const proposed = holdings.slice(1).filter(a => a.suggestedDelta !== 0).length;
-    const canSelectAll = accepted !== proposed;
-
-    const somethingIsChanged = this.state.changedIsin.filter(i => i !== 'CASH').length === 0;
-    const acceptAll = !(accepted === proposed);
-    const isValid = finalWeight.filter(h => h.weight < -0.001 || h.weight > 1).length === 0;
-    return (
-      <div >
-        {
-          this.state.addingSecurity && <Spotlight
-            onCancel={() => { this.setState({ addingSecurity: false }) }}
-            onItemNavigate={i => this.handleOnAddSecurity(i as Security)}
-            searchText=""
-            context="Security"
-            limit={12}
-            visible
-          />
-        }
-        {
-          this.state.changingSecurity && <Spotlight
-            onCancel={() => { this.setState({ addingSecurity: false }) }}
-            onItemNavigate={i => this.handleChangeSecurity(i as Security)}
-            searchText=""
-            context="Security"
-            limit={12}
-            macroAssetClass={holdings.find(s => s.security.IsinCode === this.state.changingSecurity)!.security.MacroAssetClass}
-            visible
-          />
-        }
+  return (
+    <div >
+      {
+        addingSecurity && <Spotlight
+          onCancel={() => { setAddingSecurity(false) }}
+          onItemNavigate={i => handleOnAddSecurity(i as Security)}
+          searchText=""
+          context="Security"
+          limit={12}
+          visible
+        />
+      }
+      {
+        changingSecurity && <Spotlight
+          onCancel={() => { setAddingSecurity(false) }}
+          onItemNavigate={i => handleChangeSecurity(i as Security)}
+          searchText=""
+          context="Security"
+          limit={12}
+          macroAssetClass={holdings.find(s => s.security.IsinCode === changingSecurity)!.security.MacroAssetClass}
+          visible
+        />
+      }
 
 
-        <Menu size='mini'>
-          <Menu.Item onClick={this.props.onShowModel}  ><Icon name="table" />Model</Menu.Item>
-          <Menu.Item onClick={() => this.setState({ addingSecurity: true })} >
-            <Icon name="add" />
-            Add Security
+      <Menu size='mini'>
+        <Menu.Item onClick={props.onShowModel}  ><Icon name="table" />Model</Menu.Item>
+        <Menu.Item onClick={() => setAddingSecurity(true)} >
+          <Icon name="add" />
+          Add Security
                     </Menu.Item>
-          <Menu.Item>
-            <Icon name="add" />
-            New Cash
+        <Menu.Item>
+          <Icon name="add" />
+          New Cash
                     </Menu.Item>
-          <Menu.Menu position="right">
+        <Menu.Menu position="right">
 
-            <ConfirmDialog
-              title={lang.ORDER_LIST}
-              shareButtons={['Excel', 'Copy', 'Pdf']}
-              showOnlyCloseButton
-              trigger={<Menu.Item position="right"><Icon name="list layout" />Show Order List</Menu.Item>}
-              style={{ border: '2px solid green' }}>
-              <OrderList data={holdings} lang={lang} />
-            </ConfirmDialog>
+          <ConfirmDialog
+            title={lang.ORDER_LIST}
+            shareButtons={['Excel', 'Copy', 'Pdf']}
+            showOnlyCloseButton
+            trigger={<Menu.Item position="right"><Icon name="list layout" />Show Order List</Menu.Item>}
+            style={{ border: '2px solid green' }}>
+            <OrderList data={holdings} lang={lang} />
+          </ConfirmDialog>
 
-            <Menu.Item position="right" style={{ color: 'black' }} onClick={() => this.handleAcceptAll(acceptAll)}>
-              <Icon name="check" />
-              {canSelectAll ? 'Select All' : 'UnSelect All'}
-            </Menu.Item>
-            {/*
-            <Menu.Item position="right" disabled={somethingIsChanged} onClick={this.handleOnSimulate} >/*}
-              <Icon name="tv" />
-              Simulate
-            </Menu.Item>
-          */}
+          <Menu.Item position="right" onClick={() => handleAcceptAll(acceptAll)}>
+            <Icon name="check" />
+            {canSelectAll ? 'Select All' : 'UnSelect All'}
+          </Menu.Item>
 
-            {this.props.onAddHistory
-              ? (
-                <ConfirmDialog
-                  title={lang.PROPOSAL_VALIDATION.title}
-                  trigger={<Menu.Item position="right" disabled={!isValid || !somethingIsChanged}><Icon name="send" />Validate</Menu.Item>}
-                  style={{ border: '2px solid green' }}
+          {props.onAddHistory
+            ? (
+              <ConfirmDialog
+                title={lang.PROPOSAL_VALIDATION.title}
+                trigger={<Menu.Item position="right" disabled={!isValid}><Icon name="send" />Validate</Menu.Item>}
+                style={{ border: '2px solid green' }}
 
-                  confirmButton="Accept"
-                  cancelButton="Reject"
-                  customButton={{ text: 'Postpone', icon: 'forward', color: 'blue' }}
+                confirmButton="Accept"
+                cancelButton="Reject"
+                customButton={{ text: 'Postpone', icon: 'forward', color: 'blue' }}
 
-                  onConfirm={() => this.handleOnAddHistory('PENDING EXECUTION')}
-                  onCancel={() => this.handleOnAddHistory('ON HOLD', 'Last proposal rejected')}
-                  onCustom={() => this.handleOnAddHistory('PENDING PROPOSAL')} >
+                onConfirm={() => handleOnAddHistory('PENDING EXECUTION')}
+                onCancel={() => handleOnAddHistory('ON HOLD', 'Last proposal rejected')}
+                onCustom={() => handleOnAddHistory('PENDING PROPOSAL')} >
 
 
-                  <div style={{ width: '100%' }}>
-                    <OrderList data={holdings} lang={lang} />
-                    <RadarGraph data={this.props.radar!} lang={lang} axes={this.props.axes} onClickShape={() => { }} width={700} height={413} alertsAbout={'proposed'} />
-                    <br />
-                    <Checkbox defaultChecked label='Open pdf after generation' />
-                  </div>
+                <div style={{ width: '100%' }}>
+                  <OrderList data={holdings} lang={lang} />
+                  <RadarGraph data={props.radar!} lang={lang} axes={props.axes} onClickShape={() => { }} width={700} height={413} alertsAbout={'proposed'} />
+                  <br />
+                  <Checkbox defaultChecked label='Open pdf after generation' />
+                </div>
 
-                </ConfirmDialog>
-              ) : <Menu.Item position="right" disabled={!isValid || !somethingIsChanged}><Icon name="send" />Validate</Menu.Item>
-            }
+              </ConfirmDialog>
+            ) : <Menu.Item position="right" disabled={!isValid}><Icon name="send" />Validate</Menu.Item>
+          }
 
 
-          </Menu.Menu>
-        </Menu>
-        <Table compact size="small">
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell style={{ width: '10px' }} ></Table.HeaderCell>
-              <Table.HeaderCell width={1}>{lang.ISIN}</Table.HeaderCell>
-              <Table.HeaderCell >{lang.SECURITY_NAME}</Table.HeaderCell>
-              <Table.HeaderCell width={2}>{lang.ASSET_CLASS}</Table.HeaderCell>
-              <Table.HeaderCell width={2} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
-              <Table.HeaderCell width={1} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
-              <Table.HeaderCell width={1} textAlign="right">{lang.WEIGHT}</Table.HeaderCell>
-              <Table.HeaderCell width={1} textAlign="center">
-                <Dropdown text={`${lang.PROPOSE}: ${this.state.mode}`} pointing='left' className='link item'>
-                  <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => this.setState({ mode: 'Weight' })} >Weight</Dropdown.Item>
-                    <Dropdown.Item onClick={() => this.setState({ mode: 'Quantity' })} >Quantity</Dropdown.Item>
-                    <Dropdown.Item onClick={() => this.setState({ mode: 'Amount' })} >Amount</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+        </Menu.Menu>
+      </Menu>
+      <Table compact size="small">
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell style={{ width: '10px' }} ></Table.HeaderCell>
+            <Table.HeaderCell >{lang.SECURITY_NAME}</Table.HeaderCell>
+            <Table.HeaderCell width={1} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
+            <Table.HeaderCell width={1} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
+            <Table.HeaderCell width={1} textAlign="right">{lang.WEIGHT}</Table.HeaderCell>
+            <Table.HeaderCell width={1} textAlign="center">
+              <Dropdown text={`${lang.PROPOSE}: ${mode}`} pointing='left' className='link item'>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => setMode('Weight')} >Weight</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setMode('Quantity')} >Quantity</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setMode('Amount')} >Amount</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
 
-              </Table.HeaderCell>
-              <Table.HeaderCell width={2} textAlign="right">{lang.FINAL_WEIGHT}</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body style={{ overflow: 'visible' }}>
-            {
-              holdings.map((t, i) => {
-                const show = t.currentQuantity !== 0;
-                const suggWeight = finalWeight[i].weight
-                const factor = this.state.mode === 'Weight' ? 1
-                  : this.state.mode === 'Quantity' ? tot / t.currentPrice / 100
-                    : tot / 100;
-                return (!t.newSecurity && t.currentQuantity === 0 && t.suggestedDelta === 0) ? null :
-                  <Table.Row key={i}>
-                    <Table.Cell>
-                      {t.security.blacklisted && <Icon size="large" color="black" name='thumbs down' />}
-                      {t.security.pushed && <Icon size="large" color="green" name='thumbs up' />}
-                      {t.clientFavorites && <Icon size="large" color="red" name='heart' />}
-                    </Table.Cell>
-                    <Table.Cell >{t.security.IsinCode}
-                    </Table.Cell>
-                    <Table.Cell>{t.security.SecurityName}
-                    </Table.Cell>
-                    <Table.Cell>{t.security.MacroAssetClass}</Table.Cell>
-                    <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
-                    <Table.Cell textAlign="right">{show && fmt(t.currentAmount)}</Table.Cell>
-                    <Table.Cell textAlign="right">{show && fmt(t.currentWeight * 100, 0)} </Table.Cell>
-                    <Table.Cell textAlign="left" warning={i !== 0 && this.state.changedIsin.indexOf(t.security.IsinCode) > -1}>
-                      <HoldingWeigthControl factor={factor} data={t} onChange={(item) => this.handleItemChanged(item, i)} />
-                    </Table.Cell>
-                    {somethingIsChanged &&
-                      <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100)}</Table.Cell>
+            </Table.HeaderCell>
+            <Table.HeaderCell width={2} textAlign="right">{lang.FINAL_WEIGHT}</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body style={{ overflow: 'visible' }}>
+          {
+            holdings.map((t, i) => {
+              const show = t.currentQuantity !== 0;
+              const suggWeight = finalWeight[i].weight
+              const factor = mode === 'Weight' ? 1
+                : mode === 'Quantity' ? tot / t.currentPrice / 100
+                  : tot / 100;
+              return (!t.newSecurity && t.currentQuantity === 0 && t.suggestedDelta === 0) ? null :
+                <Table.Row key={i}>
+                  <Table.Cell>
+                    {t.security.blacklisted && <Icon size="large" color="black" name='thumbs down' />}
+                    {t.security.pushed && <Icon size="large" color="green" name='thumbs up' />}
+                    {t.clientFavorites && <Icon size="large" color="red" name='heart' />}
+                  </Table.Cell>
+                  <Table.Cell >
+                    <p style={{ padding: 0, margin: 0 }}><b>{t.security.SecurityName}</b></p>
+                    <p style={{ padding: 0, margin: 0, color: 'lightgrey' }}><small>{t.security.IsinCode} - <i>{t.security.MacroAssetClass}</i></small> </p>
+                  </Table.Cell>
+                  <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
+                  <Table.Cell textAlign="right">{show && fmt(t.currentAmount)}</Table.Cell>
+                  <Table.Cell textAlign="right">{show && fmt(t.currentWeight * 100, 0)} </Table.Cell>
+                  <Table.Cell textAlign="left">
+                    {/*
+                    <HoldingWeigthControl factor={factor} data={t} onChange={(item) => handleItemChanged(item, i)} />
+                     */}
+                    <Button icon="pencil" onClick={() => setCurrentHolding(t)} />
+                    {
+                      currentHolding && <WeightChange
+                        item={currentHolding}
+                        onCancel={() => setCurrentHolding(undefined)}
+                        onChange={(item) => {
+                          setHoldings([...holdings.splice(0, i), item]);
+                          setCurrentHolding(undefined);
+                        }}
+                      />
                     }
-                  </Table.Row>
-              })
-            }
-          </Table.Body>
-          <Table.Footer>
-            <Table.Row>
-              <Table.HeaderCell></Table.HeaderCell>
-              <Table.HeaderCell>{lang.TOTAL}</Table.HeaderCell>
-              <Table.HeaderCell></Table.HeaderCell>
-              <Table.HeaderCell textAlign="right"></Table.HeaderCell>
-              <Table.HeaderCell textAlign="right">{fmt(tot)}</Table.HeaderCell>
-              <Table.HeaderCell textAlign="right">{fmt(sumBy(holdings, t => t.currentWeight) * 100)}</Table.HeaderCell>
-              <Table.HeaderCell textAlign="right"></Table.HeaderCell>
-              <Table.HeaderCell textAlign="right"></Table.HeaderCell>
-
-              <Table.HeaderCell textAlign="right">{somethingIsChanged && fmt(sumBy(finalWeight, t => t.weight) * 100)}</Table.HeaderCell>
-
-            </Table.Row>
-          </Table.Footer>
-        </Table>
-      </div >
-    )
-  }
+                  </Table.Cell>
+                  {
+                    <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100)}</Table.Cell>
+                  }
+                </Table.Row>
+            })
+          }
+        </Table.Body>
+        <Table.Footer>
+          <Table.Row>
+            <Table.HeaderCell></Table.HeaderCell>
+            <Table.HeaderCell>{lang.TOTAL}</Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
+            <Table.HeaderCell textAlign="right">{fmt(tot)}</Table.HeaderCell>
+            <Table.HeaderCell textAlign="right">{fmt(sumBy(holdings, t => t.currentWeight) * 100)}</Table.HeaderCell>
+            <Table.HeaderCell textAlign="right"></Table.HeaderCell>
+            <Table.HeaderCell textAlign="right">{fmt(sumBy(finalWeight, t => t.weight) * 100)}</Table.HeaderCell>
+          </Table.Row>
+        </Table.Footer>
+      </Table>
+    </div >
+  )
 }
 
 
 
+
+type WeightChangeProps = {
+  item: StrategyItem;
+  onChange: (item: StrategyItem) => void;
+  onCancel: () => void;
+}
+
+const WeightChange = (props: WeightChangeProps) => {
+  const [weight, setWeight] = React.useState(props.item.currentWeight.toString());
+  const [weightValue, setWeightValue] = React.useState(props.item.currentWeight);
+  const [error, setError] = React.useState<any>({});
+
+  React.useEffect(() => {
+    if (isNaN(weight as any)) {
+      setError({ ...error, weight: 'Weight is not a correct number' });
+
+    } else {
+      setWeightValue(parseFloat(weight))
+      setError({ ...error, weight: undefined });
+    }
+  }, [weight]);
+
+  const hasError = Object.keys(error).some(k => error[k] != undefined);
+
+  return <Modal open>
+    <Segment>
+      <h1>Change Security Weight</h1>
+      <span>Weight</span><Input error={error.weight} value={weight} onChange={(a, b) => setWeight(b.value)} />
+      {hasError && <Message warning>
+        {Object.keys(error).map((k,ix)=>(<li key={ix}>{error[ix]}</li>))}
+      </Message>}
+    </Segment>
+    <Modal.Actions>
+      <Button negative onClick={props.onCancel}>Cancel</Button>
+      <Button disabled={hasError} positive onClick={() => props.onChange({ ...props.item, currentWeight: weightValue, suggestionAccepted: true })}>Apply</Button>
+    </Modal.Actions>
+  </Modal>
+}
