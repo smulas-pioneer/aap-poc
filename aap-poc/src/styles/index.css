@@ -152,7 +152,7 @@ svg.nations .area:not(.unselectable):hover>path {
   fill: darkkhaki !important;
 }
 
-svg.nations path.europe.eu {
+svg.nations path.europe.eu:not(.managed) {
   fill: dimgray !important;
 }
 

@@ -24,6 +24,7 @@ import { getMapOptionTypeCaption } from '../../../commonUtils';
 import { FillAreaLegend } from './FillAreaLegend';
 import { ConfigLayout } from '../../../reducers/config';
 import { isArray } from 'util';
+import { AreaValue } from '../../shared/AreaMapProps';
 
 const { Legend, ResponsiveContainer } = require('recharts');
 const ReactTooltip = require('react-tooltip');
@@ -40,13 +41,6 @@ export interface ItalyMapState {
   mapIndex: number | undefined;
   requestMapIndex: number | undefined;
   values: { type: IndicatorOptionsType, areaValues: AreaValue[], countWithValues: number };
-}
-
-export interface AreaValue {
-  key: string,
-  value: number,
-  perc: number,
-  color: string
 }
 
 export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
