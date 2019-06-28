@@ -11,6 +11,12 @@ echo "var j=require('./build/package.json');var fs=require('fs');j.scripts={star
 node ./copyPackage.js
 rm ./copyPackage.js
 
+# config.json
+echo "var j=require('./build/config.json');var fs=require('fs');j.APPNAME='aap-poc';fs.writeFileSync('./build/config.json',JSON.stringify(j,null,2));true">changeConfig.js
+node ./changeConfig.js
+rm ./changeConfig.js
+
+
 # Inject Configuration
 echo "PORT=8080">./build/.env
 echo "export PORT">>./build/.env
