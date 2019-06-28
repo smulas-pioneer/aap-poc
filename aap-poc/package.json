@@ -1,8 +1,8 @@
 {
   "name": "aap-poc",
-  "version": "1.0.74",
-  "homepage": ".",
+  "version": "2.0.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "app-support": "^2.0.32",
     "javascript-lp-solver": "^0.4.5",
@@ -13,7 +13,6 @@
     "react-google-charts": "^1.5.5",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "^3.0.1",
     "react-slick": "^0.15.4",
     "react-sortable-hoc": "^0.6.8",
     "react-tooltip": "^3.10.0",
@@ -25,28 +24,32 @@
     "semantic-ui-react": "^0.87.2",
     "slick-carousel": "^1.8.1",
     "sprintf-js": "^1.1.1",
-    "typescript": "3.2.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "docker-build": "./tools/docker-build.sh",
-    "docker-deploy": "./tools/docker-deploy.sh"
+    "typescript": "3.2.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "3.0.1"
   },
   "devDependencies": {
-    "@types/jest": "^21.1.4",
+    "@types/jest": "24.0.15",
+    "@types/node": "12.0.10",
+    "@types/react": "16.8.22",
+    "@types/react-dom": "16.8.4",
     "@types/lodash": "^4.14.78",
     "@types/mathjs": "^0.0.35",
     "@types/react-slick": "^0.14.1",
     "@types/react-sortable-hoc": "^0.6.0",
-    "@types/react-tooltip": "^3.3.2",
-    "tslint": "^5.18.0"
+    "@types/react-tooltip": "^3.3.2"
+    
   },
-  "main": "index.js",
-  "repository": "http://github.com/pioneer-investments/mildev-aap-poc",
-  "license": "MIT",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
   "browserslist": {
     "production": [
       ">0.2%",

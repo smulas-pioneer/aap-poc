@@ -25,9 +25,6 @@ import { Model } from './Model';
 import { ClientAlert } from './ClientAlert';
 
 
-import Slider from "react-slick";
-import { useState } from 'react';
-
 
 const conn = appConnector<{ id: string }>()(
   (s, p) => ({

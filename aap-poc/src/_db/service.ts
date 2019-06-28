@@ -2,17 +2,15 @@ import { clientList, securityList, history, strategies, alertHistory } from './d
 import * as Model from './common/interfaces';
 import { sumBy, groupBy } from 'lodash'
 import { rnd, numArray, getRndItem, hasFlag, getAgentViewsFromClients } from './utils';
-import { SpotlightSearchParms, SpotlightContext, Holding, StrategyItem, InterviewResult } from './common/interfaces';
+import { SpotlightSearchParms, SpotlightContext, StrategyItem, InterviewResult } from './common/interfaces';
 import * as ce from './coreEngine';
 import { intersection } from 'lodash';
 import moment from 'moment';
-import { getRandomRadar, isFakeClient, currentPosition } from './common/radarUtils';
-import { promisify } from 'util';
+import { getRandomRadar, isFakeClient } from './common/radarUtils';
 import { REFERENCE_DATE_TODAY, MainColors } from './common/consts';
-import { Holdings } from '../components/clientView/Holdings';
 import { Aggregation, ClientState } from './interfaces';
 
-export const patchHoldings = (holdings: Model.Holding[], transactions: Model.Transaction[]): Promise<Model.Holding[]> => {
+export const patchHoldings = (): Promise<Model.Holding[]> => {
   return Promise.resolve([]);
 };
 
@@ -80,7 +78,7 @@ export const getSuggestedTransactions = (actual: Model.Holding[], target: Model.
 export const getSuggestedTransactions = (args: { holdings: Model.Holding[], proposed: Model.RadarItem } | undefined) => {
   // Random
   const nBuy = rnd(0, args!.holdings.length * 2);
-  const buy = numArray(nBuy).map(i => {
+  const buy = numArray(nBuy).map(() => {
     const sec = getRndItem(securityList);
     return {
       security: sec,
@@ -88,7 +86,7 @@ export const getSuggestedTransactions = (args: { holdings: Model.Holding[], prop
       type: "BUY"
     } as Model.Transaction
   });
-  const sell = numArray(nBuy).map(i => {
+  const sell = numArray(nBuy).map(() => {
     const sec = getRndItem(args!.holdings);
     return {
       security: securityList.find(i => i.IsinCode === sec.securityId),
@@ -278,7 +276,7 @@ export const spotlightSearch = (parms: SpotlightSearchParms): Promise<Model.Spot
 }
 
 export const getRandomSecurities = (max: number, except: string[]): Model.Security[] => {
-  return numArray(max).map(r => {
+  return numArray(max).map(() => {
     const ix = rnd(1, securityList.length - 1);
     return securityList[ix]
   }).filter(s => !except.find(i => i === s.IsinCode));
