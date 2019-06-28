@@ -17,6 +17,7 @@ import { WidgetTitle } from './shared/WidgetTitle';
 import { ClientViews, ClientViewsNew } from './clientView/ClientView3';
 import { BreakdownView } from './clientView/BreakdownView';
 import { ClientsView } from './clientsView/ClientsView';
+import { EuropaMap } from './maps/europe/EuropeMap';
 
 const sprintf = require("sprintf-js").sprintf;
 
@@ -107,7 +108,8 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         <Grid.Column>
           <Segment>
             <WidgetTitle title={'Key Figures Map'} shareButtons={['Image', 'Copy']} />
-            <ItalyMap lang={lang} clients={data} layout={layout} height="524px" />
+            {/* <ItalyMap lang={lang} clients={data} layout={layout} height="524px" /> */}
+            <EuropaMap lang={lang} clients={data} layout={layout} height="524px" />
           </Segment>
         </Grid.Column>
         <Grid.Column>
