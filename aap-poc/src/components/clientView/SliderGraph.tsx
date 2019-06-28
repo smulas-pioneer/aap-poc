@@ -4,6 +4,7 @@ import { Grid, Segment, Statistic, Button, Icon, Tab, SemanticCOLORS, Menu, Moda
 
 import Slider from "react-slick";
 import { useState } from 'react';
+import { WidgetTitle } from '../shared/WidgetTitle';
 
 interface SliderGraphProps {
   graphs: any[],
@@ -43,6 +44,7 @@ export const SliderGraph = (props: SliderGraphProps) => {
   return <Grid>
     <Grid.Row>
       <Grid.Column style={{ height: '470px' }}>
+        <WidgetTitle title={graphs[activeIndex].title} />
         {getCharts(graphs[activeIndex], false)}
       </Grid.Column>
     </Grid.Row>
