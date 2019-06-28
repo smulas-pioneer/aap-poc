@@ -10,7 +10,7 @@ import './styles/hovereffect.css';
 import { Root } from './components/Root';
 import { loadDatabase } from './_db/data';
 import { Loader } from 'semantic-ui-react';
-import { setConfigJson } from "./actions/index";
+import { setConfigJson, login, LoginType } from "./actions/index";
 
 import 'semantic-ui-css/semantic.min.css';
 import './styles/hovereffect.css';
@@ -18,10 +18,13 @@ import './styles/index.css';
 import './styles/bigone.css';
 import './styles/bigone-gen.css';
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const startingState: any = {}
 
 const store = configureStore(reducers.default, /*startingState,*/ true);
+
 
 loadConfiguration('config.json').then((_cfg) => {
   const cfg = _cfg as { APPNAME: string, CLIENT: string };

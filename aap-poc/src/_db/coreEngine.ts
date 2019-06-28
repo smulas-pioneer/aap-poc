@@ -186,7 +186,6 @@ export const getPositionPerformance = (position: PositionItem[], period: Perform
   }, {} as { [key: string]: number });
 
   const perfCompo = getPerformances(keys, period);
-  console.log (perfCompo);
   return perfCompo[keys[0]].map((i, ix) => {
     return {
       date: i.date,

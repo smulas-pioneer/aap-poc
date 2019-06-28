@@ -14,12 +14,13 @@ import { formatAua, formatNumber } from '../_db/utils';
 import { ClientFilter } from './shared/ClientFilter';
 import { ItalyMap } from './maps/italy/ItalyMap';
 import { WidgetTitle } from './shared/WidgetTitle';
-import { ClientViews } from './clientView/ClientView3';
+import { ClientViews, ClientViewsNew } from './clientView/ClientView3';
 import { BreakdownView } from './clientView/BreakdownView';
 import { ClientsView } from './clientsView/ClientsView';
-import { EuropaMap } from './maps/europe/EuropeMap';
 
 const sprintf = require("sprintf-js").sprintf;
+
+
 
 export interface DashboardMgrProps {
   uid: string
@@ -87,7 +88,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
   // render statistic
   renderItem(value: any, label?: string, sublabel?: any, valueIcon?: SemanticICONS, color?: SemanticCOLORS) {
-    return (<Statistic size="small" color='blue' >
+    return (<Statistic size="tiny" color='blue' >
       {label && <Statistic.Label>{label}</Statistic.Label>}
       <Statistic.Value>
         {valueIcon && <Icon name={valueIcon} color={color} />}
@@ -106,8 +107,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         <Grid.Column>
           <Segment>
             <WidgetTitle title={'Key Figures Map'} shareButtons={['Image', 'Copy']} />
-            {/* <ItalyMap lang={lang} clients={data} layout={layout} height="524px" /> */}
-            <EuropaMap lang={lang} clients={data} layout={layout} height="524px" />
+            <ItalyMap lang={lang} clients={data} layout={layout} height="524px" />
           </Segment>
         </Grid.Column>
         <Grid.Column>
@@ -161,7 +161,6 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
     return (
       <Segment>
-        {/*} <WidgetTitle title={header} shareButtons={['Image', 'Copy']} />*/}
         <CustomPieChart width={500} height={500} data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
       </Segment>
     );
@@ -261,9 +260,6 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
             <Grid.Column textAlign="center">
               {this.renderItem(<span style={{ color: 'red' }}>{fmt(info.clientAlert)}</span>, lang.DB_CLIENTS_ALERTS, this.alertsDetail(fmt(info.mifidAlert)))}
             </Grid.Column>
-            {/* <Grid.Column textAlign="center">
-                            {this.renderItem(info.interviews, lang.DB_INTERVIEWS, this.percDetail(undefined, '1', 'M'))}
-                        </Grid.Column> */}
             <Grid.Column textAlign="center">
               {this.renderItem(fmt(info.totalBudget) + "€", lang.BUDGET, Math.round(100 * (info.totRevenues / info.totalBudget)).toString() + '% accomplished YTD', undefined, 'green')}
             </Grid.Column>
@@ -277,9 +273,9 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
           </Grid>
         </Segment>
         <AdvancedGrid className="grid-filter-right">
-          <Card as={OverflowColumn} fluid>
+          <Segment as={OverflowColumn} >
             <Tab menu={{ pointing: true, secondary: true }} panes={panes} style={{ height: '95%' }} />
-          </Card>
+          </Segment>
           <Segment style={{ margin: 0 }}>
             <WidgetTitle title={lang.FILTER} />
             <ClientFilter

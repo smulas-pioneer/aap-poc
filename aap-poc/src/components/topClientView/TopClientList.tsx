@@ -35,7 +35,7 @@ export const TopClientList = ({ clients, group, indicator, lang }: TopClientList
         let ret: CSSProperties = {};
         if (rowNumber === 0) {
             if ((isGroup && type === group) || (!isGroup && type === indicator)) {
-                ret.color = '#0209AB';
+                ret.color = 'rgb(46, 204, 64)';
                 ret.fontWeight = 'bolder';
                 ret.fontSize = '1.1em';
             }
@@ -79,7 +79,7 @@ export const TopClientList = ({ clients, group, indicator, lang }: TopClientList
                     <Table.Body>
                         {
                             clients.map((client, clIndex) =>
-                                <Table.Row key={clIndex} style={rowStyle(clIndex)}>
+                                <Table.Row key={clIndex}>
                                     {group >= GroupTypes.Country &&
                                         <Table.Cell style={cellStyle(clIndex, GroupTypes.Country, true)}>{client.country}</Table.Cell>
                                     }

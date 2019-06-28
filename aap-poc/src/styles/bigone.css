@@ -14,7 +14,7 @@ html,
 }
 
 .grid-advanced.grid-header-fix {
-    grid-template-rows: 120px auto;
+    grid-template-rows: 110px auto;
 }
 
 /*
@@ -28,6 +28,4 @@ html,
     border: none;
     box-shadow: none
 }
-
-
 */

@@ -112,7 +112,10 @@ export const RadarGraph = (props: {
 
   return (
     <ResponsiveContainer width="100%" height={props.responsiveHeight || props.height} >
-      <RadarChart cx='50%' cy='50%' width={props.width} height={props.height} data={data} outerRadius={'85%'} isAnimationActive startWithAnimation >
+      <RadarChart cx='50%' cy='50%'
+        startAngle={60}
+        endAngle={420}
+        width={props.width} height={props.height} data={data} outerRadius={'85%'} isAnimationActive startWithAnimation  >
         <Legend height={1} verticalAlign="bottom" />
         {/*<Radar name="Limits" dataKey="limits" stroke="blue" fill="#D10505" fillOpacity={0} />*/}
         <Radar name="Actuals" dataKey="actual" stroke="orange" fill="#ff8c00" fillOpacity={props.alertsAbout === 'actual' ? 0.5 : 0.25} dot />

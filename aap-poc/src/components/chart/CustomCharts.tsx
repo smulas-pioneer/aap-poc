@@ -84,8 +84,8 @@ export class CustomPieChart extends React.Component<CustomPieProps, CustomChartS
             const percentLabel = (percent * 100).toFixed(0);
             if (percentLabel === '0') return null;
 
-            const radiusX = innerRadius + (outerRadius - innerRadius) * 0.5;
-            const radiusY = innerRadius + (outerRadius - innerRadius) * 0.6;
+            const radiusX = innerRadius + (outerRadius - innerRadius) * 0.4;
+            const radiusY = innerRadius + (outerRadius - innerRadius) * 0.5;
             const x = cx - paddingAngle + radiusX * Math.cos(-midAngle * this.RADIAN);
             const y = cy - paddingAngle + radiusY * Math.sin(-midAngle * this.RADIAN);
 
