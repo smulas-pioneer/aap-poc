@@ -139,8 +139,6 @@ html {
     display: block;
 }
 
-
-
 svg .area:not(.unselectable),
 svg g.selectable {
     cursor: pointer;
@@ -149,6 +147,15 @@ svg g.selectable {
 svg .regions .area:not(.unselectable):hover>path {
     fill: darkkhaki !important;
 }
+
+svg.nations .area:not(.unselectable):hover>path {
+  fill: darkkhaki !important;
+}
+
+svg.nations path.europe {
+  fill: dimgray !important;
+}
+
 
 svg .boundaries>path {
     stroke: gray;
@@ -165,7 +172,7 @@ svg .boundaries>path {
 .blink_me {
     animation: blinker 1s linear infinite;
   }
-  
-  @keyframes blinker {  
+
+  @keyframes blinker {
     50% { opacity: 0; }
   }
