@@ -47,6 +47,12 @@ export class Holdings extends React.Component<Props, State> {
       this.setState({ holdings: next.holdings, changedIsin: [] })
     }
   }
+
+  handleOnSimulate = () => {
+    this.props.onChange(this.state.holdings);
+    //this.props.onToggleSimulation(!this.props.isInSimulationMode);
+  }
+
   handleItemChanged = (item: StrategyItem, ix: number) => {
     let holdings = [...this.state.holdings];
     holdings[ix] = item;
@@ -61,6 +67,7 @@ export class Holdings extends React.Component<Props, State> {
       changedIsin
     }, () => {
       this.props.onSomethingChanged(changedIsin.filter(i => i !== 'CASH').length > 0);
+      this.props.onChange(holdings);
     });
 
   }
@@ -83,10 +90,6 @@ export class Holdings extends React.Component<Props, State> {
     })
   }
 
-  handleOnSimulate = () => {
-    this.props.onChange(this.state.holdings);
-    //this.props.onToggleSimulation(!this.props.isInSimulationMode);
-  }
 
   handleChangeSecurity = (security: Security) => {
     let holdings = this.state.holdings.map(h => {
@@ -203,11 +206,12 @@ export class Holdings extends React.Component<Props, State> {
               <Icon name="check" />
               {canSelectAll ? 'Select All' : 'UnSelect All'}
             </Menu.Item>
-
-            <Menu.Item position="right" disabled={somethingIsChanged} onClick={this.handleOnSimulate} >
+            {/*
+            <Menu.Item position="right" disabled={somethingIsChanged} onClick={this.handleOnSimulate} >/*}
               <Icon name="tv" />
               Simulate
-                        </Menu.Item>
+            </Menu.Item>
+          */}
 
             {this.props.onAddHistory
               ? (
