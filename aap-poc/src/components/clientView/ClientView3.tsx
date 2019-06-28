@@ -6,10 +6,9 @@ import { LangDictionary } from '../../reducers/language/interfaces';
 import { Client, Breakdown, Radar, StrategyItem, RadarStrategyParm, InterviewResult, TimeHorizon } from '../../_db/interfaces';
 import * as ce from '../../_db/coreEngine';
 import { sumBy } from 'lodash';
-import { Grid, Segment, Statistic, Button, Icon, Tab, SemanticCOLORS, Menu, Modal, Loader, TabProps, Card } from 'semantic-ui-react';
+import { Grid, Segment, Statistic, Button, Icon, Tab, SemanticCOLORS, Menu, Modal, Loader, TabProps } from 'semantic-ui-react';
 import { RadarGraph } from '../RadarGraph';
 import { Holdings } from './Holdings';
-import { OrderList } from "./OrderList";
 import { PerformanceChart } from '../securityView/PerformanceChart';
 import { RiskReturnGraph } from './RiskReturnGraph';
 import { BreakdownView } from './BreakdownView';
@@ -249,7 +248,7 @@ class ClientViewCompo extends conn.StatefulCompo<State> {
 
   render() {
     const { client, lang, history } = this.props;
-    const { radar, strategy, breakdown, axes, somethingIsChanged, viewHistory, processing } = this.state;
+    const { radar, strategy, axes, somethingIsChanged, viewHistory, processing } = this.state;
 
     if (!client || history.length === 0) return <div />
 
@@ -397,7 +396,7 @@ const ClientHistory = (props: { history: InterviewResult[], lang: LangDictionary
       });
     }
     return memo;
-  }, [] = [] as any);
+  }, [] as any);
 
   return <Tab menu={{ pointing: true, secondary: true }} panes={panes} style={{ height: '95%' }} />
 }
@@ -496,7 +495,7 @@ export class ClientViews extends React.Component<ClientViewProps, { activeIndex?
       });
 
       return memo;
-    }, [] = [] as any[]);
+    },  [] as any[]);
 
     return (
       <div>
@@ -521,7 +520,7 @@ export class ClientViews extends React.Component<ClientViewProps, { activeIndex?
         );
       }
       return memo;
-    }, [] = [] as any);
+    },  [] as any);
 
     return (
       <div>

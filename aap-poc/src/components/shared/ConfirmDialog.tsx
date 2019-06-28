@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { Confirm, Modal, Button, Icon, SemanticICONS, SemanticCOLORS, Segment } from 'semantic-ui-react';
+import { Modal, Button, Icon, SemanticICONS, SemanticCOLORS, Segment } from 'semantic-ui-react';
 import { WidgetTitle } from './WidgetTitle';
 import { ShareButton } from '../Share';
-import { Link } from 'react-router-dom';
 
 export interface ConfirmDialogProps {
     show?: boolean;
@@ -88,7 +87,7 @@ export class ConfirmDialog extends React.Component<ConfirmDialogProps, ConfirmDi
     }
 
     render() {
-        const { title, trigger, content, children, showOnlyCloseButton, cancelButton, confirmButton, onCancel, onConfirm, style, shareButtons } = this.props;
+        const { title, trigger, content, children, showOnlyCloseButton, cancelButton, confirmButton, style, shareButtons } = this.props;
         const { open } = this.state;
 
         let customTrigger = trigger && React.cloneElement(trigger, { onClick: this.show });

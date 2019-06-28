@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { appConnector } from 'app-support';
-import { getSearchResult, getSearchFilter, getAgentView, getLanguage } from '../../reducers/index';
+import {  getSearchFilter, getAgentView, getLanguage } from '../../reducers/index';
 import { searchClient } from '../../actions/index';
 import { SearchParms } from '../../_db/interfaces';
-import { Segment, Icon, Header, Grid, Card } from 'semantic-ui-react';
+import { Segment, Icon, Header, Card } from 'semantic-ui-react';
 import { FilterMapTypes } from '../../actions/model';
 import { AgentList } from '../agentView/AgentList';
 
@@ -25,7 +25,7 @@ class ManagerViewCompo extends conn.StatefulCompo<{ searchParms: SearchParms }> 
     constructor(props: any) {
         super(props);
         this.state = {
-            searchParms: this.props.agentView && this.props.agentView.parms || {
+            searchParms: (this.props.agentView && this.props.agentView.parms) || {
                 filter: '',
                 uid: ''
             }

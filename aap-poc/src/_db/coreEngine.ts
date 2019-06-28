@@ -1,12 +1,10 @@
-import { PositionItem, RadarItem, StrategyItem, RadarStrategyParm, Breakdown, Alert, Radar, PerformancePeriod, Client, AlertHistory2, TimeHorizon } from "./interfaces";
+import { PositionItem, StrategyItem, RadarStrategyParm, Breakdown,  PerformancePeriod, Client, TimeHorizon } from "./interfaces";
 import { sumBy, groupBy } from "lodash";
-import { numArray, rnd } from "./utils";
 import { solve } from "./solver";
 import { performances, perfSummary } from "./data/index";
 import moment from 'moment';
 import * as math from 'mathjs';
-import { networkInterfaces } from "os";
-import { suggestedPositionExCash, currentPosition, suggestedPosition } from "./common/radarUtils";
+import { suggestedPositionExCash, } from "./common/radarUtils";
 import { securityList } from "./data";
 
 

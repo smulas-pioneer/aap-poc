@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Grid, Header, Form, Segment, Input, Button, Message } from 'semantic-ui-react';
+import { Grid, Header, Form, Segment, Button, Message } from 'semantic-ui-react';
 import { LoginType } from '../actions/index';
 
 export interface LoginProps {

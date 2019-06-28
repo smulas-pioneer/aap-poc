@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import { appConnector } from 'app-support';
 import { getSearchFilter, selectAlertHistory, getLanguage, getSearchResult, getConfigLayout } from '../../reducers/index';
@@ -45,7 +46,7 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
         super(props);
         this.state = {
             pageIndex: 1,
-            searchParms: this.props.data && this.props.data.parms || {
+            searchParms: (this.props.data && this.props.data.parms) || {
                 filter: '',
                 uid: '',
                 onlyWithAlerts: true

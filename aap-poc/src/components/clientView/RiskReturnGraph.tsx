@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { LangDictionary } from '../../reducers/language/interfaces';
 import { Segment, Button } from 'semantic-ui-react';
-const { ScatterChart, Dot, Cross, XAxis, CartesianGrid, Legend, Scatter, Tooltip, YAxis, ResponsiveContainer } = require('recharts');
+const { ScatterChart, Dot, XAxis, CartesianGrid, Legend, Scatter, Tooltip, YAxis, ResponsiveContainer } = require('recharts');
 
 const Colors = {
     ORANGE: "#F07D00",
@@ -54,7 +54,7 @@ export class RiskReturnGraph extends React.Component<RiskReturnChartProps, RiskR
 }
 
 const renderScatter = (shapeform: string, viewText: boolean,radius?:number) => (props: any) => {
-    const { cx, cy, fill, payload: { perf, devSt, id } } = props;
+    const { cx, cy, fill, payload: {  id } } = props;
     if (id) {
         return (
             <g>

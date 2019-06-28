@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Card, Responsive, Segment, Table, Menu, Icon } from 'semantic-ui-react';
+import { Segment, Table, Menu } from 'semantic-ui-react';
 import { Client, } from "../../_db/interfaces";
-import { WithLang, LangDictionary, } from '../../reducers/language/interfaces';
-import { formatAua, formatNumber } from "../../_db/utils";
+import { LangDictionary, } from '../../reducers/language/interfaces';
+import { formatNumber } from "../../_db/utils";
 import client from '../../reducers/client';
 import { numArray } from '../../_db/common/radarUtils';
 import { WidgetTitle } from '../shared/WidgetTitle';

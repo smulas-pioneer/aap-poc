@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import { StrategyItem, Security, Radar, RadarStrategyParm, ClientState } from '../../_db/interfaces';
 import { Table, Menu, Icon, Dropdown, Modal, Segment, Input, Button, Message } from 'semantic-ui-react';
 import { LangDictionary } from '../../reducers/language/interfaces';
-import { HoldingWeigthControl } from './HoldingWeightControl';
 import { sumBy } from 'lodash';
-import { numArray, formatNumber } from '../../_db/utils';
+import { formatNumber } from '../../_db/utils';
 import { Spotlight } from '../spotlight';
 import { ConfirmDialog } from '../shared/ConfirmDialog';
 import { suggestedPosition, getRandomRadar } from '../../_db/common/radarUtils';
@@ -34,21 +34,17 @@ export const Holdings = (props: Props) => {
   const [holdings, setHoldings] = React.useState(props.holdings);
   const [currentHolding, setCurrentHolding] = React.useState<StrategyItem | undefined>(undefined);
   //  const [changedIsin, setChangedIsin] = React.useState<string[]>([]);
+  const { onChange } = props;
 
   React.useEffect(() => {
-    if (JSON.stringify(holdings) !== JSON.stringify(props.holdings)) {
-      setHoldings(props.holdings);
-    }
+    setHoldings(props.holdings);
   }, [props.holdings]);
 
 
   React.useEffect(() => {
-    //    props.onSomethingChanged(changedIsin.filter(i => i !== 'CASH').length > 0);
-    if (JSON.stringify(holdings) !== JSON.stringify(props.holdings)) {
-      props.onChange(holdings);
-    }
+    onChange(holdings);
   }, [
-      holdings
+      holdings, onChange
     ]);
 
 
@@ -318,16 +314,17 @@ const WeightChange = (props: WeightChangeProps) => {
       setWeightValue(parseFloat(weight))
       setError({ ...error, weight: undefined });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weight]);
 
-  const hasError = Object.keys(error).some(k => error[k] != undefined);
+  const hasError = Object.keys(error).some(k => error[k] !== undefined);
 
   return <Modal open>
     <Segment>
       <h1>Change Security Weight</h1>
       <span>Weight</span><Input error={error.weight} value={weight} onChange={(a, b) => setWeight(b.value)} />
       {hasError && <Message warning>
-        {Object.keys(error).map((k,ix)=>(<li key={ix}>{error[ix]}</li>))}
+        {Object.keys(error).map((k, ix) => (<li key={ix}>{error[ix]}</li>))}
       </Message>}
     </Segment>
     <Modal.Actions>

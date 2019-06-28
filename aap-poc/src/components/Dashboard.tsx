@@ -4,13 +4,11 @@ import { getSearchResult, getSearchFilter, getLanguage } from '../reducers/index
 import { searchClient } from '../actions/index';
 
 import { SearchParms, Client } from "../_db/interfaces";
-import { LangDictionary } from '../reducers/language/interfaces';
 
-import { Card, Grid, Icon, SemanticICONS, SemanticCOLORS, Statistic, Segment, Menu, Label, Tab, Button, Container } from 'semantic-ui-react';
-import { groupBy, sumBy } from 'lodash';
+import { Card, Grid, Icon, SemanticICONS, SemanticCOLORS, Statistic, Segment, Menu, Tab } from 'semantic-ui-react';
 import { CustomPieChart } from './chart/CustomCharts';
 
-import { ClientFilters, SearchFilter, FilterMap, MemuItemModel, memuItems, filterMapItems } from '../actions/model';
+import {  FilterMap,filterMapItems } from '../actions/model';
 import { ClientsView } from './clientsView/ClientsView';
 import { AlertsView } from './alertsView/AlertsView';
 import { ClientFilter } from './shared/ClientFilter';
@@ -41,7 +39,7 @@ const conn = appConnector<DashboardProps>()(
 class Dashboard extends conn.StatefulCompo<DashboardState> {
     constructor(props: any) {
         super(props);
-        this.state = { searchParms: this.props.data && this.props.data.parms || { filter: '', uid: '' } };
+        this.state = { searchParms: (this.props.data && this.props.data.parms) || { filter: '', uid: '' } };
 
         this.search = this.search.bind(this);
         this.searchAdvanced = this.searchAdvanced.bind(this);
@@ -57,7 +55,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
 
     componentWillReceiveProps(next: any) {
         this.setState({
-            searchParms: next.data && next.data.parms || { filter: '', uid: '' }
+            searchParms: (next.data && next.data.parms) || { filter: '', uid: '' }
         });
     }
 
@@ -149,9 +147,8 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                 }
 
                 return memo;
-            }, [] = [] as any);
+            },  [] as any);
 
-        var arrayValues = this.state.searchParms[searchprop];
 
         return (
             <Segment>

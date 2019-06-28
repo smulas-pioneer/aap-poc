@@ -1,8 +1,7 @@
-import { PositionItem, RadarItem, StrategyItem, RadarStrategyParm, Breakdown, Alert, Radar, PerformancePeriod, Client, AlertHistory2, TimeHorizon } from "./interfaces";
-import { sumBy, groupBy, endsWith, sum } from "lodash";
+import { PositionItem, RadarItem, StrategyItem, Alert, Radar, Client, AlertHistory2 } from "./interfaces";
+import { sumBy, endsWith,  } from "lodash";
 import moment from 'moment';
 import * as math from 'mathjs';
-import { networkInterfaces } from "os";
 import { REFERENCE_DATE_TODAY } from "./consts";
 
 export const isFakeClient = (clientId: string) => ["0", "1", "2"].indexOf(clientId) > -1;

@@ -1,12 +1,11 @@
 import * as React from "react";
-import { Modal, Input, InputOnChangeData, Button, ButtonProps, Icon, SemanticCOLORS } from "semantic-ui-react";
+import { Modal, Input, InputOnChangeData, Button, Icon, SemanticCOLORS } from "semantic-ui-react";
 import { SpotlightResultList } from "./SpotlightResultList";
 import { SpotlightResultItemPreview } from "./SpotlightResultItemPreview";
 import { appConnector } from "app-support";
 import { spotlightSearch } from "../../actions/index";
 import { getSpotlightData, getLanguage } from "../../reducers/index";
 import { SpotlightSearchResultItem } from "../../_db/interfaces";
-import { isClient } from "../../_db/utils";
 
 export interface SpotlightProps {
   visible: boolean;
@@ -142,11 +141,9 @@ class SpotlightCompo extends conn.StatefulCompo<SpotlightState> {
   }
 
   render() {
-    const { activePosition, searchText, onlyPushedSecurity } = this.state;
+    const { activePosition, searchText } = this.state;
     const { data, lang, visible } = this.props;
     const emptyData = !data || !data.items || !Object.keys(data.items).length;
-
-    let currentItem = undefined;
 
     const searchBox = (
       <Input

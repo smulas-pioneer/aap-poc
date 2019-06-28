@@ -36,7 +36,7 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
         ? lang.ONHOLD + ' (' + alertTitle + ')'
         : alertTitle
 
-    const alertColor = props.client.decision=='ONHOLD' ? 'blue': radar.numOfAlerts ==0 ? 'green' : radar.riskAdequacyAlert =='red' ? 'red' : 'orange';
+    const alertColor = props.client.decision==='ONHOLD' ? 'blue': radar.numOfAlerts ===0 ? 'green' : radar.riskAdequacyAlert ==='red' ? 'red' : 'orange';
     const dur = moment(REFERENCE_DATE_TODAY).to(moment(props.client.clientStatusAge));
     const title = (
         <Segment basic as="span" >

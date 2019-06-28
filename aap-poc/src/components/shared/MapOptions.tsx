@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { LangDictionary } from '../../reducers/language/interfaces';
-import { Button, Menu, Divider } from 'semantic-ui-react';
+import {  Menu, Divider } from 'semantic-ui-react';
 import { IndicatorOptionsType } from '../../actions/model';
 
 export interface MapOptionsProps {
@@ -41,7 +41,6 @@ export class MapOptions extends React.Component<MapOptionsProps, MapOptionsState
   }
 
   render() {
-    const { activeOption } = this.state;
     const { lang } = this.props;
 
     const buttons = [

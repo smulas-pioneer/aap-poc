@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Dropdown, DropdownItemProps, Segment, Grid } from "semantic-ui-react";
-import { GroupType, GroupTypes } from "./index";
+import { Dropdown, DropdownItemProps, Segment,  } from "semantic-ui-react";
+import { GroupTypes } from "./index";
 import { IndicatorOptionsType } from "../../actions/model";
 import { startCase } from "lodash";
 import { Share } from "../Share";

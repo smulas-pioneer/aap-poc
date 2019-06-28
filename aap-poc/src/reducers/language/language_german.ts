@@ -1,4 +1,3 @@
-import { LanguageState } from '.';
 import {English} from './language_english';
 let  German = {...English};
 German.id= 'de';

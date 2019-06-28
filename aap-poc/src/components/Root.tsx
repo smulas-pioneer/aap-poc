@@ -21,6 +21,7 @@ export const Root = conn.PureCompo(props => {
     if (autologin) {
       props.login(LoginType.Manager);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const { logged, manager, login } = props;

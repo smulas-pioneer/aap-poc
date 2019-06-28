@@ -17,7 +17,7 @@ const Colors = {
   YELLOW: "#F07D00"//"#C1B000"// "#C19135",
 }
 
-const perc = (num: number) => (100 * num - 100).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+//const perc = (num: number) => (100 * num - 100).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 interface AlertsChartProps {
   data: AlertHistory2[];

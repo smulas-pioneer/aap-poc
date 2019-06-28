@@ -1,5 +1,5 @@
 import { createAction, createPromiseAction, createPromiseWithThunkAction } from 'redux-helper';
-import { SearchResult, Client, Transaction, Breakdown, InterviewResult, SpotlightSearchResult, Holding, StrategyItem, SearchParms, SpotlightSearchParms, AlertHistory, Security } from '../_db/interfaces';
+import { SearchResult, Client, Transaction, Breakdown, InterviewResult, SpotlightSearchResult, Holding, StrategyItem, SearchParms, SpotlightSearchParms, AlertHistory } from '../_db/interfaces';
 import * as svc from '../_db/service';
 import { UserInfo, ConfigJsonModel } from './model';
 import { agents } from '../_db/data/index';

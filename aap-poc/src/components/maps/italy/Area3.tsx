@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { MouseEventHandler } from 'react';
 import { AreaMapProps } from '../../shared/AreaMapProps';
 import { Marker } from './Marker';
 

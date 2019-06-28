@@ -3,18 +3,16 @@ import { SearchParms, Client } from '../_db/interfaces';
 import { appConnector } from 'app-support';
 import { searchClient } from '../actions/index';
 import { getSearchResult, getSearchFilter, getLanguage, getConfigLayout } from '../reducers/index';
-import { SemanticICONS, Statistic, Grid, Segment, SemanticCOLORS, Icon, Menu, Tab, Card } from 'semantic-ui-react';
+import { SemanticICONS, Statistic, Grid, Segment, SemanticCOLORS, Icon, Menu, Tab } from 'semantic-ui-react';
 import { filterMapItems, FilterMap } from '../actions/model';
 import { TopClient } from './topClientView/index';
 import { CustomPieChart } from './chart/CustomCharts';
-import { OverflowItem, AdvancedGrid, OverflowColumn } from './shared/GridOverflow';
+import { AdvancedGrid, OverflowColumn } from './shared/GridOverflow';
 import { ManagerView } from './managerView/managerView';
 import { AlertsView } from './alertsView/AlertsView';
 import { formatAua, formatNumber } from '../_db/utils';
 import { ClientFilter } from './shared/ClientFilter';
-import { ItalyMap } from './maps/italy/ItalyMap';
 import { WidgetTitle } from './shared/WidgetTitle';
-import { ClientViews } from './clientView/ClientView3';
 import { BreakdownView } from './clientView/BreakdownView';
 import { ClientsView } from './clientsView/ClientsView';
 import { SliderGraph } from './clientView/SliderGraph';
@@ -46,7 +44,7 @@ const conn = appConnector<DashboardMgrProps>()(
 class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
     constructor(props: any) {
         super(props);
-        this.state = { searchParms: this.props.data && this.props.data.parms || { filter: '', uid: '' } };
+        this.state = { searchParms: (this.props.data && this.props.data.parms ) || { filter: '', uid: '' } };
 
         this.search = this.search.bind(this);
         this.searchAdvanced = this.searchAdvanced.bind(this);
@@ -62,7 +60,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
     componentWillReceiveProps(next: any) {
         this.setState({
-            searchParms: next.data && next.data.parms || { filter: '', uid: '' }
+            searchParms: (next.data && next.data.parms) || { filter: '', uid: '' }
         });
     }
 
@@ -105,6 +103,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
     // render filter
     renderFilterGraphics(data: Client[]) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { lang, layout, filter = { Aua: {} } } = this.props;
         return (
             <Grid columns={2}>
@@ -130,6 +129,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
     Colors = ["#F07D00", "#004F9F", "#E6325E", "#3B7296", "#39B2B6", "#c8c802", "#bd00bf"]
 
     renderFilterGraphItem(key: number, map: FilterMap, values: any) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { searchprop, render: { header, label } } = map;
 
         let valuesSizeGraph: any[] = Object.keys(values).reduce(
@@ -160,7 +160,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 }
 
                 return memo;
-            }, [] = [] as any);
+            }, [] as any);
 
 
         return (<CustomPieChart width={50} height={50} responsiveHeight="100%" data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
@@ -179,7 +179,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
     }
 
     createGraphs() {
-        const { lang, filter = { Aua: {} } } = this.props;
+        const { filter = { Aua: {} } } = this.props;
         let graphs = {
             Performance: {
                 title: 'AUA',

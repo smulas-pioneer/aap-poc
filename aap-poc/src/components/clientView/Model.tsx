@@ -1,13 +1,8 @@
 import * as React from 'react';
-import { StrategyItem, Security } from '../../_db/interfaces';
-import { Table, Button, Segment, Menu, Icon, Dropdown } from 'semantic-ui-react';
+import { StrategyItem } from '../../_db/interfaces';
+import { Table, Menu, Icon } from 'semantic-ui-react';
 import { LangDictionary } from '../../reducers/language/interfaces';
-import { HoldingWeigthControl } from './HoldingWeightControl';
 import { sumBy } from 'lodash';
-import { numArray } from '../../_db/utils';
-import { Spotlight } from '../spotlight';
-import { suggestedPosition } from '../../_db/common/radarUtils';
-import { OverflowItem } from '../shared/GridOverflow';
 
 interface Props {
     holdings: StrategyItem[],
