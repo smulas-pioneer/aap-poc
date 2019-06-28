@@ -55,7 +55,7 @@ export const memuItems: MemuItemModel[] = [
   { langProps: 'NEWS_INSIGHTS', linkTo: undefined, color: 'grey', icon: 'newspaper', innewline: true }
 ]
 
-export type FilterMapTypes = 'Regions' | 'Alerts' | 'Agents' | 'Aua' | 'AlertType' | 'Segment' | 'Branch' | 'ClientStatus' | 'ClientStatusDuration' | 'RiskProfile';
+export type FilterMapTypes = 'Countries' | 'Regions' | 'Alerts' | 'Agents' | 'Aua' | 'AlertType' | 'Segment' | 'Branch' | 'ClientStatus' | 'ClientStatusDuration' | 'RiskProfile';
 
 export interface ConfigJsonModel {
   APPNAME: string,
@@ -69,6 +69,11 @@ export interface FilterMap {
   enableClearAll?: boolean;
 }
 export const filterMapItems: { [key in FilterMapTypes]: FilterMap } = {
+  Countries: {
+    prop: 'country',
+    searchprop: 'countries',
+    render: { header: 'Countries', icon: 'flag', label: undefined }
+  },
   Regions: {
     prop: 'address',
     subprop: 'region',
