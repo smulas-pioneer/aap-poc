@@ -1191,7 +1191,7 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
 
 .ui.button:focus {
     background-color: #cacbcd;
-    color: rgba(0, 0, 0, .8);
+    color: #000;
     background-image: "" !important;
     box-shadow: "" !important
 }
@@ -1466,18 +1466,23 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
     margin-top: 0
 }
 
-.ui.inverted.button.active,
-.ui.inverted.button:focus,
 .ui.inverted.button:hover {
     background: #fff;
     box-shadow: inset 0 0 0 2px #fff !important;
     color: rgba(0, 0, 0, .8)
 }
 
+.ui.inverted.button.active,
+.ui.inverted.button:focus {
+    background: #fff;
+    box-shadow: inset 0 0 0 2px #fff !important;
+    color: #000
+}
+
 .ui.inverted.button.active:focus {
     background: #dcddde;
     box-shadow: inset 0 0 0 2px #dcddde !important;
-    color: rgba(0, 0, 0, .8)
+    color: #000
 }
 
 .ui.labeled.button:not(.icon) {
@@ -13249,8 +13254,8 @@ img.ui.bordered.image {
 .ui.input.focus>input,
 .ui.input>input:focus {
     border-color: #85b7d9;
-    background: #272f38;
-    color: rgba(0, 0, 0, .8);
+    background: #fff;
+    color: #000;
     box-shadow: none
 }
 
@@ -17691,7 +17696,7 @@ ol.ui.horizontal.list li:before {
     line-height: 1.21428571em;
     padding: .67857143em 1em;
     font-size: 1em;
-    background: #fff;
+    background: #272f38;
     border: 1px solid rgba(34, 36, 38, .15);
     color: #fff;
     border-radius: .28571429rem;
@@ -17705,7 +17710,7 @@ ol.ui.horizontal.list li:before {
     -webkit-appearance: none;
     tap-highlight-color: hsla(0, 0%, 100%, 0);
     padding: .78571429em 1em;
-    background: #fff;
+    background: #272f38;
     border: 1px solid rgba(34, 36, 38, .15);
     outline: none;
     color: #fff;
@@ -17904,7 +17909,7 @@ ol.ui.horizontal.list li:before {
 .ui.form input[type=time]:focus,
 .ui.form input[type=url]:focus,
 .ui.form textarea:focus {
-    color: rgba(0, 0, 0, .95);
+    color: #000;
     border-color: #85b7d9;
     border-radius: .28571429rem;
     background: #fff;
@@ -18213,7 +18218,7 @@ ol.ui.horizontal.list li:before {
 .ui.inverted.form input[type=text],
 .ui.inverted.form input[type=time],
 .ui.inverted.form input[type=url] {
-    background: #fff;
+    background: #272f38;
     border-color: hsla(0, 0%, 100%, .1);
     color: #fff;
     box-shadow: none
@@ -27083,7 +27088,7 @@ body.dimmable>.dimmer {
     transform: rotate(0deg);
     min-width: 14em;
     min-height: 2.71428571em;
-    background: #fff;
+    background: #272f38;
     display: inline-block;
     padding: .78571429em 2.1em .78571429em 1em;
     color: #fff;
@@ -30074,7 +30079,7 @@ a.ui.nag {
     line-height: 1.21428571em;
     padding: .67857143em 1em;
     font-size: 1em;
-    background: #fff;
+    background: #272f38;
     border: 1px solid rgba(34, 36, 38, .15);
     color: #fff;
     box-shadow: inset 0 0 0 0 transparent;
@@ -30199,7 +30204,7 @@ a.ui.nag {
 
 .ui.search>.prompt:focus {
     border-color: rgba(34, 36, 38, .35);
-    background: #fff;
+    background: #272f38;
     color: rgba(0, 0, 0, .95)
 }
 

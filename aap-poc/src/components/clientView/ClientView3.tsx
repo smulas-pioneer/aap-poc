@@ -3,27 +3,29 @@ import { appConnector } from 'app-support';
 import { getCurrentClient, getLanguage, getHistory, selectStrategy, selectStrategySuccessCount } from '../../reducers/index';
 import { getClient, getSuggestions, getClientSuccess, addSecurity, addHistory } from '../../actions/index';
 import { LangDictionary } from '../../reducers/language/interfaces';
-import { Client, Breakdown, Radar, StrategyItem, RadarStrategyParm, InterviewResult, TimeHorizonMonths, TimeHorizon } from '../../_db/interfaces';
+import { Client, Breakdown, Radar, StrategyItem, RadarStrategyParm, InterviewResult, TimeHorizon } from '../../_db/interfaces';
 import * as ce from '../../_db/coreEngine';
-import { sumBy, startCase, camelCase } from 'lodash';
-
-import { Grid, Segment, Statistic, Card, Button, Table, SemanticICONS, Icon, Feed, Form, Label, Tab, Accordion, Header, SemanticCOLORS, List, Menu, Transition, Checkbox, Modal, Loader, Dimmer, TabProps } from 'semantic-ui-react';
+import { sumBy } from 'lodash';
+import { Grid, Segment, Statistic, Button, Icon, Tab, SemanticCOLORS, Menu, Modal, Loader, TabProps } from 'semantic-ui-react';
 import { RadarGraph } from '../RadarGraph';
-import { Holdings, OrderList } from './Holdings';
+import { Holdings, } from './Holdings';
 import { PerformanceChart } from '../securityView/PerformanceChart';
 import { RiskReturnGraph } from './RiskReturnGraph';
 import { BreakdownView } from './BreakdownView';
-import { AdvancedGrid, OverflowColumn, OverflowItem } from '../shared/GridOverflow';
-import { ClientAlerts } from '../clientsView/ClientAlerts';
+import { AdvancedGrid, OverflowItem } from '../shared/GridOverflow';
+
 import { HistoryViewTimelineEvent } from './HistoryView';
-import { settings } from 'cluster';
+
 import { PerformanceContributionGraph } from './PerformanceContribution';
 import { createRadarFromStrategy, suggestedPosition, currentPosition, modelPosition } from '../../_db/common/radarUtils';
 import { WidgetTitle } from '../shared/WidgetTitle';
 import { radars } from '../../_db/data';
 import { Model } from './Model';
-import { ColorsLegend } from '../maps/italy/ColorsLegend';
 import { ClientAlert } from './ClientAlert';
+
+
+import Slider from "react-slick";
+
 
 const conn = appConnector<{ id: string }>()(
   (s, p) => ({
@@ -544,3 +546,110 @@ export class ClientViews extends React.Component<ClientViewProps, { activeIndex?
     }
   }
 }
+
+export class ClientViewsNew extends React.Component<ClientViewProps, { activeIndex?: number }> {
+  constructor(props: ClientViewProps) {
+    super(props);
+    this.state = { activeIndex: 0 };
+    this.handleBtnChange = this.handleBtnChange.bind(this);
+    this.handleTabChange = this.handleTabChange.bind(this);
+
+    setTimeout(() => {
+      this.setState({ activeIndex: props.defaultIndex });
+    }, 1000);
+  }
+  componentDidMount() {
+  }
+  handleTabChange(e: any, data: TabProps) {
+    if (typeof (data.activeIndex) === "string") return;
+    this.setState({ activeIndex: data.activeIndex });
+  }
+  handleBtnChange(activeIndex: number) {
+    this.setState({ activeIndex });
+  }
+
+  renderTab(graphs: any[], activeIndex: number, lang: LangDictionary) {
+    const panes = graphs.reduce((memo, item, ix) => {
+      memo.push({
+        menuItem: item.charts && item.charts.length ? <Menu.Item key={ix} name={item.title} icon={item.icon} /> : undefined,
+        render: () => <Tab.Pane as="div" style={{ padding: '5px 8px' }}
+          content={
+            <Grid columns="equal" >
+              {item.charts && item.charts.map((v: any, j: number) => <Grid.Column key={j} textAlign="center">{v.title !== item.title ? v.title : ''}{v.chart}</Grid.Column>)}
+            </Grid>
+          } />
+      });
+
+      return memo;
+    }, [] = [] as any[]);
+
+    return (
+      <div>
+        {!this.props.hideTitle && <WidgetTitle title={lang.PORTFOLIO_VIEWS} shareButtons={['Image', 'Copy']} />}
+        <Tab menu={{ pointing: true, secondary: true }} panes={panes} activeIndex={activeIndex} onTabChange={this.handleTabChange} style={{ height: '95%' }} />
+      </div>
+    );
+  }
+
+  renderButtons(graphs: any[], activeIndex: number, lang: LangDictionary) {
+    const item = graphs[activeIndex]
+
+    const panes = graphs.reduce((memo, item, ix) => {
+      if (item.charts && item.charts.length) {
+        memo.push(
+          <Button key={ix} size="mini" active={ix === activeIndex} onClick={() => this.handleBtnChange(ix)} >
+            <Icon name={item.icon as any} />
+            <br /> <br />{item.title}
+          </Button>
+        );
+      }
+      return memo;
+    }, [] = [] as any);
+
+    return (
+      <div>
+        <WidgetTitle title={lang.PORTFOLIO_VIEWS} subtitle={item.title} />
+        <Grid columns="equal" >
+          {item.charts && item.charts.map((v: any, j: number) => <Grid.Column key={j} textAlign="center">{v.title !== item.title ? v.title : ''}{v.chart}</Grid.Column>)}
+        </Grid>
+        <Button.Group basic fluid size="mini" >
+          {panes}
+        </Button.Group >
+      </div>
+    );
+  }
+
+  render() {
+    const { mode, graphs, lang } = this.props;
+    const { activeIndex } = this.state;
+
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    };
+
+    const sliderPanes = graphs.map((item, ix) => {
+      return <div>
+        {item.charts && item.charts.map((v: any, j: number) => <Grid.Column key={j} textAlign="center">{v.title !== item.title ? v.title : ''}{v.chart}</Grid.Column>)}
+      </div>} );
+
+
+    return <Slider {...settings}>
+      {sliderPanes} 
+    </Slider>
+
+
+    /*
+
+    if (mode === 'tab') {
+      return this.renderTab(graphs, activeIndex!, lang);
+    } else {
+      return this.renderButtons(graphs, activeIndex!, lang);
+    }
+    */
+  }
+}
+

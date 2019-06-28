@@ -18,6 +18,8 @@ import './styles/index.css';
 import './styles/bigone.css';
 import './styles/bigone-gen.css';
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const startingState: any = {}
 

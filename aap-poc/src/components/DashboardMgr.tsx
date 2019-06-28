@@ -14,11 +14,13 @@ import { formatAua, formatNumber } from '../_db/utils';
 import { ClientFilter } from './shared/ClientFilter';
 import { ItalyMap } from './maps/italy/ItalyMap';
 import { WidgetTitle } from './shared/WidgetTitle';
-import { ClientViews } from './clientView/ClientView3';
+import { ClientViews, ClientViewsNew } from './clientView/ClientView3';
 import { BreakdownView } from './clientView/BreakdownView';
 import { ClientsView } from './clientsView/ClientsView';
 
 const sprintf = require("sprintf-js").sprintf;
+
+
 
 export interface DashboardMgrProps {
     uid: string
@@ -159,7 +161,6 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
         return (
             <Segment>
-                {/*} <WidgetTitle title={header} shareButtons={['Image', 'Copy']} />*/}
                 <CustomPieChart width={500} height={500} data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
             </Segment>
         );
