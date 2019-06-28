@@ -14,9 +14,10 @@ import { formatAua, formatNumber } from '../_db/utils';
 import { ClientFilter } from './shared/ClientFilter';
 import { ItalyMap } from './maps/italy/ItalyMap';
 import { WidgetTitle } from './shared/WidgetTitle';
-import { ClientViews, ClientViewsNew } from './clientView/ClientView3';
+import { ClientViews } from './clientView/ClientView3';
 import { BreakdownView } from './clientView/BreakdownView';
 import { ClientsView } from './clientsView/ClientsView';
+import { SliderGraph } from './clientView/SliderGraph';
 
 const sprintf = require("sprintf-js").sprintf;
 
@@ -111,8 +112,8 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                     </Segment>
                 </Grid.Column>
                 <Grid.Column>
-                    <Segment>
-                        <ClientViews graphs={this.createGraphs()} lang={lang} mode="tab" defaultIndex={0} hideTitle />
+                    <Segment style={{ height: '100%' }}>
+                        <SliderGraph graphs={this.createGraphs()} lang={lang} defaultIndex={0} hideTitle />
                     </Segment>
                 </Grid.Column>
                 <Grid.Column width={16}>
@@ -157,19 +158,14 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 return memo;
             }, [] = [] as any);
 
-        var arrayValues = this.state.searchParms[searchprop];
+        //var arrayValues = this.state.searchParms[searchprop];
 
-        return (
-            <Segment>
-                <CustomPieChart width={500} height={500} data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
-            </Segment>
-        );
+        return (<CustomPieChart width={50} height={50} responsiveHeight="100%" data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />);
     }
 
     // lang
     alertsDetail = (numOfAlerts: string) => sprintf(this.props.lang.DB_ALERTS_DETAIL, numOfAlerts);
     percDetail = (value: number | undefined, from: string, period: 'Y' | 'M' | 'D', info?: string) => sprintf(this.props.lang.DB_PERC_DETAIL, (value ? value + '% ' : ''), (info ? info + ' ' : ''), from, period === 'Y' ? this.props.lang.YEAR : period === 'M' ? this.props.lang.MONTH : this.props.lang.DAY);
-
     renderTabItem(langProps: string, icon: SemanticICONS, color: SemanticCOLORS) {
         return (<Menu.Item name={this.props.lang[langProps]} key={langProps}>
             <Icon name={icon} color={color} />
@@ -179,6 +175,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
     createGraphs() {
         const { lang, filter = { Aua: {} } } = this.props;
+
         let graphs = {
             Performance: {
                 title: 'AUA',
@@ -197,10 +194,11 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 icon: 'line chart',
                 charts: [
                     {
-                        chart: <BreakdownView breakdown={b} width={500} height={500} />
+                        chart: <BreakdownView breakdown={b} width={50} height={50} responsiveHeight="100%" />
                     }]
             }
         });
+        
         return Object.keys(graphs).map((v) => graphs[v]).concat(bd);
     }
 
@@ -214,19 +212,19 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         const panes = [
             {
                 menuItem: this.renderTabItem('DASHBOARD', 'pie graph', 'green'),
-                render: () => <Tab.Pane as={OverflowItem} style={style} content={this.renderFilterGraphics(data.result)} />
+                render: () => <Tab.Pane as={"div"} style={style} content={this.renderFilterGraphics(data.result)} />
             },
             {
                 menuItem: this.renderTabItem('MY_PORTFOLIOS', 'users', 'blue'),
-                render: () => <Tab.Pane as={OverflowItem} style={style} content={<ManagerView uid={uid} />} />
+                render: () => <Tab.Pane as={"div"} style={style} content={<ManagerView uid={uid} />} />
             },
             {
                 menuItem: this.renderTabItem('MY_ALERTS', 'alarm', 'red'),
-                render: () => <Tab.Pane as={OverflowItem} style={style} content={<AlertsView manager uid={uid} hideGraphs />} />
+                render: () => <Tab.Pane as={"div"} style={style} content={<AlertsView manager uid={uid} hideGraphs />} />
             },
             {
                 menuItem: this.renderTabItem('MY_CLIENTS', 'users', 'blue'),
-                render: () => <Tab.Pane as={OverflowItem} style={style} content={<ClientsView uid={uid} />} />
+                render: () => <Tab.Pane as={"div"} style={style} content={<ClientsView uid={uid} />} />
             },
         ]
 
