@@ -56,10 +56,10 @@ html {
     margin: 5px 5px !important;
 }
 .ui-flex.ui-flex-row > div:first-child {
-    margin-left: 0px; 
+    margin-left: 0px !important; 
 }
 .ui-flex.ui-flex-row > div:last-child {
-    margin-right: 0px; 
+    margin-right: 0px !important; 
 }
 
 .tab-dashboard .ui-flex.ui-flex-row > div {
