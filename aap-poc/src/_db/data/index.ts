@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { securities as securityList, wrapSecurities, wrapSecurity } from '../common/securities';
+import { securities as securityList, wrapSecurity } from '../common/securities';
 import { Security, StrategyItem, Client, AlertHistory, InterviewResult } from '../common/interfaces';
 import { Radar } from '../interfaces';
 import { updateStrategies } from '../fakedata1';

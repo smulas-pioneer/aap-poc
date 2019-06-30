@@ -1,4 +1,4 @@
-import { Client, Radar, ClientStateColors } from "../../_db/interfaces";
+import { Client, ClientStateColors } from "../../_db/interfaces";
 import { LangDictionary } from "../../reducers/language/interfaces";
 import * as React from "react";
 import { Icon, SemanticICONS, Card, Table, Header, Label, Statistic } from "semantic-ui-react";

@@ -7,7 +7,7 @@ export const solve = (strategy: StrategyItem[], axes: RadarStrategyParm): Strate
     const axesKeys = Object.keys(axes).filter(k => axes[k] === true);
     const retStrategy = strategy.map(h=>({...h,suggestedDelta:0,suggestionAccepted:false}));
 
-    if ( axesKeys.length==0) return retStrategy;
+    if ( axesKeys.length===0) return retStrategy;
 
     const maxWeight = Math.min(.5, maxBy(strategy, v=>v.currentWeight)!.currentWeight  * 1.5);
 

@@ -1,11 +1,10 @@
 import * as React from 'react';
 
 import { Radar as RadarModel, RadarStrategyParm } from '../_db/interfaces';
-import { Segment, Icon } from 'semantic-ui-react';
 import { LangDictionary } from '../reducers/language/interfaces';
 import { getRAG } from '../_db/common/radarUtils';
 
-var { Radar, Legend, ResponsiveContainer, RadarChart, PolarAngleAxis, PolarRadiusAxis, PolarGrid, Dot, Text } = require('recharts');
+var { Radar, Legend, ResponsiveContainer, RadarChart, PolarAngleAxis, PolarRadiusAxis, PolarGrid,Text } = require('recharts');
 
 
 export const RadarGraph = (props: {

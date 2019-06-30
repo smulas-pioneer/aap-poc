@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import { getRndItem } from '../../_db/utils';
-import { findIndex } from 'lodash';
 const { ComposedChart, Legend, ResponsiveContainer, Sector, PieChart, Pie, Cell, Bar, XAxis, YAxis, CartesianGrid } = require('recharts');
 
 const Colors = {
@@ -99,7 +99,7 @@ export class CustomPieChart extends React.Component<CustomPieProps, CustomChartS
     };
 
     renderActiveShape = (props: any) => {
-        const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, name, isActive } = props;
+        const { cx, cy, midAngle, outerRadius, startAngle, endAngle, fill, isActive } = props;
         const sin = Math.sin(-this.RADIAN * midAngle);
         const cos = Math.cos(-this.RADIAN * midAngle);
 

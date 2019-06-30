@@ -11,7 +11,7 @@ import { IndicatorOptionsType } from "../../../actions/model";
 import { isArray } from "util";
 import { AreaValue } from "../../shared/AreaMapProps";
 import { uniqBy, countBy, sumBy } from "lodash";
-import { Transition, Segment } from "semantic-ui-react";
+import { Transition } from "semantic-ui-react";
 import { ItalyMap } from "../italy/ItalyMap";
 import { ColorsLegend } from './../../shared/ColorsLegend';
 import { formatAua } from "../../../_db/utils";
@@ -159,7 +159,6 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
     const areaValues = EuropaMap.AREA_MAP_INDEX.reduce((acc, key, idx) => {
       const value = values[key] ? values[key] : 0;
       const perc = (value * 100) / maxValue;
-      const area = `area_${idx}`;
 
       if (minValue === undefined) minValue = 0;
 
@@ -201,7 +200,7 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
   }
 
   render() {
-    const { type, areaValues, countWithValues } = this.state.values;
+    const { type, areaValues } = this.state.values;
 
     const showEurope = !this.props.isOnlyItaly;
     const showItaly = this.props.isOnlyItaly;

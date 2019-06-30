@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import { LangDictionary } from '../../reducers/language/interfaces';
-import { Grid, Segment, Statistic, Button, Icon, Tab, SemanticCOLORS, Menu, Modal, Loader, TabProps, Card, Divider } from 'semantic-ui-react';
+import { Divider } from 'semantic-ui-react';
 
 import Slider from "react-slick";
 import { useState } from 'react';
@@ -15,9 +16,12 @@ interface SliderGraphProps {
   slidesToShow?: number
 }
 
+
 const getCharts = (item: any, slider: boolean) => {
   return item.charts && item.charts.map((v: any, j: number) => {
-    return slider ? React.cloneElement(v.chart, { legend: false, caption: false }) : v.chart
+    return slider
+      ? React.cloneElement(v.chart, { legend: false, caption: false, key: j })
+      : React.cloneElement(v.chart, {  key: 'current-graph' })
   });
 }
 

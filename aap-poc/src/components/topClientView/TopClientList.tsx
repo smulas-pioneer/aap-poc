@@ -1,8 +1,6 @@
 import * as React from "react";
-import { Client } from "../../_db/interfaces";
 import { LangDictionary } from "../../reducers/language/interfaces";
-import { startCase } from "lodash";
-import { Segment, Table, Popup, Label } from "semantic-ui-react";
+import { Segment, Table } from "semantic-ui-react";
 import { formatAua, formatNumber } from "../../_db/utils";
 import { CSSProperties } from "react";
 import { IndicatorOptionsType } from "../../actions/model";
@@ -17,6 +15,7 @@ export interface TopClientListProps {
 
 export const TopClientList = ({ clients, group, indicator, lang }: TopClientListProps) => {
 
+    /*
     const renderBreaks = (client: Client) => {
         return client.breaks.reduce((p, c) => p ? `${p}, ${startCase(c)}` : startCase(c), '');
     };
@@ -29,6 +28,7 @@ export const TopClientList = ({ clients, group, indicator, lang }: TopClientList
         }
         return ret;
     }
+*/
     const fmt = formatNumber(lang.NUMBER_FORMAT);
 
     const cellStyle = (rowNumber: number, type: GroupTypes | IndicatorOptionsType, isGroup?: boolean) => {

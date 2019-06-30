@@ -1,8 +1,6 @@
 import * as React from 'react';
 
 import { Input, InputOnChangeData, } from 'semantic-ui-react';
-import { SearchParms, } from '../../_db/interfaces';
-import { LangDictionary } from '../../reducers/language/interfaces';
 import { debounce } from 'lodash';
 
 interface ClientsViewFilterTextProps {

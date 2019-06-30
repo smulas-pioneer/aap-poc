@@ -1,13 +1,10 @@
 import * as React from "react";
-import { Menu, Icon, Label, Accordion, Segment, Dropdown } from "semantic-ui-react";
-import { ClientFilters, SearchFilter, filterMapItems, FilterMap, FilterMapTypes, createFilterAdv } from "../../actions/model";
-import { SearchParms, Client } from "../../_db/interfaces";
+import { Menu, Icon, Label, Dropdown } from "semantic-ui-react";
+import { ClientFilters, SearchFilter, filterMapItems, FilterMap, FilterMapTypes } from "../../actions/model";
+import { SearchParms } from "../../_db/interfaces";
 import { ClientsViewFilterText } from "../clientsView/ClientsViewParms";
-import { LangDictionary } from "../../reducers/language/interfaces";
 import IconButton from "./IconButton/index";
 import { isArray } from "util";
-import { PeerCertificate } from "tls";
-import { WidgetTitle } from "./WidgetTitle";
 import { startsWith } from "lodash";
 
 export type FilterMapDefinition = { [k in FilterMapTypes]?: { clearAll?: boolean } | undefined };
@@ -105,9 +102,8 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
       }
 
       return memo;
-    }, { menu: [], others: [] } = { menu: [] as any, others: [] as any });
+    },  { menu: [] as any, others: [] as any });
 
-    const hasUs = current.menu && current.menu.length;
     const hasOthers = current.others && current.others.length;
 
     return (

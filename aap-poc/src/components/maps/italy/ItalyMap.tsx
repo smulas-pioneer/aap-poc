@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Transition, Popup, Header, Label } from 'semantic-ui-react';
+import { Transition,Label } from 'semantic-ui-react';
 import { Area1 } from './Area1';
 import { Area2 } from './Area2';
 import { Area3 } from './Area3';
@@ -9,23 +9,22 @@ import { Area5 } from './Area5';
 import { Area6 } from './Area6';
 import { Area7 } from './Area7';
 import { Boundaries } from './Boundaries';
-import { Marker } from './Marker';
 import { ColorsLegend } from './../../shared/ColorsLegend';
-import { SearchFilter, IndicatorOptionsType, MapLegend } from '../../../actions/model';
+import {  IndicatorOptionsType, MapLegend } from '../../../actions/model';
 
-import { groupBy, Dictionary, countBy, sumBy, uniqBy } from 'lodash';
+import { countBy, sumBy, uniqBy } from 'lodash';
 import { LangDictionary } from '../../../reducers/language/interfaces';
 import { MapOptions } from '../../shared/MapOptions';
 import { Client } from '../../../_db/interfaces';
-import { rnd, formatAua } from '../../../_db/utils';
+import {  formatAua } from '../../../_db/utils';
 import { SingleAreaLegend } from './SingleAreaLegend';
-import { ClientCard } from '../../clientsView/ClientCard';
 import { getMapOptionTypeCaption } from '../../../commonUtils';
 import { FillAreaLegend } from './FillAreaLegend';
 import { ConfigLayout } from '../../../reducers/config';
 import { isArray } from 'util';
 import { AreaValue } from '../../shared/AreaMapProps';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { Legend, ResponsiveContainer } = require('recharts');
 const ReactTooltip = require('react-tooltip');
 
@@ -179,6 +178,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
     const areaValues = ItalyMap.AREA_MAP_INDEX.reduce((acc, key, idx) => {
       const value = values[key] ? values[key] : 0;
       const perc = (value * 100) / maxValue;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const area = `area_${idx}`;
 
       if (minValue === undefined) minValue = 0;

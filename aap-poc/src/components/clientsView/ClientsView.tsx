@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import { appConnector } from 'app-support';
 import { getSearchResult, getSearchFilter, getAgentView, getLanguage } from '../../reducers/index';
@@ -27,7 +28,7 @@ class ClientsViewCompo extends conn.StatefulCompo<{ searchParms: SearchParms }> 
 
 
         this.state = {
-            searchParms: this.props.data && this.props.data.parms || {
+            searchParms: (this.props.data && this.props.data.parms) || {
                 filter: '',
                 uid: ''
             }

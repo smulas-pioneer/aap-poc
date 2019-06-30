@@ -22,10 +22,7 @@ interface ShareState {
 }
 
 export class Share extends React.Component<ShareProps, ShareState> {
-    constructor(props: ShareProps) {
-        super(props);
 
-    }
     render() {
         const { buttons } = this.props;
         if (!buttons) return null;

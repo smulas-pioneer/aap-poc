@@ -1,5 +1,4 @@
 import { Security } from "./interfaces";
-import { min } from "moment";
 
 export const cash: Security = {
   "IsinCode": "CASH",
@@ -7004,7 +7003,7 @@ export const wrapSecurity = (s: any) => {
     Currency: dictCur[s.Currency] || s.Currency,
     MicroAssetClass: dictMI[s.MicroAssetClass] || s.MicroAssetClass,
     MacroAssetClass: s.MacroAssetClass === "Balanced" ? "Balanced" : dictMA2[s.MicroAssetClass] || s.MacroAssetClass,
-    Region: s.Region && wRegion[s.Region.toLowerCase()] || s.Region
+    Region: (s.Region && wRegion[s.Region.toLowerCase()]) || s.Region
   }
 }
 

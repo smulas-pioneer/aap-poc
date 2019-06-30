@@ -1,12 +1,8 @@
-import { SearchResult, AgentView, Client, SearchParms, AlertHistory2 } from '../_db/interfaces';
+import { SearchResult, AgentView, SearchParms, AlertHistory2 } from '../_db/interfaces';
 import { searchClientSuccess, logoutSuccess } from '../actions/index';
 import * as Model from '../actions/model';
 import { getAgentViewsFromClients } from '../_db/utils';
-import { createSelector } from 'reselect';
-import { intersection } from 'lodash';
-import { access } from 'fs';
 import { calculateAlertHistory } from '../_db/common/radarUtils';
-import { returnStatement } from '@babel/types';
 
 export interface State {
   result: {

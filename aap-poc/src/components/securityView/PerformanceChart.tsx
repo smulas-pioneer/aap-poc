@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { Menu, Button, Input, Grid, Segment, Dropdown, Progress, Label, Statistic, Icon } from 'semantic-ui-react';
+import { Menu, Button, Input, Grid, Dropdown, Progress, Icon } from 'semantic-ui-react';
 import { calculateProjection } from '../../_db/coreEngine';
 import { LangDictionary } from '../../reducers/language/interfaces';
 import moment from 'moment';
 import { TimeHorizon, TimeHorizonMonths, PerformancePeriod } from '../../_db/interfaces';
-import { CLIENT_RENEG_WINDOW } from 'tls';
-import { filterMapItems } from '../../actions/model';
 const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } = require('recharts');
 
 const Colors = {
@@ -272,6 +270,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 //const RADIAN = Math.PI / 180;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SimplePieChart = (props: any) => {
   return (
     <PieChart width={100} height={50}>

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { appConnector } from 'app-support';
 import { getLanguageFlag, getLanguageName } from '../reducers/index';
 import { setLanguage } from '../actions/index';
-import { Dropdown, Flag, Icon } from 'semantic-ui-react';
+import { Dropdown, Flag } from 'semantic-ui-react';
 const conn = appConnector<{ style?: React.CSSProperties }>()(
     (s, p) => ({
         flag: getLanguageFlag(s),
@@ -27,7 +27,7 @@ const opts: Opts[] = [
 class LangBarCompo extends conn.StatefulCompo<{}> {
 
     render() {
-        const { setLanguage, lang, style, flag } = this.props;
+        const { setLanguage,  flag } = this.props;
         return opts.map((val) => (
             <Dropdown.Item
                 key={val.key}

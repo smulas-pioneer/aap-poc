@@ -41,7 +41,6 @@ export class MapOptions extends React.Component<MapOptionsProps, MapOptionsState
   }
 
   render() {
-    const { activeOption } = this.state;
     const { lang } = this.props;
 
     const buttons = [

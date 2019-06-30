@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { LangDictionary } from '../../reducers/language/interfaces';
-import { Segment } from 'semantic-ui-react';
-import { groupBy, uniq } from 'lodash';
-const { ScatterChart, XAxis, CartesianGrid, Legend, Scatter, Tooltip, YAxis, ResponsiveContainer, BarChart, Bar } = require('recharts');
+const { XAxis, CartesianGrid, Legend, Tooltip, YAxis, ResponsiveContainer, BarChart, Bar } = require('recharts');
 
 const Colors = [
     "#F07D00",

@@ -2,12 +2,9 @@ import 'react-vertical-timeline-component/style.min.css';
 import { InterviewResult, ClientStateColors } from "../../_db/interfaces";
 import { LangDictionary } from "../../reducers/language/interfaces";
 import * as React from "react";
-import { Card, Table, Label, Icon, Image, SemanticICONS } from "semantic-ui-react";
+import { Icon, SemanticICONS } from "semantic-ui-react";
 import moment from 'moment';
-import IconButton from "../shared/IconButton/index";
 const { Timeline, TimelineEvent } = require('react-event-timeline');
-
-const { VerticalTimeline, VerticalTimelineElement } = require('react-vertical-timeline-component');
 
 interface HistoryViewProps {
   history: InterviewResult[]
@@ -110,7 +107,7 @@ export const HistoryViewTimelineEvent = ({ history, lang, height }: HistoryViewP
             </TimelineEvent>
           );
           return memo;
-        }, [] = [] as any)}
+        },  [] as any)}
       </Timeline>
     </div>
   )

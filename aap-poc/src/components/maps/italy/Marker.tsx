@@ -17,9 +17,6 @@ interface MarkerState {
 
 export class Marker extends React.Component<MarkerProps, MarkerState> {
 
-    constructor(props: MarkerProps) {
-        super(props)
-    }
 
     render() {
         const { border = 'gray', transform, width = 38, height = 38, perc = 0, color = 'lightgreen', onClick } = this.props;

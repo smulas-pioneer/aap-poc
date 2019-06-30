@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { Breakdown } from '../../_db/interfaces';
-import { Segment } from 'semantic-ui-react';
-import { getRndItem } from '../../_db/utils';
 import { CustomPieChart, CustomComposedChart } from '../chart/CustomCharts';
 
 interface Props {
@@ -18,6 +16,7 @@ interface State {
 
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Colors = {
     ORANGE: "#F07D00",
     BLUE: "#004F9F",
@@ -30,7 +29,7 @@ export const perc = (num: number) => (100 * num).toLocaleString(undefined, { min
 
 export class BreakdownView extends React.Component<Props, State> {
     render() {
-        const { breakdown, chartView, onClick, width, height, responsiveHeight, legend, caption } = this.props;
+        const { breakdown, chartView, width, height, responsiveHeight, legend, caption } = this.props;
 
         if (!breakdown || !breakdown.data) {
             return <div />

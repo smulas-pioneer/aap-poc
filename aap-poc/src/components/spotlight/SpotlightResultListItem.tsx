@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import * as React from "react";
 import { SpotlightSearchResultItem } from "../../_db/interfaces";
 import { isClient, isSecurity, isAgent } from "../../_db/utils";
@@ -32,11 +33,10 @@ export class SpotlightResultListItem extends React.Component<SpotlightSearchResu
   }
 
   item = (item: SpotlightSearchResultItem, active: boolean, onClick: () => void, onNavigate: () => void) => {
-    let ret = undefined;
     let itemNavigate = false;
     if (active) itemNavigate = isClient(item) || isAgent(item) || isSecurity(item);
     return <Table.Cell selectable={!itemNavigate}>
-      <a ref={(n) => this.cellNode = n}
+      <a  ref={(n) => this.cellNode = n}
         style={{ cursor: 'pointer' }}
         onClick={itemNavigate ? onNavigate : onClick}>{this.itemText(item)}
       </a> </Table.Cell>
