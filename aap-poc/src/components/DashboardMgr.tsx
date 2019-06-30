@@ -116,7 +116,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         const { graphMode } = this.state;
 
         return <div className='tab-dashboard ui-flex ui-flex-col'>
-            <div className='ui-flex ui-flex-row' style={{ height: '600px' }}>
+            <div className='ui-flex ui-flex-row' style={{ }}>
                 <Segment>
                     <EuropaMap lang={lang} clients={data} layout={layout} height={600} isOnlyItaly={this.props.isOnlyItaly} />
                 </Segment>
@@ -127,7 +127,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                         </Segment>
                         : this.state.graphMode === 1
                             ? <Segment><SliderGraph graphs={this.createGraphs()} height={600} lang={lang} defaultIndex={0} slidesToShow={1} bordered={false} /> </Segment>
-                            : <div>
+                            : <div className='ui-flex ui-flex-col'>
                                 <Segment>
                                     <SliderGraph graphs={this.createGraphs()} height={280} lang={lang} defaultIndex={0} slidesToShow={1} />
                                 </Segment>
@@ -300,7 +300,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
         return (
             <AdvancedGrid className="grid-header-fix" >
-                <Segment compact style={{ margin: 0 }} onClick={this.setSlider}>
+                <Segment compact style={{ width: '100%', margin: 0 }} onClick={this.setSlider}>
                     <Grid columns={6} >
                         <Grid.Column textAlign="center" >
                             {this.renderItem(fmt(info.length), lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
@@ -320,7 +320,6 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                         <Grid.Column textAlign="center">
                             {this.renderItem(fmt(info.acceptedProposals), lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${fmt(info.totalProposals)} (${Math.round(100 * (info.acceptedProposals / info.totalProposals)).toString() + '%)'}`)}
                         </Grid.Column>
-
                     </Grid>
                 </Segment>
                 <AdvancedGrid className="grid-filter-right">
