@@ -32,34 +32,21 @@ export const Holdings = (props: Props) => {
   const [addingSecurity, setAddingSecurity] = React.useState(false);
   const [changingSecurity, setChangingSecurity] = React.useState<string | undefined>(undefined);
   const [mode, setMode] = React.useState<'Weight' | 'Quantity' | 'Amount'>('Weight');
-  const [holdings, setHoldings] = React.useState(props.holdings);
+  //const [holdings, setHoldings] = React.useState(props.holdings);
   const [currentHolding, setCurrentHolding] = React.useState<StrategyItem | undefined>(undefined);
-  //  const [changedIsin, setChangedIsin] = React.useState<string[]>([]);
   const { onChange } = props;
 
-  React.useEffect(() => {
-    setHoldings(props.holdings);
-  }, [props.holdings]);
-
-
-  React.useEffect(() => {
-    onChange(holdings);
-  }, [
-      holdings, onChange
-    ]);
-
-
+ 
   const handleItemChanged = (item: StrategyItem, ix: number) => {
-    let holdingsCopy = [...holdings];
+    let holdingsCopy = [...props.holdings];
     holdingsCopy[ix] = item;
     const originalValue = props.holdings.find(i => i.security.IsinCode === item.security.IsinCode);
     const changed = originalValue === undefined || originalValue.suggestedDelta !== item.suggestedDelta || originalValue.suggestionAccepted !== item.suggestionAccepted;
-
-    setHoldings(holdingsCopy);
+    props.onChange(holdingsCopy);
   }
 
   const handleAcceptAll = (accept: boolean) => {
-    let holdingsCopy = holdings.map(h => (
+    let holdingsCopy = props.holdings.map(h => (
       {
         ...h,
         suggestionAccepted: h.suggestedDelta !== 0 ? accept : false,
@@ -69,12 +56,12 @@ export const Holdings = (props: Props) => {
       return pr === undefined || pr.suggestedDelta !== i.suggestedDelta || pr.suggestionAccepted !== i.suggestionAccepted;
     }).map(h => h.security.IsinCode);
 
-    setHoldings(holdingsCopy);
+    props.onChange(holdingsCopy);
   }
 
 
   const handleChangeSecurity = (security: Security) => {
-    let holdingsCopy = holdings.map(h => {
+    let holdingsCopy = props.holdings.map(h => {
       return h.security.IsinCode !== changingSecurity ? h : {
         security,
         currentAmount: 0,
@@ -91,8 +78,8 @@ export const Holdings = (props: Props) => {
       }
     });
 
-    setHoldings(holdingsCopy);
     setChangingSecurity(changingSecurity);
+    props.onChange(holdingsCopy);
   }
 
   const handleOnAddSecurity = (security: Security) => {
@@ -112,7 +99,7 @@ export const Holdings = (props: Props) => {
     }
 
     setAddingSecurity(false);
-    setHoldings([...holdings, h])
+    props.onChange([...props.holdings, h])
   }
 
   const handleOnAddHistory = (status: ClientState | null, notes?: string) => {
@@ -120,7 +107,7 @@ export const Holdings = (props: Props) => {
     onAddHistory!({ clientId: props.clientId, notes: notes || props.lang.PROPOSAL_VALIDATION.title, status: status || props.clientState });
   }
 
-  const { lang } = props;
+  const { lang ,holdings} = props;
   const finalWeight = suggestedPosition(holdings);
   const fmt = formatNumber(lang.NUMBER_FORMAT);
   const tot = sumBy(holdings, t => t.currentAmount);
@@ -258,14 +245,18 @@ export const Holdings = (props: Props) => {
                     {/*
                     <HoldingWeigthControl factor={factor} data={t} onChange={(item) => handleItemChanged(item, i)} />
                      */}
+                     
+                    {t.suggestionAccepted 
+                    ? <b>{(t.suggestedDelta + t.currentWeight)}</b>
+                  :<span>{(t.suggestedDelta + t.currentWeight)}</span>} 
                     <Button icon="pencil" onClick={() => setCurrentHolding(t)} />
                     {
                       currentHolding && <WeightChange
                         item={currentHolding}
                         onCancel={() => setCurrentHolding(undefined)}
                         onChange={(item) => {
-                          setHoldings([...holdings.splice(0, i), item]);
                           setCurrentHolding(undefined);
+                          props.onChange([...holdings.splice(0, i), item]);
                         }}
                       />
                     }
@@ -294,12 +285,5 @@ export const Holdings = (props: Props) => {
 }
 
 
-
-
-export type WeightChangeProps = {
-  item: StrategyItem;
-  onChange: (item: StrategyItem) => void;
-  onCancel: () => void;
-}
 
 

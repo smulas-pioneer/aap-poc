@@ -74,15 +74,15 @@ const reducer = (state: State, action: Partial<State>): State => {
 
 //class ClientViewCompo extends conn.StatefulCompo<State> {
 export const ClientView = conn.PureCompo(props => {
-  const { client, lang, history,id, getClient,getSuggestions,strategySuccessCount,strategy} = props;
+  const { client, lang, history, id, getClient, getSuggestions, strategySuccessCount, strategy } = props;
   const [state, dispatch] = React.useReducer(reducer, defaultState);
-  const { radar, axes, somethingIsChanged, viewHistory, processing, stateStrategy, breakdown} = state;
+  const { radar, axes, somethingIsChanged, viewHistory, processing, stateStrategy, breakdown } = state;
 
   React.useEffect(() => {
-    getClient({ id});
+    getClient({ id });
     setTimeout(() => {
-      selectAllAxes();      
-    }, 2000);
+      selectAllAxes();
+    }, 100);
   }, [id, getClient]);
 
   React.useEffect(() => {
@@ -122,6 +122,14 @@ export const ClientView = conn.PureCompo(props => {
 
 
   const handleOnChange = (strategy: StrategyItem[]) => {
+    console.log(strategy);
+    if (strategy.length > 0) {
+      dispatch({ firstSimulation: false, processing: undefined, somethingIsChanged: false });
+      setTimeout(() => {
+        console.log('calculate...');
+        props.getSuggestions({ id: props.client!.id, position: strategy, axes, calculateFromAxes: false });
+      }, 1000);
+    }
     /*
     const cb = () => this.setState({ firstSimulation: false, processing: undefined, somethingIsChanged: false }, () => {
       this.props.getSuggestions({ id: this.props.client!.id, position: strategy, axes: this.state.axes, calculateFromAxes: false });
@@ -312,9 +320,9 @@ export const ClientView = conn.PureCompo(props => {
         <div style={{ opacity: 0.9, position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'whitesmoke' }}>
           <Loader style={{ opacity: 1 }} active size="huge">{processing}</Loader>
         </div>}
-        <pre>          
-          {JSON.stringify(stateStrategy,null,2)}
-        </pre>
+      <pre>
+        {JSON.stringify(stateStrategy, null, 2)}
+      </pre>
     </div>
   )
 });
