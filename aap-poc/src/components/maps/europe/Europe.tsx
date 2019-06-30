@@ -2,9 +2,9 @@ import React from "react";
 
 const SVG = ({
   style = {},
-  width = 610,
+  width = '100%',
   className = '',
-  height = 530,
+  height = '599px',
   viewBox = '0 0 595 599',
   paths = [] as any[]
 }) =>

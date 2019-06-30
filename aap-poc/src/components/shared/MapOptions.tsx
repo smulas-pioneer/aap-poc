@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { LangDictionary } from '../../reducers/language/interfaces';
-import { Button, Menu, Divider } from 'semantic-ui-react';
+import { Menu, Divider } from 'semantic-ui-react';
 import { IndicatorOptionsType } from '../../actions/model';
 
 export interface MapOptionsProps {
@@ -58,7 +58,6 @@ export class MapOptions extends React.Component<MapOptionsProps, MapOptionsState
         <Menu fluid widths={buttons.length} color={'teal'}>
           {buttons.map(b => this.renderButton(b[0], b[1]))}
         </Menu>
-        <Divider />
       </div>
     )
   }

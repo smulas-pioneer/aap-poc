@@ -511,7 +511,7 @@ export class ClientViews extends React.Component<ClientViewProps, { activeIndex?
 
     const panes = graphs.reduce((memo, item, ix) => {
       if (item.charts && item.charts.length) {
-        console.log(item.icon);
+     
         memo.push(
 
           <Button key={ix} size="mini" active={ix === activeIndex} onClick={() => this.handleBtnChange(ix)} >

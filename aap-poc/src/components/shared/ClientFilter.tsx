@@ -164,8 +164,7 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
         {freeFilterText &&
           <Menu.Item>
             <Menu.Header>
-              <Icon name="search" />Filter
-                    </Menu.Header>
+              <Icon name="search" />Filter</Menu.Header>
             <ClientsViewFilterText
               filter={filterValue.filter}
               searchPlaceholder={searchPlaceholder}

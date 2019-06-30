@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { LangDictionary } from '../../reducers/language/interfaces';
-import { Grid, Segment, Statistic, Button, Icon, Tab, SemanticCOLORS, Menu, Modal, Loader, TabProps, Card } from 'semantic-ui-react';
+import { Grid, Segment, Statistic, Button, Icon, Tab, SemanticCOLORS, Menu, Modal, Loader, TabProps, Card, Divider } from 'semantic-ui-react';
 
 import Slider from "react-slick";
 import { useState } from 'react';
@@ -9,49 +9,83 @@ import { WidgetTitle } from '../shared/WidgetTitle';
 interface SliderGraphProps {
   graphs: any[],
   lang: LangDictionary,
-  defaultIndex: number,
-  hideTitle?: boolean
+  defaultIndex?: number,
+  height?: number,
+  bordered?: boolean;
+  slidesToShow?: number
+}
+
+const getCharts = (item: any, slider: boolean) => {
+  return item.charts && item.charts.map((v: any, j: number) => {
+    return slider ? React.cloneElement(v.chart, { legend: false, caption: false }) : v.chart
+  });
+}
+
+
+export const SliderGraphWrapper = (props: SliderGraphProps & { mode?: 'sliderThumb' | 'slider' }) => {
+  const { mode = 'slider', ...others } = props;
+  switch (mode) {
+    case 'sliderThumb':
+      return <SliderGraphThumb {...others} />
+    default:
+      return <SliderGraph {...others} />
+  }
 }
 
 export const SliderGraph = (props: SliderGraphProps) => {
-  const [activeIndex, setActiveIndex] = useState(props.defaultIndex);
+  const { graphs = [], bordered, defaultIndex = 0, slidesToShow = 1, height = 600 } = props;
 
-  const { graphs = [], lang } = props;
   const settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    initialSlide: 0,
-    centerMode: true,
+    slidesToShow,
+    slidesToScroll: slidesToShow,
+    initialSlide: defaultIndex,
+    lazyLoad: true
   };
 
-  const getCharts = (item: any, slider: boolean) => {
-    return item.charts && item.charts.map((v: any, j: number) => {
-      return slider ? React.cloneElement(v.chart, { legend: false, caption: false }) : v.chart
-    });
-  }
-
   const sliderPanes = graphs.map((item, ix) => {
-    return <Segment basic style={{ height: '100px' }}>
-      <label>{item.title}</label>
-      <div key={ix} className='bordered' style={{ height: '100%' }} onClick={() => setActiveIndex(ix)}>
-        {getCharts(item, true)}
+    return <div className="sliderGraphItem" key={ix} style={{ height: `${height}px` }}>
+      <WidgetTitle size="mini" title={item.title} />
+      <div className={`${bordered ? 'bordered' : ''}`} style={{ height: `${height - 30}px` }} >
+        {getCharts(item, false)}
       </div>
-    </Segment>
+    </div>
   });
 
-  return <Grid>
-    <Grid.Row>
-      <Grid.Column style={{ height: '470px' }}>
-        <WidgetTitle title={graphs[activeIndex].title} />
-        {getCharts(graphs[activeIndex], false)}
-      </Grid.Column>
-    </Grid.Row>
-    <Grid.Row style={{ height: '130px' }}>
-      <Grid.Column>
-        <Slider {...settings}>{sliderPanes}</Slider>
-      </Grid.Column>
-    </Grid.Row>
-  </Grid>
+  return <Slider {...settings}>{sliderPanes}</Slider>
+}
+
+export const SliderGraphThumb = (props: SliderGraphProps) => {
+  const { graphs = [], bordered= true, defaultIndex = 0, slidesToShow = 1, height = 600 } = props;
+
+  const [activeIndex, setActiveIndex] = useState(defaultIndex);
+
+  const settings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow,
+    slidesToScroll: slidesToShow,
+    initialSlide: defaultIndex
+  };
+
+  const sliderPanes = graphs.map((item, ix) => {
+    return <div className="sliderGraphItem" key={ix} style={{ height: '100px', padding: '2px' }}>
+      <label>{item.title}</label>
+      <div className={`${bordered ? 'bordered' : ''}`} style={{ height: '80%' }} onClick={() => setActiveIndex(ix)}>
+        {getCharts(item, true)}
+      </div>
+    </div>
+  });
+
+  return <div style={{ display: 'flex', flexDirection: 'column', height }}>
+    <WidgetTitle size='small' title={graphs[activeIndex].title} />
+    <div style={{ flex:  '1' }}>
+      {getCharts(graphs[activeIndex], false)}
+    </div>
+    <div style={{ height: '130px' }}>
+      <Divider />
+      <Slider {...settings} >{sliderPanes}</Slider>
+    </div>
+  </div>
 }

@@ -17,13 +17,14 @@ import { ColorsLegend } from './../../shared/ColorsLegend';
 import { formatAua } from "../../../_db/utils";
 import { getMapOptionTypeCaption } from "../../../commonUtils";
 import { MapOptions } from "../../shared/MapOptions";
+import { WidgetTitle } from "../../shared/WidgetTitle";
 const ReactTooltip = require('react-tooltip');
 export interface EuropeMapProps {
   lang: LangDictionary,
   layout: ConfigLayout,
   clients: Client[]
-  width?: number | string;
-  height?: number | string;
+  width?: number;
+  height?: number;
   isOnlyItaly?: boolean;
 }
 
@@ -206,31 +207,36 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
     const showItaly = this.props.isOnlyItaly;
 
     //this.state.requestMapIndex !== undefined && this.state.mapIndex !== undefined;
-    const { lang } = this.props;
+    const { lang, height } = this.props;
 
     return (
-      <div style={{ width: this.props.width, height: this.props.height }}>
+      <div style={{ height: `${height}px` }}>
         <Transition visible={showEurope} animation='fade up' duration={350} onComplete={(_, e) => { !showEurope && this.setState(prev => ({ mapIndex: prev.requestMapIndex })) }} >
-          <div style={{ width: "100%", height: "100%" }}>
-            <ColorsLegend type={type} values={areaValues} lang={lang} />
-            <Europe
-              className="nations"
-              width={520}
-              height={450}
-              paths={
-                EuropaMap.AREA_MAP_INDEX.map((val, idx) => {
-                  const aValue = areaValues[idx];
-                  const htmlTooltip = aValue.value !== 0 ? this.getTooltipText(aValue.key, type, aValue.value) : undefined;
-                  return this.getAreaByName(val, {
-                    color: aValue.color,
-                    onClick: () => this.setState({ requestMapIndex: idx }),
-                    htmlTooltip
-                  })
-                })
-              }
-            />
-            <MapOptions onChange={e => this.onMapOptionsChange(e)} lang={lang} />
-            <ReactTooltip html type='info' delayShow={600} place="bottom" />
+          <div style={{ height: "100%" }}>
+            <div style={{ height: "100%", display: 'flex', flexDirection: 'column' }}>
+              <WidgetTitle size='small' title={'Key Figures Map'} shareButtons={['Image', 'Copy']} />
+              <ColorsLegend type={type} values={areaValues} lang={lang} />
+              <div style={{ flex: 1 }}>
+                <Europe
+                  className="nations"
+                  width={'100%'}
+                  height={`100%`}
+                  paths={
+                    EuropaMap.AREA_MAP_INDEX.map((val, idx) => {
+                      const aValue = areaValues[idx];
+                      const htmlTooltip = aValue.value !== 0 ? this.getTooltipText(aValue.key, type, aValue.value) : undefined;
+                      return this.getAreaByName(val, {
+                        color: aValue.color,
+                        onClick: () => this.setState({ requestMapIndex: idx }),
+                        htmlTooltip
+                      })
+                    })
+                  }
+                />
+              </div>
+              <MapOptions onChange={e => this.onMapOptionsChange(e)} lang={lang} />
+              <ReactTooltip html type='info' delayShow={600} place="bottom" />
+            </div>
           </div>
         </Transition>
 

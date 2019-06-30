@@ -45,7 +45,8 @@ export const TopClientList = ({ clients, group, indicator, lang }: TopClientList
 
     return (
         <Segment.Group>
-            <Segment basic style={{ height: '54vh' }} >
+            {/*</Segment.Group><Segment basic style={{ height: '54vh' }} >*/}
+            <Segment basic  >
                 <Table compact fixed singleLine >
                     <Table.Header fullWidth >
                         <Table.Row>

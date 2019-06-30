@@ -1,6 +1,5 @@
 :root {
     --background-app: black;
-    --background-segment: #272f38;
 }
 
 html,
@@ -13,24 +12,6 @@ html,
     border: none
 }
 
-.grid-advanced.grid-header-fix {
-    grid-template-rows: 110px auto;
-}
-
 .recharts-wrapper text {
     fill: white
-}
-
-.segment.slick-slide.slick-active {
-    text-align: center;
-    cursor: pointer;
-}
-
-.segment.slick-slide.slick-active * {
-    cursor: pointer;
-}
-
-.segment.slick-slide.slick-active .bordered {
-    border: 1px solid grey;
-    border-radius: 5px; 
 }

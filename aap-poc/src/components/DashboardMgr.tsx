@@ -3,7 +3,7 @@ import { SearchParms, Client } from '../_db/interfaces';
 import { appConnector } from 'app-support';
 import { searchClient } from '../actions/index';
 import { getSearchResult, getSearchFilter, getLanguage, getConfigLayout } from '../reducers/index';
-import { SemanticICONS, Statistic, Grid, Segment, SemanticCOLORS, Icon, Menu, Tab, Card } from 'semantic-ui-react';
+import { SemanticICONS, Statistic, Grid, Segment, SemanticCOLORS, Icon, Menu, Tab, Card, Divider } from 'semantic-ui-react';
 import { filterMapItems, FilterMap } from '../actions/model';
 import { TopClient } from './topClientView/index';
 import { CustomPieChart } from './chart/CustomCharts';
@@ -17,7 +17,7 @@ import { WidgetTitle } from './shared/WidgetTitle';
 import { ClientViews } from './clientView/ClientView3';
 import { BreakdownView } from './clientView/BreakdownView';
 import { ClientsView } from './clientsView/ClientsView';
-import { SliderGraph } from './clientView/SliderGraph';
+import { SliderGraph, SliderGraphThumb } from './clientView/SliderGraph';
 import { EuropaMap } from './maps/europe/EuropeMap';
 import { getIsOnlyItaly } from '../reducers';
 
@@ -29,7 +29,8 @@ export interface DashboardMgrProps {
     uid: string
 }
 export interface DashboardMgrState {
-    searchParms: SearchParms
+    searchParms: SearchParms,
+    graphMode: number
 }
 
 const conn = appConnector<DashboardMgrProps>()(
@@ -46,12 +47,16 @@ const conn = appConnector<DashboardMgrProps>()(
 class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
     constructor(props: any) {
         super(props);
-        this.state = { searchParms: this.props.data && this.props.data.parms || { filter: '', uid: '' } };
+        this.state = {
+            searchParms: this.props.data && this.props.data.parms || { filter: '', uid: '' },
+            graphMode: 0
+        };
 
         this.search = this.search.bind(this);
         this.searchAdvanced = this.searchAdvanced.bind(this);
         this.searchAdvancedByGraph = this.searchAdvancedByGraph.bind(this);
         this.handleOnChangeFilter = this.handleOnChangeFilter.bind(this);
+        this.setSlider = this.setSlider.bind(this);
     }
 
     componentDidMount() {
@@ -92,39 +97,86 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
     // render statistic
     renderItem(value: any, label?: string, sublabel?: any, valueIcon?: SemanticICONS, color?: SemanticCOLORS) {
-        return (<Statistic size="tiny" color='blue' >
+        return (<Statistic size="mini" color='blue' >
             {label && <Statistic.Label>{label}</Statistic.Label>}
             <Statistic.Value>
                 {valueIcon && <Icon name={valueIcon} color={color} />}
                 {value}
             </Statistic.Value>
             <br />
-            {sublabel && <Statistic.Label><span style={color && { color: color === 'green' ? '#2ecc40' : color }}>{sublabel}</span></Statistic.Label>}
+            {sublabel && <Statistic.Label><span style={{ color: color ? (color === 'green' ? '#2ecc40' : color) : undefined, whiteSpace: 'nowrap' }}>{sublabel}</span></Statistic.Label>}
         </Statistic>);
     }
 
+    setSlider() {
+        this.setState({ graphMode: this.state.graphMode === 2 ? 0 : this.state.graphMode + 1 })
+    }
     // render filter
     renderFilterGraphics(data: Client[]) {
         const { lang, layout, filter = { Aua: {} } } = this.props;
+        const { graphMode } = this.state;
+
+        return <div className='tab-dashboard ui-flex ui-flex-col'>
+            <div className='ui-flex ui-flex-row' style={{ height: '600px' }}>
+                <Segment>
+                    <EuropaMap lang={lang} clients={data} layout={layout} height={600} isOnlyItaly={this.props.isOnlyItaly} />
+                </Segment>
+                <div>
+                    {graphMode === 0
+                        ? <Segment>
+                            <SliderGraphThumb graphs={this.createGraphs()} height={600} lang={lang} defaultIndex={0} slidesToShow={3} />
+                        </Segment>
+                        : this.state.graphMode === 1
+                            ? <Segment><SliderGraph graphs={this.createGraphs()} height={600} lang={lang} defaultIndex={0} slidesToShow={1} bordered={false} /> </Segment>
+                            : <div>
+                                <Segment>
+                                    <SliderGraph graphs={this.createGraphs()} height={280} lang={lang} defaultIndex={0} slidesToShow={1} />
+                                </Segment>
+                                <Segment>
+                                    <SliderGraph graphs={this.createGraphs()} height={280} lang={lang} defaultIndex={1} slidesToShow={1} />
+                                </Segment>
+                            </div>
+                    }
+                </div>
+            </div>
+            <Segment>
+                <TopClient clients={data} lang={lang} />
+            </Segment>
+        </div >
+        /*    
         return (
             <Grid columns={2}>
                 <Grid.Column>
-                    <Segment>
-                        <WidgetTitle title={'Key Figures Map'} shareButtons={['Image', 'Copy']} />
-                        {/* <ItalyMap lang={lang} clients={data} layout={layout} height="524px" /> */}
-                        <EuropaMap lang={lang} clients={data} layout={layout} height="524px" isOnlyItaly={this.props.isOnlyItaly} />
+                    <Segment style={{ height: '600px' }}>
+                        <WidgetTitle size='small' title={'Key Figures Map'} shareButtons={['Image', 'Copy']} />
+                        <EuropaMap lang={lang} clients={data} layout={layout} height="550px" isOnlyItaly={this.props.isOnlyItaly} />
                     </Segment>
                 </Grid.Column>
                 <Grid.Column>
-                    <Segment style={{ height: '100%' }}>
-                        <SliderGraph graphs={this.createGraphs()} lang={lang} defaultIndex={0} hideTitle />
+                    <Segment style={{ height: '600px' }}>
+                        {this.state.graphMode === 'slider1'
+                            ? <SliderGraphThumb graphs={this.createGraphs()} height={580} lang={lang} defaultIndex={0} slidesToShow={3} />
+                            : this.state.graphMode === 'slider2'
+                                ? <SliderGraph graphs={this.createGraphs()} height={600} lang={lang} defaultIndex={0} slidesToShow={1} bordered={false} />
+                                : <div>
+                                    <Card fluid>
+                                        <SliderGraph graphs={this.createGraphs()} height={280} lang={lang} defaultIndex={0} slidesToShow={1} />
+                                    </Card>
+                                    <Card fluid>
+                                        <SliderGraph graphs={this.createGraphs()} height={280} lang={lang} defaultIndex={1} slidesToShow={1} />
+                                    </Card>
+                                </div>
+                        }
+
                     </Segment>
                 </Grid.Column>
                 <Grid.Column width={16}>
                     <TopClient clients={data} lang={lang} />
                 </Grid.Column>
             </Grid>
+            
         )
+        */
     }
 
     Colors = ["#F07D00", "#004F9F", "#E6325E", "#3B7296", "#39B2B6", "#c8c802", "#bd00bf"]
@@ -162,9 +214,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                 return memo;
             }, [] = [] as any);
 
-
-        return (<CustomPieChart width={50} height={50} responsiveHeight="100%" data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
-        );
+        return (<CustomPieChart key='pieFilter' width={50} height={50} responsiveHeight="100%" data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />);
     }
 
     // lang
@@ -192,13 +242,13 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
             }
         }
 
-        const bd = this.props.data!.breakdowns.map(b => {
+        const bd = this.props.data!.breakdowns.map((b, i) => {
             return {
                 title: b.attributeName,
                 icon: 'line chart',
                 charts: [
                     {
-                        chart: <BreakdownView breakdown={b} width={50} height={50} responsiveHeight="100%" />
+                        chart: <BreakdownView key={i} breakdown={b} width={500} height={500} responsiveHeight="100%" />
                     }]
             }
         });
@@ -207,7 +257,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
     render() {
         const { uid, data, filter, lang } = this.props;
-        const style = { padding: '5px 15px' }
+        const style = { padding: '0px 0px' }
         const fmt = formatNumber(lang.NUMBER_FORMAT);
 
         if (!data) return null;
@@ -250,7 +300,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
         return (
             <AdvancedGrid className="grid-header-fix" >
-                <Segment style={{ margin: 0 }}>
+                <Segment compact style={{ margin: 0 }} onClick={this.setSlider}>
                     <Grid columns={6} >
                         <Grid.Column textAlign="center" >
                             {this.renderItem(fmt(info.length), lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
@@ -274,11 +324,11 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
                     </Grid>
                 </Segment>
                 <AdvancedGrid className="grid-filter-right">
-                    <Segment as={OverflowColumn}>
-                        <Tab menu={{ pointing: true, secondary: true }} panes={panes} style={{ height: '95%' }} />
-                    </Segment>
+                    <OverflowColumn>
+                        <Tab menu={{ pointing: true, secondary: true, style: { margin: 0 } }} panes={panes} style={{ height: '95%' }} />
+                    </OverflowColumn>
                     <Segment style={{ margin: 0 }}>
-                        <WidgetTitle title={lang.FILTER} />
+                        <WidgetTitle size="mini" title={lang.FILTER} />
                         <ClientFilter
                             searchPlaceholder={lang.ENTER_FILTER_TEXT}
                             data={filter}

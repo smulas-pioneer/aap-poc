@@ -12,14 +12,16 @@ import { loadDatabase } from './_db/data';
 import { Loader } from 'semantic-ui-react';
 import { setConfigJson, login, LoginType } from "./actions/index";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 import 'semantic-ui-css/semantic.min.css';
 import './styles/hovereffect.css';
-import './styles/index.css';
 import './styles/bigone.css';
 import './styles/bigone-gen.css';
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
+import './styles/index.css';
 
 const startingState: any = {}
 

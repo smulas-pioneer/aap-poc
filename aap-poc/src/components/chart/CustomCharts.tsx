@@ -188,6 +188,7 @@ export class CustomComposedChart extends React.Component<CustomChartProps, Custo
     render() {
         const { data, width, height, responsiveHeight, dataKey, nameKey, legend = true, caption = true } = this.props;
         const color = this.props.color || getRndItem(Object.keys(Colors).map(k => Colors[k]));
+    
         return (
             <CustomResponsiveContainer height={responsiveHeight || height}>
                 <ComposedChart layout="vertical" height={height} width={width} data={data} margin={{ top: 5, right: 5, bottom: 5, left: 5 }} >
