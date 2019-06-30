@@ -44,7 +44,9 @@ const conn = appConnector<DashboardMgrProps>()(
 class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
     constructor(props: any) {
         super(props);
-        this.state = { searchParms: (this.props.data && this.props.data.parms ) || { filter: '', uid: '' } };
+        this.state = { 
+            searchParms: this.props.data && this.props.data.parms ? this.props.data.parms : { filter: '', uid: '' }
+        };
 
         this.search = this.search.bind(this);
         this.searchAdvanced = this.searchAdvanced.bind(this);
@@ -60,7 +62,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
     componentWillReceiveProps(next: any) {
         this.setState({
-            searchParms: (next.data && next.data.parms) || { filter: '', uid: '' }
+            searchParms: next.data && (next.data.parms || { filter: '', uid: '' })
         });
     }
 

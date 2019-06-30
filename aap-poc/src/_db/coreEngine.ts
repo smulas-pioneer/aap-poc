@@ -1,4 +1,4 @@
-import { PositionItem, StrategyItem, RadarStrategyParm, Breakdown,  PerformancePeriod, Client, TimeHorizon } from "./interfaces";
+import { PositionItem, StrategyItem, RadarStrategyParm, Breakdown, PerformancePeriod, Client, TimeHorizon } from "./interfaces";
 import { sumBy, groupBy } from "lodash";
 import { solve } from "./solver";
 import { performances, perfSummary } from "./data/index";
@@ -19,7 +19,9 @@ const getSuggestion1 = (position: StrategyItem[], axes: RadarStrategyParm, calcu
   } else {
 
     let newPos = forced
-      ? forced.map(p => ({ ...p, suggestionAccepted: position.find(r => r.security.IsinCode === p.security.IsinCode)!.suggestionAccepted }))
+      ? forced.map(p => {
+        return { ...p, suggestionAccepted: position.find(r => r.security.IsinCode === p.security.IsinCode)!.suggestionAccepted }
+      })
       : position;
     const w = suggestedPositionExCash(newPos)
     const delta = sumBy(w, s => s.weight) - 1;
