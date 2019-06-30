@@ -29,14 +29,16 @@ export const SliderGraph = (props: SliderGraphProps) => {
 
   const getCharts = (item: any, slider: boolean) => {
     return item.charts && item.charts.map((v: any, j: number) => {
-      return slider ? React.cloneElement(v.chart, { legend: false, caption: false }) : v.chart
+      return slider
+        ? React.cloneElement(v.chart, { legend: false, caption: false, key: j })
+        : React.cloneElement(v.chart, {  key: 'current-graph' })
     });
   }
 
   const sliderPanes = graphs.map((item, ix) => {
-    return <Segment basic style={{ height: '100px' }}>
+    return <Segment key={ix} basic style={{ height: '100px' }}>
       <label>{item.title}</label>
-      <div key={ix} className='bordered' style={{ height: '100%' }} onClick={() => setActiveIndex(ix)}>
+      <div className='bordered' style={{ height: '100%' }} onClick={() => setActiveIndex(ix)}>
         {getCharts(item, true)}
       </div>
     </Segment>
