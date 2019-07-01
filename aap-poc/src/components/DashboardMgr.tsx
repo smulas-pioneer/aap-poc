@@ -307,7 +307,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
       {
         menuItem: this.renderTabItem('MY_CLIENTS', 'users', 'blue'),
         render: () => <Tab.Pane as={"div"} style={style} content={<ClientsView uid={uid} />} />
-      },
+      }
     ]
 
     const info = data.result.reduce<
