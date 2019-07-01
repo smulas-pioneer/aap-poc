@@ -255,7 +255,6 @@ export const ClientView = conn.PureCompo(props => {
 
       <AdvancedGrid className="grid-client-view-main" style={{ marginBottom: '10px' }}>
         <Segment style={{ margin: 0 }} >
-          <WidgetTitle title={lang.PERSONAL_INFORMATION} />
           <ClientCard client={client} lang={lang} color={'blue'} />
         </Segment>
         <Segment style={{ margin: 0 }}>
