@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IndicatorOptionsType } from '../../actions/model';
 
-import { groupBy } from 'lodash';
+import { groupBy, sortBy } from 'lodash';
 import { LangDictionary } from '../../reducers/language/interfaces';
 import { formatAua } from '../../_db/utils';
 import { Popup } from 'semantic-ui-react';
@@ -23,7 +23,7 @@ export const ColorsLegend = ({ type, values, lang }: { type: IndicatorOptionsTyp
     });
   }
 
-  onlyValues = onlyValues.sort((a, b) => b.value < a.value ? 1 : 0);
+  onlyValues = sortBy(onlyValues, b => b.value); // onlyValues.sort((a, b) =>  b.value  < a.value ? 1 : 0);
 
   const min = onlyValues[0].value;
   const max = onlyValues[onlyValues.length - 1].value;
@@ -42,7 +42,16 @@ export const ColorsLegend = ({ type, values, lang }: { type: IndicatorOptionsTyp
     {
       onlyValues.map((areaValues, idx) => {
         const col = areaValues.color;
-        const lbl = <span key={idx} style={{ float: 'right', cursor: areaValues.value > 0 ? 'pointer' : undefined, backgroundColor: col }}>&nbsp;&nbsp;&nbsp;&nbsp;</span>;
+        const brickStyle: React.CSSProperties | undefined = {
+          // borderRadius: 20,
+          // border: '1px solid white',
+          width: 20,
+          float: 'right',
+          padding: 1,
+          cursor: areaValues.value > 0 ? 'pointer' : undefined,
+          backgroundColor: col
+        };
+        const lbl = <span key={idx} style={brickStyle}>&nbsp;&nbsp;&nbsp;&nbsp;</span>;
         if (areaValues.value > 0) return <Popup
           key={idx}
           trigger={lbl}

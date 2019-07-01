@@ -24,7 +24,7 @@ export interface EuropeMapProps {
   layout: ConfigLayout,
   clients: Client[]
   width?: number;
-  height?: number;
+  height?: string | number;
   isOnlyItaly?: boolean;
   filterMap?: FilterMap;
   onFilterChange?: (map: FilterMap, value: string) => void;
@@ -35,6 +35,7 @@ export interface EuropeMapState {
   mapIndex: number | undefined;
   requestMapIndex: number | undefined;
   values: { type: IndicatorOptionsType, areaValues: AreaValue[], countWithValues: number };
+  europeAnimationEnd: boolean;
 }
 
 type MANAGED_COUNTRIES = 'Italy' | 'Luxemburg' | 'Austria' | 'Germany';
@@ -72,7 +73,8 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
     this.state = {
       mapIndex: undefined,
       requestMapIndex: undefined,
-      values: this.calculateAreaValues(props.clients)
+      values: this.calculateAreaValues(props.clients),
+      europeAnimationEnd: false
     };
   }
 
@@ -213,19 +215,30 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
   render() {
     const { type, areaValues } = this.state.values;
 
-    const showEurope = !this.props.isOnlyItaly;
-    const showItaly = this.props.isOnlyItaly;
-
     //this.state.requestMapIndex !== undefined && this.state.mapIndex !== undefined;
     const { lang, height, transform } = this.props;
+    const showItaly = this.props.isOnlyItaly;
+    const showEurope = !showItaly;
 
     return (
-      <div style={{ height: `${height}px` }}>
-        <Transition visible={showEurope} animation='fade up' duration={350} onComplete={(_, e) => { !showEurope && this.setState(prev => ({ mapIndex: prev.requestMapIndex })) }} >
+      <div style={{ height }}>
+
+        <Transition
+          visible={showEurope && !this.state.europeAnimationEnd}
+          animation='vertical flip'
+          duration={1000}
+          onComplete={(_, e) => {
+            this.setState(prev => ({ mapIndex: prev.requestMapIndex, europeAnimationEnd: showItaly || false }))
+          }} >
+
           <div style={{ height: "100%" }}>
             <div style={{ height: "100%", display: 'flex', flexDirection: 'column' }}>
-              <WidgetTitle size='small' title={'Key Figures Map'} shareButtons={['Image', 'Copy']} />
-              <ColorsLegend type={type} values={areaValues} lang={lang} />
+              <WidgetTitle
+                size='small'
+                title={'Key Figures Map'}
+                shareButtons={['Image', 'Copy']}
+                rightComponent={<ColorsLegend type={type} values={areaValues} lang={lang} />} />
+
               <Europe
                 className="nations"
                 transform={transform}
@@ -247,17 +260,27 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
           </div>
         </Transition>
 
-        <Transition visible={showItaly} animation="fade" duration={350} onComplete={(_, e) => { !showItaly && this.setState(prev => ({ mapIndex: prev.requestMapIndex })) }} >
-          <div style={{ width: "100%", height: "100%" }}>
-            <ItalyMap
-              clients={this.props.clients}
-              lang={this.props.lang}
-              layout={this.props.layout}
-              height={524}
-              filterMap={filterMapItems.Regions}
-              onFilterChange={this.props.onFilterChange}
-            />
+        <Transition
+          visible={showItaly && this.state.europeAnimationEnd}
+          animation="vertical flip"
+          duration={1000}
+          onComplete={(_, e) => {
+            this.setState(prev => ({ mapIndex: prev.requestMapIndex, europeAnimationEnd: !showEurope }))
+          }} >
+
+          <div style={{ height: "100%" }}>
+            <div style={{ height: "100%", display: 'flex', flexDirection: 'column' }}>
+              <ItalyMap
+                height={this.props.height}
+                clients={this.props.clients}
+                lang={this.props.lang}
+                layout={this.props.layout}
+                filterMap={filterMapItems.Regions}
+                onFilterChange={this.props.onFilterChange}
+              />
+            </div>
           </div>
+
         </Transition>
       </div>
     );
