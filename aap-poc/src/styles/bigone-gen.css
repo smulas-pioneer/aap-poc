@@ -28713,8 +28713,8 @@ select.ui.dropdown {
     }
 }
 
-.ui.modal {
-    border: 1px solid #dcddde
+.ui.label {
+    border: none
 }
 
 /*!
