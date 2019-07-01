@@ -57,10 +57,10 @@ html {
     margin: 5px 5px !important;
 }
 .ui-flex.ui-flex-row > div:first-child {
-    margin-left: 0px !important; 
+    margin-left: 0px !important;
 }
 .ui-flex.ui-flex-row > div:last-child {
-    margin-right: 0px !important; 
+    margin-right: 0px !important;
 }
 
 .tab-dashboard .ui-flex.ui-flex-row > div {
@@ -219,6 +219,7 @@ svg.nations path:not(.europe) {
   fill: rgb(42, 42, 42) !important;
 }
 
+
 svg .boundaries > path {
   stroke: gray;
 }
@@ -237,4 +238,12 @@ svg .boundaries > path {
   50% {
     opacity: 0;
   }
+}
+
+/** Area Legend */
+.singleAreaLegend .title{
+  color:white;
+  font-family: 'Lato';
+  font-size: 2em;
+  width: 50%
 }

@@ -22,6 +22,7 @@ import { getMapOptionTypeCaption } from '../../../commonUtils';
 import { ConfigLayout } from '../../../reducers/config';
 import { isArray } from 'util';
 import { AreaValue } from '../../shared/AreaMapProps';
+import { WidgetTitle } from '../../shared/WidgetTitle';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { Legend, ResponsiveContainer } = require('recharts');
@@ -279,41 +280,57 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
     const { type, areaValues, countWithValues } = this.state.values;
     // const showItaly = this.state.requestMapIndex === undefined && this.state.mapIndex === undefined;
     // const showRegion = this.state.requestMapIndex !== undefined && this.state.mapIndex !== undefined;
-    const { lang } = this.props;
+    const { lang, width, height } = this.props;
 
     // let regionLegend: MapLegend<string | number> | undefined = undefined;
-
     // if (showRegion) regionLegend = this.createRegionLegendData();
+    const currentLegend = countWithValues > 1
+      ? <ColorsLegend
+        type={type}
+        values={areaValues}
+        lang={lang}
+      />
+      : <SingleAreaLegend
+        showTitle={false}
+        type={type}
+        value={areaValues.find(e => e.value !== 0)!}
+        lang={lang}
+      />;
 
     return (
-      <div style={{ width: this.props.width, height: this.props.height }}>
+      <div style={{ width, height }}>
 
         {/* <Transition visible={showItaly} animation='fade up' duration={350} onComplete={(_, e) => { !showItaly && this.setState(prev => ({ mapIndex: prev.requestMapIndex })) }} > */}
-        <div style={{ width: "100%", height: "100%" }}>
-          {countWithValues > 1 ? <ColorsLegend type={type} values={areaValues} lang={lang} /> : <SingleAreaLegend type={type} value={areaValues.find(e => e.value !== 0)!} lang={lang} />}
-          <svg version="1.2" id="aap-italy" baseProfile="tiny" x="0px" y="0px" width="100%" height="87%" viewBox="0 0 340 400">
-            <g className="regions" >
-              {
-                ItalyMap.AREA_MAP_INDEX.map((val, idx) => {
-                  const aValue = areaValues[idx];
-                  const htmlTooltip = aValue.value !== 0 ? this.getTooltipText(aValue.key, type, aValue.value) : undefined;
-                  return this.getAreaById(idx,
-                    {
-                      fill: false,
-                      color: aValue.color,
-                      onClick: () => this.onRegionClick(val, idx),
-                      // percentage: countWithValues > 1 ? aValue.perc : undefined,
-                      htmlTooltip
-                    })
-                })
-              }
-            </g>
-            <Boundaries />
-          </svg>
 
-          <MapOptions onChange={e => this.onMapOptionsChange(e)} lang={lang} />
-          <ReactTooltip html type='info' delayShow={countWithValues > 1 ? 600 : 100} place="bottom" />
-        </div>
+        {<WidgetTitle
+          size='small'
+          title={'Key Figures Map'}
+          shareButtons={['Image', 'Copy']}
+          rightComponent={currentLegend} />}
+
+        <svg x="0px" y="0px" width="100%" height="76%" viewBox="0 0 340 400">
+          <g className="regions" >
+            {
+              ItalyMap.AREA_MAP_INDEX.map((val, idx) => {
+                const aValue = areaValues[idx];
+                const htmlTooltip = aValue.value !== 0 ? this.getTooltipText(aValue.key, type, aValue.value) : undefined;
+                return this.getAreaById(idx,
+                  {
+                    fill: false,
+                    color: aValue.color,
+                    onClick: () => this.onRegionClick(val, idx),
+                    // percentage: countWithValues > 1 ? aValue.perc : undefined,
+                    htmlTooltip
+                  })
+              })
+            }
+          </g>
+          <Boundaries />
+        </svg>
+
+        <MapOptions onChange={e => this.onMapOptionsChange(e)} lang={lang} />
+        <ReactTooltip html type='info' delayShow={countWithValues > 1 ? 600 : 100} place="bottom" />
+
         {/* </Transition> */}
 
         {/* <Transition visible={showRegion} animation="fade" duration={350} onComplete={(_, e) => { !showRegion && this.setState(prev => ({ mapIndex: prev.requestMapIndex })) }} >
