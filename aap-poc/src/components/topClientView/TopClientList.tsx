@@ -1,6 +1,6 @@
 import * as React from "react";
 import { LangDictionary } from "../../reducers/language/interfaces";
-import { Segment, Table } from "semantic-ui-react";
+import {  Table } from "semantic-ui-react";
 import { formatAua, formatNumber } from "../../_db/utils";
 import { CSSProperties } from "react";
 import { IndicatorOptionsType } from "../../actions/model";

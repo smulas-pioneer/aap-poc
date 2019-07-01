@@ -102,6 +102,7 @@ export const ClientView = conn.PureCompo(props => {
     getSuggestions({ id, position: stateStrategy, axes, calculateFromAxes: true });
   }, [axes]);
 
+
   /*
   componentWillUnmount() {
     this.props.getClientSuccess();
