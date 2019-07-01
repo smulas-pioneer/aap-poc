@@ -20546,7 +20546,7 @@ ol.ui.horizontal.list li:before {
 .ui.menu .header.item,
 .ui.vertical.menu .header.item {
     margin: 0;
-    background: #000;
+    background: #191e24;
     text-transform: normal;
     font-weight: 700
 }
@@ -22635,7 +22635,7 @@ ol.ui.horizontal.list li:before {
 
 .ui.table thead th {
     cursor: auto;
-    background: #000;
+    background: #191e24;
     text-align: inherit;
     color: #fff;
     padding: .92857143em .78571429em;
@@ -22670,7 +22670,7 @@ ol.ui.horizontal.list li:before {
 .ui.table tfoot th {
     cursor: auto;
     border-top: 1px solid rgba(95, 119, 136, .5);
-    background: #000;
+    background: #191e24;
     text-align: inherit;
     color: #fff;
     padding: .78571429em;
@@ -22803,15 +22803,15 @@ ol.ui.horizontal.list li:before {
 
 .ui.definition.table thead:not(.full-width) th:first-child {
     pointer-events: none;
-    background: #000;
+    background: #191e24;
     font-weight: 400;
-    color: #000;
+    color: #191e24;
     box-shadow: -1px -1px 0 1px #fff
 }
 
 .ui.definition.table tfoot:not(.full-width) th:first-child {
     pointer-events: none;
-    background: #000;
+    background: #191e24;
     font-weight: #FFFFFF;
     color: normal;
     box-shadow: 1px 1px 0 1px #fff
@@ -28238,7 +28238,7 @@ select.ui.dropdown {
 .ui.modal>.header {
     display: block;
     font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif;
-    background: #000;
+    background: #191e24;
     margin: 0;
     padding: 1.25rem 1.5rem;
     box-shadow: none;
