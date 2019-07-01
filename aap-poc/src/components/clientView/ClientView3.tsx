@@ -96,11 +96,11 @@ export const ClientView = conn.PureCompo(props => {
         radar
       });
     }
-  }, [strategy,id]);
+  }, [strategy]);
 
   React.useEffect(() => {
     getSuggestions({ id, position: stateStrategy, axes, calculateFromAxes: true });
-  }, [axes,id,getSuggestions,stateStrategy]);
+  }, [axes]);
 
 
   /*
