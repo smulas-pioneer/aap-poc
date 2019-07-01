@@ -141,7 +141,7 @@ export const Holdings = (props: Props) => {
       }
       {
         currentHolding && <WeightChange
-        tot={tot}
+          tot={tot}
           item={currentHolding.item}
           onCancel={() => setCurrentHolding(undefined)}
           onChange={(item) => {
@@ -166,7 +166,7 @@ export const Holdings = (props: Props) => {
             shareButtons={['Excel', 'Copy', 'Pdf']}
             showOnlyCloseButton
             trigger={<Menu.Item position="right"><Icon name="list layout" />Show Order List</Menu.Item>}
-            >
+          >
             <OrderList data={holdings} lang={lang} />
           </ConfirmDialog>
 
@@ -204,9 +204,9 @@ export const Holdings = (props: Props) => {
             <Table.HeaderCell style={{ width: '10px' }} ></Table.HeaderCell>
             <Table.HeaderCell >{lang.SECURITY_NAME}</Table.HeaderCell>
             <Table.HeaderCell width={1} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
-            <Table.HeaderCell width={1} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
+            <Table.HeaderCell width={2} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
             <Table.HeaderCell width={1} textAlign="right">{lang.WEIGHT}</Table.HeaderCell>
-            <Table.HeaderCell width={2} textAlign="center">{lang.PROPOSE}
+            <Table.HeaderCell width={2} textAlign="right">{lang.PROPOSE}
             </Table.HeaderCell>
             <Table.HeaderCell width={2} textAlign="right">{lang.FINAL_WEIGHT}</Table.HeaderCell>
           </Table.Row>
@@ -231,37 +231,25 @@ export const Holdings = (props: Props) => {
                     <p style={{ padding: 0, margin: 0, color: 'lightgrey' }}><small>{t.security.IsinCode} - <i>{t.security.MacroAssetClass}</i></small> </p>
                   </Table.Cell>
                   <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
-                  <Table.Cell textAlign="right">{show && fmt(t.currentAmount)}</Table.Cell>
-                  <Table.Cell textAlign="right">{show && fmt(t.currentWeight * 100, 0)} </Table.Cell>
+                  <Table.Cell textAlign="right">{show && fmt(t.currentAmount) + ' €'} </Table.Cell>
+                  <Table.Cell textAlign="right">{show && fmt(t.currentWeight * 100, 0) + ' %'} </Table.Cell>
                   <Table.Cell textAlign="right">
                     <div style={{ display: 'flex', height: '20px' }}>
                       <div style={{ flex: 2, cursor: 'pointer' }}>
                         <div
-                          onClick={() => setCurrentHolding({item:t, index:i})}
+                          onClick={() => setCurrentHolding({ item: t, index: i })}
                           style={proposalStyle(t.suggestionAccepted, t.suggestedDelta > 0)}
                         >
-                          {t.suggestedDelta > 0 ? '+' : ''} {fmt(t.suggestedDelta * 100)}
+                          {t.suggestedDelta > 0 ? '+' : ''} {fmt(t.suggestedDelta * 100)} {t.suggestedDelta !== 0 && ' %'}
                         </div>
 
                       </div>
-                      {/*
-                      <div style={{ flex: 1 }}>
-                        {!t.isCash && t.suggestedDelta !== 0 && <Checkbox
-
-                          style={{ cursor: 'pointer', backgroundColor: 'black' }}
-                          checked={t.suggestionAccepted}
-                          onChange={(a, b) => {
-                            handleItemChanged({ ...t, suggestionAccepted: b.checked === true }, i);
-                          }} />}
-
-                      </div>
-                      */}
                     </div>
 
 
                   </Table.Cell>
                   {
-                    <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100)}</Table.Cell>
+                    <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100) + ' %'}</Table.Cell>
                   }
                 </Table.Row>
             })
@@ -272,10 +260,10 @@ export const Holdings = (props: Props) => {
             <Table.HeaderCell></Table.HeaderCell>
             <Table.HeaderCell>{lang.TOTAL}</Table.HeaderCell>
             <Table.HeaderCell></Table.HeaderCell>
-            <Table.HeaderCell textAlign="right">{fmt(tot)}</Table.HeaderCell>
-            <Table.HeaderCell textAlign="right">{fmt(sumBy(holdings, t => t.currentWeight) * 100)}</Table.HeaderCell>
+            <Table.HeaderCell textAlign="right">{fmt(tot)} €</Table.HeaderCell>
+            <Table.HeaderCell textAlign="right">{fmt(sumBy(holdings, t => t.currentWeight) * 100)} %</Table.HeaderCell>
             <Table.HeaderCell textAlign="right"></Table.HeaderCell>
-            <Table.HeaderCell textAlign="right">{fmt(sumBy(finalWeight, t => t.weight) * 100)}</Table.HeaderCell>
+            <Table.HeaderCell textAlign="right">{fmt(sumBy(finalWeight, t => t.weight) * 100)} %</Table.HeaderCell>
           </Table.Row>
         </Table.Footer>
       </Table>

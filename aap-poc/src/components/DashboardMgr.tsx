@@ -159,10 +159,10 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
               ? <Segment><SliderGraph graphs={this.createGraphs()} height={600} lang={lang} defaultIndex={0} slidesToShow={1} bordered={false} /> </Segment>
               : <div className='ui-flex ui-flex-col'>
                 <Segment>
-                  <SliderGraph graphs={this.createGraphs()} height={280} lang={lang} defaultIndex={0} slidesToShow={1} />
+                  <SliderGraph graphs={this.createGraphs()} height={280} lang={lang} defaultIndex={0} slidesToShow={2} />
                 </Segment>
                 <Segment>
-                  <SliderGraph graphs={this.createGraphs()} height={280} lang={lang} defaultIndex={1} slidesToShow={1} />
+                  <SliderGraph graphs={this.createGraphs()} height={280} lang={lang} defaultIndex={1} slidesToShow={2} />
                 </Segment>
               </div>
           }
