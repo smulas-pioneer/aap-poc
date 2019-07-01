@@ -92,6 +92,14 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
     this.searchAdvanced(prop, data.filter, data.isActive);
   }
   handleOnChangeFilter = (searchParms: SearchParms) => {
+    if (searchParms.countries && searchParms.countries.length === 1 && searchParms.countries[0] === 'Italy') { }
+    else {
+      searchParms[filterMapItems.Regions.searchprop] = undefined;
+      searchParms[filterMapItems.Branch.searchprop] = undefined;
+      searchParms[filterMapItems.Agents.searchprop] = undefined;
+    }
+
+
     this.setState({ searchParms }, this.search);
   }
 
@@ -318,10 +326,9 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         },
         { length: 0, assetUnder: 0, clientAlert: 0, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0, rejectedProposals: 0, totalBudget: 0, totRevenues: 0, totalTurnover: 0 });
 
-    let filterMaps: FilterMapTypes[] = ['Countries', 'Regions', 'Branch', 'Agents', 'Aua', 'Segment', 'RiskProfile'];
-    if (!this.props.isOnlyItaly) {
-      delete filterMaps[1];
-      this.handleOnChangeFilter({ ...this.state.searchParms, [filterMapItems.Regions.searchprop]: undefined });
+    let filterMaps: FilterMapTypes[] = ['Countries', 'Aua', 'Segment', 'RiskProfile'];
+    if (this.props.isOnlyItaly) {
+      filterMaps.splice(1, 0, 'Regions', 'Branch', 'Agents');
     }
 
     return (

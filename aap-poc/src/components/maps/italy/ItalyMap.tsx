@@ -301,7 +301,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
                     {
                       fill: false,
                       color: aValue.color,
-                      onClick: aValue.value !== 0 ? () => this.onRegionClick(val, idx) : undefined,
+                      onClick: () => this.onRegionClick(val, idx),
                       // percentage: countWithValues > 1 ? aValue.perc : undefined,
                       htmlTooltip
                     })
