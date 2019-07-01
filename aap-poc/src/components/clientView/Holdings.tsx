@@ -159,7 +159,7 @@ export const Holdings = (props: Props) => {
             shareButtons={['Excel', 'Copy', 'Pdf']}
             showOnlyCloseButton
             trigger={<Menu.Item position="right"><Icon name="list layout" />Show Order List</Menu.Item>}
-            style={{ border: '2px solid green' }}>
+            >
             <OrderList data={holdings} lang={lang} />
           </ConfirmDialog>
 
@@ -173,17 +173,12 @@ export const Holdings = (props: Props) => {
               <ConfirmDialog
                 title={lang.PROPOSAL_VALIDATION.title}
                 trigger={<Menu.Item position="right" disabled={!isValid}><Icon name="send" />Validate</Menu.Item>}
-                style={{ border: '2px solid green' }}
-
                 confirmButton="Accept"
                 cancelButton="Reject"
                 customButton={{ text: 'Postpone', icon: 'forward', color: 'blue' }}
-
                 onConfirm={() => handleOnAddHistory('PENDING EXECUTION')}
                 onCancel={() => handleOnAddHistory('ON HOLD', 'Last proposal rejected')}
                 onCustom={() => handleOnAddHistory('PENDING PROPOSAL')} >
-
-
                 <div style={{ width: '100%' }}>
                   <OrderList data={holdings} lang={lang} />
                   <RadarGraph data={props.radar!} lang={lang} axes={props.axes} onClickShape={() => { }} width={700} height={413} alertsAbout={'proposed'} />
@@ -198,7 +193,7 @@ export const Holdings = (props: Props) => {
 
         </Menu.Menu>
       </Menu>
-      <Table compact size="small">
+      <Table striped compact size="small">
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell style={{ width: '10px' }} ></Table.HeaderCell>

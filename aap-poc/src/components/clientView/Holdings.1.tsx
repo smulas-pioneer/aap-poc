@@ -187,11 +187,11 @@ export class Holdings extends React.Component<Props, State> {
           <Menu.Item onClick={() => this.setState({ addingSecurity: true })} >
             <Icon name="add" />
             Add Security
-                    </Menu.Item>
+          </Menu.Item>
           <Menu.Item>
             <Icon name="add" />
             New Cash
-                    </Menu.Item>
+          </Menu.Item>
           <Menu.Menu position="right">
 
             <ConfirmDialog
@@ -199,7 +199,7 @@ export class Holdings extends React.Component<Props, State> {
               shareButtons={['Excel', 'Copy', 'Pdf']}
               showOnlyCloseButton
               trigger={<Menu.Item position="right"><Icon name="list layout" />Show Order List</Menu.Item>}
-              style={{ border: '2px solid green' }}>
+            >
               <OrderList data={holdings} lang={lang} />
             </ConfirmDialog>
 
@@ -219,24 +219,18 @@ export class Holdings extends React.Component<Props, State> {
                 <ConfirmDialog
                   title={lang.PROPOSAL_VALIDATION.title}
                   trigger={<Menu.Item position="right" disabled={!isValid || !somethingIsChanged}><Icon name="send" />Validate</Menu.Item>}
-                  style={{ border: '2px solid green' }}
-
                   confirmButton="Accept"
                   cancelButton="Reject"
                   customButton={{ text: 'Postpone', icon: 'forward', color: 'blue' }}
-
                   onConfirm={() => this.handleOnAddHistory('PENDING EXECUTION')}
                   onCancel={() => this.handleOnAddHistory('ON HOLD', 'Last proposal rejected')}
                   onCustom={() => this.handleOnAddHistory('PENDING PROPOSAL')} >
-
-
                   <div style={{ width: '100%' }}>
                     <OrderList data={holdings} lang={lang} />
                     <RadarGraph data={this.props.radar!} lang={lang} axes={this.props.axes} onClickShape={() => { }} width={700} height={413} alertsAbout={'proposed'} />
                     <br />
                     <Checkbox defaultChecked label='Open pdf after generation' />
                   </div>
-
                 </ConfirmDialog>
               ) : <Menu.Item position="right" disabled={!isValid || !somethingIsChanged}><Icon name="send" />Validate</Menu.Item>
             }

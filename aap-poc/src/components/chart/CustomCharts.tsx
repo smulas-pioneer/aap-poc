@@ -192,9 +192,9 @@ export class CustomComposedChart extends React.Component<CustomChartProps, Custo
         return (
             <CustomResponsiveContainer height={responsiveHeight || height}>
                 <ComposedChart layout="vertical" height={height} width={width} data={data} margin={{ top: 5, right: 5, bottom: 5, left: 5 }} >
-                    <XAxis type="number" hide />
+                    <XAxis type="number" hide={!caption} tick={false} />
                     <YAxis dataKey={nameKey} type="category" width={100} hide={!caption}/>
-                    <CartesianGrid stroke='#f5f5f5' />
+                    {/* <CartesianGrid stroke='#f5f5f5' /> */}
                     <Bar dataKey={dataKey} name={nameKey} barSize={20} fill={color} label={caption && this.renderCustomizedLabel} />
                 </ComposedChart>
             </CustomResponsiveContainer>

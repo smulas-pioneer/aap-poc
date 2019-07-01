@@ -147,7 +147,7 @@ html {
 /****************************************************/
 
 .ui.cards > .card.client-card {
-  box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5, 6px 6px 5px #888888;
+  /* box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5, 6px 6px 5px #888888; */
   cursor: pointer;
 }
 

@@ -25,7 +25,7 @@ class App extends React.Component<IAppProps, {}> {
         <Route exact={false} path="/" component={(p: RouteComponentProps<any>) => <MenuFlat history={p.history} />} />
         <Segment basic style={{ marginTop: 0, height: '95%' }}>
           {/* <Route exact path="/" component={(p: any) => <HomePage />} />
-                    <Route exact path="/homepage" component={(p: any) => <HomePage />} /> */}
+              <Route exact path="/homepage" component={(p: any) => <HomePage />} /> */}
           <Route exact path="/" component={(p: any) => manager ? <DashboardMgr uid="dashboard" /> : <Dashboard uid="dashboard" />} />
           <Route exact path="/clients" component={(p: any) => <ClientsView uid="cli" showFilter showTitle />} />
           <Route exact path="/alerts" component={(p: any) => <AlertsView uid="alerts" manager={manager} showFilter showTitle />} />

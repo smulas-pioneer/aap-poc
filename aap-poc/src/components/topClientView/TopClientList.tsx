@@ -44,73 +44,68 @@ export const TopClientList = ({ clients, group, indicator, lang }: TopClientList
     }
 
     return (
-        <Segment.Group>
-            {/*</Segment.Group><Segment basic style={{ height: '54vh' }} >*/}
-            <Segment basic  >
-                <Table compact fixed singleLine >
-                    <Table.Header fullWidth >
-                        <Table.Row>
-                            {group >= GroupTypes.Country &&
-                                <Table.HeaderCell width={1}>COUNTRY</Table.HeaderCell>
-                            }
+        <Table compact fixed singleLine striped>
+            <Table.Header fullWidth >
+                <Table.Row>
+                    {group >= GroupTypes.Country &&
+                        <Table.HeaderCell width={1}>COUNTRY</Table.HeaderCell>
+                    }
 
+                    {group >= GroupTypes.Region &&
+                        <Table.HeaderCell width={1}>{lang.REGION}</Table.HeaderCell>
+                    }
+
+                    {group >= GroupTypes.Branch &&
+                        <Table.HeaderCell width={1}>{lang.BRANCH}</Table.HeaderCell>
+                    }
+                    {group >= GroupTypes.Advisor &&
+                        <Table.HeaderCell width={2} >{lang.ADVISOR}</Table.HeaderCell>
+                    }
+                    <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_CLIENTS}</Table.HeaderCell>
+                    <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_AUA}</Table.HeaderCell>
+                    <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_PROPOSALS}</Table.HeaderCell>
+                    <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_ACC_PROPOSAL}</Table.HeaderCell>
+                    <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_ALERTS}</Table.HeaderCell>
+
+                    <Table.HeaderCell textAlign="right" width={1}>{lang.UPFRONT_FEES}</Table.HeaderCell>
+                    <Table.HeaderCell textAlign="right" width={1}>{lang.ONGOING_FEES}</Table.HeaderCell>
+                    <Table.HeaderCell textAlign="right" width={1}>{lang.BUDGET} YTD</Table.HeaderCell>
+                    <Table.HeaderCell textAlign="right" width={1}>{lang.BUDGET} Accomplished YTD %</Table.HeaderCell>
+                    <Table.HeaderCell textAlign="right" width={1}>{lang.TURNOVER} %</Table.HeaderCell>
+                </Table.Row>
+            </Table.Header>
+            <Table.Body>
+                {
+                    clients.map((client, clIndex) =>
+                        <Table.Row key={clIndex}>
+                            {group >= GroupTypes.Country &&
+                                <Table.Cell style={cellStyle(clIndex, GroupTypes.Country, true)}>{client.country}</Table.Cell>
+                            }
                             {group >= GroupTypes.Region &&
-                                <Table.HeaderCell width={1}>{lang.REGION}</Table.HeaderCell>
+                                <Table.Cell style={cellStyle(clIndex, GroupTypes.Region, true)}>{client.region}</Table.Cell>
                             }
 
                             {group >= GroupTypes.Branch &&
-                                <Table.HeaderCell width={1}>{lang.BRANCH}</Table.HeaderCell>
+                                <Table.Cell style={cellStyle(clIndex, GroupTypes.Branch, true)}>{client.branch}</Table.Cell>
                             }
                             {group >= GroupTypes.Advisor &&
-                                <Table.HeaderCell width={2} >{lang.ADVISOR}</Table.HeaderCell>
+                                <Table.Cell style={cellStyle(clIndex, GroupTypes.Advisor, true)}>{client.advisor}</Table.Cell>
                             }
-                            <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_CLIENTS}</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_AUA}</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_PROPOSALS}</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_ACC_PROPOSAL}</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right" width={1}>{lang.MAP_OPTS_ALERTS}</Table.HeaderCell>
+                            <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.clients)}>{fmt(client.totals.clients)}</Table.Cell>
+                            <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.aua)}>{formatAua(client.totals.aua, fmt)}</Table.Cell>
+                            <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.proposals)}>{fmt(client.totals.proposals)}</Table.Cell>
+                            <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.acceptedProposals)}>{fmt(client.totals.acceptedProposals)}</Table.Cell>
+                            <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.alerts)}>{fmt(client.totals.alerts)}</Table.Cell>
 
-                            <Table.HeaderCell textAlign="right" width={1}>{lang.UPFRONT_FEES}</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right" width={1}>{lang.ONGOING_FEES}</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right" width={1}>{lang.BUDGET} YTD</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right" width={1}>{lang.BUDGET} Accomplished YTD %</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="right" width={1}>{lang.TURNOVER} %</Table.HeaderCell>
+                            <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.upfrontFees)}>{fmt(client.totals.upfrontFees)}</Table.Cell>
+                            <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.ongoingFees)}>{fmt(client.totals.ongoingFees)}</Table.Cell>
+                            <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.budget)}>{fmt(client.totals.budget)}</Table.Cell>
+                            <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.budgetAccomplishedYTD)}>{fmt(client.totals.budgetAccomplishedYTD)}</Table.Cell>
+                            <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.turnover)}>{fmt(client.totals.turnover)}</Table.Cell>
                         </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                        {
-                            clients.map((client, clIndex) =>
-                                <Table.Row key={clIndex}>
-                                    {group >= GroupTypes.Country &&
-                                        <Table.Cell style={cellStyle(clIndex, GroupTypes.Country, true)}>{client.country}</Table.Cell>
-                                    }
-                                    {group >= GroupTypes.Region &&
-                                        <Table.Cell style={cellStyle(clIndex, GroupTypes.Region, true)}>{client.region}</Table.Cell>
-                                    }
-
-                                    {group >= GroupTypes.Branch &&
-                                        <Table.Cell style={cellStyle(clIndex, GroupTypes.Branch, true)}>{client.branch}</Table.Cell>
-                                    }
-                                    {group >= GroupTypes.Advisor &&
-                                        <Table.Cell style={cellStyle(clIndex, GroupTypes.Advisor, true)}>{client.advisor}</Table.Cell>
-                                    }
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.clients)}>{fmt(client.totals.clients)}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.aua)}>{formatAua(client.totals.aua, fmt)}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.proposals)}>{fmt(client.totals.proposals)}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.acceptedProposals)}>{fmt(client.totals.acceptedProposals)}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.alerts)}>{fmt(client.totals.alerts)}</Table.Cell>
-
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.upfrontFees)}>{fmt(client.totals.upfrontFees)}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.ongoingFees)}>{fmt(client.totals.ongoingFees)}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.budget)}>{fmt(client.totals.budget)}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.budgetAccomplishedYTD)}>{fmt(client.totals.budgetAccomplishedYTD)}</Table.Cell>
-                                    <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.turnover)}>{fmt(client.totals.turnover)}</Table.Cell>
-                                </Table.Row>
-                            )
-                        }
-                    </Table.Body>
-                </Table>
-            </Segment>
-        </Segment.Group>
+                    )
+                }
+            </Table.Body>
+        </Table>
     );
 }

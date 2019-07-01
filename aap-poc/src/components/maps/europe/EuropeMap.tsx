@@ -215,22 +215,22 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
             <div style={{ height: "100%", display: 'flex', flexDirection: 'column' }}>
               <WidgetTitle size='small' title={'Key Figures Map'} shareButtons={['Image', 'Copy']} />
               <ColorsLegend type={type} values={areaValues} lang={lang} />
-                <Europe
-                  className="nations"
-                  width={'100%'}
-                  height={`100%`}
-                  paths={
-                    EuropaMap.AREA_MAP_INDEX.map((val, idx) => {
-                      const aValue = areaValues[idx];
-                      const htmlTooltip = aValue.value !== 0 ? this.getTooltipText(aValue.key, type, aValue.value) : undefined;
-                      return this.getAreaByName(val, {
-                        color: aValue.color,
-                        onClick: () => this.setState({ requestMapIndex: idx }),
-                        htmlTooltip
-                      })
+              <Europe
+                className="nations"
+                width={'100%'}
+                height={`100%`}
+                paths={
+                  EuropaMap.AREA_MAP_INDEX.map((val, idx) => {
+                    const aValue = areaValues[idx];
+                    const htmlTooltip = aValue.value !== 0 ? this.getTooltipText(aValue.key, type, aValue.value) : undefined;
+                    return this.getAreaByName(val, {
+                      color: aValue.color,
+                      onClick: () => this.setState({ requestMapIndex: idx }),
+                      htmlTooltip
                     })
-                  }
-                />
+                  })
+                }
+              />
               <MapOptions onChange={e => this.onMapOptionsChange(e)} lang={lang} />
               <ReactTooltip html type='info' delayShow={600} place="bottom" />
             </div>
