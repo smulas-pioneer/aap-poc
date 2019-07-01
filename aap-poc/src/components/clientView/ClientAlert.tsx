@@ -13,9 +13,9 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
         const value = radar[prop];
 
         return value !== 'green'
-            ? (<List.Item key={key}  >
+            ? (<List.Item  key={key}  >
                 <List.Content style={{ marginBottom: '6px' }}>
-                    <p style={{ fontSize: "20px" }}>
+                    <p style={{ fontSize: "14px" }}>
                         <b style={{ color: value === "orange" ? "darkorange" : value }}>{alert.name.toUpperCase()}</b> : {alert.sentence}
                     </p>
                 </List.Content>
@@ -33,14 +33,14 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
     const alertColor = props.client.decision==='ONHOLD' ? 'blue': radar.numOfAlerts ===0 ? 'green' : radar.riskAdequacyAlert ==='red' ? 'red' : 'orange';
     const dur = moment(REFERENCE_DATE_TODAY).to(moment(props.client.clientStatusAge));
     const title = (
-        <Segment basic as="span" >
+        <Segment basic as="span" size="small">
             <Icon name='alarm' circular inverted color={alertColor} />
             &nbsp;
-            <Header key="0" as='h2' style={{ display: 'initial' }} color={alertColor} >
+            <Header key="0" as='h3' style={{ display: 'initial' }} color={alertColor} >
                 <Header.Content style={{ marginTop: '4px' }}>{actualTitle}</Header.Content>
             </Header>
             <Icon style={{ float: 'right', cursor: 'pointer' }} name='history' circular onClick={(e: any) => { e.stopPropagation(); props.onOpenHistory() }} />
-            <Header floated="right" key="1" as='h2' style={{ display: 'initial' }}>
+            <Header floated="right" key="1" as='h3' style={{ display: 'initial' }}>
                 <Header.Subheader style={{ marginTop: '4px' }}>
                     {lang.LAST_STATUS}: <b>{lang[props.client.clientStatus]}</b> <small>({props.client.clientStatusAge}, {dur})</small>
                 </Header.Subheader>

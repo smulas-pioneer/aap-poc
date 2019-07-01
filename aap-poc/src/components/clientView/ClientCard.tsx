@@ -15,7 +15,7 @@ export const ClientCard = (props: {
   const renderColumns = (data: {
     [label: string]: string | number;
   }, right?: boolean) => {
-    return <Grid.Column textAlign={right ? "right" : "left"} style={{ fontSize: 'medium', paddingTop: 0 }}>
+    return <Grid.Column textAlign={right ? "right" : "left"} style={{ fontSize: 'small', paddingTop: 0 }}>
       {Object.keys(data).map((d, i) => {
         return <div key={i}>
           <b>{d}:</b> &nbsp; {data[d]}
@@ -23,15 +23,15 @@ export const ClientCard = (props: {
       })}
     </Grid.Column>;
   };
-  return (<Grid basic='very' verticalAlign="top">
+  return (<Grid basic='very' verticalAlign="top" >
     <Grid.Row>
       <Grid.Column width="12">
-        <Statistic size="small" color={color}>
+        <Statistic size="mini" color={color}>
           <Statistic.Value><Icon size="small" name={'user'} inverted circular color={color} />&nbsp;{client.name}</Statistic.Value>
         </Statistic>
       </Grid.Column>
       <Grid.Column width="4" textAlign="right">
-        <Statistic size="small" color={color}>
+        <Statistic size="mini" color={color}>
           <Statistic.Value>{`${fmt1.format(client.aua)} €`}</Statistic.Value>
         </Statistic>
       </Grid.Column>

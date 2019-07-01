@@ -51,7 +51,7 @@ export const SliderGraph = (props: SliderGraphProps) => {
   const sliderPanes = graphs.map((item, ix) => {
     return <div className="sliderGraphItem" key={ix} style={{ height: `${height}px` }}>
       <WidgetTitle size="mini" title={item.title} />
-      <div className={`${bordered ? 'bordered' : ''}`} style={{ height: `${height - 30}px` }} >
+      <div className={`${bordered ? 'bordered' : ''}`} style={{ height: `${height - 50}px` }} >
         {getCharts(item, false)}
       </div>
     </div>

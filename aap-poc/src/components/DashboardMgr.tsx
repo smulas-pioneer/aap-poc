@@ -99,7 +99,6 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
       searchParms[filterMapItems.Agents.searchprop] = undefined;
     }
 
-
     this.setState({ searchParms }, this.search);
   }
 
