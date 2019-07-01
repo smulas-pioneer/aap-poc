@@ -20,16 +20,15 @@ export const WeightChange = (props: WeightChangeProps) => {
     <Segment>
       <h1>{props.item.security.SecurityName}</h1>
       <p>{props.item.security.IsinCode} - {props.item.security.MacroAssetClass}</p>
-      <hr />
       <div style={{ position: 'absolute', right: 15, top: 15 }}>
         <Button color={enabled?'green':'red'} onClick={() => { setEnabled(!enabled) }}>{enabled ? 'Enabled' : 'Disabled'}</Button>
       </div>
 
-      <Grid>
-        <Grid.Row>
+      <Grid columns="equal" celled>
+        <Grid.Row verticalAlign="middle">
           <Grid.Column>Weight</Grid.Column>
-          <Grid.Column>{`${props.item.currentWeight * 100} %`}</Grid.Column>
-          <Grid.Column>  <Input error={error.weight} value={newWeight.stringValue} onChange={(a, b) => newWeight.setValue(b.value)} /></Grid.Column>
+          <Grid.Column>current: {`${props.item.currentWeight * 100} %`}</Grid.Column>
+          <Grid.Column>new:  <Input size="massive" error={error.weight} value={newWeight.stringValue} onChange={(a, b) => newWeight.setValue(b.value)} /></Grid.Column>
         </Grid.Row>
       </Grid>
 
