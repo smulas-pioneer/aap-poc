@@ -14705,6 +14705,10 @@ a.ui.basic.label:hover {
     font-size: 1.71428571rem
 }
 
+.ui.label {
+    border: none
+}
+
 /*!
  * # Semantic UI - List
  * http://github.com/semantic-org/semantic-ui/
@@ -28713,8 +28717,8 @@ select.ui.dropdown {
     }
 }
 
-.ui.label {
-    border: none
+.ui.modal {
+    border: 1px solid rgba(95, 119, 136, .5)
 }
 
 /*!
