@@ -18,7 +18,7 @@ export const WidgetTitle = (props: {
 
 
   return (
-    <Segment clearing>
+    <div >
       <Header as={as} color={props.color} icon={props.icon} subheader={props.subtitle} style={props.style} floated={rightComponent ? 'left' : undefined} >
         {props.title}
         {props.shareButtons && <Share buttons={props.shareButtons} />}
@@ -26,6 +26,6 @@ export const WidgetTitle = (props: {
       {
         rightComponent && <Header floated='right'>{rightComponent}</Header>
       }
-    </Segment>
+    </div>
   )
 }
