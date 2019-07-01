@@ -1,5 +1,5 @@
 import { StrategyItem } from '../../_db/interfaces';
-import { Table, Segment } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 import { LangDictionary } from '../../reducers/language/interfaces';
 import { sumBy } from 'lodash';
 import * as React from 'react';

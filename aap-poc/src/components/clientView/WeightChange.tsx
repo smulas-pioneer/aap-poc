@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { Modal, Segment, Input, Button, Message, Grid, Item } from 'semantic-ui-react';
+import { Modal, Segment, Input, Button, Message, Grid,  } from 'semantic-ui-react';
 import { StrategyItem } from '../../_db/interfaces';
-import { formatNumber, numArray } from '../../_db/utils';
-import { Italiano } from '../../reducers/language/language_italiano';
+import { formatNumber } from '../../_db/utils';
 import { English } from '../../reducers/language/language_english';
-import { isNumber } from 'util';
 
 
 type WeightChangeProps = {
