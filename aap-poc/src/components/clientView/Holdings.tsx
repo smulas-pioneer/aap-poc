@@ -141,6 +141,7 @@ export const Holdings = (props: Props) => {
       }
       {
         currentHolding && <WeightChange
+        tot={tot}
           item={currentHolding.item}
           onCancel={() => setCurrentHolding(undefined)}
           onChange={(item) => {
