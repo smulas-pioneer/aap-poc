@@ -22,7 +22,7 @@ const ReactTooltip = require('react-tooltip');
 export interface EuropeMapProps {
   lang: LangDictionary,
   layout: ConfigLayout,
-  clients: Client[]
+  clients: Client[] 
   width?: number;
   height?: number;
   isOnlyItaly?: boolean;
