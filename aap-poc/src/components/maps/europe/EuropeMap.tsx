@@ -215,7 +215,6 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
             <div style={{ height: "100%", display: 'flex', flexDirection: 'column' }}>
               <WidgetTitle size='small' title={'Key Figures Map'} shareButtons={['Image', 'Copy']} />
               <ColorsLegend type={type} values={areaValues} lang={lang} />
-              <div style={{ flex: 1 }}>
                 <Europe
                   className="nations"
                   width={'100%'}
@@ -232,7 +231,6 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
                     })
                   }
                 />
-              </div>
               <MapOptions onChange={e => this.onMapOptionsChange(e)} lang={lang} />
               <ReactTooltip html type='info' delayShow={600} place="bottom" />
             </div>
