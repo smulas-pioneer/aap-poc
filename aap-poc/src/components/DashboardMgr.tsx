@@ -129,6 +129,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
       <div className='ui-flex ui-flex-row' style={{}}>
         <Segment>
           <EuropaMap
+            transform="scale(1.8) translate(-100, -250)"
             lang={lang}
             clients={data}
             layout={layout}

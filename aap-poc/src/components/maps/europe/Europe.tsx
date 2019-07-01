@@ -6,6 +6,7 @@ const SVG = ({
   className = '',
   height = '599px',
   viewBox = '0 0 595 599',
+  transform = '',
   paths = [] as any[]
 }) =>
   <svg
@@ -16,10 +17,11 @@ const SVG = ({
     className={className}
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
+
   >
     <defs id="defs3227">
     </defs>
-    <g id="layer1">
+    <g id="layer1" transform={transform} >
       {paths}
       <path
         style={{ opacity: 1, fillOpacity: 1, stroke: '#ffffff', strokeWidth: 0.65450865, display: 'inline' }}

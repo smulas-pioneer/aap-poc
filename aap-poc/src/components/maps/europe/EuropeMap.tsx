@@ -28,6 +28,7 @@ export interface EuropeMapProps {
   isOnlyItaly?: boolean;
   filterMap?: FilterMap;
   onFilterChange?: (map: FilterMap, value: string) => void;
+  transform?: string;
 }
 
 export interface EuropeMapState {
@@ -216,7 +217,7 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
     const showItaly = this.props.isOnlyItaly;
 
     //this.state.requestMapIndex !== undefined && this.state.mapIndex !== undefined;
-    const { lang, height } = this.props;
+    const { lang, height, transform } = this.props;
 
     return (
       <div style={{ height: `${height}px` }}>
@@ -227,8 +228,7 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
               <ColorsLegend type={type} values={areaValues} lang={lang} />
               <Europe
                 className="nations"
-                width={'100%'}
-                height={`100%`}
+                transform={transform}
                 paths={
                   EuropaMap.AREA_MAP_INDEX.map((val, idx) => {
                     const aValue = areaValues[idx];
