@@ -33,16 +33,16 @@ export const Holdings = (props: Props) => {
   const [changingSecurity, setChangingSecurity] = React.useState<string | undefined>(undefined);
   const [mode, setMode] = React.useState<'Weight' | 'Quantity' | 'Amount'>('Weight');
   //const [holdings, setHoldings] = React.useState(props.holdings);
-  const [currentHolding, setCurrentHolding] = React.useState<StrategyItem | undefined>(undefined);
+  const [currentHolding, setCurrentHolding] = React.useState<{ item: StrategyItem, index: number } | undefined>(undefined);
   const { onChange } = props;
 
- 
   const handleItemChanged = (item: StrategyItem, ix: number) => {
     let holdingsCopy = [...props.holdings];
     holdingsCopy[ix] = item;
-    const originalValue = props.holdings.find(i => i.security.IsinCode === item.security.IsinCode);
-    const changed = originalValue === undefined || originalValue.suggestedDelta !== item.suggestedDelta || originalValue.suggestionAccepted !== item.suggestionAccepted;
-    props.onChange(holdingsCopy);
+    //const originalValue = props.holdings.find(i => i.security.IsinCode === item.security.IsinCode);
+    //const changed = originalValue === undefined || originalValue.suggestedDelta !== item.suggestedDelta || originalValue.suggestionAccepted !== item.suggestionAccepted;
+    setCurrentHolding(undefined);
+    onChange(holdingsCopy);
   }
 
   const handleAcceptAll = (accept: boolean) => {
@@ -55,7 +55,6 @@ export const Holdings = (props: Props) => {
       const pr = props.holdings.find(h => h.security.IsinCode === i.security.IsinCode);
       return pr === undefined || pr.suggestedDelta !== i.suggestedDelta || pr.suggestionAccepted !== i.suggestionAccepted;
     }).map(h => h.security.IsinCode);
-
     props.onChange(holdingsCopy);
   }
 
@@ -107,7 +106,7 @@ export const Holdings = (props: Props) => {
     onAddHistory!({ clientId: props.clientId, notes: notes || props.lang.PROPOSAL_VALIDATION.title, status: status || props.clientState });
   }
 
-  const { lang ,holdings} = props;
+  const { lang, holdings } = props;
   const finalWeight = suggestedPosition(holdings);
   const fmt = formatNumber(lang.NUMBER_FORMAT);
   const tot = sumBy(holdings, t => t.currentAmount);
@@ -140,8 +139,15 @@ export const Holdings = (props: Props) => {
           visible
         />
       }
-
-
+      {
+        currentHolding && <WeightChange
+          item={currentHolding.item}
+          onCancel={() => setCurrentHolding(undefined)}
+          onChange={(item) => {
+            handleItemChanged(item, currentHolding.index);
+          }}
+        />
+      }
       <Menu size='mini'>
         <Menu.Item onClick={props.onShowModel}  ><Icon name="table" />Model</Menu.Item>
         <Menu.Item onClick={() => setAddingSecurity(true)} >
@@ -159,7 +165,7 @@ export const Holdings = (props: Props) => {
             shareButtons={['Excel', 'Copy', 'Pdf']}
             showOnlyCloseButton
             trigger={<Menu.Item position="right"><Icon name="list layout" />Show Order List</Menu.Item>}
-            style={{ border: '2px solid green' }}>
+            >
             <OrderList data={holdings} lang={lang} />
           </ConfirmDialog>
 
@@ -173,17 +179,12 @@ export const Holdings = (props: Props) => {
               <ConfirmDialog
                 title={lang.PROPOSAL_VALIDATION.title}
                 trigger={<Menu.Item position="right" disabled={!isValid}><Icon name="send" />Validate</Menu.Item>}
-                style={{ border: '2px solid green' }}
-
                 confirmButton="Accept"
                 cancelButton="Reject"
                 customButton={{ text: 'Postpone', icon: 'forward', color: 'blue' }}
-
                 onConfirm={() => handleOnAddHistory('PENDING EXECUTION')}
                 onCancel={() => handleOnAddHistory('ON HOLD', 'Last proposal rejected')}
                 onCustom={() => handleOnAddHistory('PENDING PROPOSAL')} >
-
-
                 <div style={{ width: '100%' }}>
                   <OrderList data={holdings} lang={lang} />
                   <RadarGraph data={props.radar!} lang={lang} axes={props.axes} onClickShape={() => { }} width={700} height={413} alertsAbout={'proposed'} />
@@ -194,11 +195,9 @@ export const Holdings = (props: Props) => {
               </ConfirmDialog>
             ) : <Menu.Item position="right" disabled={!isValid}><Icon name="send" />Validate</Menu.Item>
           }
-
-
         </Menu.Menu>
       </Menu>
-      <Table compact size="small">
+      <Table striped compact size="small">
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell style={{ width: '10px' }} ></Table.HeaderCell>
@@ -206,28 +205,20 @@ export const Holdings = (props: Props) => {
             <Table.HeaderCell width={1} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
             <Table.HeaderCell width={1} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
             <Table.HeaderCell width={1} textAlign="right">{lang.WEIGHT}</Table.HeaderCell>
-            <Table.HeaderCell width={1} textAlign="center">
-              <Dropdown text={`${lang.PROPOSE}: ${mode}`} pointing='left' className='link item'>
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => setMode('Weight')} >Weight</Dropdown.Item>
-                  <Dropdown.Item onClick={() => setMode('Quantity')} >Quantity</Dropdown.Item>
-                  <Dropdown.Item onClick={() => setMode('Amount')} >Amount</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-
+            <Table.HeaderCell width={2} textAlign="center">{lang.PROPOSE}
             </Table.HeaderCell>
             <Table.HeaderCell width={2} textAlign="right">{lang.FINAL_WEIGHT}</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body style={{ overflow: 'visible' }}>
           {
-            holdings.map((t, i) => {
+            holdings.sort(holdingsSort).map((t, i) => {
               const show = t.currentQuantity !== 0;
               const suggWeight = finalWeight[i].weight
               const factor = mode === 'Weight' ? 1
                 : mode === 'Quantity' ? tot / t.currentPrice / 100
                   : tot / 100;
-              return (!t.newSecurity && t.currentQuantity === 0 && t.suggestedDelta === 0) ? null :
+              return (!t.newSecurity && t.currentQuantity === 0 && t.suggestedDelta === 0 && !t.isCash) ? null :
                 <Table.Row key={i}>
                   <Table.Cell>
                     {t.security.blacklisted && <Icon size="large" color="black" name='thumbs down' />}
@@ -241,25 +232,32 @@ export const Holdings = (props: Props) => {
                   <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
                   <Table.Cell textAlign="right">{show && fmt(t.currentAmount)}</Table.Cell>
                   <Table.Cell textAlign="right">{show && fmt(t.currentWeight * 100, 0)} </Table.Cell>
-                  <Table.Cell textAlign="left">
-                    {/*
-                    <HoldingWeigthControl factor={factor} data={t} onChange={(item) => handleItemChanged(item, i)} />
-                     */}
-                     
-                    {t.suggestionAccepted 
-                    ? <b>{(t.suggestedDelta + t.currentWeight)}</b>
-                  :<span>{(t.suggestedDelta + t.currentWeight)}</span>} 
-                    <Button icon="pencil" onClick={() => setCurrentHolding(t)} />
-                    {
-                      currentHolding && <WeightChange
-                        item={currentHolding}
-                        onCancel={() => setCurrentHolding(undefined)}
-                        onChange={(item) => {
-                          setCurrentHolding(undefined);
-                          props.onChange([...holdings.splice(0, i), item]);
-                        }}
-                      />
-                    }
+                  <Table.Cell textAlign="right">
+                    <div style={{ display: 'flex', height: '20px' }}>
+                      <div style={{ flex: 2, cursor: 'pointer' }}>
+                        <div
+                          onClick={() => setCurrentHolding({item:t, index:i})}
+                          style={proposalStyle(t.suggestionAccepted, t.suggestedDelta > 0)}
+                        >
+                          {t.suggestedDelta > 0 ? '+' : ''} {fmt(t.suggestedDelta * 100)}
+                        </div>
+
+                      </div>
+                      {/*
+                      <div style={{ flex: 1 }}>
+                        {!t.isCash && t.suggestedDelta !== 0 && <Checkbox
+
+                          style={{ cursor: 'pointer', backgroundColor: 'black' }}
+                          checked={t.suggestionAccepted}
+                          onChange={(a, b) => {
+                            handleItemChanged({ ...t, suggestionAccepted: b.checked === true }, i);
+                          }} />}
+
+                      </div>
+                      */}
+                    </div>
+
+
                   </Table.Cell>
                   {
                     <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100)}</Table.Cell>
@@ -287,3 +285,19 @@ export const Holdings = (props: Props) => {
 
 
 
+
+
+const holdingsSort = (a: StrategyItem, b: StrategyItem) => {
+  if (a.isCash) return -1;
+  if (b.isCash) return 1;
+  return a.security.MacroAssetClass.localeCompare(b.security.MacroAssetClass);
+}
+
+
+const proposalStyle = (accepted: boolean, positive: boolean): React.CSSProperties => {
+  let style: React.CSSProperties = accepted ? { fontWeight: 'bold' } : { color: 'lightgrey' };
+  if (accepted) {
+    style.color = positive ? 'lightgreen' : 'red';
+  }
+  return style;
+}
