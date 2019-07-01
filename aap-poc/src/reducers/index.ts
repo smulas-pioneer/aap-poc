@@ -49,6 +49,8 @@ export const getLanguageFlag = (state: AppState) => fromLanguage.getLanguage(sta
 export const getSearchResult = (state: AppState, uid: string) => fromSearch.getSearchResult(state.search, uid);
 export const getSearchFilter = (state: AppState, uid: string) => fromSearch.getSearchFilter(state.search, uid);
 export const getIsOnlyItaly = (state: AppState, uid: string) => fromSearch.getIsOnlyItaly(state.search, uid);
+export const getIsCountryActive = (state: AppState, uid: string) => (country: string) => fromSearch.getIsSearchActive(state.search, uid, 'countries', country);
+export const getIsRegionActive = (state: AppState, uid: string) => (region: string) => fromSearch.getIsSearchActive(state.search, uid, 'regions', region);
 
 export const getCurrentClient = (state: AppState) => fromClient.getCurrentClient(state.client);
 export const getSuggestedTransactions = (state: AppState) => fromClient.getSuggestedTransactions(state.client);

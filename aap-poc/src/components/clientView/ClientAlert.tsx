@@ -15,15 +15,9 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
         return value !== 'green'
             ? (<List.Item key={key}  >
                 <List.Content style={{ marginBottom: '6px' }}>
-                    {/*<h3 style={{ color: value === "orange" ? "darkorange" : value }}>*/}
-                    <p style={{ color: "black", fontSize: "20px" }}>
+                    <p style={{ fontSize: "20px" }}>
                         <b style={{ color: value === "orange" ? "darkorange" : value }}>{alert.name.toUpperCase()}</b> : {alert.sentence}
                     </p>
-                    {/* <Statistic size="mini" color={value}  >
-                        <Statistic.Value as="p" style={{ textAlign: 'left' }}  >
-
-                        </Statistic.Value>
-                    </Statistic> */}
                 </List.Content>
             </List.Item>)
             : null;
@@ -42,14 +36,11 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
         <Segment basic as="span" >
             <Icon name='alarm' circular inverted color={alertColor} />
             &nbsp;
-
             <Header key="0" as='h2' style={{ display: 'initial' }} color={alertColor} >
                 <Header.Content style={{ marginTop: '4px' }}>{actualTitle}</Header.Content>
             </Header>
-
-            <Icon style={{ float: 'right', cursor: 'pointer' }} name='history' circular color="black" onClick={(e: any) => { e.stopPropagation(); props.onOpenHistory() }} />
-
-            <Header floated="right" key="1" as='h2' style={{ display: 'initial' }} color="black">
+            <Icon style={{ float: 'right', cursor: 'pointer' }} name='history' circular onClick={(e: any) => { e.stopPropagation(); props.onOpenHistory() }} />
+            <Header floated="right" key="1" as='h2' style={{ display: 'initial' }}>
                 <Header.Subheader style={{ marginTop: '4px' }}>
                     {lang.LAST_STATUS}: <b>{lang[props.client.clientStatus]}</b> <small>({props.client.clientStatusAge}, {dur})</small>
                 </Header.Subheader>

@@ -134,7 +134,7 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
         <Menu attached secondary >
           <img alt="" style={{ width: '50px', height: '50px', padding: '4px', ...layout.logoStyle }} src={srcLogo} />
 
-          <Menu.Item replace="true" style={{ width: '50%' }} ><Link to="/" style={{ color: '#005483', fontFamily: 'Helvetica', ...layout.titleStyle }} ><h2>Advisory Platform.</h2></Link></Menu.Item>
+          <Menu.Item replace="true" ><Link to="/" style={{ color: '#FFFFFF', fontFamily: 'Lato', ...layout.titleStyle }} ><h2>Advisory Platform</h2></Link></Menu.Item>
 
           <Menu secondary compact floated='right' >
 
@@ -162,7 +162,7 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
                     </Menu.Item>
                     {this.renderSpotlightItem()} */}
         </Menu>
-      </div>
+      </div >
     );
   }
 }

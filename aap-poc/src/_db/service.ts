@@ -23,15 +23,16 @@ export const getPerformance = (securityId: string, date: string): Promise<Model.
   });
 };
 
-const arrayContains = (array?: any[], value?: any) => {
-  if (!array || !array.length) return true;
-  const a = array.find(v => v === value.toString());
-  return a ? true : false;
-}
-
 const checkAlerts = (alertToCheck: string[] | undefined, breaks: string[]) => {
   if (!alertToCheck || !alertToCheck.length) return true; // all
   return intersection(alertToCheck, breaks).length === alertToCheck.length;
+}
+
+
+export function arrayContains(array?: any[], value?: any) {
+  if (!array || !array.length) return true;
+  const a = array.find(v => v === value.toString());
+  return a ? true : false;
 }
 
 export const searchClient = (parms: Model.SearchParms, visibility?: string[]): Promise<Model.SearchResult> => {
