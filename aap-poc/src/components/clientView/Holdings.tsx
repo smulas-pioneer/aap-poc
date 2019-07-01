@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import { StrategyItem, Security, Radar, RadarStrategyParm, ClientState } from '../../_db/interfaces';
-import { Table, Menu, Icon, Dropdown, Button } from 'semantic-ui-react';
+import { Table, Menu, Icon, Dropdown, Button, Transition, Popup } from 'semantic-ui-react';
 import { LangDictionary } from '../../reducers/language/interfaces';
 import { sumBy } from 'lodash';
 import { formatNumber } from '../../_db/utils';
@@ -12,6 +12,7 @@ import Checkbox from 'semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox'
 import { RadarGraph } from '../RadarGraph';
 import { OrderList } from './OrderList';
 import { WeightChange } from './WeightChange';
+import { PopoverChange } from './PopoverChange';
 
 interface Props {
   holdings: StrategyItem[],
@@ -35,6 +36,7 @@ export const Holdings = (props: Props) => {
   //const [holdings, setHoldings] = React.useState(props.holdings);
   const [currentHolding, setCurrentHolding] = React.useState<{ item: StrategyItem, index: number } | undefined>(undefined);
   const { onChange } = props;
+  const [isProposingMode, setIsProposingMode] = React.useState(false);
 
   const handleItemChanged = (item: StrategyItem, ix: number) => {
     let holdingsCopy = [...props.holdings];
@@ -154,13 +156,16 @@ export const Holdings = (props: Props) => {
         <Menu.Item onClick={() => setAddingSecurity(true)} >
           <Icon name="add" />
           Add Security
-                    </Menu.Item>
+        </Menu.Item>
         <Menu.Item>
           <Icon name="add" />
           New Cash
-                    </Menu.Item>
-        <Menu.Menu position="right">
-
+        </Menu.Item>
+        {!isProposingMode && <Menu.Menu position="right">
+          <Menu.Item onClick={() => setIsProposingMode(true)}  ><Icon name="lightning" />Get Proposals</Menu.Item>
+        </Menu.Menu>}
+        {isProposingMode && <Menu.Menu position="right">
+          <Menu.Item onClick={() => setIsProposingMode(false)}  ><Icon name="close" />Back</Menu.Item>
           <ConfirmDialog
             title={lang.ORDER_LIST}
             shareButtons={['Excel', 'Copy', 'Pdf']}
@@ -196,80 +201,93 @@ export const Holdings = (props: Props) => {
               </ConfirmDialog>
             ) : <Menu.Item position="right" disabled={!isValid}><Icon name="send" />Validate</Menu.Item>
           }
-        </Menu.Menu>
+        </Menu.Menu>}
       </Menu>
-      <Table striped compact size="small">
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell style={{ width: '6px' }} ></Table.HeaderCell>
-            <Table.HeaderCell style={{ width: '6px' }} ></Table.HeaderCell>
-            <Table.HeaderCell >{lang.SECURITY_NAME}</Table.HeaderCell>
-            <Table.HeaderCell width={1} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
-            <Table.HeaderCell width={2} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
-            <Table.HeaderCell width={1} textAlign="right">{lang.WEIGHT}</Table.HeaderCell>
-            <Table.HeaderCell width={2} textAlign="left">{lang.PROPOSE}
-            </Table.HeaderCell>
-            <Table.HeaderCell width={2} textAlign="right">{lang.FINAL_WEIGHT}</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body style={{ overflow: 'visible' }}>
-          {
-            holdings.sort(holdingsSort).map((t, i) => {
-              const show = t.currentQuantity !== 0;
-              const suggWeight = finalWeight[i].weight
-              const factor = mode === 'Weight' ? 1
-                : mode === 'Quantity' ? tot / t.currentPrice / 100
-                  : tot / 100;
-              return (!t.newSecurity && t.currentQuantity === 0 && t.suggestedDelta === 0 && !t.isCash) ? null :
-                <Table.Row key={i}>
-                  <Table.Cell>
-                    {t.security.blacklisted && <Icon color="black" name='thumbs down' />}
-                    {t.security.pushed && <Icon color="green" name='thumbs up' />}
-                    {t.clientFavorites && <Icon color="red" name='heart' />}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {!t.isCash && <Icon name="exchange" style={{ cursor: 'pointer' }} />}
-                  </Table.Cell>
-                  <Table.Cell >
+      <Transition animation="pulse" duration={500} visible={true}>
 
-                    <p style={{ padding: 0, margin: 0 }}> {' '}<b>{t.security.SecurityName}</b></p>
-                    <p style={{ padding: 0, margin: 0, color: 'lightgrey' }}><small>{t.security.IsinCode} - <i>{t.security.MacroAssetClass}</i></small> </p>
-                  </Table.Cell>
-                  <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
-                  <Table.Cell textAlign="right">{show && fmt(t.currentAmount) + ' €'} </Table.Cell>
-                  <Table.Cell textAlign="right">{show && fmt(t.currentWeight * 100, 0) + ' %'} </Table.Cell>
-                  <Table.Cell textAlign="right">
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
 
-                      <div
-                        onClick={() => setCurrentHolding({ item: t, index: i })}
-                        style={{ ...proposalStyle(t.suggestionAccepted, t.suggestedDelta > 0), flex: 1 }}
-                      >
-                        {t.suggestedDelta > 0 ? '+' : ''} {fmt(t.suggestedDelta * 100)} {t.suggestedDelta !== 0 && ' %'}
+        <Table striped compact size="small">
+          <Table.Header>
+            <Table.Row>
+              {<Table.HeaderCell style={{ width: '6px' }} ></Table.HeaderCell>}
+              {<Table.HeaderCell style={{ width: '6px' }} ></Table.HeaderCell>}
+              <Table.HeaderCell >{lang.SECURITY_NAME}</Table.HeaderCell>
+              <Table.HeaderCell width={1} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
+              <Table.HeaderCell width={2} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
+              <Table.HeaderCell width={1} textAlign="right">{lang.WEIGHT}</Table.HeaderCell>
+              {isProposingMode && <Table.HeaderCell width={2} textAlign="center">{lang.PROPOSE}</Table.HeaderCell>}
+              {isProposingMode && <Table.HeaderCell width={2} textAlign="right">{lang.FINAL_WEIGHT}</Table.HeaderCell>}
+            </Table.Row>
+          </Table.Header>
+          <Table.Body style={{ overflow: 'visible' }}>
+            {
+              holdings.sort(holdingsSort).map((t, i) => {
+                const show = t.currentQuantity !== 0;
+                const suggWeight = finalWeight[i].weight
+                const factor = mode === 'Weight' ? 1
+                  : mode === 'Quantity' ? tot / t.currentPrice / 100
+                    : tot / 100;
+                return (!t.newSecurity && t.currentQuantity === 0 && t.suggestedDelta === 0 && !t.isCash) ? null :
+                  <Table.Row key={i}>
+                    {<Table.Cell>
+                      {t.security.blacklisted && <Icon size="large" color="black" name='thumbs down' />}
+                      {t.security.pushed && <Icon size="large" color="green" name='thumbs up' />}
+                      {t.clientFavorites && <Icon size="large" color="red" name='heart' />}
+                    </Table.Cell>}
+                    {<Table.Cell>
+                      {!t.isCash && <Icon name="exchange" style={{ cursor: 'pointer' }} />}
+                    </Table.Cell>}
+                    <Table.Cell >
+
+                      <p style={{ padding: 0, margin: 0 }}> {' '}<b>{t.security.SecurityName}</b></p>
+                      <p style={{ padding: 0, margin: 0, color: 'lightgrey' }}><small>{t.security.IsinCode} - <i>{t.security.MacroAssetClass}</i></small> </p>
+                    </Table.Cell>
+                    <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
+                    <Table.Cell textAlign="right">{show && fmt(t.currentAmount) + ' €'} </Table.Cell>
+                    <Table.Cell textAlign="right">{show && fmt(t.currentWeight * 100, 0) + ' %'} </Table.Cell>
+                    {isProposingMode && <Table.Cell textAlign="right">
+                      <div style={{ display: 'flex', flexDirection: 'row' }}>
+
+                        <div
+                          onClick={() => setCurrentHolding({ item: t, index: i })}
+                          style={{ ...proposalStyle(t.suggestionAccepted, t.suggestedDelta > 0), flex: 1 }}
+                        >
+                          {t.suggestedDelta > 0 ? '+' : ''} {fmt(t.suggestedDelta * 100)} {t.suggestedDelta !== 0 && ' %'}
+                        </div>
+
+                        <Popup wide trigger={<Icon style={{ cursor: 'pointer', flex: 1 }} name="pencil" />} on='click'>
+                          <h6></h6>
+                          <PopoverChange tot={tot}
+                            item={t}
+                            onCancel={() => setCurrentHolding(undefined)}
+                            onChange={(item) => {
+                              handleItemChanged(item, i);
+                            }} />
+                        </Popup>
+
                       </div>
-                      <Icon style={{ cursor: 'pointer', flex: 1 }} name="pencil" />
-                    </div>
-                  </Table.Cell>
-                  {
-                    <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100) + ' %'}</Table.Cell>
-                  }
-                </Table.Row>
-            })
-          }
-        </Table.Body>
-        <Table.Footer>
-          <Table.Row>
-            <Table.HeaderCell></Table.HeaderCell>
-            <Table.HeaderCell></Table.HeaderCell>
-            <Table.HeaderCell>{lang.TOTAL}</Table.HeaderCell>
-            <Table.HeaderCell></Table.HeaderCell>
-            <Table.HeaderCell textAlign="right">{fmt(tot)} €</Table.HeaderCell>
-            <Table.HeaderCell textAlign="right">{fmt(sumBy(holdings, t => t.currentWeight) * 100)} %</Table.HeaderCell>
-            <Table.HeaderCell textAlign="right"></Table.HeaderCell>
-            <Table.HeaderCell textAlign="right">{fmt(sumBy(finalWeight, t => t.weight) * 100)} %</Table.HeaderCell>
-          </Table.Row>
-        </Table.Footer>
-      </Table>
+                    </Table.Cell>}
+                    {isProposingMode &&
+                      <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100) + ' %'}</Table.Cell>
+                    }
+                  </Table.Row>
+              })
+            }
+          </Table.Body>
+          <Table.Footer>
+            <Table.Row>
+              {<Table.HeaderCell></Table.HeaderCell>}
+              {<Table.HeaderCell></Table.HeaderCell>}
+              <Table.HeaderCell>{lang.TOTAL}</Table.HeaderCell>
+              <Table.HeaderCell></Table.HeaderCell>
+              <Table.HeaderCell textAlign="right">{fmt(tot)} €</Table.HeaderCell>
+              <Table.HeaderCell textAlign="right">{fmt(sumBy(holdings, t => t.currentWeight) * 100)} %</Table.HeaderCell>
+              {isProposingMode && <Table.HeaderCell textAlign="right"></Table.HeaderCell>}
+              {isProposingMode && <Table.HeaderCell textAlign="right">{fmt(sumBy(finalWeight, t => t.weight) * 100)} %</Table.HeaderCell>}
+            </Table.Row>
+          </Table.Footer>
+        </Table>
+      </Transition>
     </div >
   )
 }
