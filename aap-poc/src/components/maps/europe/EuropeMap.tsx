@@ -7,7 +7,7 @@ import Italy from "./Italy";
 import Luxemburg from "./Luxemburg";
 import Austria from "./Austria";
 import Germany from "./Germany";
-import { IndicatorOptionsType } from "../../../actions/model";
+import { IndicatorOptionsType, FilterMap, filterMapItems } from "../../../actions/model";
 import { isArray } from "util";
 import { AreaValue } from "../../shared/AreaMapProps";
 import { uniqBy, countBy, sumBy } from "lodash";
@@ -26,6 +26,8 @@ export interface EuropeMapProps {
   width?: number;
   height?: number;
   isOnlyItaly?: boolean;
+  filterMap?: FilterMap;
+  onFilterChange?: (map: FilterMap, value: string) => void;
 }
 
 export interface EuropeMapState {
@@ -52,6 +54,7 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
     this.interpolateColors = this.interpolateColors.bind(this);
     this.onMapOptionsChange = this.onMapOptionsChange.bind(this);
     this.getTooltipText = this.getTooltipText.bind(this);
+    this.onEuropeMapClick = this.onEuropeMapClick.bind(this);
     this.colors = this.interpolateColors('rgb(255, 192, 77)', 'rgb(2, 2, 234)', 10);
 
     const { layout: { interpolateColors } } = props;
@@ -199,6 +202,13 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
     return ret;
   }
 
+  onEuropeMapClick(val: string, idx: number) {
+    if (this.props.filterMap && this.props.onFilterChange) {
+      this.props.onFilterChange(this.props.filterMap, val);
+    }
+    this.setState({ requestMapIndex: idx })
+  }
+
   render() {
     const { type, areaValues } = this.state.values;
 
@@ -215,22 +225,22 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
             <div style={{ height: "100%", display: 'flex', flexDirection: 'column' }}>
               <WidgetTitle size='small' title={'Key Figures Map'} shareButtons={['Image', 'Copy']} />
               <ColorsLegend type={type} values={areaValues} lang={lang} />
-                <Europe
-                  className="nations"
-                  width={'100%'}
-                  height={`100%`}
-                  paths={
-                    EuropaMap.AREA_MAP_INDEX.map((val, idx) => {
-                      const aValue = areaValues[idx];
-                      const htmlTooltip = aValue.value !== 0 ? this.getTooltipText(aValue.key, type, aValue.value) : undefined;
-                      return this.getAreaByName(val, {
-                        color: aValue.color,
-                        onClick: () => this.setState({ requestMapIndex: idx }),
-                        htmlTooltip
-                      })
+              <Europe
+                className="nations"
+                width={'100%'}
+                height={`100%`}
+                paths={
+                  EuropaMap.AREA_MAP_INDEX.map((val, idx) => {
+                    const aValue = areaValues[idx];
+                    const htmlTooltip = aValue.value !== 0 ? this.getTooltipText(aValue.key, type, aValue.value) : undefined;
+                    return this.getAreaByName(val, {
+                      color: aValue.color,
+                      onClick: () => this.onEuropeMapClick(val, idx),
+                      htmlTooltip
                     })
-                  }
-                />
+                  })
+                }
+              />
               <MapOptions onChange={e => this.onMapOptionsChange(e)} lang={lang} />
               <ReactTooltip html type='info' delayShow={600} place="bottom" />
             </div>
@@ -239,7 +249,14 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
 
         <Transition visible={showItaly} animation="fade" duration={350} onComplete={(_, e) => { !showItaly && this.setState(prev => ({ mapIndex: prev.requestMapIndex })) }} >
           <div style={{ width: "100%", height: "100%" }}>
-            <ItalyMap clients={this.props.clients} lang={this.props.lang} layout={this.props.layout} height="524px" />
+            <ItalyMap
+              clients={this.props.clients}
+              lang={this.props.lang}
+              layout={this.props.layout}
+              height={524}
+              filterMap={filterMapItems.Regions}
+              onFilterChange={this.props.onFilterChange}
+            />
           </div>
         </Transition>
       </div>

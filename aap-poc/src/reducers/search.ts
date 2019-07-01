@@ -3,6 +3,7 @@ import { searchClientSuccess, logoutSuccess } from '../actions/index';
 import * as Model from '../actions/model';
 import { getAgentViewsFromClients } from '../_db/utils';
 import { calculateAlertHistory } from '../_db/common/radarUtils';
+import { arrayHasValue } from '../commonUtils';
 
 export interface State {
   result: {
@@ -60,14 +61,21 @@ export default (state: State = defaultState, action: any): State => {
 };
 
 export const getIsOnlyItaly = (state: State, uid: string) => {
-  const x = getSearchParms(state, uid);
-  const countries = x && x['countries'];
+  const params = getSearchParms(state, uid);
+  const countries = params && params['countries'];
   var ret = false;
   if (countries) {
     ret = countries.length === 1 && countries[0] === 'Italy';
   }
   return ret;
 }
+
+export const getIsSearchActive = (state: State, uid: string, searchProp: 'countries' | 'regions', value: string) => {
+  const params = getSearchParms(state, uid);
+  const countries = params && params[searchProp];
+  return countries && arrayHasValue(countries, value);
+}
+
 export const getSearchResult = (state: State, uid: string) => state.result[uid];
 export const getSearchFilter = (state: State, uid: string) => state.filter[uid];
 export const getAgentView = (state: State, uid: string) => state.agentView[uid];
