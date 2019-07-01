@@ -33,15 +33,16 @@ export const Holdings = (props: Props) => {
   const [changingSecurity, setChangingSecurity] = React.useState<string | undefined>(undefined);
   const [mode, setMode] = React.useState<'Weight' | 'Quantity' | 'Amount'>('Weight');
   //const [holdings, setHoldings] = React.useState(props.holdings);
-  const [currentHolding, setCurrentHolding] = React.useState<StrategyItem | undefined>(undefined);
+  const [currentHolding, setCurrentHolding] = React.useState<{ item: StrategyItem, index: number } | undefined>(undefined);
   const { onChange } = props;
 
   const handleItemChanged = (item: StrategyItem, ix: number) => {
     let holdingsCopy = [...props.holdings];
     holdingsCopy[ix] = item;
-    const originalValue = props.holdings.find(i => i.security.IsinCode === item.security.IsinCode);
-    const changed = originalValue === undefined || originalValue.suggestedDelta !== item.suggestedDelta || originalValue.suggestionAccepted !== item.suggestionAccepted;
-    props.onChange(holdingsCopy);
+    //const originalValue = props.holdings.find(i => i.security.IsinCode === item.security.IsinCode);
+    //const changed = originalValue === undefined || originalValue.suggestedDelta !== item.suggestedDelta || originalValue.suggestionAccepted !== item.suggestionAccepted;
+    setCurrentHolding(undefined);
+    onChange(holdingsCopy);
   }
 
   const handleAcceptAll = (accept: boolean) => {
@@ -138,7 +139,15 @@ export const Holdings = (props: Props) => {
           visible
         />
       }
-
+      {
+        currentHolding && <WeightChange
+          item={currentHolding.item}
+          onCancel={() => setCurrentHolding(undefined)}
+          onChange={(item) => {
+            handleItemChanged(item, currentHolding.index);
+          }}
+        />
+      }
       <Menu size='mini'>
         <Menu.Item onClick={props.onShowModel}  ><Icon name="table" />Model</Menu.Item>
         <Menu.Item onClick={() => setAddingSecurity(true)} >
@@ -232,33 +241,27 @@ export const Holdings = (props: Props) => {
                     <div style={{ display: 'flex', height: '20px' }}>
                       <div style={{ flex: 2, cursor: 'pointer' }}>
                         <div
-                          onClick={() => setCurrentHolding(t)}
-                          style={proposalStyle(t.suggestionAccepted, t.suggestedDelta>0)}
-                          >
+                          onClick={() => setCurrentHolding({item:t, index:i})}
+                          style={proposalStyle(t.suggestionAccepted, t.suggestedDelta > 0)}
+                        >
                           {t.suggestedDelta > 0 ? '+' : ''} {fmt(t.suggestedDelta * 100)}
                         </div>
 
                       </div>
+                      {/*
                       <div style={{ flex: 1 }}>
-                        {!t.isCash && t.suggestedDelta !== 0 && <Icon
-                          style={{ cursor: 'pointer' }}
-                          name={t.suggestionAccepted ? 'check' : 'square outline'}
-                          onClick={() => {
-                            handleItemChanged({ ...t, suggestionAccepted: !t.suggestionAccepted }, i);
+                        {!t.isCash && t.suggestedDelta !== 0 && <Checkbox
+
+                          style={{ cursor: 'pointer', backgroundColor: 'black' }}
+                          checked={t.suggestionAccepted}
+                          onChange={(a, b) => {
+                            handleItemChanged({ ...t, suggestionAccepted: b.checked === true }, i);
                           }} />}
 
                       </div>
+                      */}
                     </div>
-                    {
-                      currentHolding && <WeightChange
-                        item={currentHolding}
-                        onCancel={() => setCurrentHolding(undefined)}
-                        onChange={(item) => {
-                          setCurrentHolding(undefined);
-                          props.onChange([...holdings.splice(0, i), item]);
-                        }}
-                      />
-                    }
+
 
                   </Table.Cell>
                   {
@@ -296,10 +299,10 @@ const holdingsSort = (a: StrategyItem, b: StrategyItem) => {
 }
 
 
-const proposalStyle = (accepted:boolean, positive:boolean):React.CSSProperties => {
-  let style:React.CSSProperties = accepted ? { fontWeight: 'bold' } : { color: 'lightgrey' };
-  if ( accepted) {
-    style.color= positive ? 'lightgreen': 'red';
+const proposalStyle = (accepted: boolean, positive: boolean): React.CSSProperties => {
+  let style: React.CSSProperties = accepted ? { fontWeight: 'bold' } : { color: 'lightgrey' };
+  if (accepted) {
+    style.color = positive ? 'lightgreen' : 'red';
   }
   return style;
 }
