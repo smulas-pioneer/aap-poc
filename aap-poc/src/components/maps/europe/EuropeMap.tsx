@@ -22,7 +22,7 @@ const ReactTooltip = require('react-tooltip');
 export interface EuropeMapProps {
   lang: LangDictionary,
   layout: ConfigLayout,
-  clients: Client[] 
+  clients: Client[]
   width?: number;
   height?: string | number;
   isOnlyItaly?: boolean;
@@ -226,7 +226,7 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
         <Transition
           visible={showEurope && !this.state.europeAnimationEnd}
           animation='vertical flip'
-          duration={1000}
+          duration={300}
           onComplete={(_, e) => {
             this.setState(prev => ({ mapIndex: prev.requestMapIndex, europeAnimationEnd: showItaly || false }))
           }} >
@@ -252,6 +252,7 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
                       htmlTooltip
                     })
                   })
+
                 }
               />
               <MapOptions onChange={e => this.onMapOptionsChange(e)} lang={lang} />
@@ -263,7 +264,7 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
         <Transition
           visible={showItaly && this.state.europeAnimationEnd}
           animation="vertical flip"
-          duration={1000}
+          duration={300}
           onComplete={(_, e) => {
             this.setState(prev => ({ mapIndex: prev.requestMapIndex, europeAnimationEnd: !showEurope }))
           }} >
