@@ -201,12 +201,13 @@ export const Holdings = (props: Props) => {
       <Table striped compact size="small">
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell style={{ width: '10px' }} ></Table.HeaderCell>
+            <Table.HeaderCell style={{ width: '6px' }} ></Table.HeaderCell>
+            <Table.HeaderCell style={{ width: '6px' }} ></Table.HeaderCell>
             <Table.HeaderCell >{lang.SECURITY_NAME}</Table.HeaderCell>
             <Table.HeaderCell width={1} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
             <Table.HeaderCell width={2} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
             <Table.HeaderCell width={1} textAlign="right">{lang.WEIGHT}</Table.HeaderCell>
-            <Table.HeaderCell width={2} textAlign="right">{lang.PROPOSE}
+            <Table.HeaderCell width={2} textAlign="left">{lang.PROPOSE}
             </Table.HeaderCell>
             <Table.HeaderCell width={2} textAlign="right">{lang.FINAL_WEIGHT}</Table.HeaderCell>
           </Table.Row>
@@ -222,31 +223,32 @@ export const Holdings = (props: Props) => {
               return (!t.newSecurity && t.currentQuantity === 0 && t.suggestedDelta === 0 && !t.isCash) ? null :
                 <Table.Row key={i}>
                   <Table.Cell>
-                    {t.security.blacklisted && <Icon size="large" color="black" name='thumbs down' />}
-                    {t.security.pushed && <Icon size="large" color="green" name='thumbs up' />}
-                    {t.clientFavorites && <Icon size="large" color="red" name='heart' />}
+                    {t.security.blacklisted && <Icon color="black" name='thumbs down' />}
+                    {t.security.pushed && <Icon color="green" name='thumbs up' />}
+                    {t.clientFavorites && <Icon color="red" name='heart' />}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {!t.isCash && <Icon name="exchange" style={{ cursor: 'pointer' }} />}
                   </Table.Cell>
                   <Table.Cell >
-                    <p style={{ padding: 0, margin: 0 }}><b>{t.security.SecurityName}</b></p>
+
+                    <p style={{ padding: 0, margin: 0 }}> {' '}<b>{t.security.SecurityName}</b></p>
                     <p style={{ padding: 0, margin: 0, color: 'lightgrey' }}><small>{t.security.IsinCode} - <i>{t.security.MacroAssetClass}</i></small> </p>
                   </Table.Cell>
                   <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
                   <Table.Cell textAlign="right">{show && fmt(t.currentAmount) + ' €'} </Table.Cell>
                   <Table.Cell textAlign="right">{show && fmt(t.currentWeight * 100, 0) + ' %'} </Table.Cell>
                   <Table.Cell textAlign="right">
-                    <div style={{ display: 'flex', height: '20px' }}>
-                      <div style={{ flex: 2, cursor: 'pointer' }}>
-                        <div
-                          onClick={() => setCurrentHolding({ item: t, index: i })}
-                          style={proposalStyle(t.suggestionAccepted, t.suggestedDelta > 0)}
-                        >
-                          {t.suggestedDelta > 0 ? '+' : ''} {fmt(t.suggestedDelta * 100)} {t.suggestedDelta !== 0 && ' %'}
-                        </div>
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
 
+                      <div
+                        onClick={() => setCurrentHolding({ item: t, index: i })}
+                        style={{ ...proposalStyle(t.suggestionAccepted, t.suggestedDelta > 0), flex: 1 }}
+                      >
+                        {t.suggestedDelta > 0 ? '+' : ''} {fmt(t.suggestedDelta * 100)} {t.suggestedDelta !== 0 && ' %'}
                       </div>
+                      <Icon style={{ cursor: 'pointer', flex: 1 }} name="pencil" />
                     </div>
-
-
                   </Table.Cell>
                   {
                     <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100) + ' %'}</Table.Cell>
@@ -257,6 +259,7 @@ export const Holdings = (props: Props) => {
         </Table.Body>
         <Table.Footer>
           <Table.Row>
+            <Table.HeaderCell></Table.HeaderCell>
             <Table.HeaderCell></Table.HeaderCell>
             <Table.HeaderCell>{lang.TOTAL}</Table.HeaderCell>
             <Table.HeaderCell></Table.HeaderCell>
