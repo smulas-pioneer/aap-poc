@@ -20,7 +20,12 @@ const getSuggestion1 = (position: StrategyItem[], axes: RadarStrategyParm, calcu
 
     let newPos = forced
       ? forced.map(p => {
-        return { ...p, suggestionAccepted: position.find(r => r.security.IsinCode === p.security.IsinCode)!.suggestionAccepted }
+        const strategy = position.find(r => r.security.IsinCode === p.security.IsinCode);
+        if ( strategy ) {
+          return { ...p, suggestionAccepted: strategy.suggestionAccepted }
+        }
+      console.log('ERROR', strategy,forced.map(i=>i.security.IsinCode), position.map(i=>i.security.IsinCode),p.security.IsinCode);
+        return p;
       })
       : position;
     const w = suggestedPositionExCash(newPos)

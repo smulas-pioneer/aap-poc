@@ -139,7 +139,6 @@ const useValue = (value: number, tag: string) => {
 
   return {
         setValue: (value:string|number)=>{
-        console.log(`set ${tag} = ${value}`)
       setStringValue(value.toString());
     } ,
     stringValue,

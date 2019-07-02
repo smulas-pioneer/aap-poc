@@ -53,6 +53,7 @@ export const Holdings = (props: Props) => {
         ...h,
         suggestionAccepted: h.suggestedDelta !== 0 ? accept : false,
       }));
+
     const changedIsinNewValue = holdingsCopy.filter(i => {
       const pr = props.holdings.find(h => h.security.IsinCode === i.security.IsinCode);
       return pr === undefined || pr.suggestedDelta !== i.suggestedDelta || pr.suggestionAccepted !== i.suggestionAccepted;
@@ -210,7 +211,7 @@ export const Holdings = (props: Props) => {
           <Table.Header>
             <Table.Row>
               {<Table.HeaderCell style={{ width: '6px' }} ></Table.HeaderCell>}
-              {<Table.HeaderCell style={{ width: '6px' }} ></Table.HeaderCell>}
+              {isProposingMode && <Table.HeaderCell style={{ width: '6px' }} ></Table.HeaderCell>}
               <Table.HeaderCell >{lang.SECURITY_NAME}</Table.HeaderCell>
               <Table.HeaderCell width={1} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
               <Table.HeaderCell width={2} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
@@ -221,63 +222,65 @@ export const Holdings = (props: Props) => {
           </Table.Header>
           <Table.Body style={{ overflow: 'visible' }}>
             {
-              holdings.sort(holdingsSort).map((t, i) => {
-                const show = t.currentQuantity !== 0;
-                const suggWeight = finalWeight[i].weight
-                const factor = mode === 'Weight' ? 1
-                  : mode === 'Quantity' ? tot / t.currentPrice / 100
-                    : tot / 100;
-                return (!t.newSecurity && t.currentQuantity === 0 && t.suggestedDelta === 0 && !t.isCash) ? null :
-                  <Table.Row key={i}>
-                    {<Table.Cell>
-                      {t.security.blacklisted && <Icon size="large" color="black" name='thumbs down' />}
-                      {t.security.pushed && <Icon size="large" color="green" name='thumbs up' />}
-                      {t.clientFavorites && <Icon size="large" color="red" name='heart' />}
-                    </Table.Cell>}
-                    {<Table.Cell>
-                      {!t.isCash && <Icon name="exchange" style={{ cursor: 'pointer' }} />}
-                    </Table.Cell>}
-                    <Table.Cell >
+              holdings
+                //  .filter(holdingsFilter(isProposingMode))
+                .sort(holdingsSort)
+                .map((t, i) => {
+                  const show = t.currentQuantity !== 0;
+                  const suggWeight = finalWeight[i].weight
+                  const factor = mode === 'Weight' ? 1
+                    : mode === 'Quantity' ? tot / t.currentPrice / 100
+                      : tot / 100;
+                  return (!t.newSecurity && t.currentQuantity === 0 && t.suggestedDelta === 0 && !t.isCash) ? null :
+                    <Table.Row key={i}>
+                      {<Table.Cell>
+                        {t.security.blacklisted && <Icon size="large" color="black" name='thumbs down' />}
+                        {t.security.pushed && <Icon size="large" color="green" name='thumbs up' />}
+                        {t.clientFavorites && <Icon size="large" color="red" name='heart' />}
+                      </Table.Cell>}
+                      {isProposingMode && < Table.Cell>
+                        {!t.isCash && <Icon name="exchange" style={{ cursor: 'pointer' }} />}
+                      </Table.Cell>}
+                      <Table.Cell >
 
-                      <p style={{ padding: 0, margin: 0 }}> {' '}<b>{t.security.SecurityName}</b></p>
-                      <p style={{ padding: 0, margin: 0, color: 'lightgrey' }}><small>{t.security.IsinCode} - <i>{t.security.MacroAssetClass}</i></small> </p>
-                    </Table.Cell>
-                    <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
-                    <Table.Cell textAlign="right">{show && fmt(t.currentAmount) + ' €'} </Table.Cell>
-                    <Table.Cell textAlign="right">{show && fmt(t.currentWeight * 100, 0) + ' %'} </Table.Cell>
-                    {isProposingMode && <Table.Cell textAlign="right">
-                      <div style={{ display: 'flex', flexDirection: 'row' }}>
+                        <p style={{ padding: 0, margin: 0 }}> {' '}<b>{t.security.SecurityName}</b></p>
+                        <p style={{ padding: 0, margin: 0, color: 'lightgrey' }}><small>{t.security.IsinCode} - <i>{t.security.MacroAssetClass}</i></small> </p>
+                      </Table.Cell>
+                      <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
+                      <Table.Cell textAlign="right">{show && fmt(t.currentAmount) + ' €'} </Table.Cell>
+                      <Table.Cell textAlign="right">{show && fmt(t.currentWeight * 100, 0) + ' %'} </Table.Cell>
+                      {isProposingMode && <Table.Cell textAlign="right">
+                        <div style={{ display: 'flex', flexDirection: 'row' }}>
 
-                        <div
-                          onClick={() => setCurrentHolding({ item: t, index: i })}
-                          style={{ ...proposalStyle(t.suggestionAccepted, t.suggestedDelta > 0), flex: 1 }}
-                        >
-                          {t.suggestedDelta > 0 ? '+' : ''} {fmt(t.suggestedDelta * 100)} {t.suggestedDelta !== 0 && ' %'}
+                          <div
+                            onClick={() => setCurrentHolding({ item: t, index: i })}
+                            style={{ ...proposalStyle(t.suggestionAccepted, t.suggestedDelta > 0), flex: 1 }}
+                          >
+                            {t.suggestedDelta > 0 ? '+' : ''} {fmt(t.suggestedDelta * 100)} {t.suggestedDelta !== 0 && ' %'}
+                          </div>
+
+                          <Popup wide trigger={<Icon style={{ cursor: 'pointer', flex: 1 }} name="pencil" />} on='click'>
+                            <PopoverChange tot={tot}
+                              item={t}
+                              onCancel={() => setCurrentHolding(undefined)}
+                              onChange={(item) => {
+                                handleItemChanged(item, i);
+                              }} />
+                          </Popup>
+
                         </div>
-
-                        <Popup wide trigger={<Icon style={{ cursor: 'pointer', flex: 1 }} name="pencil" />} on='click'>
-                          <h6></h6>
-                          <PopoverChange tot={tot}
-                            item={t}
-                            onCancel={() => setCurrentHolding(undefined)}
-                            onChange={(item) => {
-                              handleItemChanged(item, i);
-                            }} />
-                        </Popup>
-
-                      </div>
-                    </Table.Cell>}
-                    {isProposingMode &&
-                      <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100) + ' %'}</Table.Cell>
-                    }
-                  </Table.Row>
-              })
+                      </Table.Cell>}
+                      {isProposingMode &&
+                        <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100) + ' %'}</Table.Cell>
+                      }
+                    </Table.Row>
+                })
             }
           </Table.Body>
           <Table.Footer>
             <Table.Row>
               {<Table.HeaderCell></Table.HeaderCell>}
-              {<Table.HeaderCell></Table.HeaderCell>}
+              {isProposingMode && <Table.HeaderCell></Table.HeaderCell>}
               <Table.HeaderCell>{lang.TOTAL}</Table.HeaderCell>
               <Table.HeaderCell></Table.HeaderCell>
               <Table.HeaderCell textAlign="right">{fmt(tot)} €</Table.HeaderCell>
@@ -296,6 +299,11 @@ const holdingsSort = (a: StrategyItem, b: StrategyItem) => {
   if (a.isCash) return -1;
   if (b.isCash) return 1;
   return a.security.MacroAssetClass.localeCompare(b.security.MacroAssetClass);
+}
+
+const holdingsFilter = (isProposalMode: boolean) => (h: StrategyItem) => {
+  if (isProposalMode) return true;
+  return h.currentWeight !== 0 || h.isCash;
 }
 
 const proposalStyle = (accepted: boolean, positive: boolean): React.CSSProperties => {

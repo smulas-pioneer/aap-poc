@@ -262,19 +262,19 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
     const panes = [
       {
         menuItem: this.renderTabItem('DASHBOARD', 'pie graph', 'green'),
-        render: () => <Tab.Pane as={"div"} style={style} content={this.renderFilterGraphics(data.result)} />
+        render: () => <Tab.Pane as={"div"} style={style} content={<div style={{ padding: 4 }}>{this.renderFilterGraphics(data.result)} </div>} />
       },
       {
         menuItem: this.renderTabItem('MY_PORTFOLIOS', 'users', 'blue'),
-        render: () => <Tab.Pane as={"div"} style={style} content={<ManagerView uid={uid} />} />
+        render: () => <Tab.Pane as={"div"} style={style} content={<div style={{ padding: 10 }}> <ManagerView uid={uid} /></ div>} />
       },
       {
         menuItem: this.renderTabItem('MY_ALERTS', 'alarm', 'red'),
-        render: () => <Tab.Pane as={"div"} style={style} content={<AlertsView manager uid={uid} hideGraphs />} />
+        render: () => <Tab.Pane as={"div"} style={style} content={<div style={{ padding: 10 }}><AlertsView manager uid={uid} hideGraphs /></div>} />
       },
       {
         menuItem: this.renderTabItem('MY_CLIENTS', 'users', 'blue'),
-        render: () => <Tab.Pane as={"div"} style={style} content={<ClientsView uid={uid} />} />
+        render: () => <Tab.Pane as={"div"} style={style} content={<div style={{ padding: 10 }}><ClientsView uid={uid} /></div>} />
       }
     ]
 

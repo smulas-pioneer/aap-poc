@@ -123,11 +123,10 @@ export const ClientView = conn.PureCompo(props => {
 
 
   const handleOnChange = (strategy: StrategyItem[]) => {
-    console.log(strategy);
+    //console.log(strategy);
     if (strategy.length > 0) {
       dispatch({ firstSimulation: false, processing: undefined, somethingIsChanged: false });
       setTimeout(() => {
-        console.log('calculate...');
         props.getSuggestions({ id: props.client!.id, position: strategy, axes, calculateFromAxes: false });
       }, 1000);
     }
@@ -320,9 +319,6 @@ export const ClientView = conn.PureCompo(props => {
         <div style={{ opacity: 0.9, position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'whitesmoke' }}>
           <Loader style={{ opacity: 1 }} active size="huge">{processing}</Loader>
         </div>}
-      <pre>
-        {JSON.stringify(stateStrategy, null, 2)}
-      </pre>
     </div>
   )
 });
