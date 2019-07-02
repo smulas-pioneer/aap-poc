@@ -7,7 +7,7 @@ import { SemanticICONS, Statistic, Grid, Segment, SemanticCOLORS, Icon, Menu, Ta
 import { filterMapItems, FilterMap, FilterMapTypes } from '../actions/model';
 import { TopClient } from './topClientView/index';
 import { CustomPieChart } from './chart/CustomCharts';
-import { AdvancedGrid, OverflowColumn } from './shared/GridOverflow';
+import { AdvancedGrid } from './shared/GridOverflow';
 import { ManagerView } from './managerView/managerView';
 import { AlertsView } from './alertsView/AlertsView';
 import { formatAua, formatNumber } from '../_db/utils';
