@@ -96,12 +96,17 @@ export const ClientView = conn.PureCompo(props => {
         radar
       });
     }
-  }, [strategy]);
+  },
+    // eslint-disable-next-line
+    [strategy]
+  );
 
   React.useEffect(() => {
     getSuggestions({ id, position: stateStrategy, axes, calculateFromAxes: true });
-  }, [axes]);
-
+  },
+    // eslint-disable-next-line
+    [axes]
+  );
 
   /*
   componentWillUnmount() {
