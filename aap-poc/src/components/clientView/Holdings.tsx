@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import { StrategyItem, Security, Radar, RadarStrategyParm, ClientState } from '../../_db/interfaces';
-import { Table, Menu, Icon, Dropdown, Button, Transition, Popup } from 'semantic-ui-react';
+import { Table, Menu, Icon, Dropdown, Button, Transition, Popup, Item } from 'semantic-ui-react';
 import { LangDictionary } from '../../reducers/language/interfaces';
 import { sumBy } from 'lodash';
 import { formatNumber } from '../../_db/utils';
@@ -216,14 +216,14 @@ export const Holdings = (props: Props) => {
               <Table.HeaderCell width={1} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
               <Table.HeaderCell width={2} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
               <Table.HeaderCell width={1} textAlign="right">{lang.WEIGHT}</Table.HeaderCell>
-              {isProposingMode && <Table.HeaderCell width={2} textAlign="center">{lang.PROPOSE}</Table.HeaderCell>}
+              {isProposingMode && <Table.HeaderCell colSpan={2} width={3} textAlign="center">{lang.PROPOSE}</Table.HeaderCell>}
               {isProposingMode && <Table.HeaderCell width={2} textAlign="right">{lang.FINAL_WEIGHT}</Table.HeaderCell>}
             </Table.Row>
           </Table.Header>
           <Table.Body style={{ overflow: 'visible' }}>
             {
               holdings
-                //  .filter(holdingsFilter(isProposingMode))
+                //.filter(holdingsFilter(isProposingMode))
                 .sort(holdingsSort)
                 .map((t, i) => {
                   const show = t.currentQuantity !== 0;
@@ -232,7 +232,7 @@ export const Holdings = (props: Props) => {
                     : mode === 'Quantity' ? tot / t.currentPrice / 100
                       : tot / 100;
                   return (!t.newSecurity && t.currentQuantity === 0 && t.suggestedDelta === 0 && !t.isCash) ? null :
-                    <Table.Row key={i}>
+                    <Table.Row key={i} style={holdingsFilter(isProposingMode)(t) ?{}:{display:'none'}}>
                       {<Table.Cell>
                         {t.security.blacklisted && <Icon size="large" color="black" name='thumbs down' />}
                         {t.security.pushed && <Icon size="large" color="green" name='thumbs up' />}
@@ -244,32 +244,36 @@ export const Holdings = (props: Props) => {
                       <Table.Cell >
 
                         <p style={{ padding: 0, margin: 0 }}> {' '}<b>{t.security.SecurityName}</b></p>
-                        <p style={{ padding: 0, margin: 0, color: 'lightgrey' }}><small>{t.security.IsinCode} - <i>{t.security.MacroAssetClass}</i></small> </p>
+                        <p style={{ padding: 0, margin: 0, color: 'lightgrey'}}><small>{t.security.IsinCode} - <i>{t.security.MacroAssetClass}</i></small> </p>
                       </Table.Cell>
                       <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
                       <Table.Cell textAlign="right">{show && fmt(t.currentAmount) + ' €'} </Table.Cell>
                       <Table.Cell textAlign="right">{show && fmt(t.currentWeight * 100, 0) + ' %'} </Table.Cell>
                       {isProposingMode && <Table.Cell textAlign="right">
-                        <div style={{ display: 'flex', flexDirection: 'row' }}>
 
-                          <div
-                            onClick={() => setCurrentHolding({ item: t, index: i })}
-                            style={{ ...proposalStyle(t.suggestionAccepted, t.suggestedDelta > 0), flex: 1 }}
-                          >
-                            {t.suggestedDelta > 0 ? '+' : ''} {fmt(t.suggestedDelta * 100)} {t.suggestedDelta !== 0 && ' %'}
-                          </div>
-
-                          <Popup wide trigger={<Icon style={{ cursor: 'pointer', flex: 1 }} name="pencil" />} on='click'>
-                            <PopoverChange tot={tot}
-                              item={t}
-                              onCancel={() => setCurrentHolding(undefined)}
-                              onChange={(item) => {
-                                handleItemChanged(item, i);
-                              }} />
-                          </Popup>
-
+                        <div
+                          style={{ ...proposalStyle(t.suggestionAccepted, t.suggestedDelta > 0), flex: 1 }}
+                        >
+                          {t.suggestedDelta > 0 ? '+' : ''} {fmt(t.suggestedDelta * 100)} {t.suggestedDelta !== 0 && ' %'}
                         </div>
                       </Table.Cell>}
+                      {isProposingMode && <Table.Cell verticalAlign="middle">
+                        {!t.isCash && !t.clientFavorites &&
+                          <Popup inverted wide style={{ margin: 0, padding: 0 }} trigger={<Icon style={{ cursor: 'pointer', flex: 1 }} name="pencil" />} on='click'>
+                            <div>
+                              <PopoverChange tot={tot}
+                                item={t}
+                                onCancel={() => setCurrentHolding(undefined)}
+                                onChange={(item) => {
+                                  handleItemChanged(item, i);
+                                }} />
+                            </div>
+                          </Popup>}
+                        {/*
+                        <Checkbox checked={t.suggestionAccepted} onChange={(a, b) => handleItemChanged({ ...t, suggestionAccepted: b.checked || false }, i)} />
+                        */}
+                      </Table.Cell>}
+
                       {isProposingMode &&
                         <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100) + ' %'}</Table.Cell>
                       }
@@ -298,7 +302,7 @@ export const Holdings = (props: Props) => {
 const holdingsSort = (a: StrategyItem, b: StrategyItem) => {
   if (a.isCash) return -1;
   if (b.isCash) return 1;
-  return a.security.MacroAssetClass.localeCompare(b.security.MacroAssetClass);
+  return Math.sign( b.currentWeight- a.currentWeight);// >  a.security.MacroAssetClass.localeCompare(b.security.MacroAssetClass);
 }
 
 const holdingsFilter = (isProposalMode: boolean) => (h: StrategyItem) => {
@@ -310,6 +314,8 @@ const proposalStyle = (accepted: boolean, positive: boolean): React.CSSPropertie
   let style: React.CSSProperties = accepted ? { fontWeight: 'bold' } : { color: 'lightgrey' };
   if (accepted) {
     style.color = positive ? 'lightgreen' : 'red';
+  } else {
+    style.textDecoration = 'line-through'
   }
   return style;
 }
