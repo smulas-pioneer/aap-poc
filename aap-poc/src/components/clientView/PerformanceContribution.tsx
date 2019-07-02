@@ -17,8 +17,6 @@ const Colors = [
 
 interface PerformanceContributionProps {
     data: any[];
-    width?: number;
-    height?: number;
     showLegend?: boolean
     lang: LangDictionary;
 }
@@ -47,19 +45,16 @@ export class PerformanceContributionGraph extends React.Component<PerformanceCon
             ids: Object.keys(ids)
         };
     }
-
     render() {
         const data = this.props.data;
-        return <ResponsiveContainer width="100%" height={this.props.height || 400}>
-            <BarChart width={this.props.width || 500} height={this.props.height || 400} data={data}>
+        return <ResponsiveContainer width="100%" height="100%">
+            <BarChart width={500} height={600} data={data}>
                 <XAxis dataKey="year" />
-                <YAxis />
+                <YAxis width={40}/>
                 <CartesianGrid strokeDasharray="3 3" />
                 <Tooltip formatter={(d: number) => perc(d) + '%'} />
                 <Legend />
-                {
-                    this.state.ids.map((d, i) => <Bar key={i} dataKey={d} stackId="a" fill={Colors[i]} />)
-                }
+                {this.state.ids.map((d, i) => <Bar key={i} dataKey={d} stackId="a" fill={Colors[i]} />)}
             </BarChart>
         </ResponsiveContainer>
     }

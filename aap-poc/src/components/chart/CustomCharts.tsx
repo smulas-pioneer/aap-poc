@@ -154,7 +154,7 @@ export class CustomPieChart extends React.Component<CustomPieProps, CustomChartS
             <CustomResponsiveContainer height={responsiveHeight || height}>
                 <PieChart width={width} height={height}>
                     {legend && <Legend layout="horizontal" verticalAlign="bottom" payload={legendPayload} />}
-                    <Pie {...pieProps} onClick={this.onCellClick} cx={'50%'} cy={'50%'} innerRadius={'55%'} outerRadius={'85%'} label={caption && this.renderLabel} labelLine={false} >
+                    <Pie {...pieProps} onClick={this.onCellClick} cx={'50%'} cy={'50%'} innerRadius={'60%'} outerRadius={'90%'} label={caption && this.renderLabel} labelLine={false} >
                         {cellPayload}
                     </Pie>
                 </ PieChart >
@@ -191,7 +191,7 @@ export class CustomComposedChart extends React.Component<CustomChartProps, Custo
     
         return (
             <CustomResponsiveContainer height={responsiveHeight || height}>
-                <ComposedChart layout="vertical" height={height} width={width} data={data} margin={{ top: 5, right: 5, bottom: 5, left: 5 }} >
+                <ComposedChart layout="vertical" height={height} width={width} data={data}  >
                     <XAxis type="number" hide={!caption} tick={false} />
                     <YAxis dataKey={nameKey} type="category" width={70} hide={!caption}/>
                     {/* <CartesianGrid stroke='#f5f5f5' /> */}
