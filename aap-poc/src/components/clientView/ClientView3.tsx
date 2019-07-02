@@ -263,7 +263,7 @@ export const ClientView = conn.PureCompo(props => {
             </Grid.Column>
 
             {/* <Grid.Column width={1}></Grid.Column> */}
-            <Grid.Column className="col-user-menu">
+            <Grid.Column className="col-user-menu" style={{borderLeft:'solid thin black'}}>
               {props.children}
             </Grid.Column>
           </Grid>
@@ -326,7 +326,7 @@ export const ClientView = conn.PureCompo(props => {
                 <WidgetTitle title={lang.CLIENT_EVENT_HISTORY} />
                  <ClientHistory lang={lang} history={history} />
              </Segment>
-           
+
         </AdvancedGrid>
 */}
 
