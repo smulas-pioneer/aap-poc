@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Modal, Segment, Input, Button, Message, Grid, Icon, Checkbox, Item, } from 'semantic-ui-react';
+import { Input, Button, Checkbox, } from 'semantic-ui-react';
 import { StrategyItem } from '../../_db/interfaces';
 import { formatNumber } from '../../_db/utils';
 import { English } from '../../reducers/language/language_english';
@@ -16,11 +16,6 @@ type PopoverChangeProps = {
 export const PopoverChange = (props: PopoverChangeProps) => {
   const suggestion = useValue(props.item.suggestedDelta * 100, 'suggestion');
   const [enabled, setEnabled] = React.useState(props.item.suggestionAccepted);
-
-  const error = { ...suggestion.error };
-  const hasError = Object.keys(error).some(k => error[k] !== undefined);
-
-
   const sendChange = (value: number) => {
     props.onChange({
       ...props.item,
@@ -29,10 +24,8 @@ export const PopoverChange = (props: PopoverChangeProps) => {
     })
   }
 
-
   const onChangeSuggestion = (value: number | string, propagate = false) => {
     suggestion.setValue(value);
-
     if (propagate && !isNaN(value as any)) {
       sendChange(parseFloat(value.toString()));
     }
@@ -40,13 +33,10 @@ export const PopoverChange = (props: PopoverChangeProps) => {
 
   const isChanged = enabled !== props.item.suggestionAccepted || props.item.suggestedDelta !== suggestion.value / 100;
 
-
   return <div style={{ display: 'flex', flexDirection: 'column', padding: 5 }}>
-    <div style={{ flex: 1, display:'flex' , alignContent:'center'}}>
-      <span style={{flex:1,marginRight:3}}>Enabled:</span>
-      <a style={{flex:2, cursor:'pointer'}} onClick={()=>setEnabled(!enabled)}>
-        <Checkbox checked={enabled} onChange={(a,b)=>setEnabled(b.checked||false)} />
-      </a>
+    <div style={{ flex: 1, display: 'flex', alignContent: 'center' }}>
+      <span style={{ flex: 1, marginRight: 3 }}>Enabled:</span>
+      <Checkbox checked={enabled} onChange={(a, b) => setEnabled(b.checked || false)} />
     </div>
 
     <div style={{ flex: 1 }}>
