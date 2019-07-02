@@ -23371,13 +23371,13 @@ ol.ui.horizontal.list li:before {
 }
 
 .ui.sortable.table thead th:hover {
-    background: rgba(0, 0, 0, .05);
-    color: rgba(0, 0, 0, .8)
+    background: rgba(95, 119, 136, .5);
+    color: #fff
 }
 
 .ui.sortable.table thead th.sorted {
-    background: rgba(0, 0, 0, .05);
-    color: rgba(0, 0, 0, .95)
+    background: #191e24;
+    color: #fff
 }
 
 .ui.sortable.table thead th.sorted:after {
@@ -23385,8 +23385,8 @@ ol.ui.horizontal.list li:before {
 }
 
 .ui.sortable.table thead th.sorted:hover {
-    background: rgba(0, 0, 0, .05);
-    color: rgba(0, 0, 0, .95)
+    background: rgba(95, 119, 136, .5);
+    color: #fff
 }
 
 .ui.inverted.sortable.table thead th.sorted {
