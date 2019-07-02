@@ -9,6 +9,7 @@ var { Radar, Legend, ResponsiveContainer, RadarChart, PolarAngleAxis, PolarRadiu
 
 export const RadarGraph = (props: {
   data: RadarModel,
+  hideProposal?: boolean,
   lang: LangDictionary,
   axes?: RadarStrategyParm,
   width: number,
@@ -114,10 +115,10 @@ export const RadarGraph = (props: {
       <RadarChart cx='50%' cy='50%' startAngle={60} endAngle={420} width={600} height={600} data={data} outerRadius={'85%'} isAnimationActive startWithAnimation  >
         <Legend height={1} verticalAlign="bottom" />
         {/*<Radar name="Limits" dataKey="limits" stroke="blue" fill="#D10505" fillOpacity={0} />*/}
-        <Radar name="Actuals" dataKey="actual" stroke="#54C8FF" fill="#54C8FF" fillOpacity={1 } dot />
-        <Radar name="Proposed" dataKey="proposed" stroke="green" fill="green" fillOpacity={0.8} dot />
+        <Radar name="Actuals" dataKey="actual" stroke="#54C8FF" fill="#54C8FF" fillOpacity={1} dot />
+        {props.hideProposal !== true && <Radar name="Proposed" dataKey="proposed" stroke="green" fill="green" fillOpacity={0.8} dot />}
         <Radar name="Guidelines" dataKey="guideLines" stroke="red" strokeWidth={3} fill="# 00f" fillOpacity={0} />
-        <PolarGrid stroke="grey"/>
+        <PolarGrid stroke="grey" />
         <PolarRadiusAxis angle={30} />
         <PolarAngleAxis dataKey="subject" tick={<CustomizedShape axes={props.axes} names={alertNames} colors={alertColors} onClickShape={props.onClickShape} />} />
       </RadarChart>

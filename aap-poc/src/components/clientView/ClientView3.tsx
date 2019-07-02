@@ -21,8 +21,7 @@ import { ClientAlert } from './ClientAlert';
 import { ClientCard } from './ClientCard';
 import { ClientHistory } from './ClientHistory';
 import { Fees } from './Fees';
-import { ClientViews } from './ClientViews';
-import { SliderGraph, SliderGraphThumb } from './SliderGraph';
+import { SliderGraph, } from './SliderGraph';
 
 const conn = appConnector<{ id: string, children: any }>()(
   (s, p) => ({
@@ -47,6 +46,7 @@ interface State {
   viewHistory: boolean,
   processing: string | undefined,
   firstSimulation: boolean,
+  hideProposal: boolean
 }
 
 const defaultState: State = {
@@ -68,6 +68,7 @@ const defaultState: State = {
   viewHistory: false,
   processing: undefined,
   firstSimulation: true,
+  hideProposal: true,
 } as State
 
 const reducer = (state: State, action: Partial<State>): State => {
@@ -175,7 +176,7 @@ export const ClientView = conn.PureCompo(props => {
         charts: radar && [
           {
             title: lang.PORTFOLIO_MONITORING,
-            chart: <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={handleAxesChange} width={700} height={413} alertsAbout={'actual'} />
+            chart: <RadarGraph hideProposal={state.hideProposal} data={radar} lang={lang} axes={axes} onClickShape={handleAxesChange} width={700} height={413} alertsAbout={'actual'} />
           }
         ]
       },
@@ -263,7 +264,7 @@ export const ClientView = conn.PureCompo(props => {
             </Grid.Column>
 
             {/* <Grid.Column width={1}></Grid.Column> */}
-            <Grid.Column className="col-user-menu" style={{borderLeft:'solid thin black'}}>
+            <Grid.Column className="col-user-menu" >
               {props.children}
             </Grid.Column>
           </Grid>
@@ -281,6 +282,8 @@ export const ClientView = conn.PureCompo(props => {
               onShowHoldings={() => dispatch({ showModel: false })}
             />}
             {!state.showModel && <Holdings
+              hideProposal={state.hideProposal}
+              setHideProposal={hideProposal => dispatch({ hideProposal })}
               clientId={client.id}
               clientState={client.clientStatus}
               lang={lang}

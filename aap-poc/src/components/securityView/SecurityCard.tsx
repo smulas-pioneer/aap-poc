@@ -39,7 +39,7 @@ export const SecurityCard = ({ security, lang }: { security: Security } & WithLa
                     </Table>
                 </Grid.Column>
                 <Grid.Column width={8}>
-                    <PerformanceChart data={p} width={300} lang={lang} version={1} />
+                    <PerformanceChart data={p}  lang={lang} version={1} />
                     <Statistic.Group size="small" widths="1">
                         <Statistic>
                             <Statistic.Value>

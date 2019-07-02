@@ -150,7 +150,7 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
     // }
 
     if (orientation === 'horizontal') return (
-      <div>
+      <div style={{ borderLeft: 'solid thin black' }}>
         <Menu >
           {/* <img alt="" style={{ width: '50px', height: '50px', padding: '4px', ...layout.logoStyle }} src={srcLogo} />
           <Menu.Item replace="true" ><Link to="/" style={{ color: '#FFFFFF', fontFamily: 'Lato', ...layout.titleStyle }} ><h2>Advisory Platform</h2></Link></Menu.Item> */}
@@ -177,7 +177,7 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
     );
 
     else if (orientation === 'vertical') return (
-      <div style={{ margin: 0 }}>
+      <div style={{ margin: 0 , borderLeft: 'solid thin black' }}>
 
         <Menu compact fluid className='menu-user' size='large' >
           {userMenuDropDown}

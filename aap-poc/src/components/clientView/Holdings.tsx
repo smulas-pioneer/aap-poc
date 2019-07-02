@@ -26,6 +26,8 @@ interface Props {
   onSomethingChanged: (value: boolean) => void;
   radar?: Radar,
   axes: RadarStrategyParm,
+  hideProposal:boolean,
+  setHideProposal: (value:boolean)=>void
 
 }
 
@@ -36,8 +38,7 @@ export const Holdings = (props: Props) => {
   //const [holdings, setHoldings] = React.useState(props.holdings);
   const [currentHolding, setCurrentHolding] = React.useState<{ item: StrategyItem, index: number } | undefined>(undefined);
   const { onChange } = props;
-  const [isProposingMode, setIsProposingMode] = React.useState(false);
-
+  const isProposingMode = !props.hideProposal;
   const handleItemChanged = (item: StrategyItem, ix: number) => {
     let holdingsCopy = [...props.holdings];
     holdingsCopy[ix] = item;
@@ -163,10 +164,10 @@ export const Holdings = (props: Props) => {
           New Cash
         </Menu.Item>
         {!isProposingMode && <Menu.Menu position="right">
-          <Menu.Item onClick={() => setIsProposingMode(true)}  ><Icon name="lightning" />Get Proposals</Menu.Item>
+          <Menu.Item onClick={() => props.setHideProposal(false)}  ><Icon name="lightning" />Get Proposals</Menu.Item>
         </Menu.Menu>}
         {isProposingMode && <Menu.Menu position="right">
-          <Menu.Item onClick={() => setIsProposingMode(false)}  ><Icon name="close" />Back</Menu.Item>
+          <Menu.Item onClick={() => props.setHideProposal(true)}  ><Icon name="close" />Back</Menu.Item>
           <ConfirmDialog
             title={lang.ORDER_LIST}
             shareButtons={['Excel', 'Copy', 'Pdf']}

@@ -1,7 +1,7 @@
 import { LangDictionary } from '../../reducers/language/interfaces';
 import * as React from 'react';
 import { Client } from '../../_db/interfaces';
-import { Grid, Statistic, Icon, SemanticCOLORS } from 'semantic-ui-react';
+import { Grid, Statistic, SemanticCOLORS } from 'semantic-ui-react';
 export const ClientCard = (props: {
   client: Client;
   lang: LangDictionary;
@@ -52,9 +52,9 @@ export const ClientCard = (props: {
           {renderColumns({ [lang.TIME_HORIZON]: client.timeHorizon })}
           {renderColumns({ [lang.RISKPROFILE]: client.clientRiskProfile })}
           {renderColumns({ [lang.MODEL]: client.modelName })}
-          {renderColumns({ ["Other Banks"]: fmt1.format(otherBanks) + "€" },true)}
-          {renderColumns({ ["Real Estate"]: fmt1.format(realEstate) + "€" },true)}
-          {renderColumns({ ["Tot. Wealth"]: fmt1.format(totalWealth) + "€" },true)}
+          {renderColumns({ "Other Banks": fmt1.format(otherBanks) + "€" },true)}
+          {renderColumns({ "Real Estate": fmt1.format(realEstate) + "€" },true)}
+          {renderColumns({ "Tot. Wealth": fmt1.format(totalWealth) + "€" },true)}
           {/*
           {renderColumns({ 'Birth Date': client.bornDate || '1972-12-21', 'Entry Date': client.lastAdvicedate, 'Segment': client.segment, 'Branch': client.branch })}
           {renderColumns({ 'Address': client.address.streetAddress, 'City': client.address.city, 'Tel': client.phone, 'Email': client.email })}
