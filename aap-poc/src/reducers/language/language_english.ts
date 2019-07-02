@@ -84,6 +84,7 @@ export const English: LanguageState = {
     ALLOCATION: 'Allocation',
     TURNOVER: 'Turnover',
     TIME_HORIZON: "Horizon",
+    COUNTRY: "Country",
     REGION: "Region",
     CITY: "City",
     BRANCH: "Branch",
