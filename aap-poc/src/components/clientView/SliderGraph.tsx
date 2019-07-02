@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import { LangDictionary } from '../../reducers/language/interfaces';
-import { Divider } from 'semantic-ui-react';
+import { Divider, Icon } from 'semantic-ui-react';
 
 import Slider from "react-slick";
 import { useState } from 'react';
@@ -21,7 +21,7 @@ const getCharts = (item: any, slider: boolean) => {
   return item.charts && item.charts.map((v: any, j: number) => {
     return slider
       ? React.cloneElement(v.chart, { legend: false, caption: false, key: j })
-      : React.cloneElement(v.chart, {  key: 'current-graph' })
+      : React.cloneElement(v.chart, { key: 'current-graph' })
   });
 }
 
@@ -45,23 +45,25 @@ export const SliderGraph = (props: SliderGraphProps) => {
     slidesToShow,
     slidesToScroll: slidesToShow,
     initialSlide: defaultIndex,
-    lazyLoad: true
+    lazyLoad: true,
+    prevArrow: <CustomArrowPrev />,
+    nextArrow: <CustomArrowNext />
   };
 
   const sliderPanes = graphs.map((item, ix) => {
     return <div className="sliderGraphItem" key={ix} style={{ height: `${height}px` }}>
       <WidgetTitle size="mini" title={item.title} />
-      <div className={`${bordered ? 'bordered' : ''}`} style={{ height: item.icon ==='pie chart' ? `95%` : '100%' }} >
+      <div className={`${bordered ? 'bordered' : ''}`} style={{ height: item.icon === 'pie chart' ? `95%` : '100%' }} >
         {getCharts(item, false)}
       </div>
     </div>
   });
 
-  return <Slider {...settings}>{sliderPanes}</Slider>
+  return <div className='sliderGraph' ><Slider {...settings} >{sliderPanes}</Slider></div>
 }
 
 export const SliderGraphThumb = (props: SliderGraphProps) => {
-  const { graphs = [], bordered= true, defaultIndex = 0, slidesToShow = 1, height = 600 } = props;
+  const { graphs = [], bordered = true, defaultIndex = 0, slidesToShow = 1, height = 600 } = props;
 
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
 
@@ -70,7 +72,9 @@ export const SliderGraphThumb = (props: SliderGraphProps) => {
     speed: 500,
     slidesToShow,
     slidesToScroll: slidesToShow,
-    initialSlide: defaultIndex
+    initialSlide: defaultIndex,
+    prevArrow: <CustomArrowPrev />,
+    nextArrow: <CustomArrowNext />,
   };
 
   const sliderPanes = graphs.map((item, ix) => {
@@ -84,12 +88,15 @@ export const SliderGraphThumb = (props: SliderGraphProps) => {
 
   return <div style={{ display: 'flex', flexDirection: 'column', height }}>
     <WidgetTitle size='small' title={graphs[activeIndex].title} />
-    <div style={{ flex:  '1' }}>
+    <div style={{ flex: '1' }}>
       {getCharts(graphs[activeIndex], false)}
     </div>
-    <div style={{ height: '130px' }}>
+    <div className='sliderGraph' style={{ height: '130px' }}>
       <Divider />
       <Slider {...settings} >{sliderPanes}</Slider>
     </div>
   </div>
 }
+
+const CustomArrowPrev = (props: any) => (<div className={`custom-slick-arrow custom-slick-prev`}><Icon name='arrow left' onClick={props.onClick} link /></div>);
+const CustomArrowNext = (props: any) => (<div className={`custom-slick-arrow custom-slick-next`}><Icon name='arrow right' onClick={props.onClick} link /></div>);

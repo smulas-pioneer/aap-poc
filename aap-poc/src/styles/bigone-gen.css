@@ -7039,14 +7039,6 @@ a.ui.inverted.grey.header:hover {
  * http://opensource.org/licenses/MIT
  *
  */
-@font-face {
-    font-family: Icons;
-    font-style: normal;
-    font-weight: 400;
-    font-variant: normal;
-    text-decoration: inherit;
-    text-transform: none
-}
 
 i.icon {
     display: inline-block;
@@ -12058,15 +12050,6 @@ i.icon.youtube.play:before {
     content: "\F167"
 }
 
-@font-face {
-    font-family: fa-regular-400;
-    font-style: normal;
-    font-weight: 400;
-    font-variant: normal;
-    text-decoration: inherit;
-    text-transform: none
-}
-
 i.icon.outline {
     font-family: fa-regular-400
 }
@@ -12550,15 +12533,6 @@ i.icon.heart.empty:before {
 
 i.icon.star.empty:before {
     content: "\F089"
-}
-
-@font-face {
-    font-family: fa-brands-400;
-    font-style: normal;
-    font-weight: 400;
-    font-variant: normal;
-    text-decoration: inherit;
-    text-transform: none
 }
 
 i.icon.\35 00px,
@@ -26852,7 +26826,7 @@ body.dimmable>.dimmer {
     min-width: max-content;
     margin: 0;
     padding: 0;
-    background: #fff;
+    background: #272f38;
     font-size: 1em;
     text-shadow: none;
     text-align: left;
@@ -26942,7 +26916,7 @@ body.dimmable>.dimmer {
 .ui.dropdown .menu>.header {
     margin: 1rem 0 .75rem;
     padding: 0 1.14285714rem;
-    color: rgba(0, 0, 0, .85);
+    color: #fff;
     font-size: .78571429em;
     font-weight: 700;
     text-transform: uppercase
@@ -26980,7 +26954,7 @@ body.dimmable>.dimmer {
 .ui.dropdown>.text>.description {
     float: right;
     margin: 0 0 0 1em;
-    color: rgba(0, 0, 0, .4)
+    color: rgba(56, 178, 182, .5)
 }
 
 .ui.dropdown .menu>.message {
@@ -27180,7 +27154,7 @@ select.ui.dropdown {
 }
 
 .ui.selection.dropdown .menu>.item {
-    border-top: 1px solid #fafafa;
+    border-top: none;
     padding: .78571429rem 1.14285714rem !important;
     white-space: normal;
     word-wrap: normal
@@ -27432,8 +27406,8 @@ select.ui.dropdown {
 }
 
 .ui.dropdown .menu>.item:hover {
-    background: rgba(0, 0, 0, .05);
-    color: rgba(0, 0, 0, .95);
+    background: rgba(95, 119, 136, .5);
+    color: #fff;
     z-index: 13
 }
 
