@@ -225,7 +225,7 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
 
         <Transition
           visible={showEurope && !this.state.europeAnimationEnd}
-          animation='vertical flip'
+          animation='fade down'
           duration={300}
           onComplete={(_, e) => {
             this.setState(prev => ({ mapIndex: prev.requestMapIndex, europeAnimationEnd: showItaly || false }))
@@ -263,7 +263,7 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
 
         <Transition
           visible={showItaly && this.state.europeAnimationEnd}
-          animation="vertical flip"
+          animation="fade up"
           duration={300}
           onComplete={(_, e) => {
             this.setState(prev => ({ mapIndex: prev.requestMapIndex, europeAnimationEnd: !showEurope }))
@@ -272,7 +272,7 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
           <div style={{ height: "100%" }}>
             <div style={{ height: "100%", display: 'flex', flexDirection: 'column' }}>
               <ItalyMap
-                height={this.props.height}
+                height={740}
                 clients={this.props.clients}
                 lang={this.props.lang}
                 layout={this.props.layout}

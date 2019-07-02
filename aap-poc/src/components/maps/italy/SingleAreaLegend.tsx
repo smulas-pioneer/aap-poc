@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { LangDictionary } from "../../../reducers/language/interfaces";
 
-import { Label, Segment } from 'semantic-ui-react';
 import { formatAua, } from '../../../_db/utils';
 import { getMapOptionTypeCaption } from '../../../commonUtils';
 import { IndicatorOptionsType } from '../../../actions/model';

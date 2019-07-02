@@ -164,7 +164,7 @@ export const createFilterAdv = (data: Client[], searchParms?: SearchParms | unde
       if (isArray(currentValues)) {
         currentValues.forEach((v, i) => {
           const pre = filter[v];
-          filter = { ...filter, [v]: { ...pre, current: pre && (pre.current || 0) + 1 } }
+          filter = { ...filter, [v]: { ...pre, current: (pre ? (pre.current || 0) : 0) + 1 } }
         });
       }
     });
@@ -174,7 +174,7 @@ export const createFilterAdv = (data: Client[], searchParms?: SearchParms | unde
     })
 
     return { ...memo, [key]: filter };
-  },  from || {} as ClientFilters);
+  }, from || {} as ClientFilters);
 };
 
 
