@@ -19,12 +19,13 @@ import { SliderGraph, SliderGraphThumb } from './clientView/SliderGraph';
 import { EuropaMap } from './maps/europe/EuropeMap';
 import { getIsOnlyItaly } from '../reducers';
 
+
 const sprintf = require("sprintf-js").sprintf;
 
-
-
 export interface DashboardMgrProps {
-  uid: string
+  uid: string,
+  commonMenu?: React.ReactChildren;
+
 }
 export interface DashboardMgrState {
   searchParms: SearchParms,
@@ -307,8 +308,10 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
     return (
       <AdvancedGrid className="grid-header-fix" >
+
         <Segment compact style={{ width: '100%', margin: 0 }} >
-          <Grid columns={6} >
+
+          <Grid columns={7}   >
             <Grid.Column textAlign="center" >
               {this.renderItem(fmt(info.length), lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), 'blue', 'green')}
             </Grid.Column>
@@ -319,16 +322,20 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
               {this.renderItem(fmt(info.clientAlert), lang.DB_CLIENTS_ALERTS, this.alertsDetail(fmt(info.mifidAlert)), 'red')}
             </Grid.Column>
             <Grid.Column textAlign="center">
-              {this.renderItem(fmt(info.totalBudget) + "€", lang.BUDGET, Math.round(100 * (info.totRevenues / info.totalBudget)).toString() + '% accomplished YTD', 'blue', 'green')}
-            </Grid.Column>
-            <Grid.Column textAlign="center">
               {this.renderItem(fmt(info.totalTurnover / info.length) + "%", lang.TURNOVER, '', 'blue', 'green')}
             </Grid.Column>
             <Grid.Column textAlign="center">
+              {this.renderItem(fmt(info.totalBudget) + "€", lang.BUDGET, Math.round(100 * (info.totRevenues / info.totalBudget)).toString() + '% accomplished YTD', 'blue', 'green')}
+            </Grid.Column>
+            <Grid.Column textAlign="center" >
               {this.renderItem(fmt(info.acceptedProposals), lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${fmt(info.totalProposals)} (${Math.round(100 * (info.acceptedProposals / info.totalProposals)).toString() + '%)'}`, 'blue')}
+            </Grid.Column>
+            <Grid.Column className="col-user-menu">
+              {this.props.children}
             </Grid.Column>
           </Grid>
         </Segment>
+
         <AdvancedGrid className="grid-filter-right">
           <div style={{ position: 'relative' }}>
             <Tab menu={{ pointing: true, secondary: true, style: { margin: 0 } }} panes={panes} style={{ height: '95%' }} />
@@ -345,6 +352,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
             />
           </Segment>
         </AdvancedGrid>
+
       </AdvancedGrid >
     );
   }

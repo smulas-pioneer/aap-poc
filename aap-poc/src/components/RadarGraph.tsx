@@ -4,7 +4,7 @@ import { Radar as RadarModel, RadarStrategyParm } from '../_db/interfaces';
 import { LangDictionary } from '../reducers/language/interfaces';
 import { getRAG } from '../_db/common/radarUtils';
 
-var { Radar, Legend, ResponsiveContainer, RadarChart, PolarAngleAxis, PolarRadiusAxis, PolarGrid,Text } = require('recharts');
+var { Radar, Legend, ResponsiveContainer, RadarChart, PolarAngleAxis, PolarRadiusAxis, PolarGrid, Text } = require('recharts');
 
 
 export const RadarGraph = (props: {
@@ -110,11 +110,8 @@ export const RadarGraph = (props: {
   ];
 
   return (
-    <ResponsiveContainer width="100%" height={props.responsiveHeight || props.height} >
-      <RadarChart cx='50%' cy='50%'
-        startAngle={60}
-        endAngle={420}
-        width={props.width} height={props.height} data={data} outerRadius={'85%'} isAnimationActive startWithAnimation  >
+    <ResponsiveContainer width="100%" height="100%" >
+      <RadarChart cx='50%' cy='50%' startAngle={60} endAngle={420} width={600} height={600} data={data} outerRadius={'85%'} isAnimationActive startWithAnimation  >
         <Legend height={1} verticalAlign="bottom" />
         {/*<Radar name="Limits" dataKey="limits" stroke="blue" fill="#D10505" fillOpacity={0} />*/}
         <Radar name="Actuals" dataKey="actual" stroke="#54C8FF" fill="#54C8FF" fillOpacity={1 } dot />

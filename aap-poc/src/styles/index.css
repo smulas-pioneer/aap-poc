@@ -156,7 +156,7 @@ html {
 }
 
 .grid-advanced.grid-header-fix {
-    grid-template-rows: 85px auto;
+    grid-template-rows: 95px auto;
 }
 
 .grid-advanced.grid-header-min {
@@ -323,4 +323,18 @@ svg .boundaries>path {
     font-family: 'Lato';
     font-size: 2em;
     width: 50%
+}
+
+div.col-user-menu{
+  width: 206px !important;
+  right: 0px;
+  position: absolute !important;
+}
+
+div.col-user-menu .menu-options{
+  margin-top: -8px !important;
+}
+
+div.col-user-menu .menu-user{
+    margin-top: -10px !important;
 }
