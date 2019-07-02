@@ -130,9 +130,6 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
 
     return (
       <div>
-        <Segment basic compact>
-          <WidgetTitle title={lang.MY_ALERTS} shareButtons={['Pdf', 'Excel', 'Copy']} />
-        </Segment>
         <Table celled compact striped fixed singleLine sortable>
           <Table.Header fullWidth>
             <Table.Row>

@@ -5,6 +5,7 @@ import { IndicatorType, IndicatorOptionsType } from "../../actions/model";
 import { Dictionary, groupBy, sumBy } from "lodash";
 import { TopClientOptionSelection, TopClientOptionSelector } from "./TopClientOptionSelector";
 import { TopClientList } from "./TopClientList";
+import { forInStatement } from "@babel/types";
 
 
 export interface TopClientProps {
@@ -19,6 +20,7 @@ export interface TopClientItem {
   city: string,
   branch: string,
   advisor: string,
+  id: string,
   name: string,
 
   totals: { [K in IndicatorType]: number };
@@ -101,6 +103,7 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
         branch: first.branch,
         advisor: first.agent,
         name: first.name,
+        id: first.id,
         totals: {
           alerts: countWithAlerts,
           aua: sumAua,
