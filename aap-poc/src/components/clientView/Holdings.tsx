@@ -254,7 +254,7 @@ export const Holdings = (props: Props) => {
                         <div
                           style={{ ...proposalStyle(t.suggestionAccepted, t.suggestedDelta > 0), flex: 1 }}
                         >
-                          {t.suggestedDelta > 0 ? '+' : ''} {fmt(t.suggestedDelta * 100)} {t.suggestedDelta !== 0 && ' %'}
+                          {t.suggestedDelta > 0 ? '+' : ''} {fmt(t.suggestedDelta * 100,1)} {t.suggestedDelta !== 0 && ' %'}
                         </div>
                       </Table.Cell>}
                       {isProposingMode && <Table.Cell verticalAlign="middle">
