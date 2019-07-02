@@ -31118,6 +31118,58 @@ body.pushable>.pusher {
  * http://opensource.org/licenses/MIT
  *
  */
+.color-green {
+    color: #2ecc40 !important
+}
+
+.color-red {
+    color: #ff695e !important
+}
+
+.color-orange {
+    color: #ff851b !important
+}
+
+.color-yellow {
+    color: #ffe21f !important
+}
+
+.color-olive {
+    color: #d9e778 !important
+}
+
+.color-teal {
+    color: #6dffff !important
+}
+
+.color-blue {
+    color: #54c8ff !important
+}
+
+.color-violet {
+    color: #a291fb !important
+}
+
+.color-purple {
+    color: #dc73ff !important
+}
+
+.color-pink {
+    color: #ff8edf !important
+}
+
+.color-brown {
+    color: #d67c1c !important
+}
+
+.color-grey {
+    color: #dcddde !important
+}
+
+.color-black {
+    color: #000 !important
+}
+
 .transition {
     -webkit-animation-iteration-count: 1;
     animation-iteration-count: 1;

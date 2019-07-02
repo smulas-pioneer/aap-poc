@@ -90,10 +90,61 @@ html {
 
 /* RECHARTS */
 .recharts-wrapper {
-  font-size: 10px;
+    font-size: 10px;
 }
 
+/* COLORS */
+.color-green {
+    color: #21ba45 !important
+}
 
+.color-red {
+    color: #db2828 !important
+}
+
+.color-orange {
+    color: #f2711c !important
+}
+
+.color-yellow {
+    color: #fbbd08 !important
+}
+
+.color-olive {
+    color: #b5cc18 !important
+}
+
+.color-teal {
+    color: #00b5ad !important
+}
+
+.color-blue {
+    color: #2185d0 !important
+}
+
+.color-violet {
+    color: #6435c9 !important
+}
+
+.color-purple {
+    color: #a333c8 !important
+}
+
+.color-pink {
+    color: #e03997 !important
+}
+
+.color-brown {
+    color: #a5673f !important
+}
+
+.color-grey {
+    color: #767676 !important
+}
+
+.color-black {
+    color: #1b1c1d !important
+}
 
 /* grid-advanced */
 .grid-advanced {
@@ -105,7 +156,7 @@ html {
 }
 
 .grid-advanced.grid-header-fix {
-    grid-template-rows: 100px auto;
+    grid-template-rows: 85px auto;
 }
 
 .grid-advanced.grid-header-min {
@@ -246,7 +297,6 @@ svg.nations path.europe:not(.eu) {
 svg.nations path:not(.europe) {
     fill: rgb(42, 42, 42) !important;
 }
-
 
 svg .boundaries>path {
     stroke: gray;

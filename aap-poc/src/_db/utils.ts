@@ -1,5 +1,6 @@
 import { SpotlightSearchResultItem, Client, Security, AgentView, Holding, FinalHolding } from "./interfaces";
 import { groupBy, sumBy } from "lodash";
+import { SemanticCOLORS } from "semantic-ui-react";
 
 export const numArray = (num: number) => {
     let ret: number[] = [];
@@ -92,3 +93,4 @@ export const processHoldingsSuggestions = (holdings: Holding[], suggestionType: 
     }
 
 }
+export const getColorCustomClassName = (name?: SemanticCOLORS, className?: string) => (`${name} ${name ? `color-${name} ` : ''}${className || ''}`);

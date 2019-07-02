@@ -292,17 +292,11 @@ export const Holdings = (props: Props) => {
   )
 }
 
-
-
-
-
-
 const holdingsSort = (a: StrategyItem, b: StrategyItem) => {
   if (a.isCash) return -1;
   if (b.isCash) return 1;
   return a.security.MacroAssetClass.localeCompare(b.security.MacroAssetClass);
 }
-
 
 const proposalStyle = (accepted: boolean, positive: boolean): React.CSSProperties => {
   let style: React.CSSProperties = accepted ? { fontWeight: 'bold' } : { color: 'lightgrey' };

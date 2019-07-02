@@ -15,7 +15,7 @@ import { ClientFilter } from './shared/ClientFilter';
 
 import { AdvancedGrid, OverflowColumn, OverflowItem } from './shared/GridOverflow';
 import { WidgetTitle } from './shared/WidgetTitle';
-import { formatAua, formatNumber } from '../_db/utils';
+import { formatAua, formatNumber, getColorCustomClassName } from '../_db/utils';
 import { ClientListBudget } from './clientsView/ClientListBudget';
 
 const sprintf = require("sprintf-js").sprintf;
@@ -86,15 +86,17 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
     }
 
     // render statistic
-    renderItem(value: any, label?: string, sublabel?: any, valueIcon?: SemanticICONS, color?: SemanticCOLORS) {
-        return (<Statistic size="small" color='blue' >
+    renderItem(value: any, label?: string, sublabel?: any,  color?: SemanticCOLORS, sublabelcolor?: SemanticCOLORS, valueIcon?: SemanticICONS ) {
+        return (<Statistic size="small" color={color || 'blue'} >
             {label && <Statistic.Label>{label}</Statistic.Label>}
             <Statistic.Value>
                 {valueIcon && <Icon name={valueIcon} color={color} />}
                 {value || 0}
             </Statistic.Value>
-            <br />
-            {sublabel && <Statistic.Label><span style={color && { color: color }}>{sublabel}</span></Statistic.Label>}
+            {sublabel && <Statistic.Label style={{ marginTop: '5px', whiteSpace: 'nowrap' }} className={getColorCustomClassName(sublabelcolor)}>
+                {sublabel}
+                {/*<span style={color && { color: color }}>{sublabel}</span>*/}
+            </Statistic.Label>}
         </Statistic>);
     }
 
@@ -219,22 +221,22 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
                 <Segment style={{ margin: 0 }}>
                     <Grid columns={6} >
                         <Grid.Column textAlign="center">
-                            {this.renderItem(fmt(info.length), lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
+                            {this.renderItem(fmt(info.length), lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), 'blue', 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
-                            {this.renderItem(formatAua(info.assetUnder), lang.DB_ASSET_ADVISE, this.percDetail(15, '1', 'Y'), undefined, 'green')}
+                            {this.renderItem(formatAua(info.assetUnder), lang.DB_ASSET_ADVISE, this.percDetail(15, '1', 'Y'), 'blue', 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
-                            {this.renderItem(<span style={{ color: 'red' }}>{fmt(info.clientAlert)}</span>, lang.DB_CLIENTS_ALERTS, this.alertsDetail(fmt(info.mifidAlert)))}
+                            {this.renderItem(fmt(info.clientAlert), lang.DB_CLIENTS_ALERTS, this.alertsDetail(fmt(info.mifidAlert)), 'red' )}
                         </Grid.Column>
                         {/* <Grid.Column textAlign="center">
                             {this.renderItem(info.interviews, lang.DB_INTERVIEWS, this.percDetail(undefined, '1', 'M'))}
                         </Grid.Column> */}
                         <Grid.Column textAlign="center">
-                            {this.renderItem(fmt(info.totalBudget) + "€", lang.BUDGET, Math.round(100 * (info.totRevenues / info.totalBudget)).toString() + '% accomplished YTD', undefined, 'green')}
+                            {this.renderItem(fmt(info.totalBudget) + "€", lang.BUDGET, Math.round(100 * (info.totRevenues / info.totalBudget)).toString() + '% accomplished YTD', 'blue', 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
-                            {this.renderItem(fmt(info.totalTurnover / info.length) + "%", lang.TURNOVER, '', undefined, 'green')}
+                            {this.renderItem(fmt(info.totalTurnover / info.length) + "%", lang.TURNOVER, '', 'blue', 'green')}
                         </Grid.Column>
                         <Grid.Column textAlign="center">
                             {this.renderItem(fmt(info.acceptedProposals), lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${fmt(info.totalProposals)} (${Math.round(100 * (info.acceptedProposals / info.totalProposals)).toString() + '%)'}`)}
