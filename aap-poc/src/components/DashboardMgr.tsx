@@ -155,7 +155,9 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
               <SliderGraphThumb graphs={this.createGraphs()} height={600} lang={lang} defaultIndex={0} slidesToShow={3} />
             </Segment>
             : this.state.graphMode === 1
-              ? <Segment><SliderGraph graphs={this.createGraphs()} height={600} lang={lang} defaultIndex={0} slidesToShow={1} bordered={false} /> </Segment>
+              ? <Segment>
+                <SliderGraph graphs={this.createGraphs()} height={600} lang={lang} defaultIndex={0} slidesToShow={1} bordered={false} />
+              </Segment>
               : <div className='ui-flex ui-flex-col'>
                 <Segment>
                   <SliderGraph graphs={this.createGraphs()} height={280} lang={lang} defaultIndex={0} slidesToShow={2} />
@@ -333,7 +335,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
     return (
       <AdvancedGrid className="grid-header-fix" >
-        <Segment compact style={{ width: '100%', margin: 0 }} onClick={this.setSlider}>
+        <Segment compact style={{ width: '100%', margin: 0 }} >
           <Grid columns={6} >
             <Grid.Column textAlign="center" >
               {this.renderItem(fmt(info.length), lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
@@ -356,9 +358,10 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
           </Grid>
         </Segment>
         <AdvancedGrid className="grid-filter-right">
-          <OverflowColumn>
+          <div style={{ position: 'relative' }}>
             <Tab menu={{ pointing: true, secondary: true, style: { margin: 0 } }} panes={panes} style={{ height: '95%' }} />
-          </OverflowColumn>
+            <Icon link name='th' size='large' style={{ position: 'absolute', top: '8px', right: '8px' }} onClick={this.setSlider}/>
+          </div>
           <Segment style={{ margin: 0 }}>
             <WidgetTitle size="mini" title={lang.FILTER} />
             <ClientFilter

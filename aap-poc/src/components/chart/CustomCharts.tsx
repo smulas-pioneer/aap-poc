@@ -178,7 +178,7 @@ export class CustomComposedChart extends React.Component<CustomChartProps, Custo
         const actualX = value < 0 ? x : width > 150 ? x + width - 50 : x + width + 3;
         const color = 'white';
 
-        return <text className="recharts-text recharts-bar-label" fill={color} x={x} y={Math.round(y + 14)} width={width} height={height} fontSize={12} textAnchor={'start'}        >
+        return <text className="recharts-text recharts-bar-label" fill={color} x={x} y={Math.round(y + 14)} width={width} height={height} textAnchor={'start'}        >
             <tspan x={actualX} >
                 {`${percentLabel}%`}
             </tspan>
@@ -193,9 +193,9 @@ export class CustomComposedChart extends React.Component<CustomChartProps, Custo
             <CustomResponsiveContainer height={responsiveHeight || height}>
                 <ComposedChart layout="vertical" height={height} width={width} data={data} margin={{ top: 5, right: 5, bottom: 5, left: 5 }} >
                     <XAxis type="number" hide={!caption} tick={false} />
-                    <YAxis dataKey={nameKey} type="category" width={100} hide={!caption}/>
+                    <YAxis dataKey={nameKey} type="category" width={70} hide={!caption}/>
                     {/* <CartesianGrid stroke='#f5f5f5' /> */}
-                    <Bar dataKey={dataKey} name={nameKey} barSize={20} fill={color} label={caption && this.renderCustomizedLabel} />
+                    <Bar dataKey={dataKey} name={nameKey} barSize={18} fill={color} label={caption && this.renderCustomizedLabel} />
                 </ComposedChart>
             </CustomResponsiveContainer>
         );
