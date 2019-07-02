@@ -53,6 +53,7 @@ export const Holdings = (props: Props) => {
         ...h,
         suggestionAccepted: h.suggestedDelta !== 0 ? accept : false,
       }));
+
     const changedIsinNewValue = holdingsCopy.filter(i => {
       const pr = props.holdings.find(h => h.security.IsinCode === i.security.IsinCode);
       return pr === undefined || pr.suggestedDelta !== i.suggestedDelta || pr.suggestionAccepted !== i.suggestionAccepted;
@@ -221,7 +222,7 @@ export const Holdings = (props: Props) => {
           </Table.Header>
           <Table.Body style={{ overflow: 'visible' }}>
             {
-              holdings.sort(holdingsSort).map((t, i) => {
+              holdings.filter(holdingsFilter(isProposingMode)).sort(holdingsSort).map((t, i) => {
                 const show = t.currentQuantity !== 0;
                 const suggWeight = finalWeight[i].weight
                 const factor = mode === 'Weight' ? 1
@@ -303,6 +304,10 @@ const holdingsSort = (a: StrategyItem, b: StrategyItem) => {
   return a.security.MacroAssetClass.localeCompare(b.security.MacroAssetClass);
 }
 
+const holdingsFilter = (isProposalMode:boolean) => (h:StrategyItem) => {
+  if (!isProposalMode) return true;
+  return h.currentWeight !== 0 || h.isCash;
+}
 
 const proposalStyle = (accepted: boolean, positive: boolean): React.CSSProperties => {
   let style: React.CSSProperties = accepted ? { fontWeight: 'bold' } : { color: 'lightgrey' };
