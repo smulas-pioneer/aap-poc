@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Breakdown } from '../../_db/interfaces';
-import { CustomPieChart, CustomComposedChart, CustomBarChart } from '../chart/CustomCharts';
+import { CustomPieChart, CustomComposedChart } from '../chart/CustomCharts';
 
 interface Props {
   breakdown: Breakdown,
@@ -42,8 +42,6 @@ export class BreakdownView extends React.Component<Props, State> {
 
     return chartView === 'pie'
       ? <CustomPieChart data={data} dataKey='weight' nameKey="key" width={width} height={height} responsiveHeight={responsiveHeight} legend={legend} caption={caption} />
-      : chartView === 'composed'
-        ? <CustomComposedChart data={data} dataKey='weight' nameKey="key" width={width} height={height} color={breakdown.color} responsiveHeight={responsiveHeight} legend={legend} caption={caption} />
-        : <CustomBarChart data={data} dataKey='weight' nameKey="key" width={width} height={height} color={breakdown.color} responsiveHeight={responsiveHeight} legend={legend} caption={caption} />
-  }
+      :  <CustomComposedChart data={data} dataKey='weight' nameKey="key" width={width} height={height} color={breakdown.color} responsiveHeight={responsiveHeight} legend={legend} caption={caption} />
+      }
 }
