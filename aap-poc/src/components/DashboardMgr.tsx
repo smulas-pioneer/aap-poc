@@ -237,15 +237,21 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
           title: 'AUA',
           chart: this.renderFilterGraphItem(1, filterMapItems.Aua, filter.Aua)
         }]
-      }
+      },
     }
-
+    const graphType = {
+      Region: 'composed',
+      Currency: 'composed',
+      Rating: 'composed',
+      MacroAssetClass: 'composed',
+      MicroAssetClass: 'composed'
+    }
     const bd = this.props.data!.breakdowns.map((b, i) => {
       return {
         title: b.attributeName,
         icon: 'line chart',
         charts: [{
-          chart: <BreakdownView key={i} breakdown={b} width={500} height={500} responsiveHeight="100%" />
+          chart: <BreakdownView key={i} breakdown={b} width={500} height={500} responsiveHeight="100%" chartView={graphType[b.attributeName]} />
         }]
       }
     });
@@ -319,7 +325,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
               {this.renderItem(fmt(info.totalTurnover / info.length) + "%", lang.TURNOVER, '', 'blue', 'green')}
             </Grid.Column>
             <Grid.Column textAlign="center">
-              {this.renderItem(fmt(info.acceptedProposals), lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${fmt(info.totalProposals)} (${Math.round(100 * (info.acceptedProposals / info.totalProposals)).toString() + '%)'}`, 'blue' )}
+              {this.renderItem(fmt(info.acceptedProposals), lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${fmt(info.totalProposals)} (${Math.round(100 * (info.acceptedProposals / info.totalProposals)).toString() + '%)'}`, 'blue')}
             </Grid.Column>
           </Grid>
         </Segment>

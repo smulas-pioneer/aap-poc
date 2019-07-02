@@ -195,6 +195,7 @@ export interface RadarStrategyParm {
 
 export interface Breakdown {
   attributeName: string,
+
   data: Array<{ value: string, weight: number, bmk: number }>
   weight: number;
   color?: string

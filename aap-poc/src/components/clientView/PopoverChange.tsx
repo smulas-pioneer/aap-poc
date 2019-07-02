@@ -31,7 +31,7 @@ export const PopoverChange = (props: PopoverChangeProps) => {
   }, [textValue,value]);
 
 
-  const sendChange = (value: number) => {
+  const sendChange = (value: number, enabled: boolean) => {
     props.onChange({
       ...props.item,
       suggestedDelta: enabled ? value / 100 : props.item.suggestedDelta,
@@ -41,7 +41,8 @@ export const PopoverChange = (props: PopoverChangeProps) => {
 
   const reset = () => {
     setTextValue(originalSuggestion.toString());
-    sendChange(originalSuggestion);
+    setEnabled(false);
+    sendChange(originalSuggestion,false);
   }
 
   const isChanged = enabled !== props.item.suggestionAccepted || originalSuggestion !== value;
@@ -54,10 +55,12 @@ export const PopoverChange = (props: PopoverChangeProps) => {
 
   const sliderValue = isNaN(value) ? originalSuggestion : value*10;
   return <div style={{ display: 'flex', flexDirection: 'column', padding: 5 }}>
+    {/*
     <div style={{ flex: 1, display: 'flex', alignContent: 'center' }}>
       <span style={{ flex: 1, marginRight: 3 }}>Enabled:</span>
       <Checkbox checked={enabled} onChange={(a, b) => setEnabled(b.checked || false)} />
     </div>
+    */}
 
     <div style={{ flex: 1 }}>
        <Input type="range" min={-10*(props.item.currentWeight * 100)} max={1000 - props.item.currentWeight * 1000} value={sliderValue} onChange={(a, b) => handleSliderChange(b.value)} />
@@ -69,10 +72,10 @@ export const PopoverChange = (props: PopoverChangeProps) => {
         </Input>
       </div>
       <div style={{ flex: 1, verticalAlign: 'middle', alignContent: 'center' }}>
-        <Button inverted disabled={!isChanged} size="small" negative icon="cancel" onClick={() => reset()} />
+        <Button inverted size="small" negative icon="cancel" onClick={() => reset()} />
       </div>
       <div style={{ flex: 1, verticalAlign: 'middle', alignContent: 'center' }}>
-        <Button inverted disabled={!isChanged || error!==undefined} size="small" positive icon="check" onClick={() => sendChange(value)} />
+        <Button inverted  size="small" positive icon="check" onClick={() => sendChange(value,true)} />
       </div>
     </div>
   </div>

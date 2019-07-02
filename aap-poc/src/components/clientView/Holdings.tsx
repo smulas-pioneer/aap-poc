@@ -259,7 +259,7 @@ export const Holdings = (props: Props) => {
                       </Table.Cell>}
                       {isProposingMode && <Table.Cell verticalAlign="middle">
                         {!t.isCash && !t.clientFavorites &&
-                          <Popup inverted wide style={{ margin: 0, padding: 0 }} trigger={<Icon style={{ cursor: 'pointer', flex: 1 }} name="pencil" />} on='click'>
+                          <Popup  wide style={{ margin: 0, padding: 0 }} trigger={<Icon style={{ cursor: 'pointer', flex: 1 }} name="pencil" />} on='click'>
                             <div>
                               <PopoverChange tot={tot}
                                 item={t}
@@ -289,7 +289,7 @@ export const Holdings = (props: Props) => {
               <Table.HeaderCell></Table.HeaderCell>
               <Table.HeaderCell textAlign="right">{fmt(tot)} €</Table.HeaderCell>
               <Table.HeaderCell textAlign="right">{fmt(sumBy(holdings, t => t.currentWeight) * 100)} %</Table.HeaderCell>
-              {isProposingMode && <Table.HeaderCell textAlign="right"></Table.HeaderCell>}
+              {isProposingMode && <Table.HeaderCell colSpan={2} textAlign="right"></Table.HeaderCell>}
               {isProposingMode && <Table.HeaderCell textAlign="right">{fmt(sumBy(finalWeight, t => t.weight) * 100)} %</Table.HeaderCell>}
             </Table.Row>
           </Table.Footer>
