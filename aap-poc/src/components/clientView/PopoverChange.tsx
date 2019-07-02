@@ -22,7 +22,6 @@ export const PopoverChange = (props: PopoverChangeProps) => {
 
 
   const sendChange = (value: number) => {
-    console.log('send change');
     props.onChange({
       ...props.item,
       suggestedDelta: enabled ? value / 100 : props.item.suggestedDelta,
