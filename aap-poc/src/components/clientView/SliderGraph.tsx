@@ -51,9 +51,10 @@ export const SliderGraph = (props: SliderGraphProps) => {
   };
 
   const sliderPanes = graphs.map((item, ix) => {
+    console.log(item);
     return <div className="sliderGraphItem" key={ix} style={{ height: `${height}px` }}>
       <WidgetTitle size="mini" title={item.title} />
-      <div className={`${bordered ? 'bordered' : ''}`} style={{ height: item.icon === 'pie chart' ? `95%` : '100%' }} >
+      <div className={`${bordered ? 'bordered' : ''}`} style={{ height: item.icon ==='chart bar' ? `${height}px` : `${height-30}px`  }} >
         {getCharts(item, false)}
       </div>
     </div>

@@ -1,10 +1,6 @@
 import * as React from 'react';
 import { Input, Button, Checkbox, } from 'semantic-ui-react';
 import { StrategyItem } from '../../_db/interfaces';
-import { formatNumber } from '../../_db/utils';
-import { English } from '../../reducers/language/language_english';
-import { debounce } from 'lodash';
-
 
 type PopoverChangeProps = {
   item: StrategyItem;
@@ -14,8 +10,27 @@ type PopoverChangeProps = {
 }
 
 export const PopoverChange = (props: PopoverChangeProps) => {
-  const suggestion = useValue(props.item.suggestedDelta * 100, 'suggestion');
+
+  const originalSuggestion = round(props.item.suggestedDelta * 100);
+  const [textValue, setTextValue] = React.useState(originalSuggestion.toString());
+  const [value, setValue] = React.useState(originalSuggestion);
   const [enabled, setEnabled] = React.useState(props.item.suggestionAccepted);
+  const [error, setError] = React.useState<string | undefined>(undefined);
+
+  React.useEffect(() => {
+    if (isNaN(textValue as any)) {
+      setError(`not a valid number`);
+    }
+    else {
+      const newValue = parseFloat(textValue);
+      if (newValue !== value) {
+        setValue(parseFloat(textValue));
+        setError(undefined);
+      }
+    }
+  }, [textValue,value]);
+
+
   const sendChange = (value: number) => {
     props.onChange({
       ...props.item,
@@ -24,15 +39,20 @@ export const PopoverChange = (props: PopoverChangeProps) => {
     })
   }
 
-  const onChangeSuggestion = (value: number | string, propagate = false) => {
-    suggestion.setValue(value);
-    if (propagate && !isNaN(value as any)) {
-      sendChange(parseFloat(value.toString()));
+  const reset = () => {
+    setTextValue(originalSuggestion.toString());
+    sendChange(originalSuggestion);
+  }
+
+  const isChanged = enabled !== props.item.suggestionAccepted || originalSuggestion !== value;
+  const handleSliderChange = (value:string) => {
+    if (!isNaN(value as any)) {
+      const numValue = round(parseFloat(value)/10);
+      setTextValue(numValue.toString());
     }
   }
 
-  const isChanged = enabled !== props.item.suggestionAccepted || props.item.suggestedDelta !== suggestion.value / 100;
-
+  const sliderValue = isNaN(value) ? originalSuggestion : value*10;
   return <div style={{ display: 'flex', flexDirection: 'column', padding: 5 }}>
     <div style={{ flex: 1, display: 'flex', alignContent: 'center' }}>
       <span style={{ flex: 1, marginRight: 3 }}>Enabled:</span>
@@ -40,26 +60,25 @@ export const PopoverChange = (props: PopoverChangeProps) => {
     </div>
 
     <div style={{ flex: 1 }}>
-      <Input type="range" min={-props.item.currentWeight * 100} max={100 - props.item.currentWeight * 100} value={suggestion.value} onChange={(a, b) => onChangeSuggestion(b.value)} />
-
+       <Input type="range" min={-10*(props.item.currentWeight * 100)} max={1000 - props.item.currentWeight * 1000} value={sliderValue} onChange={(a, b) => handleSliderChange(b.value)} />
     </div>
     <div style={{ flex: 1, display: 'flex' }}>
       <div style={{ flex: 3, verticalAlign: 'middle' }}>
-        <Input size="mini" inverted fluid value={suggestion.stringValue || ""} onChange={debounce((a, b) => onChangeSuggestion(b.value), 600)} >
-          <input style={{ color: suggestion.value > 0 ? 'lightgreen' : 'red' }} />
+        <Input size="small" inverted fluid value={textValue || ""} onChange={(a, b) =>setTextValue (b.value)} >
+          <input style={{ color: value > 0 ? 'lightgreen' : 'red' }} />
         </Input>
       </div>
       <div style={{ flex: 1, verticalAlign: 'middle', alignContent: 'center' }}>
-        <Button inverted disabled={!isChanged} size="mini" negative icon="cancel" onClick={() => onChangeSuggestion(props.item.suggestedDelta * 100, true)} />
+        <Button inverted disabled={!isChanged} size="small" negative icon="cancel" onClick={() => reset()} />
       </div>
       <div style={{ flex: 1, verticalAlign: 'middle', alignContent: 'center' }}>
-        <Button inverted disabled={!isChanged} size="mini" positive icon="check" onClick={() => sendChange(suggestion.value)} />
+        <Button inverted disabled={!isChanged || error!==undefined} size="small" positive icon="check" onClick={() => sendChange(value)} />
       </div>
     </div>
   </div>
 
 };
-
+/*
 const useValue = (value: number, tag: string) => {
   const [stringValue, setStringValue] = React.useState((fmt(value)).toString());
   const [numValue, setNumValue] = React.useState(parseFloat(fmt(value)));
@@ -87,9 +106,15 @@ const useValue = (value: number, tag: string) => {
     value: numValue,
     error
   }
-
 }
 const fmt = (number: number, digits = 2) => {
   if (number === 0) return "0";
   return formatNumber(English.dictionary.NUMBER_FORMAT)(number, digits);
 }
+*/
+
+const round = (number: number, dec = 1) => {
+  const k = (Math.pow(10, dec));
+  return Math.round(number * k) / k;
+}
+

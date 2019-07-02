@@ -25,10 +25,7 @@ const perc = (num: number) => (100 * num).toLocaleString(undefined, { minimumFra
 interface PerformanceChartProps {
   data: { date: string, perf: number }[];
   actualData?: { date: string, perf: number }[];
-  width?: number;
-  height?: number;
   showLegend?: boolean
-
   lang: LangDictionary;
   advancedView?: boolean;
   clientTimeHorizon?: TimeHorizon;
@@ -149,9 +146,8 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
     });
   }
   render() {
-    const { width, height, showLegend, advancedView, lang, actualData } = this.props;
+    const { showLegend, advancedView, lang, actualData } = this.props;
     const { data, period, initalPerf } = this.state;
-    const actualHeight = advancedView ? (height || 200) * 2.3 / 3 : height || 200;
     const fmt = new Intl.NumberFormat(lang.NUMBER_FORMAT, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
@@ -166,8 +162,7 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
     const displayedData = data.filter((d, i) => d.date < "2018-03");
     const maxDate = displayedData && moment(displayedData[displayedData.length - 1].date).format(lang.DATE_FORMAT);
 
-    return <div>
-
+    return <div style={{ height: '100%' }}>
       {advancedView && <Menu secondary >
         <Menu.Item>
           <h4>
@@ -176,7 +171,6 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
             {perf}%
                     </h4>
         </Menu.Item>
-
         <Menu.Menu position="right">
           <Menu.Item>
             <Input style={{}} type='number' label="Target Return (%)" size="mini" value={this.state.target_Return} onChange={(a, b) => this.handleChangeTargetReturn(b.value)} />
@@ -200,9 +194,8 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
           </Menu.Item>
         </Menu.Menu>
       </Menu>}
-
-      <ResponsiveContainer width="100%" height={actualHeight}>
-        <LineChart width={width || 500} height={actualHeight} data={displayedData}
+      <ResponsiveContainer width="100%" height={'70%'}>
+        <LineChart width={500} height={700} data={displayedData}
           margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
           <XAxis dataKey="date" tickFormatter={() => ""} interval={10} />
           <YAxis tickFormatter={(d: number) => perc(d)} domain={['auto', 'auto']} />
@@ -215,24 +208,23 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
           <Line type="monotone" dot={false} dataKey="max" strokeWidth={1} stroke={Colors.YELLOW} />
         </LineChart >
       </ResponsiveContainer>
-
-      {advancedView && <Grid size="mini"><Grid.Row columns="2" >
-        <Grid.Column textAlign="center">
-          <Button.Group size="mini">
-            <Button active={period === '1M'} size="tiny" content="1m" onClick={() => this.setData({ period: '1M' })} />
-            <Button active={period === '3M'} size="tiny" content="3m" onClick={() => this.setData({ period: '3M' })} />
-            <Button active={period === '6M'} size="tiny" content="6m" onClick={() => this.setData({ period: '6M' })} />
-            <Button active={period === 'YTD'} size="tiny" content="YTD" onClick={() => this.setData({ period: 'YTD' })} />
-            <Button active={period === '1Y'} size="tiny" content="1Y" onClick={() => this.setData({ period: '1Y' })} />
-            <Button active={period === 'All'} size="tiny" content="All" onClick={() => this.setData({ period: 'All' })} />
-          </Button.Group>
-        </Grid.Column>
-        <Grid.Column textAlign="center">
-          <Input style={{ width: 135 }} label="from" size="mini" type="text" value={minDate} />
-          <Input style={{ width: 105 }} label="to" size="mini" type="text" value={maxDate} />
-        </Grid.Column>
-      </Grid.Row></Grid>}
-
+      {advancedView && <Grid size="mini">
+        <Grid.Row columns="2" >
+          <Grid.Column textAlign="center">
+            <Button.Group compact size="tiny">
+              <Button active={period === '1M'} size="tiny" content="1m" onClick={() => this.setData({ period: '1M' })} />
+              <Button active={period === '3M'} size="tiny" content="3m" onClick={() => this.setData({ period: '3M' })} />
+              <Button active={period === '6M'} size="tiny" content="6m" onClick={() => this.setData({ period: '6M' })} />
+              <Button active={period === 'YTD'} size="tiny" content="YTD" onClick={() => this.setData({ period: 'YTD' })} />
+              <Button active={period === '1Y'} size="tiny" content="1Y" onClick={() => this.setData({ period: '1Y' })} />
+              <Button active={period === 'All'} size="tiny" content="All" onClick={() => this.setData({ period: 'All' })} />
+            </Button.Group>
+          </Grid.Column>
+          <Grid.Column textAlign="center">
+            <Input style={{ width: 135 }} label="from" size="mini" type="text" value={minDate} />
+            <Input style={{ width: 105 }} label="to" size="mini" type="text" value={maxDate} />
+          </Grid.Column>
+        </Grid.Row></Grid>}
     </div>
   }
 }
@@ -242,8 +234,6 @@ const regression = (show: boolean, days: number, data: { date: string, perf: num
 
   const d = data[0].perf;
   const newData = data.map(p => ({ ...p, perf: p.perf - d }));
-
-
 
   if (!show) {
     return {

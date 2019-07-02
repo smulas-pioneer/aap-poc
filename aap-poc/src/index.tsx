@@ -18,11 +18,8 @@ import "slick-carousel/slick/slick-theme.css";
 import 'semantic-ui-css/semantic.min.css';
 import './styles/hovereffect.css';
 
-
 import './styles/bigone-gen.css';
-
 import './styles/index.css';
-
 import './styles/bigone.css';
 
 
