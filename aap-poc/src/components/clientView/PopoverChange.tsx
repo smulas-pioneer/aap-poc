@@ -13,30 +13,24 @@ type PopoverChangeProps = {
 }
 
 export const PopoverChange = (props: PopoverChangeProps) => {
-  const newWeight = useValue((props.item.currentWeight + props.item.suggestedDelta) * 100, 'weight');
   const suggestion = useValue(props.item.suggestedDelta * 100, 'suggestion');
   const [enabled, setEnabled] = React.useState(props.item.suggestionAccepted);
 
-  const error = { ...newWeight.error, ...suggestion.error };
+  const error = { ...suggestion.error };
   const hasError = Object.keys(error).some(k => error[k] !== undefined);
 
+  
   const onChangeSuggestion = (value: number | string) => {
     suggestion.setValue(value);
     if (!isNaN(value as any)) {
-      newWeight.setValue(props.item.currentWeight * 100 + parseFloat(value.toString()));
-      props.onChange({
+       props.onChange({
         ...props.item,
-        suggestedDelta: enabled ? newWeight.value / 100 - props.item.currentWeight : props.item.suggestedDelta,
+        suggestedDelta: enabled ? parseFloat(value.toString())/100 : props.item.suggestedDelta,
         suggestionAccepted: enabled
       })
     }
   }
-  const onChangeWeight = (value: number | string) => {
-    newWeight.setValue(value);
-    if (!isNaN(value as any)) {
-      suggestion.setValue(parseFloat(value.toString()) - props.item.currentWeight * 100);
-    }
-  }
+
 
   const quantityFactor = props.tot / props.item.currentPrice / 100;
   const amountFactor = props.tot / 100;
@@ -72,7 +66,6 @@ const useValue = (value: number, tag: string) => {
 
   return {
     setValue: (value: string | number) => {
-      console.log(`set ${tag} = ${value}`)
       setStringValue(value.toString());
     },
     stringValue,

@@ -123,11 +123,10 @@ export const ClientView = conn.PureCompo(props => {
 
 
   const handleOnChange = (strategy: StrategyItem[]) => {
-    console.log(strategy);
+    //console.log(strategy);
     if (strategy.length > 0) {
       dispatch({ firstSimulation: false, processing: undefined, somethingIsChanged: false });
       setTimeout(() => {
-        console.log('calculate...');
         props.getSuggestions({ id: props.client!.id, position: strategy, axes, calculateFromAxes: false });
       }, 1000);
     }

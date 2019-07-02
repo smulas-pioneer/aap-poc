@@ -223,7 +223,7 @@ export const Holdings = (props: Props) => {
           <Table.Body style={{ overflow: 'visible' }}>
             {
               holdings
-                .filter(holdingsFilter(isProposingMode))
+              //  .filter(holdingsFilter(isProposingMode))
                 .sort(holdingsSort)
                 .map((t, i) => {
                   const show = t.currentQuantity !== 0;
