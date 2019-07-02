@@ -5,7 +5,6 @@ import { IndicatorOptionsType } from "../../actions/model";
 import { startCase } from "lodash";
 import { Share } from "../Share";
 import { arrayHasValue } from "../../commonUtils";
-import { tsIndexedAccessType } from "@babel/types";
 
 export interface TopClientOptionSelection {
   Group?: GroupTypes;

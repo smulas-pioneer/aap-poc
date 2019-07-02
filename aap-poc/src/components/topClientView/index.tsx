@@ -5,7 +5,6 @@ import { IndicatorType, IndicatorOptionsType } from "../../actions/model";
 import { Dictionary, groupBy, sumBy } from "lodash";
 import { TopClientOptionSelection, TopClientOptionSelector } from "./TopClientOptionSelector";
 import { TopClientList } from "./TopClientList";
-import { forInStatement } from "@babel/types";
 
 
 export interface TopClientProps {

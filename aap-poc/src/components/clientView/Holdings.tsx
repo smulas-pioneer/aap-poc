@@ -223,7 +223,7 @@ export const Holdings = (props: Props) => {
           <Table.Body style={{ overflow: 'visible' }}>
             {
               holdings
-              //  .filter(holdingsFilter(isProposingMode))
+                //  .filter(holdingsFilter(isProposingMode))
                 .sort(holdingsSort)
                 .map((t, i) => {
                   const show = t.currentQuantity !== 0;
@@ -238,7 +238,7 @@ export const Holdings = (props: Props) => {
                         {t.security.pushed && <Icon size="large" color="green" name='thumbs up' />}
                         {t.clientFavorites && <Icon size="large" color="red" name='heart' />}
                       </Table.Cell>}
-                      {isProposingMode &&< Table.Cell>
+                      {isProposingMode && < Table.Cell>
                         {!t.isCash && <Icon name="exchange" style={{ cursor: 'pointer' }} />}
                       </Table.Cell>}
                       <Table.Cell >
@@ -260,7 +260,6 @@ export const Holdings = (props: Props) => {
                           </div>
 
                           <Popup wide trigger={<Icon style={{ cursor: 'pointer', flex: 1 }} name="pencil" />} on='click'>
-                            <h6></h6>
                             <PopoverChange tot={tot}
                               item={t}
                               onCancel={() => setCurrentHolding(undefined)}
