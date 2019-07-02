@@ -299,11 +299,6 @@ export const Holdings = (props: Props) => {
   )
 }
 
-
-
-
-
-
 const holdingsSort = (a: StrategyItem, b: StrategyItem) => {
   if (a.isCash) return -1;
   if (b.isCash) return 1;

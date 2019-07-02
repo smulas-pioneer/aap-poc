@@ -14,6 +14,11 @@ interface IAppProps {
   manager?: boolean
 }
 
+const ScrollToTop = () => {
+  window.scrollTo(0, 0);
+  return null;
+};
+
 /**
  * Main App
  */
@@ -22,6 +27,7 @@ class App extends React.Component<IAppProps, {}> {
     const { manager } = this.props;
     return (
       <div className="app" style={{ height: '100vh', width: '100%', position: 'absolute', top: 0, bottom: 0 }}>
+        <Route component={ScrollToTop} />
         <Route exact={false} path="/" component={(p: RouteComponentProps<any>) => <MenuFlat history={p.history} />} />
         <Segment basic style={{ marginTop: 0, height: '95%' }}>
           {/* <Route exact path="/" component={(p: any) => <HomePage />} />

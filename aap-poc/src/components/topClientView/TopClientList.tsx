@@ -5,6 +5,7 @@ import { formatAua, formatNumber } from "../../_db/utils";
 import { CSSProperties } from "react";
 import { IndicatorOptionsType } from "../../actions/model";
 import { TopClientItem, GroupTypes } from "./index";
+import { Link } from "react-router-dom";
 
 export interface TopClientListProps {
   clients: TopClientItem[];
@@ -94,7 +95,11 @@ export const TopClientList = ({ clients, group, indicator, lang }: TopClientList
                 <Table.Cell style={cellStyle(clIndex, GroupTypes.Advisor, true)}>{client.advisor}</Table.Cell>
               }
               {group >= GroupTypes.Client &&
-                <Table.Cell style={cellStyle(clIndex, GroupTypes.Client, true)}>{client.name}</Table.Cell>
+                <Table.Cell style={cellStyle(clIndex, GroupTypes.Client, true)}>
+                  <Link to={`/clients/${client.id}`}>
+                    {client.name}
+                  </Link>
+                </Table.Cell>
               }
               {group !== GroupTypes.Client &&
                 <Table.Cell textAlign="right" style={cellStyle(clIndex, IndicatorOptionsType.clients)}>{fmt(client.totals.clients)}</Table.Cell>

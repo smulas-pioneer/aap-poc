@@ -10,7 +10,7 @@ import { CustomPieChart } from './chart/CustomCharts';
 import { AdvancedGrid } from './shared/GridOverflow';
 import { ManagerView } from './managerView/managerView';
 import { AlertsView } from './alertsView/AlertsView';
-import { formatAua, formatNumber } from '../_db/utils';
+import { formatAua, formatNumber, getColorCustomClassName } from '../_db/utils';
 import { ClientFilter } from './shared/ClientFilter';
 import { WidgetTitle } from './shared/WidgetTitle';
 import { BreakdownView } from './clientView/BreakdownView';
@@ -103,15 +103,17 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
   }
 
   // render statistic
-  renderItem(value: any, label?: string, sublabel?: any, valueIcon?: SemanticICONS, color?: SemanticCOLORS) {
-    return (<Statistic size="mini" color='blue' >
+  renderItem(value: any, label?: string, sublabel?: any, color?: SemanticCOLORS, sublabelcolor?: SemanticCOLORS, valueIcon?: SemanticICONS) {
+    return (<Statistic size="mini" color={color || 'blue'} >
       {label && <Statistic.Label>{label}</Statistic.Label>}
       <Statistic.Value>
         {valueIcon && <Icon name={valueIcon} color={color} />}
         {value}
       </Statistic.Value>
-      <br />
-      {sublabel && <Statistic.Label><span style={{ color: color ? (color === 'green' ? '#2ecc40' : color) : undefined, whiteSpace: 'nowrap' }}>{sublabel}</span></Statistic.Label>}
+      {sublabel && <Statistic.Label style={{ marginTop: '5px', whiteSpace: 'nowrap' }} className={getColorCustomClassName(sublabelcolor)}>
+        {sublabel}
+        {/*<span style={{ color: color ? (color === 'green' ? '#2ecc40' : color) : undefined, whiteSpace: 'nowrap' }}>{sublabel}</span>*/}
+      </Statistic.Label>}
     </Statistic>);
   }
 
@@ -173,40 +175,6 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         <TopClient clients={data} lang={lang} />
       </Segment>
     </div >
-    /*
-    return (
-        <Grid columns={2}>
-            <Grid.Column>
-                <Segment style={{ height: '600px' }}>
-                    <WidgetTitle size='small' title={'Key Figures Map'} shareButtons={['Image', 'Copy']} />
-                    <EuropaMap lang={lang} clients={data} layout={layout} height="550px" isOnlyItaly={this.props.isOnlyItaly} />
-                </Segment>
-            </Grid.Column>
-            <Grid.Column>
-                <Segment style={{ height: '600px' }}>
-                    {this.state.graphMode === 'slider1'
-                        ? <SliderGraphThumb graphs={this.createGraphs()} height={580} lang={lang} defaultIndex={0} slidesToShow={3} />
-                        : this.state.graphMode === 'slider2'
-                            ? <SliderGraph graphs={this.createGraphs()} height={600} lang={lang} defaultIndex={0} slidesToShow={1} bordered={false} />
-                            : <div>
-                                <Card fluid>
-                                    <SliderGraph graphs={this.createGraphs()} height={280} lang={lang} defaultIndex={0} slidesToShow={1} />
-                                </Card>
-                                <Card fluid>
-                                    <SliderGraph graphs={this.createGraphs()} height={280} lang={lang} defaultIndex={1} slidesToShow={1} />
-                                </Card>
-                            </div>
-                    }
-
-                </Segment>
-            </Grid.Column>
-            <Grid.Column width={16}>
-                <TopClient clients={data} lang={lang} />
-            </Grid.Column>
-        </Grid>
-
-    )
-    */
   }
 
   Colors = ["#F07D00", "#004F9F", "#E6325E", "#3B7296", "#39B2B6", "#c8c802", "#bd00bf"]
@@ -265,11 +233,10 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
       Performance: {
         title: 'AUA',
         icon: 'pie chart',
-        charts: [
-          {
-            title: 'AUA',
-            chart: this.renderFilterGraphItem(1, filterMapItems.Aua, filter.Aua)
-          }]
+        charts: [{
+          title: 'AUA',
+          chart: this.renderFilterGraphItem(1, filterMapItems.Aua, filter.Aua)
+        }]
       }
     }
 
@@ -277,10 +244,9 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
       return {
         title: b.attributeName,
         icon: 'line chart',
-        charts: [
-          {
-            chart: <BreakdownView key={i} breakdown={b} width={500} height={500} responsiveHeight="100%" />
-          }]
+        charts: [{
+          chart: <BreakdownView key={i} breakdown={b} width={500} height={500} responsiveHeight="100%" />
+        }]
       }
     });
     return Object.keys(graphs).map((v) => graphs[v]).concat(bd);
@@ -296,19 +262,19 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
     const panes = [
       {
         menuItem: this.renderTabItem('DASHBOARD', 'pie graph', 'green'),
-        render: () => <Tab.Pane as={"div"} style={style} content={this.renderFilterGraphics(data.result)} />
+        render: () => <Tab.Pane as={"div"} style={style} content={<div style={{ padding: 4 }}>{this.renderFilterGraphics(data.result)} </div>} />
       },
       {
         menuItem: this.renderTabItem('MY_PORTFOLIOS', 'users', 'blue'),
-        render: () => <Tab.Pane as={"div"} style={style} content={<ManagerView uid={uid} />} />
+        render: () => <Tab.Pane as={"div"} style={style} content={<div style={{ padding: 10 }}> <ManagerView uid={uid} /></ div>} />
       },
       {
         menuItem: this.renderTabItem('MY_ALERTS', 'alarm', 'red'),
-        render: () => <Tab.Pane as={"div"} style={style} content={<AlertsView manager uid={uid} hideGraphs />} />
+        render: () => <Tab.Pane as={"div"} style={style} content={<div style={{ padding: 10 }}><AlertsView manager uid={uid} hideGraphs /></div>} />
       },
       {
         menuItem: this.renderTabItem('MY_CLIENTS', 'users', 'blue'),
-        render: () => <Tab.Pane as={"div"} style={style} content={<ClientsView uid={uid} />} />
+        render: () => <Tab.Pane as={"div"} style={style} content={<div style={{ padding: 10 }}><ClientsView uid={uid} /></div>} />
       }
     ]
 
@@ -338,29 +304,29 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         <Segment compact style={{ width: '100%', margin: 0 }} >
           <Grid columns={6} >
             <Grid.Column textAlign="center" >
-              {this.renderItem(fmt(info.length), lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), undefined, 'green')}
+              {this.renderItem(fmt(info.length), lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), 'blue', 'green')}
             </Grid.Column>
             <Grid.Column textAlign="center">
-              {this.renderItem(formatAua(info.assetUnder, fmt), lang.DB_ASSET_ADVISE, this.percDetail(15, '1', 'Y'), undefined, 'green')}
+              {this.renderItem(formatAua(info.assetUnder, fmt), lang.DB_ASSET_ADVISE, this.percDetail(15, '1', 'Y'), 'blue', 'green')}
             </Grid.Column>
             <Grid.Column textAlign="center">
-              {this.renderItem(<span style={{ color: 'red' }}>{fmt(info.clientAlert)}</span>, lang.DB_CLIENTS_ALERTS, this.alertsDetail(fmt(info.mifidAlert)))}
+              {this.renderItem(fmt(info.clientAlert), lang.DB_CLIENTS_ALERTS, this.alertsDetail(fmt(info.mifidAlert)), 'red')}
             </Grid.Column>
             <Grid.Column textAlign="center">
-              {this.renderItem(fmt(info.totalBudget) + "€", lang.BUDGET, Math.round(100 * (info.totRevenues / info.totalBudget)).toString() + '% accomplished YTD', undefined, 'green')}
+              {this.renderItem(fmt(info.totalBudget) + "€", lang.BUDGET, Math.round(100 * (info.totRevenues / info.totalBudget)).toString() + '% accomplished YTD', 'blue', 'green')}
             </Grid.Column>
             <Grid.Column textAlign="center">
-              {this.renderItem(fmt(info.totalTurnover / info.length) + "%", lang.TURNOVER, '', undefined, 'green')}
+              {this.renderItem(fmt(info.totalTurnover / info.length) + "%", lang.TURNOVER, '', 'blue', 'green')}
             </Grid.Column>
             <Grid.Column textAlign="center">
-              {this.renderItem(fmt(info.acceptedProposals), lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${fmt(info.totalProposals)} (${Math.round(100 * (info.acceptedProposals / info.totalProposals)).toString() + '%)'}`)}
+              {this.renderItem(fmt(info.acceptedProposals), lang.DB_CLIENT_ACCEPTED_PROPOSALS, `${lang.OUT_OF} ${fmt(info.totalProposals)} (${Math.round(100 * (info.acceptedProposals / info.totalProposals)).toString() + '%)'}`, 'blue' )}
             </Grid.Column>
           </Grid>
         </Segment>
         <AdvancedGrid className="grid-filter-right">
           <div style={{ position: 'relative' }}>
             <Tab menu={{ pointing: true, secondary: true, style: { margin: 0 } }} panes={panes} style={{ height: '95%' }} />
-            <Icon link name='th' size='large' style={{ position: 'absolute', top: '8px', right: '8px' }} onClick={this.setSlider}/>
+            <Icon link name='th' size='large' style={{ position: 'absolute', top: '8px', right: '8px' }} onClick={this.setSlider} />
           </div>
           <Segment style={{ margin: 0 }}>
             <WidgetTitle size="mini" title={lang.FILTER} />

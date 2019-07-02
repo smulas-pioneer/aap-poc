@@ -4,6 +4,7 @@ import { List, Segment, Header, Icon, Accordion } from "semantic-ui-react";
 import * as React from 'react';
 import { REFERENCE_DATE_TODAY } from "../../_db/common/consts";
 import moment from 'moment';
+import { getColorCustomClassName } from "../../_db/utils";
 
 export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client: Client, onOpenHistory: () => void }) => {
     const { radar, lang } = props;
@@ -15,8 +16,8 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
         return value !== 'green'
             ? (<List.Item  key={key}  >
                 <List.Content style={{ marginBottom: '6px' }}>
-                    <p style={{ fontSize: "14px" }}>
-                        <b style={{ color: value === "orange" ? "darkorange" : value }}>{alert.name.toUpperCase()}</b> : {alert.sentence}
+                    <p style={{ fontSize: "14px" }} >
+                        <b className={getColorCustomClassName(value)}>{alert.name.toUpperCase()}</b> : {alert.sentence}
                     </p>
                 </List.Content>
             </List.Item>)
@@ -31,6 +32,7 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
         : alertTitle
 
     const alertColor = props.client.decision==='ONHOLD' ? 'blue': radar.numOfAlerts ===0 ? 'green' : radar.riskAdequacyAlert ==='red' ? 'red' : 'orange';
+
     const dur = moment(REFERENCE_DATE_TODAY).to(moment(props.client.clientStatusAge));
     const title = (
         <Segment basic as="span" size="small">

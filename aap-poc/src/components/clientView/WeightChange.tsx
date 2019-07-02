@@ -101,7 +101,6 @@ export const WeightChange = (props: WeightChangeProps) => {
         </Grid.Row>
       </Grid>
 
-
         {hasError && <Message warning>
           <ul>
             {Object.keys(error).map((k, ix) => (<li key={ix}>{error[ix]}</li>))}

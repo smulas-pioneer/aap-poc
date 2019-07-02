@@ -192,7 +192,8 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
           </Menu.Item>
           <Menu.Item position="right">
             Probability: &nbsp;&nbsp;
-                    <Progress style={{ width: 100, margin: 0 }}
+               <Progress
+              style={{ width: 100, margin: 0 }}
               color={this.state.probability >= 95 ? 'green' : this.state.probability > 60 ? 'orange' : 'red'}
               percent={this.state.probability} progress
             />

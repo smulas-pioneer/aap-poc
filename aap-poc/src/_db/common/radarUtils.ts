@@ -82,6 +82,7 @@ export const createRadarSync = (guideLines: RadarItem,
     const reds = alerts.filter(r => r === 'red').length;
     const oranges = alerts.filter(r => r === 'orange').length;
     const numOfAlerts = reds + oranges;
+    
     const color = numOfAlerts === 0 ? 'green' : reds === 0 ? 'orange' : 'red';
 
     const f= (n:number) => n/20
