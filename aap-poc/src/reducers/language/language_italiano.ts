@@ -118,7 +118,7 @@ export const Italiano: LanguageState = {
     LAST_ADVICE_DATE: 'Ultima Proposta',
     LAST_INTERVIEW_DATE: 'Ultima Intervista',
     MY_BUSINNESS: 'Le mie Attività',
-    WELCOME: 'Benvenuto',
+    WELCOME: 'Ciao',
     'NO ALERT': 'No Alert',
     'REGULATOR ALERT': 'Regulator Alert',
     'GUIDELINE ALERT': 'Guideline Alert',

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Dropdown, Icon } from 'semantic-ui-react';
 
+
 export type ShareButton = 'Email' | 'Pdf' | 'Excel' | 'Image' | 'Print' | 'Copy';
 
 const icons = {
@@ -15,7 +16,8 @@ const icons = {
 interface ShareProps {
   buttons?: ShareButton[]
   pointing?: boolean | 'left' | 'right' | 'top' | 'top left' | 'top right' | 'bottom' | 'bottom left' | 'bottom right';
-  text?: string
+  text?: string,
+  iconSize?: 'mini' | 'tiny' | 'small' | 'large' | 'big' | 'huge' | 'massive';
 }
 
 interface ShareState {
@@ -24,19 +26,19 @@ interface ShareState {
 export class Share extends React.Component<ShareProps, ShareState> {
 
   render() {
-    const { buttons } = this.props;
+    const { buttons, iconSize, text } = this.props;
     if (!buttons) return null;
     const opts = buttons.map((btn, ix) => {
       return { key: ix, text: btn, icon: icons[btn] }
     });
-    return <Dropdown style={{ position: 'relative' }} trigger={trigger(this.props.text)} options={opts} pointing={this.props.pointing || 'top left'} icon={null} />
+    return <Dropdown style={{ position: 'relative' }} trigger={trigger(text, iconSize)} options={opts} pointing={this.props.pointing || 'top left'} icon={null} />
   }
 }
 
 
-const trigger = (text: string = '') => (
+const trigger = (text: string = '', iconSize?: any) => (
   <span>
-    <Icon name="share alternate" />
+    <Icon size={iconSize} name="share alternate" />
     {text}
   </span>
 )

@@ -5,7 +5,7 @@ import { appConnector } from 'app-support';
 import { getCurrentClient, getLanguage, getHistory, selectStrategy, selectStrategySuccessCount } from '../../reducers/index';
 import { getClient, getSuggestions, getClientSuccess, addSecurity, addHistory } from '../../actions/index';
 import { Breakdown, Radar, StrategyItem, RadarStrategyParm } from '../../_db/interfaces';
-import { Segment, Button, Modal, Loader } from 'semantic-ui-react';
+import { Segment, Button, Modal, Loader, Grid } from 'semantic-ui-react';
 import { RadarGraph } from '../RadarGraph';
 import { Holdings } from './Holdings';
 import { PerformanceChart } from '../securityView/PerformanceChart';
@@ -24,7 +24,7 @@ import { Fees } from './Fees';
 import { ClientViews } from './ClientViews';
 import { SliderGraph, SliderGraphThumb } from './SliderGraph';
 
-const conn = appConnector<{ id: string }>()(
+const conn = appConnector<{ id: string, children: any }>()(
   (s, p) => ({
     client: getCurrentClient(s),
     lang: getLanguage(s),
@@ -255,9 +255,21 @@ export const ClientView = conn.PureCompo(props => {
   return (
     <div>
       <AdvancedGrid className="grid-client-view-main" style={{ marginBottom: '10px' }}>
+
         <Segment style={{ margin: 0 }} >
-          <ClientCard client={client} lang={lang} color={'blue'} />
+          <Grid columns={14}>
+            <Grid.Column width={13}>
+              <ClientCard client={client} lang={lang} color={'blue'} />
+            </Grid.Column>
+
+            {/* <Grid.Column width={1}></Grid.Column> */}
+            <Grid.Column className="col-user-menu">
+              {props.children}
+            </Grid.Column>
+          </Grid>
         </Segment>
+
+
         <Segment style={{ margin: 0 }}>
           <ClientAlert radar={client.radar} client={client} lang={lang} onOpenHistory={() => dispatch({ viewHistory: true })} />
         </Segment>

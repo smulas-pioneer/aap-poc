@@ -1,7 +1,7 @@
 import * as React from "react";
 import { appConnector } from 'app-support';
 import { getLanguage, getCurrentUser, getConfigLayout } from '../reducers/index';
-import { Menu, MenuItemProps, Dropdown, Image } from 'semantic-ui-react';
+import { Menu, MenuItemProps, Dropdown, Image, Icon } from 'semantic-ui-react';
 import * as Model from '../actions/model';
 import { Link } from "react-router-dom";
 import { LangBar } from './LangBar';
@@ -21,6 +21,7 @@ const managerAvatar = require('./managerAvatar.png');
 
 export interface MenuFlatProps {
   history: any;
+  orientation?: 'horizontal' | 'vertical';
 }
 export interface MenuFlatState {
   spotlightVisible: boolean,
@@ -49,13 +50,14 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
     this.spotlightMenuItem = this.spotlightMenuItem.bind(this);
     this.renderItem = this.renderItem.bind(this);
     this.handleItemClick = this.handleItemClick.bind(this);
+    this.goHome = this.goHome.bind(this);
   }
 
   toggleSpotlight(toggle: boolean) { this.setState(prevState => ({ spotlightVisible: toggle })); }
 
-  spotlightMenuItem() {
-    return (
-      <Menu.Item
+  spotlightMenuItem(showText?: boolean) {
+    if (showText)
+      return (<Menu.Item
         position="right"
         as="a"
         icon='search'
@@ -64,10 +66,23 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
         onClick={() => this.toggleSpotlight(true)}
         name={this.props.lang.MENU_SPOTLIGHT}>
       </Menu.Item>);
+    return (
+      <Menu.Item
+        position="right"
+        as="a"
+        key='spotlight'
+        onClick={() => this.toggleSpotlight(true)}
+        name={this.props.lang.MENU_SPOTLIGHT}>
+        <Icon size='large' name='search'></Icon>
+      </Menu.Item>);
   }
 
   handleItemClick(event: React.MouseEvent<HTMLAnchorElement>, data: MenuItemProps) {
     this.setState({ activeMenuItem: data.name! });
+  }
+
+  goHome() {
+    this.props.history.push('/');
   }
 
   renderItem(item: Model.MemuItemModel, i: number, activeMenuItem: string) {
@@ -107,9 +122,20 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
 
   render() {
     const { spotlightVisible } = this.state;
-    const { logout, lang, user /*, layout */ } = this.props;
-
+    const { logout, lang, user, orientation = 'horizontal' /*, layout */ } = this.props;
     const trigger = this.userOptionsTrigger(user!, lang);
+
+
+    const userMenuDropDown = <Dropdown fluid item trigger={trigger} >
+      <Dropdown.Menu>
+        <Dropdown.Divider />
+        <LangBar />
+        <Dropdown.Divider />
+        <Dropdown.Item onClick={() => logout()}>{lang.SIGN_OUT}</Dropdown.Item>
+        <Dropdown.Divider />
+        <Dropdown.Item><span style={{ marginRight: 5 }}>v {process.env.REACT_APP_VERSION} </span></Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>;
 
     // let srcLogo = logo2;
     // switch (layout.client) {
@@ -123,35 +149,17 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
     //     break;
     // }
 
-    return (
+    if (orientation === 'horizontal') return (
       <div>
-        <Spotlight
-          onCancel={() => this.toggleSpotlight(false)}
-          onItemNavigate={this.onItemNavigate}
-          visible={spotlightVisible}
-        />
-
         <Menu >
           {/* <img alt="" style={{ width: '50px', height: '50px', padding: '4px', ...layout.logoStyle }} src={srcLogo} />
           <Menu.Item replace="true" ><Link to="/" style={{ color: '#FFFFFF', fontFamily: 'Lato', ...layout.titleStyle }} ><h2>Advisory Platform</h2></Link></Menu.Item> */}
           <Menu secondary compact floated='right' color='blue' >
-
             <Menu.Item as="a" >
               <Share text='Share' buttons={['Print', 'Pdf', 'Email']} pointing="top right" />
             </Menu.Item>
-
-            {this.spotlightMenuItem()}
-
-            <Dropdown fluid item trigger={trigger} >
-              <Dropdown.Menu>
-                <Dropdown.Divider />
-                <LangBar />
-                <Dropdown.Divider />
-                <Dropdown.Item onClick={() => logout()}>{lang.SIGN_OUT}</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item><span style={{ marginRight: 5 }}>v {process.env.REACT_APP_VERSION} </span></Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+            {this.spotlightMenuItem(true)}
+            {userMenuDropDown}
           </Menu>
 
           {/* <Menu.Item>
@@ -160,8 +168,39 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
                     </Menu.Item>
                     {this.renderSpotlightItem()} */}
         </Menu>
-      </div >
+        <Spotlight
+          onCancel={() => this.toggleSpotlight(false)}
+          onItemNavigate={this.onItemNavigate}
+          visible={spotlightVisible}
+        />
+      </div>
     );
+
+    else if (orientation === 'vertical') return (
+      <div style={{ margin: 0 }}>
+
+        <Menu compact fluid className='menu-user' size='large' >
+          {userMenuDropDown}
+        </Menu>
+
+        <Menu compact fluid className='menu-options'>
+          <Menu.Item as="a" onClick={() => this.goHome()} >
+            <Icon size='large' name='home' />
+          </Menu.Item>
+          <Menu.Item as="a" position='right' >
+            <Share iconSize='large' buttons={['Print', 'Pdf', 'Email']} pointing="top right" />
+          </Menu.Item>
+          {this.spotlightMenuItem()}
+        </Menu>
+
+        <Spotlight
+          onCancel={() => this.toggleSpotlight(false)}
+          onItemNavigate={this.onItemNavigate}
+          visible={spotlightVisible}
+        />
+      </div>
+    );
+    return null;
   }
 }
 
