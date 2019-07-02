@@ -24,7 +24,7 @@ const getSuggestion1 = (position: StrategyItem[], axes: RadarStrategyParm, calcu
         if ( strategy ) {
           return { ...p, suggestionAccepted: strategy.suggestionAccepted }
         }
-      console.log('ERROR', strategy,forced.map(i=>i.security.IsinCode), position.map(i=>i.security.IsinCode),p.security.IsinCode);
+      //console.log('ERROR', strategy,forced.map(i=>i.security.IsinCode), position.map(i=>i.security.IsinCode),p.security.IsinCode);
         return p;
       })
       : position;

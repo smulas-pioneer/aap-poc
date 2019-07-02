@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Modal, Segment, Input, Button, Message, Grid, } from 'semantic-ui-react';
+import { Input, Button, Checkbox, } from 'semantic-ui-react';
 import { StrategyItem } from '../../_db/interfaces';
 import { formatNumber } from '../../_db/utils';
 import { English } from '../../reducers/language/language_english';
+import { debounce } from 'lodash';
 
 
 type PopoverChangeProps = {
@@ -15,32 +16,46 @@ type PopoverChangeProps = {
 export const PopoverChange = (props: PopoverChangeProps) => {
   const suggestion = useValue(props.item.suggestedDelta * 100, 'suggestion');
   const [enabled, setEnabled] = React.useState(props.item.suggestionAccepted);
+  const sendChange = (value: number) => {
+    props.onChange({
+      ...props.item,
+      suggestedDelta: enabled ? value / 100 : props.item.suggestedDelta,
+      suggestionAccepted: enabled
+    })
+  }
 
-  const error = { ...suggestion.error };
-  const hasError = Object.keys(error).some(k => error[k] !== undefined);
-
-  
-  const onChangeSuggestion = (value: number | string) => {
+  const onChangeSuggestion = (value: number | string, propagate = false) => {
     suggestion.setValue(value);
-    if (!isNaN(value as any)) {
-       props.onChange({
-        ...props.item,
-        suggestedDelta: enabled ? parseFloat(value.toString())/100 : props.item.suggestedDelta,
-        suggestionAccepted: enabled
-      })
+    if (propagate && !isNaN(value as any)) {
+      sendChange(parseFloat(value.toString()));
     }
   }
 
+  const isChanged = enabled !== props.item.suggestionAccepted || props.item.suggestedDelta !== suggestion.value / 100;
 
-  const quantityFactor = props.tot / props.item.currentPrice / 100;
-  const amountFactor = props.tot / 100;
+  return <div style={{ display: 'flex', flexDirection: 'column', padding: 5 }}>
+    <div style={{ flex: 1, display: 'flex', alignContent: 'center' }}>
+      <span style={{ flex: 1, marginRight: 3 }}>Enabled:</span>
+      <Checkbox checked={enabled} onChange={(a, b) => setEnabled(b.checked || false)} />
+    </div>
 
-  return <div>
-    <Input type="range" min={-props.item.currentWeight * 100} max={100 - props.item.currentWeight * 100} value={suggestion.value} onChange={(a, b) => onChangeSuggestion(b.value)} />
-    <Input fluid value={suggestion.stringValue || ""} onChange={(a, b) => onChangeSuggestion(b.value)} >
-      <input style={{ color: suggestion.value > 0 ? 'lightgreen' : 'red' }} />
-    </Input>
+    <div style={{ flex: 1 }}>
+      <Input type="range" min={-props.item.currentWeight * 100} max={100 - props.item.currentWeight * 100} value={suggestion.value} onChange={(a, b) => onChangeSuggestion(b.value)} />
 
+    </div>
+    <div style={{ flex: 1, display: 'flex' }}>
+      <div style={{ flex: 3, verticalAlign: 'middle' }}>
+        <Input size="mini" inverted fluid value={suggestion.stringValue || ""} onChange={debounce((a, b) => onChangeSuggestion(b.value), 600)} >
+          <input style={{ color: suggestion.value > 0 ? 'lightgreen' : 'red' }} />
+        </Input>
+      </div>
+      <div style={{ flex: 1, verticalAlign: 'middle', alignContent: 'center' }}>
+        <Button inverted disabled={!isChanged} size="mini" negative icon="cancel" onClick={() => onChangeSuggestion(props.item.suggestedDelta * 100, true)} />
+      </div>
+      <div style={{ flex: 1, verticalAlign: 'middle', alignContent: 'center' }}>
+        <Button inverted disabled={!isChanged} size="mini" positive icon="check" onClick={() => sendChange(suggestion.value)} />
+      </div>
+    </div>
   </div>
 
 };

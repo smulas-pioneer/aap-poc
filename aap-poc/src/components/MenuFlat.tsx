@@ -15,9 +15,9 @@ import { Share } from './Share';
 
 const advisorAvatar = require('./advisorAvatar.png');
 const managerAvatar = require('./managerAvatar.png');
-const logo2 = require('./logo2.png');
-const logoBper = require('./logo-bper.svg');
-const logoAmundi = require('./logo-amundi.png');
+// const logo2 = require('./logo2.png');
+// const logoBper = require('./logo-bper.svg');
+// const logoAmundi = require('./logo-amundi.png');
 
 export interface MenuFlatProps {
   history: any;
@@ -107,36 +107,34 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
 
   render() {
     const { spotlightVisible } = this.state;
-    const { logout, lang, user, layout } = this.props;
+    const { logout, lang, user /*, layout */ } = this.props;
 
     const trigger = this.userOptionsTrigger(user!, lang);
 
-    let srcLogo = logo2;
-    switch (layout.client) {
-      case 'BPER':
-        srcLogo = logoBper;
-        break;
-      case 'AMUNDI':
-        srcLogo = logoAmundi;
-        break;
-      default:
-        break;
-    }
+    // let srcLogo = logo2;
+    // switch (layout.client) {
+    //   case 'BPER':
+    //     srcLogo = logoBper;
+    //     break;
+    //   case 'AMUNDI':
+    //     srcLogo = logoAmundi;
+    //     break;
+    //   default:
+    //     break;
+    // }
 
     return (
-      <div style={{ backgroundColor: 'white', borderBottom: `solid ${layout.color} thick` }}>
+      <div>
         <Spotlight
           onCancel={() => this.toggleSpotlight(false)}
           onItemNavigate={this.onItemNavigate}
           visible={spotlightVisible}
         />
 
-        <Menu attached secondary >
-          <img alt="" style={{ width: '50px', height: '50px', padding: '4px', ...layout.logoStyle }} src={srcLogo} />
-
-          <Menu.Item replace="true" ><Link to="/" style={{ color: '#FFFFFF', fontFamily: 'Lato', ...layout.titleStyle }} ><h2>Advisory Platform</h2></Link></Menu.Item>
-
-          <Menu secondary compact floated='right' >
+        <Menu >
+          {/* <img alt="" style={{ width: '50px', height: '50px', padding: '4px', ...layout.logoStyle }} src={srcLogo} />
+          <Menu.Item replace="true" ><Link to="/" style={{ color: '#FFFFFF', fontFamily: 'Lato', ...layout.titleStyle }} ><h2>Advisory Platform</h2></Link></Menu.Item> */}
+          <Menu secondary compact floated='right' color='blue' >
 
             <Menu.Item as="a" >
               <Share text='Share' buttons={['Print', 'Pdf', 'Email']} pointing="top right" />
