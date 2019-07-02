@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Header, SemanticICONS, SemanticCOLORS, Segment } from 'semantic-ui-react';
+import { Header, SemanticICONS, SemanticCOLORS } from 'semantic-ui-react';
 import { ShareButton, Share } from '../Share';
 
 export const WidgetTitle = (props: {
