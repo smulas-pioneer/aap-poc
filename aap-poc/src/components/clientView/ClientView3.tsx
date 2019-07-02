@@ -22,7 +22,7 @@ import { ClientCard } from './ClientCard';
 import { ClientHistory } from './ClientHistory';
 import { Fees } from './Fees';
 import { ClientViews } from './ClientViews';
-import { SliderGraph } from './SliderGraph';
+import { SliderGraph, SliderGraphThumb } from './SliderGraph';
 
 const conn = appConnector<{ id: string }>()(
   (s, p) => ({

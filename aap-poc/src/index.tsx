@@ -22,9 +22,7 @@ import './styles/bigone-gen.css';
 import './styles/index.css';
 import './styles/bigone.css';
 
-
 const store = configureStore(reducers.default, /*startingState,*/ true);
-
 
 loadConfiguration('config.json').then((_cfg) => {
   const cfg = _cfg as { APPNAME: string, CLIENT: string };
