@@ -19,6 +19,7 @@ export interface TopClientItem {
   city: string,
   branch: string,
   advisor: string,
+  name: string,
 
   totals: { [K in IndicatorType]: number };
 }
@@ -58,6 +59,10 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
     let grouped: Dictionary<Client[]> = {};
 
     switch (groupCheck) {
+      case GroupTypes.Country: {
+        grouped = groupBy(clients, d => d.country);
+        break;
+      }
       case GroupTypes.Region: {
         grouped = groupBy(clients, d => d.address.region);
         break;
@@ -71,8 +76,8 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
         grouped = groupBy(clients, d => d.agent);
         break;
       }
-      case GroupTypes.Country: {
-        grouped = groupBy(clients, d => d.country);
+      case GroupTypes.Client: {
+        grouped = groupBy(clients, d => d.name);
         break;
       }
     }
@@ -95,6 +100,7 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
         city: first.address.city,
         branch: first.branch,
         advisor: first.agent,
+        name: first.name,
         totals: {
           alerts: countWithAlerts,
           aua: sumAua,
