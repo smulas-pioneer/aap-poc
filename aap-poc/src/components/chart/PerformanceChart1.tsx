@@ -1,5 +1,7 @@
 import * as React from 'react';
-const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } = require('recharts');
+import { ChartBaseProps } from './ChartInterface';
+
+const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } = require('recharts');
 
 const Colors = {
     ACCENT: "#00B6ED",
@@ -16,21 +18,21 @@ const Colors = {
 
 const perc = (num: number) => (100 * num - 100).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-interface PerformanceChartProps {
+interface PerformanceChartProps extends ChartBaseProps {
     data: { date: string, perf: number }[];
     width?: number;
     height?: number;
-    showLegend?: boolean
 }
 
 export const PerformanceChart = (props: PerformanceChartProps) => {
+    const { legend = true, caption = true, actions = true } = props;
+
     return <LineChart width={props.width || 500} height={props.height || 200} data={props.data}
         margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-        <XAxis dataKey="date" tickFormatter={() => ""} interval={10} />
-        <YAxis tickFormatter={(d: number) => perc(d)} domain={['auto', 'auto']} />
+        <XAxis dataKey="date" tickFormatter={() => ""} interval={10} hide={!caption} />
+        <YAxis tickFormatter={(d: number) => perc(d)} domain={['auto', 'auto']} hide={!caption} />
         <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip formatter={(d: number) => perc(d) + '%'} />
-        {props.showLegend && <Legend />}
+        {actions && <Tooltip formatter={(d: number) => perc(d) + '%'} />}
         <Line type="monotone" dot={false} dataKey="perf"  strokeWidth={3}  stroke={Colors.RED} />
     </LineChart>
 }

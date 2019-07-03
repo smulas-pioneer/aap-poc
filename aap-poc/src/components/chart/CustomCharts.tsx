@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import { getRndItem } from '../../_db/utils';
+import { ChartBaseProps } from './ChartInterface';
 const { ComposedChart, Legend, ResponsiveContainer, Sector, PieChart, Pie, Cell, Bar, XAxis, YAxis, CartesianGrid } = require('recharts');
 
 const Colors = {
@@ -16,16 +17,13 @@ const Colors = {
     ACQUA: 'aqua'
 }
 
-
-export interface CustomChartProps {
+export interface CustomChartProps extends ChartBaseProps {
     data: any[];
     dataKey: string;
     nameKey: string;
     width: number;
     height: number;
     color?: string;
-    legend?: boolean;
-    caption?: boolean;
     responsiveHeight?: number | string;
 }
 
@@ -186,7 +184,9 @@ export class CustomComposedChart extends React.Component<CustomChartProps, Custo
     }
 
     render() {
-        const { data, width, height, responsiveHeight, dataKey, nameKey, legend = true, caption = true } = this.props;
+        const { data, width, height, responsiveHeight, dataKey, nameKey} = this.props;
+        const { legend = true, caption = true, actions= true } = this.props;
+
         const color = this.props.color || getRndItem(Object.keys(Colors).map(k => Colors[k]));
 
         return (
