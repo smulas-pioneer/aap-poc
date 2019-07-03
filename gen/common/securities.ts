@@ -1,5 +1,4 @@
 import { Security } from "./interfaces";
-import { min } from "moment";
 
 export const cash: Security = {
   "IsinCode": "CASH",
@@ -4550,7 +4549,7 @@ const _securities: Security[] = [
     "Maturity": null
   },
   {
-    "IsinCode": "25",
+    "IsinCode": "LU0701928615",
     "SecurityName": "PIONEER MULTI-ASSET REAL RETURN FU",
     "AssetId": "510593",
     "IsFund": "1",
@@ -7003,8 +7002,8 @@ export const wrapSecurity = (s: any) => {
     ...s,
     Currency: dictCur[s.Currency] || s.Currency,
     MicroAssetClass: dictMI[s.MicroAssetClass] || s.MicroAssetClass,
-    MacroAssetClass: s.MacroAssetClass == "Balanced" ? "Balanced" : dictMA2[s.MicroAssetClass] || s.MacroAssetClass,
-    Region: s.Region && wRegion[s.Region.toLowerCase()] || s.Region
+    MacroAssetClass: s.MacroAssetClass === "Balanced" ? "Balanced" : dictMA2[s.MicroAssetClass] || s.MacroAssetClass,
+    Region: (s.Region && wRegion[s.Region.toLowerCase()]) || s.Region
   }
 }
 
@@ -7014,7 +7013,7 @@ export const wrapSecurities = (secs: any) => secs.map(wrapSecurity);
 let cntOther = 0;
 
 export const securities = wrapSecurities(_securities.filter(s => {
-  if (s.MacroAssetClass == "Balanced") return true;
+  if (s.MacroAssetClass === "Balanced") return true;
   if (s.MicroAssetClass !== 'Other') return true;
   cntOther++;
   return cntOther < 10;

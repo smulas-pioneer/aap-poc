@@ -2,24 +2,32 @@ import { Portfolio, Holding, Client, Radar, InterviewResult, StrategyItem, Alert
 import { securities, cash, wrapSecurities, wrapSecurity, SHOWMISSING } from './common/securities';
 import { createRadarFromStrategy, isFakeClient, getRandomRadar } from './common/radarUtils';
 import { REFERENCE_DATE_TODAY } from './common/consts';
-//import * as ce from './_db/coreEngine';
-
-import * as faker from 'faker';
 //import * as svc from './_db/service';
 import * as fs from 'fs';
 import { sumBy, maxBy, groupBy } from 'lodash';
 import moment from 'moment';
 import { getAllSecuirities, getAllPerformances, getAllStrategies, createFakeRadar } from './fakedata'
-var f = faker;
-f.locale = 'it';
+
+import * as faker_ from 'faker';
 
 const log = console.log;
 const rnd = (min: number, max: number) => Math.round(Math.random() * (max - min)) + min;
 const fmt = (num: number) => Math.ceil(num * 10) / 10
 const rndS = (data: string[]) => data[rnd(0, data.length - 1)];
-
 const dump = (file: string, data: any) => fs.writeFileSync(`./build/${file}`, JSON.stringify(data, null, 2));
-const italyRegions = ['Nord Ovest', 'Lombardia', 'Nord Est', 'Centro Nord', 'Centro', 'Sud', 'Sicilia'];
+
+const italyRegions = [
+  'Nord Ovest',
+  'Lombardia',
+  'Nord Est',
+  'Centro Nord',
+  'Centro',
+  'Sud',
+  'Sicilia',
+  'Germany',
+  'Austria',
+  'Luxemburg'];
+
 const italyRegionsRate = {
   'Nord Ovest': 4,
   'Lombardia': 10,
@@ -27,14 +35,31 @@ const italyRegionsRate = {
   'Centro Nord': 6,
   'Centro': 9,
   'Sud': 6,
-  'Sicilia': 5
+  'Sicilia': 5,
+  'Germany': 6,
+  'Austria': 7,
+  'Luxemburg': 9
 }
+const getFake = (region: string) => {
+  let faker = faker_ as any;
+  if (region === 'Germany') {
+    faker.locale = 'de';
+  } else if (region === 'Austria') {
+    faker.locale = 'at';
+  } else if (region === 'Luxemburg') {
+    faker.locale = 'lu';
+  } else {
+    faker.locale = 'it';
+  }
+  return faker as Faker.FakerStatic;
+}
+
 const MODEL_COUNT = 10;
-const CLIENT_COUNT_IT = 3000;
-const CLIENT_COUNT_DE = 1000;
-const CLIENT_COUNT_LU = 20;
-const CLIENT_COUNT_AT = 500;
-const CLIENT_COUNT =CLIENT_COUNT_AT + CLIENT_COUNT_DE + CLIENT_COUNT_IT + CLIENT_COUNT_LU;
+const CLIENT_COUNT_IT = 1//3000;
+const CLIENT_COUNT_DE = 1//1000;
+const CLIENT_COUNT_LU = 1//20;
+const CLIENT_COUNT_AT = 1//500;
+const CLIENT_COUNT = CLIENT_COUNT_AT + CLIENT_COUNT_DE + CLIENT_COUNT_IT + CLIENT_COUNT_LU;
 const MAX_CITIES_X_REGION = 3;
 const MAX_BRANCH_X_CITY = 3;
 const MAX_AGENT_X_BRANCH = 3;
@@ -62,15 +87,9 @@ const portfolioCreator = (id: string, name: string): Portfolio => {
 
 var clientIndex = 0;
 type Country = 'Italy' | 'Luxemburg' | 'Austria' | 'Germany'
-const getLocale = (country: Country) => ({
-  'Italy': 'it',
-  'Luxemburg': 'lu',
-  'Austria': 'at',
-  'Germany': 'de',
-}[country]);
 
 const clientCreator = (id: string, models: Portfolio[], agents: string[], country: Country): Client => {
-  (faker as any).locale = getLocale(country);
+  const faker = getFake(country);
 
   const name = faker.name.firstName();
   const lastName = faker.name.lastName();
@@ -275,6 +294,8 @@ const alertHistoryCreator = (date: string, days: number, clients: Client[]): Ale
 
 const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResult[] } => {
   return clients.reduce((prev, curr) => {
+    const faker = getFake(curr.country);
+    log('history for', curr.name);
     const n = rnd(4, 12);
     prev[curr.id] = numArray(n).map(i => {
       const r = rnd(1, 100);
@@ -291,6 +312,7 @@ const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResul
       } as InterviewResult;
     }).sort((a, b) => a.date.localeCompare(b.date));
 
+    log('arrivo qui?');
     // LAst one is accepted for fake client and possibly ongoing for others.
     if (isFakeClient(curr.id)) {
       prev[curr.id][prev[curr.id].length - 1].status = 'ACCEPTED';
@@ -313,6 +335,8 @@ const createAgents = () => {
   let clientId = 0;
   let ret = {} as any;
   italyRegions.forEach(region => {
+    const faker = getFake(region);
+
     const max = italyRegionsRate[region];
     const cities = numArray(max).map(i => {
       return {
@@ -347,8 +371,11 @@ const agents = Object.keys(agentDictionary);
 //export const agents = numArray(AGENT_COUNT).map(i => faker.name.findName());
 
 
-export const createModels = () => numArray(MODEL_COUNT).map(i => portfolioCreator(i.toString(), faker.commerce.productName()));
+const modelFaker = getFake('Italy');
+export const createModels = () => numArray(MODEL_COUNT)
+  .map(i => portfolioCreator(i.toString(), modelFaker.commerce.productName()));
 export const clientsCreator = (models: Portfolio[]) => {
+
   return [
     ...numArray(CLIENT_COUNT_IT).map(i => clientCreator(i.toString(), models, agents, 'Italy')),
     ...numArray(CLIENT_COUNT_AT).map(i => clientCreator(i.toString(), models, agents, 'Austria')),
@@ -471,24 +498,35 @@ const getClientState = (decision: string, radar: Radar): ClientState => {
 }
 
 const go = async () => {
+  log('generating...')
   try {
     if (!fs.existsSync('build/output')) fs.mkdirSync('build/output');
 
     const models = createModels();
     const clients = clientsCreator(models);
+    console.log('1');
     let histories = historyCreator(clients);
+    console.log('2');
     const strategies1 = clientStrategyCreator(clients);
+    console.log('3');
     const strategies2 = getAllStrategies();
+    console.log('4');
     const preformances = createAllSecuritiesPerformance();
+    console.log('5');
     const performances2 = getAllPerformances();
+    console.log('6');
     const secuirities = getAllSecuirities();
+    console.log('7');
     const allPerf = { ...preformances, ...performances2 };
+    console.log('8');
     const radars = createFakeRadar();
     //Calculate Clients Radar and aua
+    console.log('9');
 
     const strategies = { ...strategies1, ...strategies2 } as { [cli: string]: StrategyItem[] }
 
     clients.forEach(c => {
+      const faker = getFake(c.country);
       if (isFakeClient(c.id)) {
         c.radar = radars[c.id]
       } else {
@@ -576,6 +614,7 @@ const go = async () => {
     console.error(error);
   }
 }
+
 
 go();
 

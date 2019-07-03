@@ -11,7 +11,7 @@
         "noUnusedLocals": false,
         "strict": false,
         "forceConsistentCasingInFileNames": true,
-        "module": "esnext",
+        "module": "commonjs",
         "moduleResolution": "node",
 
         "types": [
