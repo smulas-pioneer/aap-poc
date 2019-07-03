@@ -16,7 +16,7 @@ import { ClientAlert } from './ClientAlert';
 import { ClientCard } from './ClientCard';
 import { ClientHistory } from './ClientHistory';
 import { Fees } from './Fees';
-import { SliderGraph, } from '../chart/SliderGraph';
+import { SliderGraph, SliderGrapMultiView, } from '../chart/SliderGraph';
 import { PerformanceChart } from '../chart//PerformanceChart';
 import { RiskReturnGraph } from '../chart/RiskReturnGraph';
 import { RadarGraph } from '../chart/RadarGraph';
@@ -175,7 +175,7 @@ export const ClientView = conn.PureCompo(props => {
         charts: radar && [
           {
             title: lang.PORTFOLIO_MONITORING,
-            chart: <RadarGraph hideProposal={state.hideProposal} data={radar} lang={lang} axes={axes} onClickShape={handleAxesChange} width={700} height={413} alertsAbout={'actual'} />
+            chart: <RadarGraph hideProposal={state.hideProposal} data={radar} lang={lang} axes={axes} onClickShape={handleAxesChange} alertsAbout={'actual'} />
           }
         ]
       },
@@ -240,7 +240,7 @@ export const ClientView = conn.PureCompo(props => {
       if (val.data && val.data.length) {
         element.charts.push({
           title,
-          chart: <BreakdownView key={`breakdown${i}`} breakdown={val} width={500} height={500} chartView={chartView} responsiveHeight="100%" />
+          chart: <BreakdownView key={`breakdown${i}`} breakdown={val} chartView={chartView} />
         })
       }
       return { ...memo, [prop]: element }
@@ -255,21 +255,17 @@ export const ClientView = conn.PureCompo(props => {
   return (
     <div>
       <AdvancedGrid className="grid-client-view-main" style={{ marginBottom: '10px' }}>
-
         <Segment style={{ margin: 0 }} >
           <Grid columns={14}>
             <Grid.Column width={13}>
               <ClientCard client={client} lang={lang} color={'blue'} />
             </Grid.Column>
-
             {/* <Grid.Column width={1}></Grid.Column> */}
             <Grid.Column className="col-user-menu" >
               {props.children}
             </Grid.Column>
           </Grid>
         </Segment>
-
-
         <Segment style={{ margin: 0 }}>
           <ClientAlert radar={client.radar} client={client} lang={lang} onOpenHistory={() => dispatch({ viewHistory: true })} />
         </Segment>
@@ -298,41 +294,9 @@ export const ClientView = conn.PureCompo(props => {
             <Fees strategy={stateStrategy} lang={lang} targetReturn={state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={!somethingIsChanged} />
           </Segment>
           <div className='ui-flex ui-flex-col' style={{ margin: 0, width: '400px' }}>
-            <Segment>
-              <SliderGraph graphs={graphs} height={350} lang={lang} defaultIndex={0} slidesToShow={1} />
-            </Segment>
-            <Segment>
-              <SliderGraph graphs={graphs} height={350} lang={lang} defaultIndex={1} slidesToShow={1} />
-            </Segment>
+            <SliderGrapMultiView graphs={graphs} lang={lang} height={800} config={{ multiSlidesToShow: 1 }} />
           </div>
         </div>
-        {/*
-          <Segment style={{ margin: 0 }}>
-            <WidgetTitle title={lang.PORTFOLIO_MONITORING} shareButtons={['Image', 'Pdf', 'Copy']} />
-            {radar &&
-              <RadarGraph data={radar} lang={lang} axes={axes} onClickShape={handleAxesChange} width={700} height={413} alertsAbout={'actual'} />
-            }
-            <br />
-            <p style={{ textAlign: 'center' }}>Alerts are about: <b>{'proposed'}</b> </p>
-          </Segment>
-          /*}
-
-
-        <AdvancedGrid className="grid-client-view-sub2">
-          {/*
-          <Segment style={{ margin: 0 }}>
-            <ClientViews graphs={graphs} lang={lang} mode='tab' defaultIndex={3} />
-          </Segment>
-          }
-             <Segment style={{ margin: 0 }} as={OverflowColumn}>
-                <WidgetTitle title={lang.CLIENT_EVENT_HISTORY} />
-                 <ClientHistory lang={lang} history={history} />
-             </Segment>
-
-        </AdvancedGrid>
-*/}
-
-
         {viewHistory && <Modal open closeOnDimmerClick={false} closeOnEscape onClose={() => dispatch({ viewHistory: false })}>
           <Modal.Header>
             <Button floated="right" size="tiny" basic negative circular icon="remove" onClick={() => dispatch({ viewHistory: false })} />

@@ -4,6 +4,7 @@ import { calculateProjection } from '../../_db/coreEngine';
 import { LangDictionary } from '../../reducers/language/interfaces';
 import moment from 'moment';
 import { TimeHorizon, TimeHorizonMonths, PerformancePeriod } from '../../_db/interfaces';
+import { ChartBaseProps } from './ChartInterface';
 const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } = require('recharts');
 
 const Colors = {
@@ -21,16 +22,13 @@ const Colors = {
 
 const perc = (num: number) => (100 * num).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-
-interface PerformanceChartProps {
+interface PerformanceChartProps extends ChartBaseProps {
   data: { date: string, perf: number }[];
   actualData?: { date: string, perf: number }[];
-  showLegend?: boolean
   lang: LangDictionary;
   advancedView?: boolean;
   clientTimeHorizon?: TimeHorizon;
   version: number;
-
   onCalculate95TargetRetForClientTimeHorizon?: (value: number) => void;
 }
 
@@ -146,7 +144,9 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
     });
   }
   render() {
-    const { showLegend, advancedView, lang, actualData } = this.props;
+    const { lang, actualData } = this.props;
+    const { legend = true, caption = true, actions = true } = this.props;
+
     const { data, period, initalPerf } = this.state;
     const fmt = new Intl.NumberFormat(lang.NUMBER_FORMAT, {
       minimumFractionDigits: 2,
@@ -155,23 +155,16 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
     if (data.length === 0) return null;
 
     // OPTIONALS
+    const displayedData = data.filter((d, i) => d.date < "2018-03");
+
     const perf = actualData && fmt.format(100 * (actualData[actualData.length - 1].perf! - initalPerf));
     const primary = actualData && actualData[actualData.length - 1].perf! > 0;
     const minDate = data && moment(data[0].date).format(lang.DATE_FORMAT);
-
-    const displayedData = data.filter((d, i) => d.date < "2018-03");
     const maxDate = displayedData && moment(displayedData[displayedData.length - 1].date).format(lang.DATE_FORMAT);
 
     return <div style={{ height: '100%' }}>
-      {advancedView && <Menu secondary >
-        <Menu.Item>
-          <h4>
-            Return:
-                    <Icon name={primary ? 'triangle up' : 'triangle down'} color={primary ? 'green' : 'red'} />
-            {perf}%
-                    </h4>
-        </Menu.Item>
-        <Menu.Menu position="right">
+      {actions && <Menu compact borderless fluid>
+        <Menu.Menu>
           <Menu.Item>
             <Input style={{}} type='number' label="Target Return (%)" size="mini" value={this.state.target_Return} onChange={(a, b) => this.handleChangeTargetReturn(b.value)} />
           </Menu.Item>
@@ -184,54 +177,46 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
               </Dropdown.Menu>
             </Dropdown>
           </Menu.Item>
+        </Menu.Menu>
+        <Menu.Menu position="right">
           <Menu.Item position="right">
-            Probability: &nbsp;&nbsp;
-               <Progress
-              style={{ width: 100, margin: 0 }}
-              color={this.state.probability >= 95 ? 'green' : this.state.probability > 60 ? 'orange' : 'red'}
-              percent={this.state.probability} progress
-            />
+            Probability: &nbsp;&nbsp;<Progress style={{ width: 100, margin: 0 }} color={this.state.probability >= 95 ? 'green' : this.state.probability > 60 ? 'orange' : 'red'} percent={this.state.probability} progress />
           </Menu.Item>
         </Menu.Menu>
       </Menu>}
-      <ResponsiveContainer width="100%" height={'70%'}>
+      <ResponsiveContainer width="100%" height={actions ? '80%' : '100%'}>
         <LineChart width={500} height={700} data={displayedData}
           margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-          <XAxis dataKey="date" tickFormatter={() => ""} interval={10} />
-          <YAxis tickFormatter={(d: number) => perc(d)} domain={['auto', 'auto']} />
+          <XAxis dataKey="date" tickFormatter={() => ""} interval={10} hide={!caption} />
+          <YAxis tickFormatter={(d: number) => perc(d)} domain={['auto', 'auto']} hide={!caption} />
           <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip formatter={(d: number) => perc(d) + '%'} />
-          {showLegend && <Legend />}
+          {actions && <Tooltip formatter={(d: number) => perc(d) + '%'} />}
           <Line type="monotone" dot={false} dataKey="perf" strokeWidth={3} stroke={Colors.RED} />
           <Line type="monotone" dot={false} dataKey="projection" strokeWidth={2} stroke={Colors.BLUE} />
           <Line type="monotone" dot={false} dataKey="min" strokeWidth={1} stroke={Colors.YELLOW} />
           <Line type="monotone" dot={false} dataKey="max" strokeWidth={1} stroke={Colors.YELLOW} />
         </LineChart >
       </ResponsiveContainer>
-      {advancedView && <Grid size="mini">
-        <Grid.Row columns="2" >
-          <Grid.Column textAlign="center">
-            <Button.Group compact size="tiny">
-              <Button active={period === '1M'} size="tiny" content="1m" onClick={() => this.setData({ period: '1M' })} />
-              <Button active={period === '3M'} size="tiny" content="3m" onClick={() => this.setData({ period: '3M' })} />
-              <Button active={period === '6M'} size="tiny" content="6m" onClick={() => this.setData({ period: '6M' })} />
-              <Button active={period === 'YTD'} size="tiny" content="YTD" onClick={() => this.setData({ period: 'YTD' })} />
-              <Button active={period === '1Y'} size="tiny" content="1Y" onClick={() => this.setData({ period: '1Y' })} />
-              <Button active={period === 'All'} size="tiny" content="All" onClick={() => this.setData({ period: 'All' })} />
-            </Button.Group>
-          </Grid.Column>
-          <Grid.Column textAlign="center">
-            <Input style={{ width: 135 }} label="from" size="mini" type="text" value={minDate} />
-            <Input style={{ width: 105 }} label="to" size="mini" type="text" value={maxDate} />
-          </Grid.Column>
-        </Grid.Row></Grid>}
+      {actions &&
+        <Grid size="mini">
+          <Grid.Row columns="1" >
+            <Grid.Column textAlign="center">
+              <Button.Group compact size="tiny">
+                <Button active={period === '1M'} size="tiny" content="1m" onClick={() => this.setData({ period: '1M' })} />
+                <Button active={period === '3M'} size="tiny" content="3m" onClick={() => this.setData({ period: '3M' })} />
+                <Button active={period === '6M'} size="tiny" content="6m" onClick={() => this.setData({ period: '6M' })} />
+                <Button active={period === 'YTD'} size="tiny" content="YTD" onClick={() => this.setData({ period: 'YTD' })} />
+                <Button active={period === '1Y'} size="tiny" content="1Y" onClick={() => this.setData({ period: '1Y' })} />
+                <Button active={period === 'All'} size="tiny" content="All" onClick={() => this.setData({ period: 'All' })} />
+              </Button.Group>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>}
     </div>
   }
 }
 
 const regression = (show: boolean, days: number, data: { date: string, perf: number }[], actualData: { date: string, perf: number }[]) => {
-  //if ( actualData.length==0) actualData = data;
-
   const d = data[0].perf;
   const newData = data.map(p => ({ ...p, perf: p.perf - d }));
 
@@ -253,34 +238,3 @@ const regression = (show: boolean, days: number, data: { date: string, perf: num
     returnFor95: ret.returnFor95
   };
 }
-
-const { PieChart, Pie, Cell } = require('recharts');
-const data = [{ name: 'Group A', value: 400 }, { name: 'Group B', value: 300 },
-{ name: 'Group C', value: 300 }, { name: 'Group D', value: 200 }];
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
-//const RADIAN = Math.PI / 180;
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const SimplePieChart = (props: any) => {
-  return (
-    <PieChart width={100} height={50}>
-      <Pie
-        data={data}
-        cx={50}
-        cy={50}
-        startAngle={180}
-        endAngle={0}
-        innerRadius={30}
-        outerRadius={40}
-        fill="#8884d8"
-        paddingAngle={5}
-        dataKey="value"
-      >
-        {
-          data.map((entry, index) => <Cell key={index} fill={COLORS[index % COLORS.length]} />)
-        }
-      </Pie>
-    </PieChart>
-  )
-};

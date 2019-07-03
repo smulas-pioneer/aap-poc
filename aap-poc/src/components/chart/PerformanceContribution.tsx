@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { LangDictionary } from '../../reducers/language/interfaces';
+import { ChartBaseProps } from './ChartInterface';
 const { XAxis, CartesianGrid, Legend, Tooltip, YAxis, ResponsiveContainer, BarChart, Bar } = require('recharts');
 
 const Colors = [
@@ -15,9 +16,8 @@ const Colors = [
     'aqua'
 ]
 
-interface PerformanceContributionProps {
+interface PerformanceContributionProps extends ChartBaseProps {
     data: any[];
-    showLegend?: boolean
     lang: LangDictionary;
 }
 
@@ -46,14 +46,16 @@ export class PerformanceContributionGraph extends React.Component<PerformanceCon
         };
     }
     render() {
+        const { legend = true, caption = true, actions = true } = this.props;
         const data = this.props.data;
+        
         return <ResponsiveContainer width="100%" height="100%">
             <BarChart width={500} height={600} data={data}>
-                <XAxis dataKey="year" />
-                <YAxis width={40}/>
+                <XAxis dataKey="year" hide={!caption} />
+                <YAxis width={40} hide={!caption} />
                 <CartesianGrid strokeDasharray="3 3" />
-                <Tooltip formatter={(d: number) => perc(d) + '%'} />
-                <Legend />
+                {actions && <Tooltip formatter={(d: number) => perc(d) + '%'} /> }
+                {legend && <Legend />}
                 {this.state.ids.map((d, i) => <Bar key={i} dataKey={d} stackId="a" fill={Colors[i]} />)}
             </BarChart>
         </ResponsiveContainer>
