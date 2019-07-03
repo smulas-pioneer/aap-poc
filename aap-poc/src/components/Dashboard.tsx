@@ -39,7 +39,7 @@ const conn = appConnector<DashboardProps>()(
 class Dashboard extends conn.StatefulCompo<DashboardState> {
     constructor(props: any) {
         super(props);
-        this.state = { 
+        this.state = {
             searchParms: this.props.data && this.props.data.parms ? this.props.data.parms : { filter: '', uid: '' }
         };
 
@@ -157,7 +157,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
         return (
             <Segment>
                 <WidgetTitle title={header} shareButtons={['Image', 'Copy']} />
-                <CustomPieChart width={500} height={500} data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
+                <CustomPieChart data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
             </Segment>
         );
     }
