@@ -3,7 +3,7 @@ import { Grid, Table, Segment, Statistic, Icon } from "semantic-ui-react";
 import { Security } from "../../_db/interfaces";
 import { WithLang } from "../../reducers/language/interfaces";
 import { getPerformances } from "../../_db/coreEngine";
-import { PerformanceChart } from "./PerformanceChart";
+import { PerformanceChart } from "../chart/PerformanceChart";
 
 export const SecurityCard = ({ security, lang }: { security: Security } & WithLang) => {
     const p = getPerformances([security.IsinCode], '1Y')[security.IsinCode];
@@ -51,20 +51,6 @@ export const SecurityCard = ({ security, lang }: { security: Security } & WithLa
                         </Statistic>
                     </Statistic.Group>
                 </Grid.Column>
-                {/*
-                <Grid.Column width={8}>
-                    <Grid>
-                        <Grid.Row columns={2} verticalAlign="middle">
-                            <Grid.Column textAlign="center"><Icon size="massive" name="line graph" color="blue"/></Grid.Column>
-                            <Grid.Column textAlign="center"><Icon size="massive" name="chart bar outline" color="grey"/></Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row columns={2} verticalAlign="middle">
-                            <Grid.Column textAlign="center"><Icon size="massive" name="pie graph" color="brown" /></Grid.Column>
-                            <Grid.Column textAlign="center"><Icon size="massive" name="address card" color="olive" /></Grid.Column>
-                        </Grid.Row>
-                    </Grid>
-                </Grid.Column>
-                */}
             </Grid.Row>
         </Grid>
     </Segment>

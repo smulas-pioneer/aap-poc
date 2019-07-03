@@ -9,7 +9,7 @@ import { Spotlight } from '../spotlight';
 import { ConfirmDialog } from '../shared/ConfirmDialog';
 import { suggestedPosition, getRandomRadar } from '../../_db/common/radarUtils';
 import Checkbox from 'semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox';
-import { RadarGraph } from '../RadarGraph';
+import { RadarGraph } from '../chart/RadarGraph';
 import { OrderList } from './OrderList';
 import { WeightChange } from './WeightChange';
 import { PopoverChange } from './PopoverChange';

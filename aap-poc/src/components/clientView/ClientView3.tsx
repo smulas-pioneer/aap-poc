@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import * as ce from '../../_db/coreEngine';
 import { appConnector } from 'app-support';
@@ -6,13 +5,9 @@ import { getCurrentClient, getLanguage, getHistory, selectStrategy, selectStrate
 import { getClient, getSuggestions, getClientSuccess, addSecurity, addHistory } from '../../actions/index';
 import { Breakdown, Radar, StrategyItem, RadarStrategyParm } from '../../_db/interfaces';
 import { Segment, Button, Modal, Loader, Grid } from 'semantic-ui-react';
-import { RadarGraph } from '../RadarGraph';
 import { Holdings } from './Holdings';
-import { PerformanceChart } from '../securityView/PerformanceChart';
-import { RiskReturnGraph } from './RiskReturnGraph';
 import { BreakdownView } from './BreakdownView';
 import { AdvancedGrid } from '../shared/GridOverflow';
-import { PerformanceContributionGraph } from './PerformanceContribution';
 import { createRadarFromStrategy, suggestedPosition, currentPosition, modelPosition } from '../../_db/common/radarUtils';
 import { WidgetTitle } from '../shared/WidgetTitle';
 import { radars } from '../../_db/data';
@@ -21,7 +16,11 @@ import { ClientAlert } from './ClientAlert';
 import { ClientCard } from './ClientCard';
 import { ClientHistory } from './ClientHistory';
 import { Fees } from './Fees';
-import { SliderGraph, } from './SliderGraph';
+import { SliderGraph, } from '../chart/SliderGraph';
+import { PerformanceChart } from '../chart//PerformanceChart';
+import { RiskReturnGraph } from '../chart/RiskReturnGraph';
+import { RadarGraph } from '../chart/RadarGraph';
+import { PerformanceContributionGraph } from '../chart/PerformanceContribution';
 
 const conn = appConnector<{ id: string, children: any }>()(
   (s, p) => ({
