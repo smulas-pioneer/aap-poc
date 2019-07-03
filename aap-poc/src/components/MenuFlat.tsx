@@ -136,7 +136,7 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
         <Dropdown.Divider />
         <Dropdown.Item><span style={{ marginRight: 5 }}>v {process.env.REACT_APP_VERSION} </span></Dropdown.Item>
 
-        {/* //TODO: Remove it! */}
+        {/* //TODO: Remove it!
         <Dropdown.Divider />
         <DropdownItem selected text=" -------- DEBUG -------- " ></DropdownItem>
         <DropdownItem onClick={() => {
@@ -145,7 +145,7 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
             uid: 'dashboard',
             dynamicFilters: [{ context: 'Currency', key: 'EUR', value: 0.5, operation: DynamicFilterOperation.GraterEqualThan }]
           });
-        }}>Add Custom filter...</DropdownItem>
+        }}>Add Custom filter...</DropdownItem> */}
         {/* <DropdownItem onClick={() => {
           this.props.searchClient({
             filter: '',
