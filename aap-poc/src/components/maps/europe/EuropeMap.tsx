@@ -36,6 +36,7 @@ export interface EuropeMapState {
   requestMapIndex: number | undefined;
   values: { type: IndicatorOptionsType, areaValues: AreaValue[], countWithValues: number };
   europeAnimationEnd: boolean;
+  europeAnimationStarted: boolean;
 }
 
 type MANAGED_COUNTRIES = 'Italy' | 'Luxemburg' | 'Austria' | 'Germany';
@@ -74,7 +75,8 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
       mapIndex: undefined,
       requestMapIndex: undefined,
       values: this.calculateAreaValues(props.clients),
-      europeAnimationEnd: false
+      europeAnimationEnd: false,
+      europeAnimationStarted: false
     };
   }
 
@@ -225,8 +227,9 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
 
         <Transition
           visible={showEurope && !this.state.europeAnimationEnd}
-          animation='fade down'
-          duration={300}
+          animation='fade'
+          duration={200}
+          onStart={() => this.setState(prev => ({ europeAnimationStarted: true }))}
           onComplete={(_, e) => {
             this.setState(prev => ({ mapIndex: prev.requestMapIndex, europeAnimationEnd: showItaly || false }))
           }} >
@@ -262,11 +265,11 @@ export class EuropaMap extends React.Component<EuropeMapProps, EuropeMapState> {
         </Transition>
 
         <Transition
-          visible={showItaly && this.state.europeAnimationEnd}
-          animation="fade up"
+          visible={showItaly && (this.state.europeAnimationStarted ? this.state.europeAnimationEnd : true)}
+          animation="fade"
           duration={300}
           onComplete={(_, e) => {
-            this.setState(prev => ({ mapIndex: prev.requestMapIndex, europeAnimationEnd: !showEurope }))
+            this.setState(prev => ({ mapIndex: prev.requestMapIndex, europeAnimationStarted: !showEurope, europeAnimationEnd: !showEurope }))
           }} >
 
           <div style={{ height: "100%" }}>

@@ -1,10 +1,20 @@
 import * as React from 'react';
 import { Radar as RadarModel } from '../../_db/interfaces';
 import { Segment } from 'semantic-ui-react';
+import { ChartBaseProps } from './ChartInterface';
 
 var { Radar, Legend, ResponsiveContainer, RadarChart, PolarAngleAxis, PolarGrid } = require('recharts');
 
-export const RadarGraph = (props: { data: RadarModel, width: number, height: number, onClick?: () => void }) => {
+interface RadarGraphProps extends ChartBaseProps {
+  data: RadarModel,
+  width: number,
+  height: number,
+  onClick?: () => void
+}
+
+export const RadarGraph = (props: RadarGraphProps) => {
+  const { legend = true, caption = true, actions = true } = props;
+
   const d = props.data;
   const data = [
     {
@@ -57,42 +67,24 @@ export const RadarGraph = (props: { data: RadarModel, width: number, height: num
     },
   ];
 
-  const radius = '70%';//props.width / 4.5;
+  const radius = '70%';
+
   return (
-
     <Segment basic textAlign="center">
-
       {props.onClick ?
         < h5 style={{ cursor: 'pointer' }} onClick={props.onClick && props.onClick}> Radar</h5>
         : null
       }
       <ResponsiveContainer width="100%" height={props.height}>
-        <RadarChart cx='50%' cy='50%'
-          width={props.width} height={props.height}
-          data={data} outerRadius={radius}
-        >
-          <Legend height={1} verticalAlign="bottom" />
-          {/*<Radar name="Limits" dataKey="limits" stroke="blue" fill="#D10505" fillOpacity={0} />*/}
+        <RadarChart cx='50%' cy='50%' width={props.width} height={props.height} data={data} outerRadius={radius}        >
+          {legend && <Legend height={1} verticalAlign="bottom" />}
           <Radar name="Actuals" dataKey="actual" stroke="orange" fill="#ff8c00" fillOpacity={0.4} dot />
           <Radar name="Guidelines" dataKey="guideLines" stroke="red" strokeWidth={2} fill="# 00f" fillOpacity={0} />
           <Radar name="Proposed" dataKey="proposed" stroke="green" fill="#32cd32" fillOpacity={0.2} dot />
           <PolarGrid />
-          <PolarAngleAxis dataKey="subject" />
-          {/* <PolarRadiusAxis angle={30} domain={[0, 6]} /> */}
+          {caption && <PolarAngleAxis dataKey="subject" />}
         </RadarChart>
       </ResponsiveContainer>
     </Segment>
-
-    // <RadarChart cx={300} cy={250} outerRadius={150} width={600} height={500} data={data}>
-    //     <Radar name="Actuals" dataKey="actual" stroke="red" fill="#8884d8" fillOpacity={0} />
-    //     <Radar name="Limits" dataKey="limits" stroke="yellow" fill="#8884d8" fillOpacity={0} />
-    //     <Radar name="Guidelines" dataKey="guideLines" stroke="blue" fill="#8884d8" fillOpacity={0.2} />
-    //     <Radar name="Proposed" dataKey="proposed" stroke="green" fill="#8884d8" fillOpacity={0} />
-    //     <PolarGrid />
-    //     <Legend />
-    //     <PolarAngleAxis dataKey="subject" />
-    //     <PolarRadiusAxis angle={30} domain={[0, 6]} />
-    // </RadarChart>
-
   );
 }

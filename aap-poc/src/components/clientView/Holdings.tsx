@@ -195,7 +195,7 @@ export const Holdings = (props: Props) => {
                 onCustom={() => handleOnAddHistory('PENDING PROPOSAL')} >
                 <div style={{ width: '100%' }}>
                   <OrderList data={holdings} lang={lang} />
-                  <RadarGraph data={props.radar!} lang={lang} axes={props.axes} onClickShape={() => { }} width={700} height={413} alertsAbout={'proposed'} />
+                  <RadarGraph data={props.radar!} lang={lang} axes={props.axes} onClickShape={() => { }} alertsAbout={'proposed'} />
                   <br />
                   <Checkbox defaultChecked label='Open pdf after generation' />
                 </div>

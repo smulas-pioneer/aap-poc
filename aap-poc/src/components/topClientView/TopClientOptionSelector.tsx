@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dropdown, DropdownItemProps, Segment, } from "semantic-ui-react";
+import { Dropdown, DropdownItemProps, } from "semantic-ui-react";
 import { GroupTypes } from "./index";
 import { IndicatorOptionsType } from "../../actions/model";
 import { startCase } from "lodash";
@@ -57,11 +57,11 @@ export const TopClientOptionSelector = ({ group, indicator, onChange }: TopClien
   }
 
   return (
-    <Segment basic>
-      <h2 style={{ textAlign: 'center' }}>
+    <div className='topClientOptionSelector' >
+      <h2  >
         Top
         &nbsp;
-        <Dropdown className="topClientDropOption" icon={false} compact text={startCase(curGroup)} as='a' >
+      <Dropdown className="topClientDropOption" icon={false} compact text={startCase(curGroup)} as='a' >
           <Dropdown.Menu >
             {renderOptions(curGroup, GroupTypes, onGroupChange)}
           </Dropdown.Menu>
@@ -69,7 +69,7 @@ export const TopClientOptionSelector = ({ group, indicator, onChange }: TopClien
         &nbsp;
         Performers by
         &nbsp;
-        <Dropdown className="topClientDropOption" icon={false} compact text={startCase(curIndicator)} as='a'>
+      <Dropdown className="topClientDropOption" icon={false} compact text={startCase(curIndicator)} as='a'>
           <Dropdown.Menu>
             {renderOptions(
               curIndicator,
@@ -81,6 +81,6 @@ export const TopClientOptionSelector = ({ group, indicator, onChange }: TopClien
         </Dropdown>
         <Share buttons={['Excel', 'Pdf', 'Copy']} />
       </h2>
-    </Segment >
+    </div >
   );
 }

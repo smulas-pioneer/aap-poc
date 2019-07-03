@@ -325,16 +325,25 @@ svg .boundaries>path {
     width: 50%
 }
 
+div.menu-flat.vertical{
+  margin: 0;
+  border-left: solid thin #1b1c1d
+}
+
 div.col-user-menu{
   width: 206px !important;
   right: 0px;
   position: absolute !important;
 }
 
-div.col-user-menu .menu-options{
-  margin-top: -8px !important;
-}
+/* div.col-user-menu .menu-options{
+   margin-top: 0px !important;
+} */
 
 div.col-user-menu .menu-user{
     margin-top: -10px !important;
+}
+
+.topClientOptionSelector{
+  text-align: center;
 }
