@@ -60,7 +60,7 @@ export const searchClient = (parms: Model.SearchParms, visibility?: string[]): P
   let filteredClients = theList;
   if (parms.dynamicFilters) { // apply only if needed
     parms.dynamicFilters
-      .forEach(df => filteredClients = theList.filter(clientDynamicFilter(df)));
+      .forEach(df => filteredClients = filteredClients.filter(clientDynamicFilter(df)));
   }
 
   filteredClients = filteredClients

@@ -170,13 +170,13 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
     const decodeOpe = (ope: DynamicFilterOperation) => {
       switch (ope) {
         case DynamicFilterOperation.GraterEqualThan:
-          return "greater equal than";
+          return ">=";
         case DynamicFilterOperation.GreaterThan:
-          return "greater than";
+          return ">";
         case DynamicFilterOperation.LesserEqualThan:
-          return "lesser equal than";
+          return "<=";
         case DynamicFilterOperation.LesserThan:
-          return "lesser than";
+          return "<";
       }
     }
     const createMenu = (context: string, df: DynamicSearchFilter[]) => (
