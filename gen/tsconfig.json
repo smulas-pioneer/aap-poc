@@ -6,7 +6,7 @@
         "sourceRoot": ".",
         "outDir": "build",
         "allowSyntheticDefaultImports": true,
-        "noImplicitAny": true,
+        "noImplicitAny": false,
         "suppressImplicitAnyIndexErrors": true,
         "noUnusedLocals": false,
         "strict": false,

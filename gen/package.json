@@ -30,7 +30,7 @@
     "javascript-lp-solver": "^0.4.5",
     "lodash": "^4.17.4",
     "mathjs": "^3.16.5",
-    "moment": "^2.19.1",
+    "moment": "^2.24.0",
     "nice-json2csv": "^0.2.2",
     "pasdb9-mysql-webapi": "^1.2.33",
     "regression": "^2.0.0"
