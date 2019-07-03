@@ -336,10 +336,14 @@ div.col-user-menu{
   position: absolute !important;
 }
 
-div.col-user-menu .menu-options{
-  /* margin-top: 0px !important; */
-}
+/* div.col-user-menu .menu-options{
+   margin-top: 0px !important;
+} */
 
 div.col-user-menu .menu-user{
     margin-top: -10px !important;
+}
+
+.topClientOptionSelector{
+  text-align: center;
 }
