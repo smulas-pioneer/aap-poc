@@ -82,6 +82,7 @@ export const ClientView = conn.PureCompo(props => {
 
 
   React.useEffect(() => {
+    dispatch({hideProposal:true});
     getClient({ id });
   }, [id, getClient]);
 
