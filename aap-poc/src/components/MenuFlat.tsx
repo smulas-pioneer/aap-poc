@@ -156,7 +156,7 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
           <Menu.Item replace="true" ><Link to="/" style={{ color: '#FFFFFF', fontFamily: 'Lato', ...layout.titleStyle }} ><h2>Advisory Platform</h2></Link></Menu.Item> */}
           <Menu secondary compact floated='right' color='blue' >
             <Menu.Item as="a" >
-              <Share text='Share' buttons={['Print', 'Pdf', 'Email']} pointing="top right" />
+              <Share text='Share' buttons={['Print', 'Pdf', 'Email']} /*pointing="top right"*/  />
             </Menu.Item>
             {this.spotlightMenuItem(true)}
             {userMenuDropDown}
@@ -188,7 +188,7 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
             <Icon size='large' name='home' />
           </Menu.Item>
           <Menu.Item as="a" position='right' >
-            <Share iconSize='large' buttons={['Print', 'Pdf', 'Email']} pointing="top right" />
+            <Share iconSize='large' buttons={['Print', 'Pdf', 'Email']} /*pointing="top right"*/  />
           </Menu.Item>
           {this.spotlightMenuItem()}
         </Menu>
