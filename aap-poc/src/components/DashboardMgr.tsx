@@ -226,7 +226,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         title: b.attributeName,
         icon: 'line chart',
         charts: [{
-          chart: <BreakdownView key={i} breakdown={b} chartView={graphType[b.attributeName]} />
+          chart: <BreakdownView key={i} breakdown={b} chartView={graphType[b.attributeName]} attributeName={b.attributeName} />
         }]
       }
     });

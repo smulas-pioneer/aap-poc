@@ -9,6 +9,7 @@ interface Props {
   legend?: boolean;
   caption?: boolean;
   actions?: boolean;
+  attributeName?: string;
 }
 interface State {
 
@@ -27,7 +28,7 @@ export const perc = (num: number) => (100 * num).toLocaleString(undefined, { min
 
 export class BreakdownView extends React.Component<Props, State> {
   render() {
-    const { breakdown, chartView, legend, caption, actions } = this.props;
+    const { breakdown, chartView, legend, caption, actions, attributeName } = this.props;
 
     if (!breakdown || !breakdown.data) {
       return <div />
@@ -39,7 +40,7 @@ export class BreakdownView extends React.Component<Props, State> {
     });
 
     return chartView === 'pie'
-      ? <CustomPieChart data={data} dataKey='weight' nameKey="key" legend={legend} caption={caption} actions={actions} />
-      :  <CustomComposedChart data={data} dataKey='weight' nameKey="key"  color={breakdown.color} legend={legend} caption={caption} actions={actions} />
-      }
+      ? <CustomPieChart attributeName={attributeName} data={data} dataKey='weight' nameKey="key" legend={legend} caption={caption} actions={actions} />
+      : <CustomComposedChart attributeName={attributeName} data={data} dataKey='weight' nameKey="key" color={breakdown.color} legend={legend} caption={caption} actions={actions} />
+  }
 }
