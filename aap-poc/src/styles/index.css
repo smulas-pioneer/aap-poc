@@ -327,7 +327,7 @@ svg .boundaries>path {
 
 div.menu-flat.vertical{
   margin: 0;
-  border-left: solid thin #1b1c1d
+  border-left: solid thin #1b1c1d;
 }
 
 div.col-user-menu{
@@ -346,4 +346,14 @@ div.col-user-menu .menu-user{
 
 .topClientOptionSelector{
   text-align: center;
+}
+
+/* TODO: Ask to ruska to put in theme color */
+.ui.dropdown .menu>.divider{
+  border-top-color:  rgba(255,255,255,.1) !important;
+}
+
+.dynamicMenuContext{
+  text-align: center;
+  color: rgb(84, 200, 255) !important;
 }

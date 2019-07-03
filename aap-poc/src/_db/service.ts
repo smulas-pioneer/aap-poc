@@ -35,11 +35,35 @@ export function arrayContains(array?: any[], value?: any) {
   return a ? true : false;
 }
 
+const clientDynamicFilter = (dynaFilter: Model.DynamicSearchFilter) => (c: Model.Client) => {
+  const bd = getClientBreakdown(c, dynaFilter.context);
+  const curr = bd.data.find(c => c.value === dynaFilter.key);
+  if (curr) {
+    switch (dynaFilter.operation) {
+      case Model.DynamicFilterOperation.GraterEqualThan:
+        return curr.weight >= dynaFilter.value;
+      case Model.DynamicFilterOperation.GreaterThan:
+        return curr.weight > dynaFilter.value;
+      case Model.DynamicFilterOperation.LesserEqualThan:
+        return curr.weight <= dynaFilter.value;
+      case Model.DynamicFilterOperation.LesserThan:
+        return curr.weight < dynaFilter.value;
+    }
+  }
+  return false;
+};
 export const searchClient = (parms: Model.SearchParms, visibility?: string[]): Promise<Model.SearchResult> => {
   let theList = process.env.REACT_APP_LIMIT_DATA_ROWS ? clientList.slice(0, parseInt(process.env.REACT_APP_LIMIT_DATA_ROWS)) : clientList;
   if (visibility && visibility.length) theList = theList.filter(c => arrayContains(visibility, c.agent));
   if (parms.onlyWithAlerts) theList = theList.filter(r => r.radar.numOfAlerts);
-  const result = theList
+
+  let filteredClients = theList;
+  if (parms.dynamicFilters) { // apply only if needed
+    parms.dynamicFilters
+      .forEach(df => filteredClients = theList.filter(clientDynamicFilter(df)));
+  }
+
+  filteredClients = filteredClients
     .filter(c => c.name.toLowerCase().indexOf(parms.filter.toLocaleLowerCase()) > -1)
     .filter(c => arrayContains(parms.alerts, c.radar.numOfAlerts))
     .filter(c => checkAlerts(parms.alertTypes, c.breaks))
@@ -55,14 +79,24 @@ export const searchClient = (parms: Model.SearchParms, visibility?: string[]): P
 
     .map(c => ({ ...c, holdings: [] }));
 
+  // const yyy = filteredClients.filter(c => {
+  //   const bd = getClientBreakdown(c, "Currency");
+  //   const curr = bd.data.find(c => c.value === 'JPY');
+  //   return curr && curr.weight >= 0.5;
+  // });
 
+  // console.log(yyy, 'with aggregated values!');
 
-  return Promise.resolve({
+  const ret = {
     parms,
-    result,
+    result: filteredClients,
     radar: undefined,
-    breakdowns: getClientsBreakdowns(result)
-  });
+    breakdowns: getClientsBreakdowns(filteredClients)
+  };
+
+
+
+  return Promise.resolve(ret);
 };
 
 export const getClient = (parms: { id: string }): Promise<Model.Client> => {
@@ -205,6 +239,16 @@ const top10Rating = (data: { value: string, weight: number, bmk: number }[]) => 
     return RKEY[a.value] - RKEY[b.value];
   });
   return sortedData;
+}
+
+
+export const getClientBreakdown = (client: Model.Client, key: string) => {
+  const agg = [client].map(c => strategies[c.id])
+    .reduce((prev, curr) => {
+      prev = prev.concat(curr.filter(f => f.currentWeight > 0).map(strategyToAggreg));
+      return prev;
+    }, [] as Model.Aggregation[]);
+  return aggToBreakdown(agg, key)
 }
 
 

@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Menu, Icon, Label, Dropdown } from "semantic-ui-react";
 import { ClientFilters, SearchFilter, filterMapItems, FilterMap, FilterMapTypes } from "../../actions/model";
-import { SearchParms } from "../../_db/interfaces";
+import { SearchParms, DynamicSearchFilter, DynamicFilterOperation } from "../../_db/interfaces";
 import { ClientsViewFilterText } from "../clientsView/ClientsViewParms";
 import IconButton from "./IconButton/index";
 import { isArray } from "util";
-import { startsWith } from "lodash";
+import { startsWith, groupBy } from "lodash";
 
 export type FilterMapDefinition = { [k in FilterMapTypes]?: { clearAll?: boolean } | undefined };
 
@@ -34,6 +34,8 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
     this.hasMoreThenOneFilter = this.hasMoreThenOneFilter.bind(this);
     this.clearAllFilters = this.clearAllFilters.bind(this);
     this.renderAllFiltersHandler = this.renderAllFiltersHandler.bind(this);
+    this.renderDynamicFilter = this.renderDynamicFilter.bind(this);
+    this.manageDynamicFilter = this.manageDynamicFilter.bind(this);
   }
 
   renderAllFiltersHandler(name: string, value: boolean) {
@@ -102,7 +104,7 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
       }
 
       return memo;
-    },  { menu: [] as any, others: [] as any });
+    }, { menu: [] as any, others: [] as any });
 
     const hasOthers = current.others && current.others.length;
 
@@ -131,8 +133,6 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
     );
   }
 
-
-
   renderFilter() {
     let ret: JSX.Element[] = [];
 
@@ -150,6 +150,60 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
     }
 
     return ret;
+  }
+  manageDynamicFilter(filter: DynamicSearchFilter, remove: boolean) {
+    let filters = this.props.filterValue.dynamicFilters || [];
+
+    if (remove) {
+      filters = filters.filter(d => d !== filter);
+    } else {
+      filters.push(filter);
+    }
+    this.props.onChange({ ...this.props.filterValue, dynamicFilters: filters });
+  }
+
+  renderDynamicFilter() {
+    const { dynamicFilters } = this.props.filterValue;
+    if (!dynamicFilters || !dynamicFilters.length) return null;
+    const active = <Icon name="checkmark" color="green" style={{ float: 'none', margin: '0 .5em 0 0' }} />;
+    const groupedDynas = groupBy(this.props.filterValue.dynamicFilters, df => df.context);
+    const decodeOpe = (ope: DynamicFilterOperation) => {
+      switch (ope) {
+        case DynamicFilterOperation.GraterEqualThan:
+          return "greater equal than";
+        case DynamicFilterOperation.GreaterThan:
+          return "greater than";
+        case DynamicFilterOperation.LesserEqualThan:
+          return "lesser equal than";
+        case DynamicFilterOperation.LesserThan:
+          return "lesser than";
+      }
+    }
+    const createMenu = (context: string, df: DynamicSearchFilter[]) => (
+      <>
+        <Menu.Item className="dynamicMenuContext">{context}</Menu.Item>
+        {
+          df.map((d, i) => (
+            <Menu.Item link key={i} onClick={() => this.manageDynamicFilter(d, true)}>
+              {active}{d.key} {decodeOpe(d.operation)} {d.value * 100}%
+            </Menu.Item>)
+          )
+        }
+      </>
+    );
+    return (
+      <Menu.Item key="dynamic-filters">
+        <Menu.Header>
+          Dynamic Filters
+        </Menu.Header>
+
+        <Menu.Menu>
+          {
+            Object.keys(groupedDynas).map(g => createMenu(g, groupedDynas[g]))
+          }
+        </Menu.Menu>
+      </Menu.Item>
+    );
   }
 
   render() {
@@ -169,6 +223,7 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
           </Menu.Item>
         }
         {this.renderFilter()}
+        {this.renderDynamicFilter()}
       </Menu>
     )
   }

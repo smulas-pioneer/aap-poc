@@ -1,15 +1,15 @@
 import * as React from "react";
 import { appConnector } from 'app-support';
 import { getLanguage, getCurrentUser, getConfigLayout } from '../reducers/index';
-import { Menu, MenuItemProps, Dropdown, Image, Icon } from 'semantic-ui-react';
+import { Menu, MenuItemProps, Dropdown, Image, Icon, DropdownItem } from 'semantic-ui-react';
 import * as Model from '../actions/model';
 import { Link } from "react-router-dom";
 import { LangBar } from './LangBar';
 import { Spotlight } from './spotlight'
-import { logout } from '../actions/index';
+import { logout, searchClient } from '../actions/index';
 import { UserInfo } from '../actions/model';
 import { LangDictionary } from '../reducers/language/interfaces';
-import { SpotlightSearchResultItem } from '../_db/interfaces';
+import { SpotlightSearchResultItem, DynamicFilterOperation } from '../_db/interfaces';
 import { isClient, isAgent } from '../_db/utils';
 import { Share } from './Share';
 
@@ -35,7 +35,8 @@ const conn = appConnector<MenuFlatProps>()(
     layout: getConfigLayout(s)
   }),
   {
-    logout
+    logout,
+    searchClient
   }
 )
 
@@ -134,6 +135,25 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
         <Dropdown.Item onClick={() => logout()}>{lang.SIGN_OUT}</Dropdown.Item>
         <Dropdown.Divider />
         <Dropdown.Item><span style={{ marginRight: 5 }}>v {process.env.REACT_APP_VERSION} </span></Dropdown.Item>
+
+        {/* //TODO: Remove it! */}
+        <Dropdown.Divider />
+        <DropdownItem selected text=" -------- DEBUG -------- " ></DropdownItem>
+        <DropdownItem onClick={() => {
+          this.props.searchClient({
+            filter: '',
+            uid: 'dashboard',
+            dynamicFilters: [{ context: 'Currency', key: 'EUR', value: 0.5, operation: DynamicFilterOperation.GraterEqualThan }]
+          });
+        }}>Add Custom filter...</DropdownItem>
+        {/* <DropdownItem onClick={() => {
+          this.props.searchClient({
+            filter: '',
+            uid: 'dashboard',
+            dynamicFilters: undefined
+          });
+        }}>Remove Custom filter...</DropdownItem> */}
+
       </Dropdown.Menu>
     </Dropdown>;
 
@@ -178,7 +198,6 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
 
     else if (orientation === 'vertical') return (
       <div className={`menu-flat ${orientation}`}>
-
         <Menu compact fluid className='menu-user' size='large' >
           {userMenuDropDown}
         </Menu>
