@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Input, Button, Checkbox, } from 'semantic-ui-react';
+import { Input, Button, } from 'semantic-ui-react';
 import { StrategyItem } from '../../_db/interfaces';
 
 type PopoverChangeProps = {
@@ -28,7 +28,7 @@ export const PopoverChange = (props: PopoverChangeProps) => {
         setError(undefined);
       }
     }
-  }, [textValue,value]);
+  }, [textValue, value]);
 
 
   const sendChange = (value: number, enabled: boolean) => {
@@ -42,18 +42,18 @@ export const PopoverChange = (props: PopoverChangeProps) => {
   const reset = () => {
     setTextValue(originalSuggestion.toString());
     setEnabled(false);
-    sendChange(originalSuggestion,false);
+    sendChange(originalSuggestion, false);
   }
 
   const isChanged = enabled !== props.item.suggestionAccepted || originalSuggestion !== value;
-  const handleSliderChange = (value:string) => {
+  const handleSliderChange = (value: string) => {
     if (!isNaN(value as any)) {
-      const numValue = round(parseFloat(value)/10);
+      const numValue = round(parseFloat(value) / 10);
       setTextValue(numValue.toString());
     }
   }
 
-  const sliderValue = isNaN(value) ? originalSuggestion : value*10;
+  const sliderValue = isNaN(value) ? originalSuggestion : value * 10;
   return <div style={{ display: 'flex', flexDirection: 'column', padding: 5 }}>
     {/*
     <div style={{ flex: 1, display: 'flex', alignContent: 'center' }}>
@@ -63,11 +63,11 @@ export const PopoverChange = (props: PopoverChangeProps) => {
     */}
 
     <div style={{ flex: 1 }}>
-       <Input type="range" min={-10*(props.item.currentWeight * 100)} max={1000 - props.item.currentWeight * 1000} value={sliderValue} onChange={(a, b) => handleSliderChange(b.value)} />
+      <Input type="range" min={-10 * (props.item.currentWeight * 100)} max={1000 - props.item.currentWeight * 1000} value={sliderValue} onChange={(a, b) => handleSliderChange(b.value)} />
     </div>
     <div style={{ flex: 1, display: 'flex' }}>
       <div style={{ flex: 3, verticalAlign: 'middle' }}>
-        <Input size="small" inverted fluid value={textValue || ""} onChange={(a, b) =>setTextValue (b.value)} >
+        <Input size="small" inverted fluid value={textValue || ""} onChange={(a, b) => setTextValue(b.value)} >
           <input style={{ color: value > 0 ? 'lightgreen' : 'red' }} />
         </Input>
       </div>
@@ -75,7 +75,7 @@ export const PopoverChange = (props: PopoverChangeProps) => {
         <Button inverted size="small" negative icon="cancel" onClick={() => reset()} />
       </div>
       <div style={{ flex: 1, verticalAlign: 'middle', alignContent: 'center' }}>
-        <Button inverted  size="small" positive icon="check" onClick={() => sendChange(value,true)} />
+        <Button inverted size="small" positive icon="check" onClick={() => sendChange(value, true)} />
       </div>
     </div>
   </div>
