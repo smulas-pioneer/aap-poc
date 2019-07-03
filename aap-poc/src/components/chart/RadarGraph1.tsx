@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Radar as RadarModel } from '../_db/interfaces';
+import { Radar as RadarModel } from '../../_db/interfaces';
 import { Segment } from 'semantic-ui-react';
 
 var { Radar, Legend, ResponsiveContainer, RadarChart, PolarAngleAxis, PolarGrid } = require('recharts');

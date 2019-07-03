@@ -15,7 +15,7 @@ import { ClientFilter } from './shared/ClientFilter';
 import { WidgetTitle } from './shared/WidgetTitle';
 import { BreakdownView } from './clientView/BreakdownView';
 import { ClientsView } from './clientsView/ClientsView';
-import { SliderGraph, SliderGraphThumb } from './clientView/SliderGraph';
+import { SliderGraph, SliderGraphThumb } from './chart/SliderGraph';
 import { EuropaMap } from './maps/europe/EuropeMap';
 import { getIsOnlyItaly } from '../reducers';
 

@@ -7,7 +7,7 @@ import { LangDictionary } from "../../reducers/language/interfaces";
 import { AgentCard } from "../agentView/AgentCard";
 import { SecurityCard } from "../securityView/SecurityCard";
 import { AgentGeoPie } from "../agentView/AgentGeoPie";
-import { RadarGraph } from "../RadarGraph1";
+import { RadarGraph } from "../chart/RadarGraph1";
 
 export const SpotlightResultItemPreview = ({ item, lang }: { item: SpotlightSearchResultItem, lang: LangDictionary }) => {
     if (!item) return null;
