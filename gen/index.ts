@@ -8,7 +8,7 @@ import * as faker from 'faker';
 //import * as svc from './_db/service';
 import * as fs from 'fs';
 import { sumBy, maxBy, groupBy } from 'lodash';
-import * as moment from 'moment';
+import moment from 'moment';
 import { getAllSecuirities, getAllPerformances, getAllStrategies, createFakeRadar } from './fakedata'
 var f = faker;
 f.locale = 'it';
