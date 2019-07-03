@@ -72,7 +72,9 @@ export const spotlightSearch = (args: SpotlightSearchParms) => (dispatch: any, g
         .then((r: any) => dispatch(spotlightSearchSuccess(r)));
 }
 export const getHistorySuccess = createAction<InterviewResult[]>('GET_HISTORY_SUCCESS');
+export const getHistoryAndStrategySuccess = createAction<[InterviewResult[], StrategyItem[]]>('GET_HISTORY_AND_STRATEGY_SUCCESS');
 export const getHistory = createPromiseAction('GET_HISTORY', svc.getHistory, getHistorySuccess);
+export const getHistoryAndStrategy = createPromiseAction('GET_HISTORY_AND_STRATEGY', svc.getHistoryAndStrategy, getHistoryAndStrategySuccess);
 export const getSuggestedAllocationSuccess = createAction<Holding[]>('GET_SUGGESTED_ALLOC_SUCCESS');
 export const getSuggestedAllocation = createPromiseAction('GET_SUGGESTED_ALLOC', svc.getSuggestedAllocation, getSuggestedAllocationSuccess);
 export const getStrategySuccess = createAction<StrategyItem[]>('GET_STRATEGY_SUCCESS');
@@ -82,8 +84,7 @@ export const getAlertHistorySuccess = createAction<AlertHistory[]>('GET_ALERT_HI
 export const getAlertHistory = createPromiseAction('GET_ALERT_HISTORY', svc.getAlertHistory, getAlertHistorySuccess);
 export const getClient = createPromiseWithThunkAction('GET_CLIENT', svc.getClient, getClientSuccess, (d, s, r, p) => {
     if (r) {
-        d(getHistory(r.id))
-        d(getStrategy(r.id))
+        d(getHistoryAndStrategy(r.id));
     }
 });
 export const addSecurity = createPromiseWithThunkAction('ADD_SECURITY', svc.addSecurity, getClientSuccess, (d, s, r, p) => {

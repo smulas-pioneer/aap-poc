@@ -167,6 +167,9 @@ export const getBreakdown = (holdings: Model.Holding[] | undefined) => {
   return Promise.resolve(attributes.map(r => getAttributeBreakDown(r, holdings!)));
 }
 
+export const getHistoryAndStrategy = (clientId: string | undefined) => {
+  return Promise.all([getHistory(clientId), getStrategy(clientId)]);
+}
 export const getHistory = (clientId: string | undefined) => {
   return Promise.resolve(history[clientId!]);
 }
