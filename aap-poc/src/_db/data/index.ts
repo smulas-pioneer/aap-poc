@@ -24,7 +24,7 @@ let agents: string[];
 
 export const loadDatabase = (appName: string) => {
   const baseUrl = appName === "" ? "" : "/" + appName;
-  const tag = process.env.REACT_APP_LIMIT_DATA ? '' : "?ts=" + moment().format('YYMMDDhhmmss');
+  const tag = process.env.REACT_APP_ENABLE_DATA_CACHE === 'true' ? '' : "?ts=" + moment().format('YYMMDDhhmmss');
 
   let procs = [];
 
