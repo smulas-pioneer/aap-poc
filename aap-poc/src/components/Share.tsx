@@ -15,7 +15,7 @@ const icons = {
 
 interface ShareProps {
   buttons?: ShareButton[]
-  pointing?: boolean | 'left' | 'right' | 'top' | 'top left' | 'top right' | 'bottom' | 'bottom left' | 'bottom right';
+  // pointing?: boolean | 'left' | 'right' | 'top' | 'top left' | 'top right' | 'bottom' | 'bottom left' | 'bottom right';
   text?: string,
   iconSize?: 'mini' | 'tiny' | 'small' | 'large' | 'big' | 'huge' | 'massive';
 }
@@ -31,7 +31,13 @@ export class Share extends React.Component<ShareProps, ShareState> {
     const opts = buttons.map((btn, ix) => {
       return { key: ix, text: btn, icon: icons[btn] }
     });
-    return <Dropdown style={{ position: 'relative' }} trigger={trigger(text, iconSize)} options={opts} pointing={this.props.pointing || 'top left'} icon={null} />
+    return <Dropdown
+      compact
+      // style={{ position: 'relative' }}
+      trigger={trigger(text, iconSize)}
+      options={opts} /* pointing={this.props.pointing || 'top left'} */
+      icon={null}
+    />
   }
 }
 

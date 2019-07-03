@@ -137,7 +137,7 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
   render() {
     const { currentGroup, currentIndicator, currentData } = this.state;
     return (
-      <div>
+      <div >
         <TopClientOptionSelector group={currentGroup} indicator={currentIndicator} onChange={this.onOptionsChange} />
         <TopClientList group={currentGroup} indicator={currentIndicator} clients={currentData} lang={this.props.lang} />
       </div>

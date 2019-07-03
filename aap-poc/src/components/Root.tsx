@@ -15,13 +15,13 @@ const conn = appConnector()(
     login
   }
 )
-const autologin = process.env.REACT_APP_LOGIN === "true";
+const autologin = process.env.REACT_APP_AUTO_LOGIN === "true";
 export const Root = conn.PureCompo(props => {
   React.useEffect(() => {
     if (autologin) {
       props.login(LoginType.Manager);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const { logged, manager, login } = props;
@@ -31,7 +31,7 @@ export const Root = conn.PureCompo(props => {
         logged
           ? <App manager={manager} />
           : autologin
-            ? <p style={{color:'red'}}>Autologin as manager...</p>
+            ? <p style={{ color: 'red' }}>Autologin as manager...</p>
             : <Login action={login} />
       }
     </div >
