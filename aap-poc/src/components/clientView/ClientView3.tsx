@@ -240,7 +240,7 @@ export const ClientView = conn.PureCompo(props => {
       if (val.data && val.data.length) {
         element.charts.push({
           title,
-          chart: <BreakdownView key={`breakdown${i}`} breakdown={val} width={500} height={500} chartView={chartView} responsiveHeight="100%" />
+          chart: <BreakdownView key={`breakdown${i}`} breakdown={val} chartView={chartView} />
         })
       }
       return { ...memo, [prop]: element }
