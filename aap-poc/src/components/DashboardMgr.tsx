@@ -107,11 +107,11 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
   renderItem(value: any, label?: string, sublabel?: any, color?: SemanticCOLORS, sublabelcolor?: SemanticCOLORS, valueIcon?: SemanticICONS) {
     return (<Statistic size="mini" color={color || 'blue'} >
       {label && <Statistic.Label>{label}</Statistic.Label>}
-      <Statistic.Value>
+      <Statistic.Value style={{ marginTop: '4px', whiteSpace: 'nowrap' }}>
         {valueIcon && <Icon name={valueIcon} color={color} />}
         {value}
       </Statistic.Value>
-      {sublabel && <Statistic.Label style={{ marginTop: '5px', whiteSpace: 'nowrap' }} className={getColorCustomClassName(sublabelcolor)}>
+      {sublabel && <Statistic.Label style={{ marginTop: '10px', whiteSpace: 'nowrap' }} className={getColorCustomClassName(sublabelcolor)}>
         {sublabel}
         {/*<span style={{ color: color ? (color === 'green' ? '#2ecc40' : color) : undefined, whiteSpace: 'nowrap' }}>{sublabel}</span>*/}
       </Statistic.Label>}

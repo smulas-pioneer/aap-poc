@@ -36,7 +36,7 @@ export function arrayContains(array?: any[], value?: any) {
 }
 
 export const searchClient = (parms: Model.SearchParms, visibility?: string[]): Promise<Model.SearchResult> => {
-  let theList = clientList;
+  let theList = process.env.REACT_APP_LIMIT_DATA ? clientList.slice(0, 50) : clientList;
   if (visibility && visibility.length) theList = theList.filter(c => arrayContains(visibility, c.agent));
   if (parms.onlyWithAlerts) theList = theList.filter(r => r.radar.numOfAlerts);
   const result = theList

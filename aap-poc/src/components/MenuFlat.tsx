@@ -177,7 +177,7 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
     );
 
     else if (orientation === 'vertical') return (
-      <div style={{ margin: 0 , borderLeft: 'solid thin black' }}>
+      <div className={`menu-flat ${orientation}`}>
 
         <Menu compact fluid className='menu-user' size='large' >
           {userMenuDropDown}
