@@ -16,9 +16,8 @@ export const WidgetTitle = (props: {
 
   const as = size === 'large' ? 'h2' : size === 'small' ? 'h3' : 'h4';
 
-
   return (
-    <div >
+    <div style={{ marginBottom: '1em' }}>
       <Header as={as} color={props.color} icon={props.icon} subheader={props.subtitle} style={props.style} floated={rightComponent ? 'left' : undefined} >
         {props.title}
         {props.shareButtons && <Share buttons={props.shareButtons} />}

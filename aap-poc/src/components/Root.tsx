@@ -1,5 +1,5 @@
 import { appConnector } from "app-support";
-import { isLogged, isManager, getIsReady } from "../reducers/index";
+import { isLogged, isManager, getIsReady, getTheme } from "../reducers/index";
 import * as React from "react";
 import { login, LoginType } from "../actions/index";
 import App from './App';
@@ -9,7 +9,8 @@ const conn = appConnector()(
   (s, p) => ({
     logged: isLogged(s),
     manager: isManager(s),
-    ready: getIsReady(s)
+    ready: getIsReady(s),
+    theme: getTheme(s)
   }),
   {
     login
@@ -24,7 +25,13 @@ export const Root = conn.PureCompo(props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { logged, manager, login } = props;
+  const { logged, manager, login, theme } = props;
+  
+  if (theme === 'dark') {
+    require('../styles/bigone-gen.css');
+    require('../styles/bigone.css');
+  }
+
   return (
     <div>
       {

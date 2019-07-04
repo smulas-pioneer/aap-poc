@@ -260,7 +260,6 @@ export const ClientView = conn.PureCompo(props => {
             <Grid.Column width={13}>
               <ClientCard client={client} lang={lang} color={'blue'} />
             </Grid.Column>
-            {/* <Grid.Column width={1}></Grid.Column> */}
             <Grid.Column className="col-user-menu" >
               {props.children}
             </Grid.Column>
@@ -271,7 +270,7 @@ export const ClientView = conn.PureCompo(props => {
         </Segment>
         <div className='ui-flex ui-flex-row'>
           <Segment style={{ margin: 0 }}>
-            <WidgetTitle title={state.showModel ? lang.MODEL : lang.PORTFOLIO_HOLDINGS} shareButtons={['Excel', 'Pdf', 'Copy']} />
+            <WidgetTitle size={'small'} title={state.showModel ? lang.MODEL : lang.PORTFOLIO_HOLDINGS} shareButtons={['Excel', 'Pdf', 'Copy']} />
             {state.showModel && <Model
               clientId={client.id} lang={lang} holdings={stateStrategy}
               onShowHoldings={() => dispatch({ showModel: false })}

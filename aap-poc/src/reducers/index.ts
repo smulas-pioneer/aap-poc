@@ -65,3 +65,4 @@ export const selectStrategy = (state: AppState) => fromClient.selectStrategy(sta
 
 export const selectAlertHistory = (state: AppState) => fromSearch.getAlertHistory(state.search);
 export const getIsReady = (state: AppState) => fromContext.getIsReady(state.context);
+export const getTheme = (state: AppState) => fromContext.getTheme(state.context);

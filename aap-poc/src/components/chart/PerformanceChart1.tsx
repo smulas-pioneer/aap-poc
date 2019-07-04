@@ -31,7 +31,7 @@ export const PerformanceChart = (props: PerformanceChartProps) => {
         margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
         <XAxis dataKey="date" tickFormatter={() => ""} interval={10} hide={!caption} />
         <YAxis tickFormatter={(d: number) => perc(d)} domain={['auto', 'auto']} hide={!caption} />
-        <CartesianGrid strokeDasharray="3 3" />
+        <CartesianGrid strokeDasharray={caption ? '3 3' : '1 1'} />
         {actions && <Tooltip formatter={(d: number) => perc(d) + '%'} />}
         <Line type="monotone" dot={false} dataKey="perf"  strokeWidth={3}  stroke={Colors.RED} />
     </LineChart>

@@ -120,7 +120,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
     const { lang, layout, filter = { Aua: {} }, isOnlyItaly, isCountryActive, isRegionActive } = this.props;
 
     return <div className='tab-dashboard ui-flex ui-flex-col'>
-      <div className='ui-flex ui-flex-row' style={{}}>
+      <div className='ui-flex ui-flex-row'>
         <Segment>
           <EuropaMap
             transform="scale(1.8) translate(-100, -250)"
@@ -235,7 +235,6 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
   render() {
     const { uid, data, filter, lang } = this.props;
-    const style = { padding: '0px 0px' }
     const fmt = formatNumber(lang.NUMBER_FORMAT);
 
     if (!data) return null;
@@ -243,19 +242,19 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
     const panes = [
       {
         menuItem: this.renderTabItem('DASHBOARD', 'pie graph', 'green'),
-        render: () => <Tab.Pane as={"div"} style={style} content={<div style={{ padding: 4 }}>{this.renderFilterGraphics(data.result)} </div>} />
+        render: () => <Tab.Pane as={"div"} content={this.renderFilterGraphics(data.result)} />
       },
       {
         menuItem: this.renderTabItem('MY_PORTFOLIOS', 'users', 'blue'),
-        render: () => <Tab.Pane as={"div"} style={style} content={<div style={{ padding: 10 }}> <ManagerView uid={uid} /></ div>} />
+        render: () => <Tab.Pane as={"div"} style={{ padding: '5px 0px' }} content={<ManagerView uid={uid} />} />
       },
       {
         menuItem: this.renderTabItem('MY_ALERTS', 'alarm', 'red'),
-        render: () => <Tab.Pane as={"div"} style={style} content={<div style={{ padding: 10 }}><AlertsView manager uid={uid} hideGraphs /></div>} />
+        render: () => <Tab.Pane as={"div"} style={{ padding: '5px 0px' }} content={<AlertsView manager uid={uid} hideGraphs />} />
       },
       {
         menuItem: this.renderTabItem('MY_CLIENTS', 'users', 'blue'),
-        render: () => <Tab.Pane as={"div"} style={style} content={<div style={{ padding: 10 }}><ClientsView uid={uid} /></div>} />
+        render: () => <Tab.Pane as={"div"} style={{ padding: '8px 4px' }} content={<ClientsView uid={uid} />} />
       }
     ]
 
@@ -282,9 +281,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
     return (
       <AdvancedGrid className="grid-header-fix" >
-
         <Segment compact style={{ width: '100%', margin: 0 }} >
-
           <Grid columns={7}   >
             <Grid.Column textAlign="center" >
               {this.renderItem(fmt(info.length), lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), 'blue', 'green')}
@@ -309,10 +306,9 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
             </Grid.Column>
           </Grid>
         </Segment>
-
         <AdvancedGrid className="grid-filter-right">
           <div style={{ position: 'relative' }}>
-            <Tab menu={{ pointing: true, secondary: true, style: { margin: 0 } }} panes={panes} style={{ height: '95%' }} />
+            <Tab menu={{ pointing: true, style: { margin: 0 } }} panes={panes} style={{ height: '95%' }} />
           </div>
           <Segment style={{ margin: 0 }}>
             <WidgetTitle size="mini" title={lang.FILTER} />
