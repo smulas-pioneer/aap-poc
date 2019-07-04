@@ -2,14 +2,14 @@
 import * as React from 'react';
 import { getRndItem } from '../../_db/utils';
 import { ChartBaseProps } from './ChartInterface';
-import { Popup, Input, Button, Modal, Dropdown } from 'semantic-ui-react';
-import { PopoverChange } from '../clientView/PopoverChange';
+import { Input, Button, Modal, Dropdown } from 'semantic-ui-react';
 import { round } from 'mathjs';
-import { DynamicFilterOperation, SearchParms, DynamicSearchFilter } from '../../_db/interfaces';
+import { DynamicFilterOperation, DynamicSearchFilter } from '../../_db/interfaces';
 import { appConnector } from 'app-support';
 import { searchClient } from '../../actions';
 import { getSearchParms } from '../../reducers';
-const { ComposedChart, Tooltip, Legend, ResponsiveContainer, Sector, PieChart, Pie, Cell, Bar, XAxis, YAxis, CartesianGrid } = require('recharts');
+import { unCamelCase } from '../../commonUtils';
+const { ComposedChart, Legend, ResponsiveContainer, Sector, PieChart, Pie, Cell, Bar, XAxis, YAxis } = require('recharts');
 
 const Colors = {
   ORANGE: "#F07D00",
@@ -210,7 +210,7 @@ class CustomComposedChartCompo extends conn.StatefulCompo<CustomChartState> {
       value
     }
     const newParms: any = { ...this.props.parms, dynamicFilters: [...previuosFilters, newFilter] };
-    this.props.searchClient(newParms);
+    this.setState(p => ({ modalManageValueOpen: false }), () => this.props.searchClient(newParms));
   }
 
   render() {
@@ -247,7 +247,7 @@ class CustomComposedChartCompo extends conn.StatefulCompo<CustomChartState> {
           </ComposedChart>
         </CustomResponsiveContainer>
         {actions && this.state.selected && <Modal size='small' open={this.state.modalManageValueOpen} onClose={() => this.setState(p => ({ modalManageValueOpen: false }))}>
-          <Modal.Header>Add filter for {attributeName}</Modal.Header>
+          <Modal.Header>{unCamelCase(attributeName)} - Add dynamic filter</Modal.Header>
           <Modal.Content><CustomComposedChartValueChange onChange={this.handleOnChange} attributeName={attributeName} attributeValue={this.state.selected.payload.key} /></Modal.Content>
         </Modal>}
       </>
@@ -287,7 +287,8 @@ const CustomComposedChartValueChange = (props: any) => {
     props.onChange(
       props,
       operation,
-      (value || 0) / 100);
+      ((value || 0) / 100)
+    );
   }
 
   const reset = () => {
@@ -341,7 +342,7 @@ const CustomComposedChartValueChange = (props: any) => {
 
     <div style={{ flex: 1 }}>
       <Input size="small" inverted fluid value={textValue || ""} onChange={(a, b) => setTextValue(b.value)} >
-        <input style={{ color: value > 0 ? 'lightgreen' : 'red' }} />
+        <input />
       </Input>
     </div>
 

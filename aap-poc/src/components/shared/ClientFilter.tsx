@@ -6,6 +6,7 @@ import { ClientsViewFilterText } from "../clientsView/ClientsViewParms";
 import IconButton from "./IconButton/index";
 import { isArray } from "util";
 import { startsWith, groupBy } from "lodash";
+import { round } from "mathjs";
 
 export type FilterMapDefinition = { [k in FilterMapTypes]?: { clearAll?: boolean } | undefined };
 
@@ -181,11 +182,11 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
     }
     const createMenu = (context: string, df: DynamicSearchFilter[]) => (
       <>
-        <Menu.Item className="dynamicMenuContext">{context}</Menu.Item>
+        <Menu.Item className="dynamicMenuContext">{context.split(/(?=[A-Z])/).join(' ')}</Menu.Item>
         {
           df.map((d, i) => (
             <Menu.Item link key={i} onClick={() => this.manageDynamicFilter(d, true)}>
-              {active}{d.key} {decodeOpe(d.operation)} {d.value * 100}%
+              {active}{d.key} {decodeOpe(d.operation)} {round(d.value * 100)}%
             </Menu.Item>)
           )
         }
@@ -196,7 +197,6 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
         <Menu.Header>
           Dynamic Filters
         </Menu.Header>
-
         <Menu.Menu>
           {
             Object.keys(groupedDynas).map(g => createMenu(g, groupedDynas[g]))

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Header, SemanticICONS, SemanticCOLORS } from 'semantic-ui-react';
 import { ShareButton, Share } from '../Share';
+import { unCamelCase } from '../../commonUtils';
 
 export const WidgetTitle = (props: {
   size?: 'mini' | 'small' | 'large',
@@ -19,7 +20,7 @@ export const WidgetTitle = (props: {
   return (
     <div style={{ marginBottom: '1em' }}>
       <Header as={as} color={props.color} icon={props.icon} subheader={props.subtitle} style={props.style} floated={rightComponent ? 'left' : undefined} >
-        {props.title}
+        {unCamelCase(props.title)}
         {props.shareButtons && <Share buttons={props.shareButtons} />}
       </Header>
       {

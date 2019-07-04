@@ -6,6 +6,7 @@ import { Divider, Icon, Segment } from 'semantic-ui-react';
 import Slider from "react-slick";
 import { WidgetTitle } from '../shared/WidgetTitle';
 import { numArray } from '../../_db/common/radarUtils';
+import { unCamelCase } from '../../commonUtils';
 
 
 interface SliderGraphBaseProps {
@@ -74,11 +75,11 @@ export const SliderGrapMultiView = (props: SliderGraphMultiViewProps) => {
     {mode === 'tumblr'
       ? <Segment style={{ marginBottom: 0 }}><SliderGraphTumblr {...graphProps} defaultIndex={0} slidesToShow={settings.tumblrSlidesToShow} /></Segment>
       : mode === 'single'
-        ? <Segment style={{ marginBottom: 0 }}><SliderGraph {...graphProps} defaultIndex={0} slidesToShow={settings.singleSlidesToShow}  /></Segment>
+        ? <Segment style={{ marginBottom: 0 }}><SliderGraph {...graphProps} defaultIndex={0} slidesToShow={settings.singleSlidesToShow} /></Segment>
         : mode === 'multi'
           ? <div className='ui-flex ui-flex-col'>
             {numArray(settings.multiSegment).map((i) => (
-              <Segment key={i} style={{ marginBottom: 0 }}><SliderGraph {...graphProps} defaultIndex={i} slidesToShow={settings.multiSlidesToShow}/></Segment>
+              <Segment key={i} style={{ marginBottom: 0 }}><SliderGraph {...graphProps} defaultIndex={i} slidesToShow={settings.multiSlidesToShow} /></Segment>
             ))}
           </div>
           : null
@@ -104,7 +105,7 @@ export const SliderGraph = (props: SliderGraphProps) => {
   const sliderPanes = graphs.map((item, ix) => {
     return <div className="sliderGraphItem" key={ix} style={{ height: `${height}px` }}>
       <WidgetTitle size="small" title={item.title} />
-      <div style={{ textAlign: slidesToShow> 1 ? 'center' :'left',  height: item.icon === 'chart bar' ? `${height}px` : `${height - 32}px` }} >
+      <div style={{ textAlign: slidesToShow > 1 ? 'center' : 'left', height: item.icon === 'chart bar' ? `${height}px` : `${height - 32}px` }} >
         {getCharts(item, false)}
       </div>
     </div>
@@ -130,7 +131,7 @@ export const SliderGraphTumblr = (props: SliderGraphProps) => {
 
   const sliderPanes = graphs.map((item, ix) => {
     return <div className="sliderGraphItem" key={ix} style={{ height: '100px', padding: '2px' }}>
-      <label>{item.title}</label>
+      <label>{unCamelCase(item.title)}</label>
       <div className="bordered" style={{ height: '80%' }} onClick={() => setActiveIndex(ix)}>
         {getCharts(item, true)}
       </div>
@@ -142,8 +143,8 @@ export const SliderGraphTumblr = (props: SliderGraphProps) => {
     <div style={{ flex: '1' }}>
       {getCharts(graphs[activeIndex], false)}
     </div>
-    <div className='sliderGraph' style={{ height: '130px', marginTop:'10px' }}>
-      <Divider/>
+    <div className='sliderGraph' style={{ height: '130px', marginTop: '10px' }}>
+      <Divider />
       <Slider {...settings} >{sliderPanes}</Slider>
     </div>
   </div>
@@ -151,4 +152,3 @@ export const SliderGraphTumblr = (props: SliderGraphProps) => {
 
 const CustomArrowPrev = (props: any) => (<div className={`custom-slick-arrow custom-slick-prev`}><Icon name='arrow left' onClick={props.onClick} link /></div>);
 const CustomArrowNext = (props: any) => (<div className={`custom-slick-arrow custom-slick-next`}><Icon name='arrow right' onClick={props.onClick} link /></div>);
-
