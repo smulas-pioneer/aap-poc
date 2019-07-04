@@ -193,7 +193,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         return memo;
       }, [] as any);
 
-    return (<CustomPieChart key='pieFilter' data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />);
+    return (<CustomPieChart uid={this.props.uid} key='pieFilter' data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />);
   }
 
   // lang
@@ -238,7 +238,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         title: b.attributeName,
         icon: 'line chart',
         charts: [{
-          chart: <BreakdownView key={i} breakdown={b} chartView={graphType[b.attributeName]} attributeName={b.attributeName} />
+          chart: <BreakdownView uid={this.props.uid} key={i} breakdown={b} chartView={graphType[b.attributeName]} attributeName={b.attributeName} />
         }]
       }
     });

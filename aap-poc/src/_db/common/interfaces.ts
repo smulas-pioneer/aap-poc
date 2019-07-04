@@ -244,7 +244,7 @@ export interface DynamicSearchFilter {
 }
 
 export enum DynamicFilterOperation {
-  GreaterThan,
+  GreaterThan = 1,
   GraterEqualThan,
 
   LesserThan,
