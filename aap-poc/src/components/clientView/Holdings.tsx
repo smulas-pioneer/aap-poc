@@ -261,7 +261,7 @@ export const Holdings = (props: Props) => {
                       </Table.Cell>}
                       {isProposingMode && <Table.Cell verticalAlign="middle">
                         {!t.isCash && !t.clientFavorites &&
-                          <Popup  wide style={{ margin: 0, padding: 0 }} trigger={<Icon style={{ cursor: 'pointer', flex: 1 }} name="pencil" />} on='click'>
+                          <Popup wide style={{ margin: 0, padding: 0 }} trigger={<Icon style={{ cursor: 'pointer', flex: 1 }} name="pencil" />} on='click'>
                             <div>
                               <PopoverChange tot={tot}
                                 item={t}
@@ -275,7 +275,6 @@ export const Holdings = (props: Props) => {
                         <Checkbox checked={t.suggestionAccepted} onChange={(a, b) => handleItemChanged({ ...t, suggestionAccepted: b.checked || false }, i)} />
                         */}
                       </Table.Cell>}
-
                       {isProposingMode &&
                         <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100) + ' %'}</Table.Cell>
                       }

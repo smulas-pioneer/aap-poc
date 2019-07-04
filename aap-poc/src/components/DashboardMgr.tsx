@@ -15,17 +15,17 @@ import { ClientFilter } from './shared/ClientFilter';
 import { WidgetTitle } from './shared/WidgetTitle';
 import { BreakdownView } from './clientView/BreakdownView';
 import { ClientsView } from './clientsView/ClientsView';
-import { SliderGraph, SliderGraphTumblr, SliderGrapMultiView } from './chart/SliderGraph';
+import { SliderGrapMultiView } from './chart/SliderGraph';
 import { EuropaMap } from './maps/europe/EuropeMap';
 import { getIsOnlyItaly } from '../reducers';
-
 
 const sprintf = require("sprintf-js").sprintf;
 
 export interface DashboardMgrProps {
   uid: string,
+  page?: string,
   commonMenu?: React.ReactChildren;
-
+  history?: any;
 }
 export interface DashboardMgrState {
   searchParms: SearchParms
@@ -55,6 +55,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
     this.searchAdvanced = this.searchAdvanced.bind(this);
     this.searchAdvancedByGraph = this.searchAdvancedByGraph.bind(this);
     this.handleOnChangeFilter = this.handleOnChangeFilter.bind(this);
+    this.handleOnChangeTab = this.handleOnChangeTab.bind(this);
   }
 
   componentDidMount() {
@@ -98,6 +99,10 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
     }
 
     this.setState({ searchParms }, this.search);
+  }
+
+  handleOnChangeTab = (page: string) => {
+    this.props.history && this.props.history.push(`/dshm/${page}`);
   }
 
   // render statistic
@@ -202,6 +207,13 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
     </Menu.Item>);
   }
 
+  renderTabItem1(key: string, name: string, icon: SemanticICONS, color: SemanticCOLORS, activeKey: string, onClick?: () => void) {
+    return (<Menu.Item key={key} name={this.props.lang[name]} active={key === activeKey} onClick={() => this.handleOnChangeTab(key)} >
+      <Icon name={icon} color={color} />
+      {this.props.lang[name]}
+    </Menu.Item>);
+  }
+
   createGraphs() {
     const { filter = { Aua: {} } } = this.props;
     let graphs = {
@@ -234,11 +246,12 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
   }
 
   render() {
-    const { uid, data, filter, lang } = this.props;
+    const { uid, page = '0', data, filter, lang } = this.props;
     const fmt = formatNumber(lang.NUMBER_FORMAT);
 
     if (!data) return null;
 
+    /*
     const panes = [
       {
         menuItem: this.renderTabItem('DASHBOARD', 'pie graph', 'green'),
@@ -255,6 +268,25 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
       {
         menuItem: this.renderTabItem('MY_CLIENTS', 'users', 'blue'),
         render: () => <Tab.Pane as={"div"} style={{ padding: '8px 4px' }} content={<ClientsView uid={uid} />} />
+      }
+    ]
+  */
+    const panes = [
+      {
+        menuItem: this.renderTabItem1('0', 'DASHBOARD', 'pie graph', 'green', page),
+        render: () => <div>{this.renderFilterGraphics(data.result)}</div>
+      },
+      {
+        menuItem: this.renderTabItem1('1', 'MY_PORTFOLIOS', 'users', 'blue', page),
+        render: () => <div style={{ padding: '5px 0px' }}><ManagerView uid={uid} /></div>
+      },
+      {
+        menuItem: this.renderTabItem1('2', 'MY_ALERTS', 'alarm', 'red', page),
+        render: () => <div style={{ padding: '5px 0px' }}><AlertsView manager uid={uid} hideGraphs /></div>
+      },
+      {
+        menuItem: this.renderTabItem1('3', 'MY_CLIENTS', 'users', 'blue', page),
+        render: () => <div style={{ padding: '8px 4px' }}><ClientsView uid={uid} /></div>
       }
     ]
 
@@ -308,7 +340,10 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         </Segment>
         <AdvancedGrid className="grid-filter-right">
           <div style={{ position: 'relative' }}>
-            <Tab menu={{ pointing: true, style: { margin: 0 } }} panes={panes} style={{ height: '95%' }} />
+            <Menu pointing style={{margin: 0}}>
+              {panes.map(s => s.menuItem)}
+            </Menu>
+            {panes[page].render()}
           </div>
           <Segment style={{ margin: 0 }}>
             <WidgetTitle size="mini" title={lang.FILTER} />

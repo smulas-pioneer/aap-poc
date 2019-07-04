@@ -54,7 +54,7 @@ export class MapOptions extends React.Component<MapOptionsProps, MapOptionsState
     return (
       <div>
         <Divider />
-        <Menu fluid widths={buttons.length} color={'teal'}>
+        <Menu fluid widths={buttons.length} >
           {buttons.map(b => this.renderButton(b[0], b[1]))}
         </Menu>
       </div>

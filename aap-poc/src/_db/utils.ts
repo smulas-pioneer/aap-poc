@@ -93,4 +93,4 @@ export const processHoldingsSuggestions = (holdings: Holding[], suggestionType: 
     }
 
 }
-export const getColorCustomClassName = (name?: SemanticCOLORS, className?: string) => (`${name} ${name ? `color-${name} ` : ''}${className || ''}`);
+export const getColorCustomClassName = (name?: SemanticCOLORS | string, className?: string) => (`${name && !name.startsWith('#') ? `color-${name} ` : ''}${className || ''}`);

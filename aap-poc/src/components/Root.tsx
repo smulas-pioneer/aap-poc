@@ -28,9 +28,7 @@ export const Root = conn.PureCompo(props => {
   const { logged, manager, login, theme } = props;
 
   const themeLink = (theme === 'dark')
-    ? <>
-      <link href="../bigone.css" rel="stylesheet" />
-    </>
+    ? <link href="bigone.css" rel="stylesheet" />
     : null;
 
   return (

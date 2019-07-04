@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Menu, Button, Input, Grid, Dropdown, Progress, Icon } from 'semantic-ui-react';
+import { Menu, Button, Input, Grid, Dropdown, Progress, Icon, Label } from 'semantic-ui-react';
 import { calculateProjection } from '../../_db/coreEngine';
 import { LangDictionary } from '../../reducers/language/interfaces';
 import moment from 'moment';
@@ -166,7 +166,8 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
       {actions && <Menu secondary compact borderless fluid style={{ marginBottom: '1em' }}>
         <Menu.Menu>
           <Menu.Item>
-            <Input style={{}} type='number' label="Target Return (%)" size="mini" value={this.state.target_Return} onChange={(a, b) => this.handleChangeTargetReturn(b.value)} />
+            <label style={{ whiteSpace: 'nowrap', marginRight: '10px'}}><b>Target Return (%) :</b></label> 
+            <Input type='number' size="mini" value={this.state.target_Return} onChange={(a, b) => this.handleChangeTargetReturn(b.value)} />
           </Menu.Item>
           <Menu.Item>
             <Dropdown text={`${lang.TIME_HORIZON}: ${this.state.timeHorizon}`} pointing='left' className='link item'>
@@ -180,7 +181,8 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
         </Menu.Menu>
         <Menu.Menu position="right">
           <Menu.Item position="right">
-            Probability: &nbsp;&nbsp;<Progress style={{ width: 100, margin: 0 }} color={this.state.probability >= 95 ? 'green' : this.state.probability > 60 ? 'orange' : 'red'} percent={this.state.probability} progress />
+            <label style={{ whiteSpace: 'nowrap', marginRight: '10px'}}><b>Probability :</b></label> 
+            <Progress style={{ width: 100, margin: 0 }} color={this.state.probability >= 95 ? 'green' : this.state.probability > 60 ? 'orange' : 'red'} percent={this.state.probability} progress />
           </Menu.Item>
         </Menu.Menu>
       </Menu>
@@ -202,7 +204,7 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
         <Grid size="mini">
           <Grid.Row columns="1" >
             <Grid.Column textAlign="center">
-              <Button.Group compact size="tiny">
+              <Button.Group basic compact size="tiny" color="teal">
                 <Button active={period === '1M'} size="tiny" content="1m" onClick={() => this.setData({ period: '1M' })} />
                 <Button active={period === '3M'} size="tiny" content="3m" onClick={() => this.setData({ period: '3M' })} />
                 <Button active={period === '6M'} size="tiny" content="6m" onClick={() => this.setData({ period: '6M' })} />
