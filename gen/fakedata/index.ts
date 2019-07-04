@@ -165,7 +165,7 @@ export const getAllPerformances = () => {
 const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
 
   const modelSecs = mod.map(p => ({
-    security: p.Symbol == 'CASH_EUR' ? cash : mapSecurity(p),
+    security: isCash(p) ? cash : mapSecurity(p),
     radar: getRandomRadar(),
     currentWeight: 0,
     currentQuantity: 0,
@@ -174,14 +174,14 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
     modelWeight: p.WEIGHT,
     suggestedDelta: 0,
     suggestionAccepted: false,
-    isCash: p.Symbol == 'CASH_EUR',
+    isCash:  isCash(p) ,
     fee: 1,
     newSecurity: false
   }));
 
 
   const suggSecs = sugg.map(p => ({
-    security: p.Symbol == 'CASH_EUR' ? cash : mapSecurity(p),
+    security:  isCash(p)  ? cash : mapSecurity(p),
     radar: getRandomRadar(),
     currentWeight: 0,
     currentQuantity: 0,
@@ -190,13 +190,13 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
     modelWeight: 0,
     suggestedDelta: p.WEIGHT,
     suggestionAccepted: false,
-    isCash: p.Symbol == 'CASH_EUR',
+    isCash:  isCash(p) ,
     fee: 1,
     newSecurity: false
   }));
 
   const posSecs = pos.map(p => ({
-    security: p.Symbol == 'CASH_EUR' ? cash : mapSecurity(p),
+    security:  isCash(p)  ? cash : mapSecurity(p),
     radar: getRandomRadar(),
     currentWeight: p.WEIGHT,
     currentQuantity: p.Shares,
@@ -205,7 +205,7 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
     modelWeight: 0,
     suggestedDelta: 0,
     suggestionAccepted: false,
-    isCash: p.Symbol == 'CASH_EUR',
+    isCash:  isCash(p) ,
     fee: 1,
     newSecurity: false,
   }));

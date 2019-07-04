@@ -249,7 +249,7 @@ export const Holdings = (props: Props) => {
                         <p style={{ padding: 0, margin: 0 }}> {' '}<b>{t.security.SecurityName}</b></p>
                         <p style={{ padding: 0, margin: 0, color: 'lightgrey'}}><small>{t.security.IsinCode} - <i>{t.security.MacroAssetClass}</i></small> </p>
                       </Table.Cell>
-                      {!isProposingMode &&<Table.HeaderCell>{t.security.Currency}</Table.HeaderCell>}
+                      {!isProposingMode &&<Table.Cell>{t.security.Currency}</Table.Cell>}
 
                       <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
                       <Table.Cell textAlign="right">{show && fmt(t.currentAmount) + ' €'} </Table.Cell>

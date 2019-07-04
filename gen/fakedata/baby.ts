@@ -162,6 +162,7 @@ export const bbCase = babySecurities.map(s => {
     Name: s.SecurityName,
     Mstar_BCH: '',
     Mstar_SRRI: 1,
+    isCash: s.AssetId==='EUR' ,
     WEIGHT: position[s.IsinCode].weight,
     //    Weight: position[s.IsinCode].quantity,
     SRRI: 1,

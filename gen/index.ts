@@ -55,10 +55,10 @@ const getFake = (region: string) => {
 }
 
 const MODEL_COUNT = 10;
-const CLIENT_COUNT_IT = 1//3000;
-const CLIENT_COUNT_DE = 1//1000;
-const CLIENT_COUNT_LU = 1//20;
-const CLIENT_COUNT_AT = 1//500;
+const CLIENT_COUNT_IT = 2320;
+const CLIENT_COUNT_DE = 1020;
+const CLIENT_COUNT_LU = 27;
+const CLIENT_COUNT_AT = 470;
 const CLIENT_COUNT = CLIENT_COUNT_AT + CLIENT_COUNT_DE + CLIENT_COUNT_IT + CLIENT_COUNT_LU;
 const MAX_CITIES_X_REGION = 3;
 const MAX_BRANCH_X_CITY = 3;
@@ -88,6 +88,10 @@ const portfolioCreator = (id: string, name: string): Portfolio => {
 var clientIndex = 0;
 type Country = 'Italy' | 'Luxemburg' | 'Austria' | 'Germany'
 
+const sameRegionAgents = (region:string) => {
+  return agents.filter(p=>agentDictionary[p].region===region);
+}
+
 const clientCreator = (id: string, models: Portfolio[], agents: string[], country: Country): Client => {
   const faker = getFake(country);
 
@@ -95,7 +99,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[], countr
   const lastName = faker.name.lastName();
   const modelIx = Math.ceil(Math.random() * (MODEL_COUNT - 1));
 
-  const agentName = isFakeClient(id) || (++clientIndex) < 200 ? agents[0] : agents[rnd(0, agents.length - 1)];
+  const agentName = isFakeClient(id) || (++clientIndex) < 200 ? sameRegionAgents[0] : sameRegionAgents[rnd(0, sameRegionAgents.length - 1)];
   const agent = agentDictionary[agentName];
   return {
     id,
@@ -108,7 +112,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[], countr
     clientStatusAge: '2017-01-01',
     clientStatusDuration: '<1W',
     projectAccomplishment: rnd(0, 100),
-    country: 'Italy',
+    country: country,
     address: {
       city: agent.branch.city.cityName,
       region: agent.branch.city.region,

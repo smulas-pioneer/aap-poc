@@ -6,6 +6,7 @@ import moment from 'moment';
 import * as math from 'mathjs';
 import { suggestedPositionExCash, } from "./common/radarUtils";
 import { securityList } from "./data";
+import { Security } from "./common/interfaces";
 
 
 export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean, forced?: StrategyItem[]): StrategyItem[] => {
@@ -156,10 +157,12 @@ const getPerfContrib = (isin: string[]) => {
 }
 
 export const getPerfContribution = (position: PositionItem[]) => {
+  const key:keyof Security="IsinCode";
+
   const filteredPos = position.filter(w => w.weight !== 0);
-  const keys = filteredPos.map(p => p.security.IsinCode);
+  const keys = filteredPos.map(p => p.security[key]);
   const weights = filteredPos.reduce((prev, curr) => {
-    prev[curr.security.IsinCode] = curr.weight;
+    prev[curr.security[key]] = curr.weight;
     return prev;
   }, {} as { [key: string]: number });
   const perfCompo = getPerfContrib(keys);
@@ -167,7 +170,7 @@ export const getPerfContribution = (position: PositionItem[]) => {
   const gPerf = groupBy(perfCompo, g => g.date);
   const ret = Object.keys(gPerf).map(k => {
     const o = gPerf[k].reduce((pr, cu) => {
-      const secNameRes = securityList.find(sec => sec.IsinCode === cu.id);
+      const secNameRes = securityList.find(sec => sec[key] === cu.id);
       const secName = secNameRes ? secNameRes.SecurityName : cu.id;
       pr[secName] = cu.perf * weights[cu.id] * 100;
       return pr;
