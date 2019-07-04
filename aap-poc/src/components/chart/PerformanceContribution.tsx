@@ -46,7 +46,7 @@ export class PerformanceContributionGraph extends React.Component<PerformanceCon
         };
     }
     render() {
-        const { legend = true, caption = true, actions = true } = this.props;
+        const { legend = false, caption = true, actions = true } = this.props;
         const data = this.props.data;
 
         return <ResponsiveContainer width="100%" height="100%">

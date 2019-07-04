@@ -233,6 +233,22 @@ export interface SearchParms {
   clientStatusDuration?: ClientStatusDuration[];
   uid: string;
   clientRiskProfile?: string[];
+  dynamicFilters?: DynamicSearchFilter[];
+}
+
+export interface DynamicSearchFilter {
+  context: string,
+  key: string,
+  operation: DynamicFilterOperation;
+  value: any;
+}
+
+export enum DynamicFilterOperation {
+  GreaterThan = 1,
+  GraterEqualThan,
+
+  LesserThan,
+  LesserEqualThan
 }
 
 export interface SearchResult {
@@ -271,9 +287,9 @@ export const ClientStateColors = {
   'NO ALERT': 'green',
   'REGULATOR ALERT': 'red',
   'GUIDELINE ALERT': 'orange',
-  'ON HOLD': '#2185d0',
-  'PENDING PROPOSAL': '#2185d0',
-  'PENDING EXECUTION': '#2185d0'
+  'ON HOLD': 'blue',
+  'PENDING PROPOSAL': 'blue',
+  'PENDING EXECUTION': 'blue'
 }
 
 export enum SpotlightContext {

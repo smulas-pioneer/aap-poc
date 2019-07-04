@@ -190,7 +190,7 @@ export class CustomComposedChart extends React.Component<CustomChartProps, Custo
     const { data, dataKey, nameKey, attributeName, uid } = this.props;
     const { legend = true, caption = true, actions = true } = this.props;
 
-    const color = this.props.color || getRndItem(Object.keys(Colors).map(k => Colors[k]));
+    const color = this.props.color;// || getRndItem(Object.keys(Colors).map(k => Colors[k]));
     const barActionableProps = (actions && {
       cursor: "pointer",
       onClick: (data: any) => {

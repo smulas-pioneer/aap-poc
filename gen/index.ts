@@ -8,13 +8,29 @@ import { sumBy, maxBy, groupBy } from 'lodash';
 import moment from 'moment';
 import { getAllSecuirities, getAllPerformances, getAllStrategies, createFakeRadar } from './fakedata'
 
-import * as faker_ from 'faker';
+import * as fakerIT from 'faker';
+import * as fakerLUX from 'faker';
+import * as fakerGER from 'faker';
+import * as fakerAUT from 'faker';
 
 const log = console.log;
 const rnd = (min: number, max: number) => Math.round(Math.random() * (max - min)) + min;
 const fmt = (num: number) => Math.ceil(num * 10) / 10
 const rndS = (data: string[]) => data[rnd(0, data.length - 1)];
 const dump = (file: string, data: any) => fs.writeFileSync(`./build/${file}`, JSON.stringify(data, null, 2));
+
+const regionCountry ={
+  'Nord Ovest': 'Italy',
+  'Lombardia':'Italy',
+  'Nord Est': 'Italy',
+  'Centro Nord': 'Italy',
+  'Centro': 'Italy',
+  'Sud': 'Italy',
+  'Sicilia': 'Italy',
+  'Germany': 'Germany',
+  'Austria':'Austria',
+  'Luxemburg': 'Luxemburg'
+}
 
 const italyRegions = [
   'Nord Ovest',
@@ -41,24 +57,30 @@ const italyRegionsRate = {
   'Luxemburg': 9
 }
 const getFake = (region: string) => {
-  let faker = faker_ as any;
   if (region === 'Germany') {
+    let faker = fakerGER;
     faker.locale = 'de';
+    return faker as Faker.FakerStatic;
   } else if (region === 'Austria') {
-    faker.locale = 'at';
+    let faker = fakerAUT;
+    faker.locale = 'de_AT';
+    return faker as Faker.FakerStatic;
   } else if (region === 'Luxemburg') {
-    faker.locale = 'lu';
+    let faker = fakerGER;
+    faker.locale = 'fr';
+    return faker as Faker.FakerStatic;
   } else {
+    let faker = fakerIT;
     faker.locale = 'it';
+    return faker as Faker.FakerStatic;
   }
-  return faker as Faker.FakerStatic;
 }
 
 const MODEL_COUNT = 10;
-const CLIENT_COUNT_IT = 1//3000;
-const CLIENT_COUNT_DE = 1//1000;
-const CLIENT_COUNT_LU = 1//20;
-const CLIENT_COUNT_AT = 1//500;
+const CLIENT_COUNT_IT = 2320;
+const CLIENT_COUNT_DE = 1020;
+const CLIENT_COUNT_LU = 27;
+const CLIENT_COUNT_AT = 470;
 const CLIENT_COUNT = CLIENT_COUNT_AT + CLIENT_COUNT_DE + CLIENT_COUNT_IT + CLIENT_COUNT_LU;
 const MAX_CITIES_X_REGION = 3;
 const MAX_BRANCH_X_CITY = 3;
@@ -88,14 +110,22 @@ const portfolioCreator = (id: string, name: string): Portfolio => {
 var clientIndex = 0;
 type Country = 'Italy' | 'Luxemburg' | 'Austria' | 'Germany'
 
+const getSameRegionAgents = (country:string) => {
+  const filteredAgents =  agents.filter(p=>agentDictionary[p].branch.city.country===country);
+//  console.log(country,filteredAgents,JSON.stringify(agentDictionary));
+  return filteredAgents;
+}
+
 const clientCreator = (id: string, models: Portfolio[], agents: string[], country: Country): Client => {
   const faker = getFake(country);
 
+  
   const name = faker.name.firstName();
   const lastName = faker.name.lastName();
   const modelIx = Math.ceil(Math.random() * (MODEL_COUNT - 1));
+  const sameRegionAgents = getSameRegionAgents(country);
+  const agentName = isFakeClient(id) || (++clientIndex) < 200 ? sameRegionAgents[0] : sameRegionAgents[rnd(0, sameRegionAgents.length - 1)];
 
-  const agentName = isFakeClient(id) || (++clientIndex) < 200 ? agents[0] : agents[rnd(0, agents.length - 1)];
   const agent = agentDictionary[agentName];
   return {
     id,
@@ -108,7 +138,7 @@ const clientCreator = (id: string, models: Portfolio[], agents: string[], countr
     clientStatusAge: '2017-01-01',
     clientStatusDuration: '<1W',
     projectAccomplishment: rnd(0, 100),
-    country: 'Italy',
+    country: country,
     address: {
       city: agent.branch.city.cityName,
       region: agent.branch.city.region,
@@ -293,17 +323,18 @@ const alertHistoryCreator = (date: string, days: number, clients: Client[]): Ale
 }
 
 const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResult[] } => {
+  const today=new Date(REFERENCE_DATE_TODAY);
   return clients.reduce((prev, curr) => {
     const faker = getFake(curr.country);
-    log('history for', curr.name);
     const n = rnd(4, 12);
     prev[curr.id] = numArray(n).map(i => {
       const r = rnd(1, 100);
       const status = r < 30 ? 'REJECTED' : 'ACCEPTED';
-      let date = faker.date.past();
+      let date = faker.date.past(3,today);
+      /*
       while (moment(date).format('YYYY-MM-DD') >= REFERENCE_DATE_TODAY) {
-        date = faker.date.past();
-      }
+        date = faker.date.past(3,today);
+      }*/
 
       return {
         date: moment(date).format('YYYY-MM-DD'),
@@ -312,14 +343,12 @@ const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResul
       } as InterviewResult;
     }).sort((a, b) => a.date.localeCompare(b.date));
 
-    log('arrivo qui?');
     // LAst one is accepted for fake client and possibly ongoing for others.
     if (isFakeClient(curr.id)) {
       prev[curr.id][prev[curr.id].length - 1].status = 'ACCEPTED';
     } else {
       const nr = rnd(1, 10);
       prev[curr.id][prev[curr.id].length - 1].status = nr < 3 ? 'ONGOING' : (nr < 6 ? 'ON HOLD' : prev[curr.id][0].status)
-
       if (prev[curr.id][prev[curr.id].length - 1].status == 'ONGOING') {
         prev[curr.id][prev[curr.id].length - 1].date = moment(REFERENCE_DATE_TODAY).add(rnd(-1, -5), 'days').format('YYYY-MM-DD');
       }
@@ -341,7 +370,8 @@ const createAgents = () => {
     const cities = numArray(max).map(i => {
       return {
         cityName: faker.address.city(),
-        region
+        region,
+        country: regionCountry[region]
       }
     });
     cities.forEach(city => {
@@ -374,37 +404,38 @@ const agents = Object.keys(agentDictionary);
 const modelFaker = getFake('Italy');
 export const createModels = () => numArray(MODEL_COUNT)
   .map(i => portfolioCreator(i.toString(), modelFaker.commerce.productName()));
-export const clientsCreator = (models: Portfolio[]) => {
 
+  export const clientsCreator = (models: Portfolio[]) => {
+  let id=0;
   return [
-    ...numArray(CLIENT_COUNT_IT).map(i => clientCreator(i.toString(), models, agents, 'Italy')),
-    ...numArray(CLIENT_COUNT_AT).map(i => clientCreator(i.toString(), models, agents, 'Austria')),
-    ...numArray(CLIENT_COUNT_DE).map(i => clientCreator(i.toString(), models, agents, 'Germany')),
-    ...numArray(CLIENT_COUNT_LU).map(i => clientCreator(i.toString(), models, agents, 'Luxemburg')),
+    ...numArray(CLIENT_COUNT_IT).map(i => clientCreator((id++).toString(), models, agents, 'Italy')),
+    ...numArray(CLIENT_COUNT_AT).map(i => clientCreator((id++).toString(), models, agents, 'Austria')),
+    ...numArray(CLIENT_COUNT_DE).map(i => clientCreator((id++).toString(), models, agents, 'Germany')),
+    ...numArray(CLIENT_COUNT_LU).map(i => clientCreator((id++).toString(), models, agents, 'Luxemburg')),
   ]
 
 }
 
-const createPerformance = () => {
+export const createRandomPerformanceForSecurity = (dateFormat='YYYY-MM-DD') => {
   let s = 1;
-  let date = moment(REFERENCE_DATE_TODAY).subtract('days', 500);
+  let date = moment(REFERENCE_DATE_TODAY).subtract(500,'days');
   let ret = [
-    { date: date.format('YYYY-MM-DD'), perf: 1 }
+    { date: date.format(dateFormat), perf: 1 }
   ]
 
   const min = rnd(-10, -100);
   const max = rnd(10, 170);
   numArray(50).forEach(i => {
     s = s + rnd(min, max) / 10000;
-    date = date.add('days', 10);
-    ret.push({ date: date.format('YYYY-MM-DD'), perf: s });
+    date = date.add(10,'days');
+    ret.push({ date: date.format(dateFormat), perf: s });
   });
   return ret;
 }
 
 const createAllSecuritiesPerformance = () => {
   return securities.reduce((prev, curr) => {
-    prev[curr.IsinCode] = createPerformance();
+    prev[curr.IsinCode] = createRandomPerformanceForSecurity();
     return prev;
   }, {});
 }
@@ -416,7 +447,7 @@ const fixPerformance = (perf: { date: string, perf: number }[]) => {
   }, {});
 
   const maxDate = maxBy(perf, d => d.date).date;
-  let dt = moment(maxDate);
+  let dt = moment(new Date(maxDate));
   let ret: { date: string, perf: number }[] = [];
   let lastPerf = dict[maxDate];
 
@@ -427,7 +458,7 @@ const fixPerformance = (perf: { date: string, perf: number }[]) => {
       date,
       perf: lastPerf
     });
-    dt = dt.subtract('days', 10);
+    dt = dt.subtract(10,'days');
   }
   return ret.sort((a, b) => a.date.localeCompare(b.date));
 }
@@ -504,24 +535,15 @@ const go = async () => {
 
     const models = createModels();
     const clients = clientsCreator(models);
-    console.log('1');
     let histories = historyCreator(clients);
-    console.log('2');
     const strategies1 = clientStrategyCreator(clients);
-    console.log('3');
     const strategies2 = getAllStrategies();
-    console.log('4');
     const preformances = createAllSecuritiesPerformance();
-    console.log('5');
     const performances2 = getAllPerformances();
-    console.log('6');
     const secuirities = getAllSecuirities();
-    console.log('7');
     const allPerf = { ...preformances, ...performances2 };
-    console.log('8');
     const radars = createFakeRadar();
     //Calculate Clients Radar and aua
-    console.log('9');
 
     const strategies = { ...strategies1, ...strategies2 } as { [cli: string]: StrategyItem[] }
 

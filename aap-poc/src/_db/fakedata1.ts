@@ -26,7 +26,7 @@ const case3 ={"CASH":{"concentration":2.13183377361838,"efficency":7.66530417435
 
 
 export const updateStrategies = () => {
-    updateStrategy("0");
+//    updateStrategy("0");
     updateStrategy("1");
     updateStrategy("2");
 }

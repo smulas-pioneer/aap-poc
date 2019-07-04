@@ -14,5 +14,8 @@
 10. Modificare colori viola e verde sui grafici
 11. Alternate Security
 12. Configurare portfolio complesso
-13. Verificare Breakdown
+~~13. Verificare Breakdown~~
 14. Proposal Validation to fix.
+15. Colore label grafici in light mode.
+16. Spaccato grafico performance in search.
+17. Risk Contribution map to asset class instead of securities
