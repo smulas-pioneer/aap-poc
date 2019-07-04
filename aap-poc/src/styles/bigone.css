@@ -23,3 +23,7 @@ html,
 }
 
 @import "bigone-gen.css";
+
+div.timelineEvent > div:last-of-type{
+  background-color: darkslategray !important;
+}
