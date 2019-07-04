@@ -27,3 +27,7 @@ html,
 div.timelineEvent > div:last-of-type{
   background-color: darkslategray !important;
 }
+
+.ui.styled.accordion, .ui.styled.accordion .accordion {
+    background: black;
+}

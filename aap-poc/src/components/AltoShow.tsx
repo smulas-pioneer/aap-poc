@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Slider from 'react-slick';
-import { Icon, List } from 'semantic-ui-react';
+import { Icon, List, Accordion } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
 
 
@@ -10,7 +10,7 @@ const getImagesByGroup = async (groupId: string) => {
   const json = await man.json();
   return {
     name: groupId,
-    images: json.files.map((s: string) => ({ name: s, src: `/altoshow/${groupId}/${s}`}) )
+    images: json.files.map((s: string) => ({ name: s, src: `/altoshow/${groupId}/${s}` }))
   }
 }
 
@@ -18,7 +18,7 @@ const getImagesByGroup = async (groupId: string) => {
 export const AltoShow = () => {
   const [list, setList] = useState<{ name: string, images: any[] }[]>([]);
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [current, setCurrent] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     Promise.all([
@@ -38,39 +38,21 @@ export const AltoShow = () => {
   };
 
   //getImagesByGroup('new').then(console.log);
-  //<img width='100%' height='100%' src={`/altoshow/${groupId}/${s}`} />
+  //
 
-  const sliderPanes = list.map((item, ix) => {
-    return <div className="sliderGraphItem" key={ix} style={{ height: '100px', padding: '2px' }}>
-      <div className="bordered" style={{ height: '80%' }} onClick={() => setActiveIndex(ix)}>
-        {item}
-      </div>
-    </div>
-  });
-
-  return <List>{
-    list.map(s =>
-      <List.Item>
-        <List.Icon name='folder' />
-        <List.Content>
-          <List.Header>{s.name}</List.Header>
-          <List.List>
-              {s.images.map(img => <List.Item>{img.name}</List.Item>)  }
-          </List.List>
-        </List.Content>
-      </List.Item>
-    )}
-  </List>
-
-
+  const panels = list.map(s => ({
+    key: s.name,
+    title: s.name,
+    content: <div><List>
+      {s.images.map(img => <List.Item onClick={() => setCurrent(img.src)}>{img.name}</List.Item>)}
+    </List></div>
+  }))
 
   return <div style={{ height: '100vh', width: '100%' }} >
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
+      <Accordion defaultActiveIndex={0} panels={panels} styled style={{ width: '200px' }} />
       <div style={{ flex: '1' }}>
-        {list[activeIndex]}
-      </div>
-      <div className='sliderGraph' style={{ height: '130px', marginTop: '10px' }}>
-        <Slider {...settings} >{sliderPanes}</Slider>
+        {current && <img width='100%' src={current} />}
       </div>
     </div>
   </div>

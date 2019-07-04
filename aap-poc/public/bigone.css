@@ -27,3 +27,13 @@ html,
 div.timelineEvent > div:last-of-type{
   background-color: #2e2d2d !important;
 }
+.ui.styled.accordion, .ui.styled.accordion .accordion {
+    background: black;
+}
+.ui.styled.accordion .accordion .active.title, .ui.styled.accordion .active.title {
+    color: yellow;
+}
+
+.ui.styled.accordion .accordion .title, .ui.styled.accordion .title {
+    color: white;
+}
