@@ -5,7 +5,7 @@ APP_NAME=$(node -pe "require('./package.json').name")
 APP_NAME=aap-poc
 
 # Build
-yarn build
+REACT_APP_VERSION=$PACKAGE_VER yarn build
 
 cp ./package.json ./build/
 echo "var j=require('./build/package.json');var fs=require('fs');j.scripts={start: 'port=8080 serve'};j.devDependencies={};fs.writeFileSync('./build/package.json',JSON.stringify(j,null,2));true">copyPackage.js
