@@ -287,9 +287,9 @@ export const ClientStateColors = {
   'NO ALERT': 'green',
   'REGULATOR ALERT': 'red',
   'GUIDELINE ALERT': 'orange',
-  'ON HOLD': '#2185d0',
-  'PENDING PROPOSAL': '#2185d0',
-  'PENDING EXECUTION': '#2185d0'
+  'ON HOLD': 'blue',
+  'PENDING PROPOSAL': 'blue',
+  'PENDING EXECUTION': 'blue'
 }
 
 export enum SpotlightContext {

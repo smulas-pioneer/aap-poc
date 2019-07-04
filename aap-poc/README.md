@@ -18,3 +18,4 @@
 14. Proposal Validation to fix.
 15. Colore label grafici in light mode.
 16. Spaccato grafico performance in search.
+17. Risk Contribution map to asset class instead of securities

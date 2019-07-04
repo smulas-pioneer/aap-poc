@@ -215,6 +215,7 @@ export const Holdings = (props: Props) => {
               {<Table.HeaderCell style={{ width: '6px' }} ></Table.HeaderCell>}
               {isProposingMode && <Table.HeaderCell style={{ width: '6px' }} ></Table.HeaderCell>}
               <Table.HeaderCell >{lang.SECURITY_NAME}</Table.HeaderCell>
+              {!isProposingMode &&<Table.HeaderCell>Currency</Table.HeaderCell>}
               <Table.HeaderCell width={1} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
               <Table.HeaderCell width={2} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
               <Table.HeaderCell width={1} textAlign="right">{lang.WEIGHT}</Table.HeaderCell>
@@ -248,9 +249,11 @@ export const Holdings = (props: Props) => {
                         <p style={{ padding: 0, margin: 0 }}> {' '}<b>{t.security.SecurityName}</b></p>
                         <p style={{ padding: 0, margin: 0, color: 'lightgrey'}}><small>{t.security.IsinCode} - <i>{t.security.MacroAssetClass}</i></small> </p>
                       </Table.Cell>
+                      {!isProposingMode &&<Table.HeaderCell>{t.security.Currency}</Table.HeaderCell>}
+
                       <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
                       <Table.Cell textAlign="right">{show && fmt(t.currentAmount) + ' €'} </Table.Cell>
-                      <Table.Cell textAlign="right">{show && fmt(t.currentWeight * 100, 0) + ' %'} </Table.Cell>
+                      <Table.Cell textAlign="right">{show && fmt(t.currentWeight * 100, 2) + ' %'} </Table.Cell>
                       {isProposingMode && <Table.Cell textAlign="right">
 
                         <div
@@ -276,7 +279,7 @@ export const Holdings = (props: Props) => {
                         */}
                       </Table.Cell>}
                       {isProposingMode &&
-                        <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100) + ' %'}</Table.Cell>
+                        <Table.Cell error={suggWeight < -0.001 || suggWeight > 1} textAlign="right">{suggWeight !== 0 && fmt(suggWeight * 100,2) + ' %'}</Table.Cell>
                       }
                     </Table.Row>
                 })
@@ -286,6 +289,8 @@ export const Holdings = (props: Props) => {
             <Table.Row>
               {<Table.HeaderCell></Table.HeaderCell>}
               {isProposingMode && <Table.HeaderCell></Table.HeaderCell>}
+              {!isProposingMode &&<Table.HeaderCell></Table.HeaderCell>}
+
               <Table.HeaderCell>{lang.TOTAL}</Table.HeaderCell>
               <Table.HeaderCell></Table.HeaderCell>
               <Table.HeaderCell textAlign="right">{fmt(tot)} €</Table.HeaderCell>

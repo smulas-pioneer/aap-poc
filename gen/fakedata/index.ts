@@ -22,7 +22,7 @@ const mapSecurity = (p: any) => {
     MacroAssetClass: p.AssetClass,
     MicroAssetClass: p.AssetType,
     Sector: p.Sector,
-    Currency: 'Euro',
+    Currency: p.Currency,
     Rating: p.Rating,
     Country: p.Country,
     Region: p.Region,
@@ -40,10 +40,12 @@ const mapSecurities = (pos: any[]): Security[] => {
   return wrapSecurities(pos.filter(p => p.Symbol != 'CASH_EUR').map(mapSecurity));
 }
 
+const isCash = p=> p.Symbol == 'CASH_EUR' || p.Symbol === 'EUR';
+
 const mapStrategy = (pos: any[], mod: any[]): StrategyItem[] => {
 
   const modelSecs = mod.map(p => ({
-    security: p.Symbol == 'CASH_EUR' ? cash : mapSecurity(p),
+    security: (isCash(p)) ? cash : mapSecurity(p),
     radar: getRandomRadar(),
     currentWeight: 0,
     currentQuantity: 0,
@@ -52,13 +54,13 @@ const mapStrategy = (pos: any[], mod: any[]): StrategyItem[] => {
     modelWeight: p.WEIGHT,
     suggestedDelta: 0,
     suggestionAccepted: false,
-    isCash: p.Symbol == 'CASH_EUR',
+    isCash: isCash(p),
     fee: 1,
     newSecurity: false
   }));
 
   const posSecs = pos.map(p => ({
-    security: p.Symbol == 'CASH_EUR' ? cash : mapSecurity(p),
+    security:  isCash(p) ? cash : mapSecurity(p),
     radar: getRandomRadar(),
     currentWeight: p.WEIGHT,
     currentQuantity: p.Shares,
@@ -67,7 +69,7 @@ const mapStrategy = (pos: any[], mod: any[]): StrategyItem[] => {
     modelWeight: 0,
     suggestedDelta: 0,
     suggestionAccepted: false,
-    isCash: p.Symbol == 'CASH_EUR',
+    isCash: isCash(p),
     fee: 1,
     newSecurity: false,
     clientFavorites: FD.fav.indexOf(p.Symbol) > -1
@@ -128,10 +130,10 @@ const perfCreator = (sec: Security[]) => sec.reduce((prev, curr) => {
   const allP = createRandomPerformanceForSecurity('YYYYMMDD');
   allP.forEach(i => {
     prev.push(
-     { date: i.date, [curr.IsinCode]: i.perf }
+      { date: i.date, [curr.IsinCode]: i.perf }
     );
-});
-return prev;
+  });
+  return prev;
 }, []);
 
 export const getAllPerformances = () => {
@@ -234,10 +236,10 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
 
 export const getAllStrategies = () => {
   let x = {
-    "0": mapSuggestion(FD.case_2_initial, FD.case_2_model, FD.case_2_proposed).sort((a, b) => a.isCash ? -1 : 1),
+    //"0": mapSuggestion(FD.case_2_initial, FD.case_2_model, FD.case_2_proposed).sort((a, b) => a.isCash ? -1 : 1),
     "1": mapSuggestion(FD.case_3_initial, FD.case_3_model, FD.case_3_proposed).sort((a, b) => a.isCash ? -1 : 1),
-    //        "2": mapSuggestion(FD.case_4_initial, FD.case_4_model, FD.case_4_proposed).sort((a, b) => a.isCash ? -1 : 1),
-    "2": mapSuggestion(BB.bbCase, BB.bbCase, BB.bbCase).sort((a, b) => a.isCash ? -1 : 1),
+    "2": mapSuggestion(FD.case_4_initial, FD.case_4_model, FD.case_4_proposed).sort((a, b) => a.isCash ? -1 : 1),
+    "0": mapSuggestion(BB.bbCase, BB.bbCase, BB.bbCase).sort((a, b) => a.isCash ? -1 : 1),
   }
   return x;
 }
