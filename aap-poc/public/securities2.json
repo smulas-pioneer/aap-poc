@@ -486,24 +486,6 @@
     "pushed": false
   },
   {
-    "IsinCode": "JPY",
-    "SecurityName": "JAPANESE YEN",
-    "AssetId": "JPY",
-    "Kilovar": null,
-    "IsFund": "0",
-    "MacroAssetClass": "Money Market",
-    "MicroAssetClass": "Money Market",
-    "Sector": null,
-    "Currency": "EUR",
-    "Rating": null,
-    "Country": "Japan",
-    "Region": "Asia-Pacific",
-    "Maturity": null,
-    "SRRI": 1,
-    "Price": 0.0082,
-    "pushed": false
-  },
-  {
     "IsinCode": "LU0179826135",
     "SecurityName": "BLUEBAY IG BOND FD-B",
     "AssetId": "LU0179826135",
@@ -810,24 +792,6 @@
     "pushed": false
   },
   {
-    "IsinCode": "NOK",
-    "SecurityName": "NORWEGIAN KRONE",
-    "AssetId": "NOK",
-    "Kilovar": null,
-    "IsFund": "0",
-    "MacroAssetClass": "Money Market",
-    "MicroAssetClass": "Money Market",
-    "Sector": null,
-    "Currency": "EUR",
-    "Rating": null,
-    "Country": "Norway",
-    "Region": "Europe",
-    "Maturity": null,
-    "SRRI": 1,
-    "Price": 0.1,
-    "pushed": false
-  },
-  {
     "IsinCode": "PTOTEXOE0024",
     "SecurityName": "PORTUGAL 1.95% 06/29",
     "AssetId": "PTOTEXOE0024",
@@ -861,24 +825,6 @@
     "Maturity": null,
     "SRRI": 1,
     "Price": 182.7,
-    "pushed": false
-  },
-  {
-    "IsinCode": "SEK",
-    "SecurityName": "SWEDISH KRONA",
-    "AssetId": "SEK",
-    "Kilovar": null,
-    "IsFund": "0",
-    "MacroAssetClass": "Money Market",
-    "MicroAssetClass": "Money Market",
-    "Sector": null,
-    "Currency": "USD",
-    "Rating": null,
-    "Country": "Sweden",
-    "Region": "Europe",
-    "Maturity": null,
-    "SRRI": 1,
-    "Price": 0.095,
     "pushed": false
   },
   {
@@ -1080,24 +1026,6 @@
     "pushed": false
   },
   {
-    "IsinCode": "USD",
-    "SecurityName": "US DOLLAR",
-    "AssetId": "USD",
-    "Kilovar": null,
-    "IsFund": "0",
-    "MacroAssetClass": "Money Market",
-    "MicroAssetClass": "Money Market",
-    "Sector": null,
-    "Currency": "EUR",
-    "Rating": null,
-    "Country": "United States",
-    "Region": "North America",
-    "Maturity": null,
-    "SRRI": 1,
-    "Price": 0.89,
-    "pushed": false
-  },
-  {
     "IsinCode": "XS0222383027",
     "SecurityName": "GLAXOSMITH 4% 06/25",
     "AssetId": "XS0222383027",
@@ -1291,7 +1219,7 @@
   },
   {
     "IsinCode": "LU0281578517",
-    "SecurityName": "Pioneer Fds Euro Bond",
+    "SecurityName": "Amundi Fds Euro Bond",
     "AssetId": "LU0281578517",
     "Kilovar": null,
     "IsFund": "0",
@@ -1321,7 +1249,7 @@
   },
   {
     "IsinCode": "LU0281579598",
-    "SecurityName": "Pioneer Fds Euro High Yield",
+    "SecurityName": "Amundi Fds Euro High Yield",
     "AssetId": "LU0281579598",
     "Kilovar": null,
     "IsFund": "0",
@@ -1380,21 +1308,6 @@
     "pushed": false
   },
   {
-    "IsinCode": "LU0145482039",
-    "SecurityName": "Generali IS Euro Corporate Bond",
-    "AssetId": "LU0145482039",
-    "Kilovar": null,
-    "IsFund": "0",
-    "MacroAssetClass": "Fixed Income",
-    "MicroAssetClass": "Corporate Bond",
-    "Rating": "A",
-    "Country": "Luxembourg",
-    "Region": "Europe",
-    "SRRI": 0.45,
-    "Price": 215.113,
-    "pushed": false
-  },
-  {
     "IsinCode": "IE0007472990",
     "SecurityName": "Vanguard Euro Government Bond Index",
     "AssetId": "IE0007472990",
@@ -1423,6 +1336,21 @@
     "SRRI": 0.3,
     "Price": 11.07,
     "pushed": false
+  },
+  {
+    "IsinCode": "LU0518421895",
+    "SecurityName": "Amundi Fds Bond Euro Government",
+    "AssetId": "LU0518421895",
+    "Kilovar": null,
+    "IsFund": "0",
+    "MacroAssetClass": "Fixed Income",
+    "MicroAssetClass": "Government Bond",
+    "Rating": "A",
+    "Country": "Luxembourg",
+    "Region": "Europe",
+    "SRRI": 0.45,
+    "Price": 215.113,
+    "pushed": true
   },
   {
     "IsinCode": "IE00B4ND3602",
@@ -1500,19 +1428,19 @@
     "pushed": true
   },
   {
-    "IsinCode": "LU0518421895",
-    "SecurityName": "Amundi Fds Bond Euro Government",
-    "AssetId": "LU0518421895",
+    "IsinCode": "LU0145482039",
+    "SecurityName": "Generali IS Euro Corporate Bond",
+    "AssetId": "LU0145482039",
     "Kilovar": null,
     "IsFund": "0",
     "MacroAssetClass": "Fixed Income",
-    "MicroAssetClass": "Government Bond",
+    "MicroAssetClass": "Corporate Bond",
     "Rating": "A",
     "Country": "Luxembourg",
     "Region": "Europe",
-    "SRRI": 0.6,
+    "SRRI": 1.2,
     "Price": 131.89,
-    "pushed": true
+    "pushed": false
   },
   {
     "IsinCode": "LU0533595319",
@@ -1546,7 +1474,7 @@
   },
   {
     "IsinCode": "LU0257968619",
-    "SecurityName": "Pioneer Fds Euro High Yield",
+    "SecurityName": "Amundi Fds Euro High Yield",
     "AssetId": "LU0257968619",
     "Kilovar": null,
     "IsFund": "0",

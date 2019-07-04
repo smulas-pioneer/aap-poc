@@ -1,4 +1,4 @@
-import { Portfolio, Holding, Client, Radar, InterviewResult, StrategyItem, AlertHistory, TimeHorizon, TimeHorizonMonths, ClientState } from './common/interfaces';
+import { Portfolio, Holding, Client, Radar, InterviewResult, StrategyItem, AlertHistory, TimeHorizon, TimeHorizonMonths, ClientState, Security } from './common/interfaces';
 import { securities, cash, wrapSecurities, wrapSecurity, SHOWMISSING } from './common/securities';
 import { createRadarFromStrategy, isFakeClient, getRandomRadar } from './common/radarUtils';
 import { REFERENCE_DATE_TODAY } from './common/consts';
@@ -226,23 +226,34 @@ const getRandomSecurity = () => {
   return ret;
 }
 
+const assetClassMoltiplicator = (sec: Security) =>{
+  switch (sec.MacroAssetClass) {
+    case "Cash": return 80;
+    case "Money Market": return 5;
+    case "Fixed Income": return 8;
+    default: return 1;
+  }
+}
+
 const strategyCreator = (): StrategyItem[] => {
   let tot = 0;
   let totModel = 0;
   let num = rnd(STRAGEGY_MIN_SECURITY_COUNT, STRATEGY_MAX_SECURITY_COUNT);
   const cliType = rnd(0, 10);
+
   const qUbound = cliType < 5 ? 6000 :
-    cliType < 6 ? 10000 :
-      cliType < 7 ? 30000 :
-        cliType < 8 ? 70000 : 100000
+    cliType < 6 ? 1000 :
+      cliType < 7 ? 3000 :
+        cliType < 8 ? 7000 : 10000
 
   return numArray(num).map(i => {
     const skipQ = i > (num - 2);
     const skipM = i > 2 && rnd(1, 7) < 3;
 
     const sec = i == 0 ? cash : getRandomSecurity();
+    const k = assetClassMoltiplicator(sec);
 
-    const quantity = skipQ ? 0 : Math.ceil(rnd(0, qUbound));
+    const quantity = skipQ ? 0 : Math.ceil(rnd(0, qUbound*k));
     const price = i == 0 ? 1 : rnd(0, 8000) / 100;
     const modelWeight = i == 0 ? 0 : skipM ? 0 : quantity * (1 + rnd(-50, 50) / 100);
 
@@ -276,7 +287,7 @@ const holdingsCreator = (num: number): Holding[] => {
       ? quantity * 100
       : Math.ceil(rnd(0, 1000000));
 
-      tot += amount;
+    tot += amount;
     return {
       securityId: sec.IsinCode,
       weight: 0,

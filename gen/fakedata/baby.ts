@@ -30,7 +30,6 @@ export const babySecurities: Security[] = [
   { IsinCode: 'IT0005094088', Currency: 'EUR', Maturity: null, AssetId: 'IT0005094088', Kilovar: '1', IsFund: '0', SecurityName: 'BTPS 1.65% 03/32', MacroAssetClass: 'Fixed Income', MicroAssetClass: 'Government Bond', Sector: null, Rating: 'BBB', Country: 'Italy', Region: 'Europe', Price: 96.1985 },
   { IsinCode: 'IT0005366767', Currency: 'EUR', Maturity: null, AssetId: 'IT0005366767', Kilovar: '1', IsFund: '0', SecurityName: 'NEXI SPA', MacroAssetClass: 'Equity', MicroAssetClass: 'Europe Equity', Sector: 'Information Technology', Rating: null, Country: 'Italy', Region: 'Europe', Price: 9.071 },
   { IsinCode: 'JE00B588CD74', Currency: 'JPY', Maturity: null, AssetId: 'JE00B588CD74', Kilovar: '1', IsFund: '0', SecurityName: 'ETFS PHYS SWISS GOLD EUR (ITA)', MacroAssetClass: 'Commodities', MicroAssetClass: 'Commodities', Sector: null, Rating: null, Country: 'Jersey', Region: 'Europe', Price: 119.73 },
-  { IsinCode: 'JPY', Currency: 'EUR', Maturity: null, AssetId: 'JPY', Kilovar: '1', IsFund: '0', SecurityName: 'JAPANESE YEN', MacroAssetClass: 'Money Market', MicroAssetClass: 'Money Market', Sector: null, Rating: null, Country: 'Japan', Region: 'Pacific', Price: 0.0082 },
   { IsinCode: 'LU0179826135', Currency: 'EUR', Maturity: null, AssetId: 'LU0179826135', Kilovar: '1', IsFund: '0', SecurityName: 'BLUEBAY IG BOND FD-B', MacroAssetClass: 'Fixed Income', MicroAssetClass: 'Corporate Bond', Sector: null, Rating: 'Not Rated', Country: 'Luxembourg', Region: 'Europe', Price: 188.59 },
   { IsinCode: 'LU0256884064', Currency: 'USD', Maturity: null, AssetId: 'LU0256884064', Kilovar: '1', IsFund: '0', SecurityName: 'ALLIANZ RCM EUROL EG', MacroAssetClass: 'Equity', MicroAssetClass: 'Europe Equity', Sector: 'Financials', Rating: null, Country: 'Luxembourg', Region: 'Europe', Price: 2614.23 },
   { IsinCode: 'LU0278093082', Currency: 'EUR', Maturity: null, AssetId: 'LU0278093082', Kilovar: '1', IsFund: '0', SecurityName: 'VONT EM MARKT EQTY I', MacroAssetClass: 'Equity', MicroAssetClass: 'EM Equity', Sector: 'Financials', Rating: null, Country: 'Luxembourg', Region: 'Europe', Price: 200.65 },
@@ -48,10 +47,14 @@ export const babySecurities: Security[] = [
   { IsinCode: 'LU1681045370', Currency: 'EUR', Maturity: null, AssetId: 'LU1681045370', Kilovar: '1', IsFund: '0', SecurityName: 'AMUNDI MSCI EMERGG MKT UC ETF-EUR-MILAN', MacroAssetClass: 'Equity', MicroAssetClass: 'EM Equity', Sector: 'Financials', Rating: null, Country: 'Luxembourg', Region: 'Europe', Price: 4.1925 },
   { IsinCode: 'NL0011821202', Currency: 'NOK', Maturity: null, AssetId: 'NL0011821202', Kilovar: '1', IsFund: '0', SecurityName: 'ING GROEP NV', MacroAssetClass: 'Equity', MicroAssetClass: 'Europe Equity', Sector: 'Financials', Rating: null, Country: 'Netherlands', Region: 'Europe', Price: 10.164 },
   { IsinCode: 'NO0005052605', Currency: 'NOK', Maturity: null, AssetId: 'NO0005052605', Kilovar: '1', IsFund: '0', SecurityName: 'NORSK HYDRO', MacroAssetClass: 'Equity', MicroAssetClass: 'Europe Equity', Sector: 'Materials', Rating: null, Country: 'Norway', Region: 'Europe', Price: 30.76 },
-  { IsinCode: 'NOK', Currency: 'EUR', Maturity: null, AssetId: 'NOK', Kilovar: '1', IsFund: '0', SecurityName: 'NORWEGIAN KRONE', MacroAssetClass: 'Money Market', MicroAssetClass: 'Money Market', Sector: null, Rating: null, Country: 'Norway', Region: 'Europe', Price: 0.1 },
   { IsinCode: 'PTOTEXOE0024', Currency: 'SEK', Maturity: null, AssetId: 'PTOTEXOE0024', Kilovar: '1', IsFund: '0', SecurityName: 'PORTUGAL 1.95% 06/29', MacroAssetClass: 'Fixed Income', MicroAssetClass: 'Government Bond', Sector: null, Rating: 'BBB', Country: 'Portugal', Region: 'Europe', Price: 115.4855 },
   { IsinCode: 'SE0000872095', Currency: 'SEK', Maturity: null, AssetId: 'SE0000872095', Kilovar: '1', IsFund: '0', SecurityName: 'SWEDISH ORPHAN BIOVITRUM AB', MacroAssetClass: 'Equity', MicroAssetClass: 'Europe Equity', Sector: 'Health Care', Rating: null, Country: 'Sweden', Region: 'Europe', Price: 182.7 },
-  { IsinCode: 'SEK', Currency: 'USD', Maturity: null, AssetId: 'SEK', Kilovar: '1', IsFund: '0', SecurityName: 'SWEDISH KRONA', MacroAssetClass: 'Money Market', MicroAssetClass: 'Money Market', Sector: null, Rating: null, Country: 'Sweden', Region: 'Europe', Price: 0.095 },
+  /*
+  { IsinCode: 'NOK', Currency: 'NOK', Maturity: null, AssetId: 'NOK', Kilovar: '1', IsFund: '0', SecurityName: 'NORWEGIAN KRONE', MacroAssetClass: 'Money Market', MicroAssetClass: 'Money Market', Sector: null, Rating: null, Country: 'Norway', Region: 'Europe', Price: 0.1 },
+  { IsinCode: 'SEK', Currency: 'SEK', Maturity: null, AssetId: 'SEK', Kilovar: '1', IsFund: '0', SecurityName: 'SWEDISH KRONA', MacroAssetClass: 'Money Market', MicroAssetClass: 'Money Market', Sector: null, Rating: null, Country: 'Sweden', Region: 'Europe', Price: 0.095 },
+  { IsinCode: 'JPY', Currency: 'JPY', Maturity: null, AssetId: 'JPY', Kilovar: '1', IsFund: '0', SecurityName: 'JAPANESE YEN', MacroAssetClass: 'Money Market', MicroAssetClass: 'Money Market', Sector: null, Rating: null, Country: 'Japan', Region: 'Pacific', Price: 0.0082 },
+  { IsinCode: 'USD', Currency: 'USD', Maturity: null, AssetId: 'USD', Kilovar: '1', IsFund: '0', SecurityName: 'US DOLLAR', MacroAssetClass: 'Money Market', MicroAssetClass: 'Money Market', Sector: null, Rating: null, Country: 'United States', Region: 'North America', Price: 0.89 },
+  */
   { IsinCode: 'US00724F1012', Currency: 'USD', Maturity: null, AssetId: 'US00724F1012', Kilovar: '1', IsFund: '0', SecurityName: 'ADOBE INC', MacroAssetClass: 'Equity', MicroAssetClass: 'North America Equity', Sector: 'Information Technology', Rating: null, Country: 'United States', Region: 'North America', Price: 301.39 },
   { IsinCode: 'US02079K3059', Currency: 'USD', Maturity: null, AssetId: 'US02079K3059', Kilovar: '1', IsFund: '0', SecurityName: 'ALPHABET INC CL A', MacroAssetClass: 'Equity', MicroAssetClass: 'North America Equity', Sector: 'Telecommunication Services', Rating: null, Country: 'United States', Region: 'North America', Price: 1112.6 },
   { IsinCode: 'US4523271090', Currency: 'USD', Maturity: null, AssetId: 'US4523271090', Kilovar: '1', IsFund: '0', SecurityName: 'ILLUMINA INC', MacroAssetClass: 'Equity', MicroAssetClass: 'North America Equity', Sector: 'Health Care', Rating: null, Country: 'United States', Region: 'North America', Price: 371.37 },
@@ -63,7 +66,6 @@ export const babySecurities: Security[] = [
   { IsinCode: 'US7170811035', Currency: 'USD', Maturity: null, AssetId: 'US7170811035', Kilovar: '1', IsFund: '0', SecurityName: 'PFIZER INC-USD', MacroAssetClass: 'Equity', MicroAssetClass: 'North America Equity', Sector: 'Health Care', Rating: null, Country: 'United States', Region: 'North America', Price: 44.22 },
   { IsinCode: 'US79466L3024', Currency: 'USD', Maturity: null, AssetId: 'US79466L3024', Kilovar: '1', IsFund: '0', SecurityName: 'SALESFORCE COM', MacroAssetClass: 'Equity', MicroAssetClass: 'North America Equity', Sector: 'Information Technology', Rating: null, Country: 'United States', Region: 'North America', Price: 154.12 },
   { IsinCode: 'US91913Y1001', Currency: 'USD', Maturity: null, AssetId: 'US91913Y1001', Kilovar: '1', IsFund: '0', SecurityName: 'VALERO ENERGY CORP', MacroAssetClass: 'Equity', MicroAssetClass: 'North America Equity', Sector: 'Energy', Rating: null, Country: 'United States', Region: 'North America', Price: 80.7 },
-  { IsinCode: 'USD', Currency: 'EUR', Maturity: null, AssetId: 'USD', Kilovar: '1', IsFund: '0', SecurityName: 'US DOLLAR', MacroAssetClass: 'Money Market', MicroAssetClass: 'Money Market', Sector: null, Rating: null, Country: 'United States', Region: 'North America', Price: 0.89 },
   { IsinCode: 'XS0222383027', Currency: 'EUR', Maturity: null, AssetId: 'XS0222383027', Kilovar: '1', IsFund: '0', SecurityName: 'GLAXOSMITH 4% 06/25', MacroAssetClass: 'Fixed Income', MicroAssetClass: 'Corporate Bond', Sector: null, Rating: 'A+', Country: 'United Kingdom', Region: 'Europe', Price: 116.714 },
   { IsinCode: 'XS0758420748', Currency: 'EUR', Maturity: null, AssetId: 'XS0758420748', Kilovar: '1', IsFund: '0', SecurityName: 'HEIANA 3.50% 03/24', MacroAssetClass: 'Fixed Income', MicroAssetClass: 'Corporate Bond', Sector: null, Rating: 'BBB+', Country: 'Netherlands', Region: 'Europe', Price: 116.714 },
   { IsinCode: 'XS0874840845', Currency: 'EUR', Maturity: null, AssetId: 'XS0874840845', Kilovar: '1', IsFund: '0', SecurityName: 'GE 2.625% 3/23', MacroAssetClass: 'Fixed Income', MicroAssetClass: 'Corporate Bond', Sector: null, Rating: 'A', Country: 'Ireland', Region: 'Europe', Price: 108.7145 },
@@ -135,11 +137,15 @@ const position = {
   FR0011758085: { price: 0.00848121734013991, quantity: 1216, weight: 0.00848121734013991 },
   LU0278093082: { price: 0.0200421896779329, quantity: 1963.016, weight: 0.0200421896779329 },
   LU0353189763: { price: 0.0101556219782082, quantity: 561, weight: 0.0101556219782082 },
-  EUR: { price: 0.0248188036364528, quantity: 438538.69, weight: 0.0248188036364528 },
-  JPY: { price: 0.0463697916238022, quantity: 100000000, weight: 0.0463697916238022 },
-  NOK: { price: 0.000373331528969505, quantity: 63780.78, weight: 0.000373331528969505 },
-  SEK: { price: 1.97946971492756E-05, quantity: 3685.89, weight: 1.97946971492756E-05 },
-  USD: { price: 0.0303815270644107, quantity: 609838.73, weight: 0.0303815270644107 },
+
+  EUR: {isCash:true, price: 1, quantity: 51169, weight: 0.1048188036364528 },
+  /*
+  EUR: {isCash:true, price: 0.0248188036364528, quantity: 438538.69, weight: 0.0248188036364528 },
+  JPY: {isCash:true, price: 0.0463697916238022, quantity: 100000000, weight: 0.0463697916238022 },
+  NOK: {isCash:true, price: 0.000373331528969505, quantity: 63780.78, weight: 0.000373331528969505 },
+  SEK: {isCash:true, price: 1.97946971492756E-05, quantity: 3685.89, weight: 1.97946971492756E-05 },
+  USD: {isCash:true, price: 0.0303815270644107, quantity: 609838.73, weight: 0.0303815270644107 },
+  */
   LU0284394151: { price: 0.00937225036712569, quantity: 971, weight: 0.00937225036712569 },
   LU0599947438: { price: 0.0200435516977838, quantity: 2522.3405, weight: 0.0200435516977838 },
   JE00B588CD74: { price: 0.0208349402409882, quantity: 3036, weight: 0.0208349402409882 },
@@ -151,8 +157,12 @@ const position = {
 
 }
 
+const rebalance = (por:any[]) => {
+  const tot = sumBy(por, p=>p.WEIGHT);
+  return por.map(p=>({...p,WEIGHT: p.WEIGHT/tot}));
+}
 
-export const bbCase = babySecurities.map(s => {
+export const bbCase = rebalance(babySecurities.map(s => {
   return {
     ...s,
     Symbol: s.IsinCode,
@@ -162,12 +172,28 @@ export const bbCase = babySecurities.map(s => {
     Name: s.SecurityName,
     Mstar_BCH: '',
     Mstar_SRRI: 1,
-    isCash: s.AssetId==='EUR' ,
+    isCash: position[s.IsinCode].isCash,
     WEIGHT: position[s.IsinCode].weight,
     //    Weight: position[s.IsinCode].quantity,
     SRRI: 1,
     Amont: position[s.IsinCode].quantity * s.Price,
     Price: s.Price,
     Shares: position[s.IsinCode].quantity,
+  }
+}));
+
+
+const swapIndex = [[2,21],[5,14],[3,20],[10,18],[22,4]];
+
+const sw1 = swapIndex.reduce((p,c)=>{
+  p[c[0]]=c[1];
+  p[c[1]]= c[0];
+  return p;
+},{})
+
+export const bbProposal = bbCase.map((b,i)=>{
+  const target = sw1[i];
+  return {...b,
+    WEIGHT: target ? bbCase[target].WEIGHT :b.WEIGHT
   }
 });

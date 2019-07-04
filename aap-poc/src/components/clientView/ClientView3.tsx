@@ -293,7 +293,10 @@ export const ClientView = conn.PureCompo(props => {
               radar={state.radar}
               axes={state.axes}
             />}
-            <Fees strategy={stateStrategy} lang={lang} targetReturn={state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={!somethingIsChanged} />
+            {
+              !state.hideProposal && <Fees 
+              strategy={stateStrategy} lang={lang} targetReturn={state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={true} />
+            }
           </Segment>
           <div className='ui-flex ui-flex-col' style={{ margin: 0, width: '400px' }}>
             <SliderGrapMultiView graphs={graphs} lang={lang} height={800} config={{ multiSlidesToShow: 1 }} />

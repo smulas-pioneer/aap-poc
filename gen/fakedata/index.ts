@@ -40,7 +40,12 @@ const mapSecurities = (pos: any[]): Security[] => {
   return wrapSecurities(pos.filter(p => !isCash(p)).map(mapSecurity));
 }
 
-const isCash = p=> p.Symbol == 'CASH_EUR' || p.Symbol === 'EUR';
+const isCash = p=> p.Symbol == 'CASH_EUR' 
+|| p.Symbol === 'EUR'
+|| p.Symbol === 'USD'
+|| p.Symbol === 'JPY'
+|| p.Symbol === 'SEK'
+|| p.Symbol === 'NOK';
 
 const mapStrategy = (pos: any[], mod: any[]): StrategyItem[] => {
 
@@ -239,7 +244,7 @@ export const getAllStrategies = () => {
     //"0": mapSuggestion(FD.case_2_initial, FD.case_2_model, FD.case_2_proposed).sort((a, b) => a.isCash ? -1 : 1),
     "1": mapSuggestion(FD.case_3_initial, FD.case_3_model, FD.case_3_proposed).sort((a, b) => a.isCash ? -1 : 1),
     "2": mapSuggestion(FD.case_4_initial, FD.case_4_model, FD.case_4_proposed).sort((a, b) => a.isCash ? -1 : 1),
-    "0": mapSuggestion(BB.bbCase, BB.bbCase, BB.bbCase).sort((a, b) => a.isCash ? -1 : 1),
+    "0": mapSuggestion(BB.bbCase, BB.bbCase, BB.bbProposal).sort((a, b) => a.isCash ? -1 : 1),
   }
   return x;
 }

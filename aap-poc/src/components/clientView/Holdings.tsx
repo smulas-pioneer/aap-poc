@@ -216,6 +216,7 @@ export const Holdings = (props: Props) => {
               {isProposingMode && <Table.HeaderCell style={{ width: '6px' }} ></Table.HeaderCell>}
               <Table.HeaderCell >{lang.SECURITY_NAME}</Table.HeaderCell>
               {!isProposingMode &&<Table.HeaderCell>Currency</Table.HeaderCell>}
+              {!isProposingMode &&<Table.HeaderCell>Micro Asset Class</Table.HeaderCell>}
               <Table.HeaderCell width={1} textAlign="right">{lang.QUANTITY}</Table.HeaderCell>
               <Table.HeaderCell width={2} textAlign="right">{lang.AMOUNT}</Table.HeaderCell>
               <Table.HeaderCell width={1} textAlign="right">{lang.WEIGHT}</Table.HeaderCell>
@@ -250,6 +251,7 @@ export const Holdings = (props: Props) => {
                         <p style={{ padding: 0, margin: 0, color: 'lightgrey'}}><small>{t.security.IsinCode} - <i>{t.security.MacroAssetClass}</i></small> </p>
                       </Table.Cell>
                       {!isProposingMode &&<Table.Cell>{t.security.Currency}</Table.Cell>}
+                      {!isProposingMode &&<Table.Cell>{t.security.MicroAssetClass}</Table.Cell>}
 
                       <Table.Cell textAlign="right">{show && fmt(t.currentQuantity)}</Table.Cell>
                       <Table.Cell textAlign="right">{show && fmt(t.currentAmount) + ' €'} </Table.Cell>
@@ -289,6 +291,7 @@ export const Holdings = (props: Props) => {
             <Table.Row>
               {<Table.HeaderCell></Table.HeaderCell>}
               {isProposingMode && <Table.HeaderCell></Table.HeaderCell>}
+              {!isProposingMode &&<Table.HeaderCell></Table.HeaderCell>}
               {!isProposingMode &&<Table.HeaderCell></Table.HeaderCell>}
 
               <Table.HeaderCell>{lang.TOTAL}</Table.HeaderCell>
