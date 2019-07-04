@@ -1,10 +1,9 @@
-import { round } from "mathjs";
 import React, { useState, Fragment } from "react";
 import { appConnector } from "app-support";
 import { getSearchParms } from "../../reducers";
 import { searchClient } from "../../actions";
 import { DynamicFilterOperation, DynamicSearchFilter } from "../../_db/interfaces";
-import { Dropdown, Input, Button, Modal } from "semantic-ui-react";
+import { Dropdown, Input, Button, Modal, Form } from "semantic-ui-react";
 import { unCamelCase } from "../../commonUtils";
 
 export interface ComposedChartChangeValueDialogProps {
@@ -62,7 +61,7 @@ export const ComposedChartChangeValueDialog = conn.PureCompo(props => {
   return (
     <>
       <ManagedTrigger />
-      <Modal size='small' open={isOpen} onClose={() => handleCancel()}>
+      <Modal style={{ width: 600 }} open={isOpen} onClose={() => handleCancel()} >
         <Modal.Header>{unCamelCase(attributeName)} - Add dynamic filter</Modal.Header>
         <Modal.Content>
           <CustomComposedChartValueChange
@@ -97,7 +96,6 @@ const CustomComposedChartValueChange = (props: CustomComposedChartValueChangePro
   const [value, setValue] = React.useState(0);
   const [textValue, setTextValue] = React.useState("0");
   const [operation, setOperation] = React.useState(DynamicFilterOperation.GraterEqualThan);
-  const [error, setError] = React.useState<string | undefined>(undefined);
 
   React.useEffect(() => {
     props.defaultOperation && setOperation(props.defaultOperation);
@@ -106,23 +104,19 @@ const CustomComposedChartValueChange = (props: CustomComposedChartValueChangePro
 
   React.useEffect(() => {
     if (isNaN(textValue as any)) {
-      setError(`not a valid number`);
+      setTextValue((value || 0).toString());
     }
     else {
-      const newValue = parseFloat(textValue);
+      let newValue = parseFloat(textValue);
       if (newValue !== value) {
-        setValue(parseFloat(textValue));
-        setError(undefined);
+        if (newValue < 0) setTextValue("0");
+        else if (newValue > 100) setTextValue("100");
+        else
+          setValue(newValue);
       }
     }
   }, [textValue, value]);
 
-  const handleSliderChange = (value: string) => {
-    if (!isNaN(value as any)) {
-      const numValue = round(parseFloat(value));
-      setTextValue(numValue.toString());
-    }
-  }
 
   const sendChange = (operation?: DynamicFilterOperation, value?: number) => {
     props.onChange({
@@ -161,36 +155,38 @@ const CustomComposedChartValueChange = (props: CustomComposedChartValueChangePro
     },
   ]
 
-  return <div style={{ display: 'flex', flexDirection: 'row', padding: 20 }}>
+  return <div style={{ display: 'flex', flexDirection: 'row', padding: 10 }}>
 
-    <div style={{ flex: 3 }}>
-      <h3>{props.attributeValue}</h3>
+    <div style={{ textAlign: "right", paddingRight: 10 }}>
+      <h2 style={{ color: "#2185d0" }} >{props.attributeValue}</h2>
     </div>
 
-    <div style={{ flex: 3 }}>
-      <h3>
+    <div >
+      <h2>
         <Dropdown
           inline
           options={operations}
           value={operation}
           onChange={(a, b) => setOperation(b.value as any)}
         />
-      </h3>
-    </div>
-
-    <div style={{ flex: 2 }}>
-      <Input type="range" min={0} max={100} value={value} onChange={(a, b) => handleSliderChange(b.value)} />
+      </h2>
     </div>
 
     <div style={{ flex: 1 }}>
-      <Input size="small" inverted fluid value={textValue || ""} onChange={(a, b) => setTextValue(b.value)} >
-        <input />
-      </Input>
+      <Form onSubmit={() => sendChange(operation, value)}>
+        <Input
+          autoFocus
+          fluid
+          label={{ corner: 'right', content: <h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%</h5> }}
+          value={textValue || ""}
+          onChange={(a, b) => setTextValue(b.value)} >
+        </Input>
+      </Form>
     </div>
 
-    <div style={{ flex: 1, display: 'flex' }}>
+    <div style={{ display: 'flex', alignItems: 'right' }}>
       <Button inverted size="small" negative icon="cancel" onClick={() => reset()} />
       <Button inverted size="small" positive icon="check" onClick={() => sendChange(operation, value)} />
     </div>
-  </div>
+  </div >
 };
