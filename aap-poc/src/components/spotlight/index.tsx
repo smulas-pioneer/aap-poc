@@ -127,9 +127,9 @@ class SpotlightCompo extends conn.StatefulCompo<SpotlightState> {
   renderCustomHeader = (key: string, index: number) => {
     switch (key.toLowerCase()) {
       case "security":
-        const colIcon: SemanticCOLORS = this.state.onlyPushedSecurity ? "green" : "black";
+        const colIcon: SemanticCOLORS = this.state.onlyPushedSecurity ? "green" : "grey";
         return (
-          <Button floated="right" basic toggle animated='vertical' onClick={() => this.onSecurityPushedClick(index)}>
+          <Button compact floated="right" toggle animated='vertical' onClick={() => this.onSecurityPushedClick(index)}>
             <Button.Content hidden>{this.state.onlyPushedSecurity ? "All" : "Advise"}</Button.Content>
             <Button.Content visible>
               <Icon color={colIcon} name='thumbs up' />
@@ -173,7 +173,7 @@ class SpotlightCompo extends conn.StatefulCompo<SpotlightState> {
           emptyData
             ? null
             : <Modal.Content>
-              <div style={{ float: 'left', overflowY: 'scroll', paddingRight: 8, height: 530 }} >
+              <div style={{ float: 'left', overflowY: 'scroll', paddingRight: 8, height: 520 }} >
                 <SpotlightResultList
                   data={data.items}
                   active={activePosition}
@@ -184,11 +184,8 @@ class SpotlightCompo extends conn.StatefulCompo<SpotlightState> {
                 />
               </div>
               {!emptyData &&
-                <div style={{ overflowY: 'scroll', padding: 0, height: 530 }}>
-                  <SpotlightResultItemPreview
-                    item={this.currentItem()!}
-                    lang={lang}
-                  />
+                <div style={{ overflowY: 'auto', padding: 0, height: '520px' }}>
+                  <SpotlightResultItemPreview item={this.currentItem()!} lang={lang} height={520} />
                 </div>
               }
             </Modal.Content>

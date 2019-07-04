@@ -118,8 +118,7 @@ class SpotlightInputCompo extends conn.StatefulCompo<SpotlightInputState> {
   }
 
   renderItems(items: SpotlightSearchResultItem[]) {
-    return items.map((item, i) =>
-      this.renderItem(item, this.itemsCount++));
+    return items.map((item, i) => this.renderItem(item, this.itemsCount++));
   }
 
   render() {

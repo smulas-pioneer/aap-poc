@@ -16,7 +16,7 @@ export interface SpotlightResultListProps extends WithLang {
 
 export class SpotlightResultList extends React.Component<SpotlightResultListProps>{
 
-  static COLORS: SemanticCOLORS[] = ['blue', 'pink', 'yellow', 'teal'];
+  static COLORS: SemanticCOLORS[] = ['teal', 'orange', 'blue', 'yellow'];
   itemsCount = 0;
 
   renderItem(item: SpotlightSearchResultItem, index: number) {
@@ -60,7 +60,7 @@ export class SpotlightResultList extends React.Component<SpotlightResultListProp
         Object.keys(data).map((key, ikey) => {
           const caption = key === 'agents' ? 'advisors' : key;
           return (
-            <Table striped color={SpotlightResultList.COLORS[ikey]} key={ikey}>
+            <Table  color={SpotlightResultList.COLORS[ikey]} key={ikey}>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell style={{ minWidth: 280 }}>{capitalize(caption)}{customHeader && customHeader(key, (this.itemsCount - ikey) + 1)}</Table.HeaderCell>
