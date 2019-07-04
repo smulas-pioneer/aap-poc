@@ -8,6 +8,8 @@ import { DashboardMgr } from './DashboardMgr';
 import Dashboard from './Dashboard';
 import MenuFlat from './MenuFlat';
 
+import { AltoShow } from './AltoShow';
+
 interface IAppProps {
   manager?: boolean
 }
@@ -31,7 +33,7 @@ class App extends React.Component<IAppProps, {}> {
         <div style={{ padding: '0 0.5rem', height: '95%' }}>
           {/* <Route exact path="/" component={(p: any) => <HomePage />} />
               <Route exact path="/homepage" component={(p: any) => <HomePage />} /> */}
-          <Switch>
+          <Switch> 
 
             <Route exact path="/" component={(p: any) => manager ? <DashboardMgr uid="dashboard" page={'0'} history={p.history} ><MenuFlat history={p.history} orientation='vertical' /> </DashboardMgr> : <Dashboard uid="dashboard" />} />
             <Route exact path="/dshm/:page" component={(p: any) => manager ? <DashboardMgr uid="dashboard" page={p.match.params.page} history={p.history}><MenuFlat history={p.history} orientation='vertical' /> </DashboardMgr> : <Dashboard uid="dashboard" />} />
@@ -43,6 +45,7 @@ class App extends React.Component<IAppProps, {}> {
             <Route exact path="/agents/:id/clients" component={(p: RouteComponentProps<any>) => <ClientsView uid="agecli" agent={p.match.params.id} showFilter showTitle />} />
             <Route exact path="/clients/:id" component={(p: RouteComponentProps<any>) => <ClientView id={p.match.params.id}><MenuFlat history={p.history} orientation='vertical' /></ClientView>} />
 
+            <Route exact path="/AltoShow" component={(p: RouteComponentProps<any>) => <AltoShow />} />
           </Switch>
         </div>
       </div>
