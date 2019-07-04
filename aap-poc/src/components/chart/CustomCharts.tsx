@@ -202,14 +202,18 @@ class CustomComposedChartCompo extends conn.StatefulCompo<CustomChartState> {
   }
 
   handleOnChange = (sender: any, operation: DynamicFilterOperation, value?: number) => {
-    const previuosFilters = (this.props.parms && this.props.parms.dynamicFilters) || [];
+    let filters = (this.props.parms && this.props.parms.dynamicFilters) || [];
     const newFilter: DynamicSearchFilter = {
       context: sender.attributeName,
       key: sender.attributeValue,
       operation,
       value
     }
-    const newParms: any = { ...this.props.parms, dynamicFilters: [...previuosFilters, newFilter] };
+    // update filter for same context and key (if any)
+    const toUpdate = filters.findIndex(f => f.context === newFilter.context && f.key === newFilter.key);
+    if (toUpdate !== -1) { filters[toUpdate] = newFilter; }
+    else { filters = [...filters, newFilter]; }
+    const newParms: any = { ...this.props.parms, dynamicFilters: filters };
     this.setState(p => ({ modalManageValueOpen: false }), () => this.props.searchClient(newParms));
   }
 

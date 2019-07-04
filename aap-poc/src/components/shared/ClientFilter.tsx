@@ -7,6 +7,7 @@ import IconButton from "./IconButton/index";
 import { isArray } from "util";
 import { startsWith, groupBy } from "lodash";
 import { round } from "mathjs";
+import { Fragment } from "react";
 
 export type FilterMapDefinition = { [k in FilterMapTypes]?: { clearAll?: boolean } | undefined };
 
@@ -181,16 +182,16 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
       }
     }
     const createMenu = (context: string, df: DynamicSearchFilter[]) => (
-      <>
+      <Fragment key={context} >
         <Menu.Item className="dynamicMenuContext">{context.split(/(?=[A-Z])/).join(' ')}</Menu.Item>
         {
           df.map((d, i) => (
-            <Menu.Item link key={i} onClick={() => this.manageDynamicFilter(d, true)}>
+            <Menu.Item link key={`${context}_${i}`} onClick={() => this.manageDynamicFilter(d, true)}>
               {active}{d.key} {decodeOpe(d.operation)} {round(d.value * 100)}%
             </Menu.Item>)
           )
         }
-      </>
+      </Fragment>
     );
     return (
       <Menu.Item key="dynamic-filters">
