@@ -3,9 +3,10 @@ import { Breakdown } from '../../_db/interfaces';
 import { CustomPieChart, CustomComposedChart } from '../chart/CustomCharts';
 
 interface Props {
-  breakdown: Breakdown,
-  chartView?: 'pie' | 'composed' | 'bar'
-  onClick?: () => void,
+  uid: string;
+  breakdown: Breakdown;
+  chartView?: 'pie' | 'composed' | 'bar';
+  onClick?: () => void;
   legend?: boolean;
   caption?: boolean;
   actions?: boolean;
@@ -28,7 +29,7 @@ export const perc = (num: number) => (100 * num).toLocaleString(undefined, { min
 
 export class BreakdownView extends React.Component<Props, State> {
   render() {
-    const { breakdown, chartView, legend, caption, actions, attributeName } = this.props;
+    const { uid, breakdown, chartView, legend, caption, actions, attributeName } = this.props;
 
     if (!breakdown || !breakdown.data) {
       return <div />
@@ -40,7 +41,7 @@ export class BreakdownView extends React.Component<Props, State> {
     });
 
     return chartView === 'pie'
-      ? <CustomPieChart attributeName={attributeName} data={data} dataKey='weight' nameKey="key" legend={legend} caption={caption} actions={actions} />
-      : <CustomComposedChart attributeName={attributeName} data={data} dataKey='weight' nameKey="key" color={breakdown.color} legend={legend} caption={caption} actions={actions} />
+      ? <CustomPieChart uid={uid} attributeName={attributeName} data={data} dataKey='weight' nameKey="key" legend={legend} caption={caption} actions={actions} />
+      : <CustomComposedChart uid={uid} attributeName={attributeName} data={data} dataKey='weight' nameKey="key" color={breakdown.color} legend={legend} caption={caption} actions={actions} />
   }
 }

@@ -26,6 +26,7 @@ const Colors = {
 }
 
 export interface CustomChartProps extends ChartBaseProps {
+  uid: string;
   data: any[];
   dataKey: string;
   nameKey: string;
@@ -193,7 +194,7 @@ export class CustomComposedChart extends React.Component<CustomChartProps, Custo
   }
 
   render() {
-    const { data, dataKey, nameKey, attributeName } = this.props;
+    const { data, dataKey, nameKey, attributeName, uid } = this.props;
     const { legend = true, caption = true, actions = true } = this.props;
 
     const color = this.props.color || getRndItem(Object.keys(Colors).map(k => Colors[k]));
@@ -215,7 +216,7 @@ export class CustomComposedChart extends React.Component<CustomChartProps, Custo
         </CustomResponsiveContainer>
         {actions && attributeName && this.state.selected &&
           <ComposedChartChangeValueDialog
-            uid='dashboard'
+            uid={uid}
             attributeName={attributeName}
             attributeValue={this.state.selected.payload.key}
             onClose={() => this.setState(p => ({ selected: undefined }))}
