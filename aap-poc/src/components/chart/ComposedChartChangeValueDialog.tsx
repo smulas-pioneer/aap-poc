@@ -102,7 +102,7 @@ const CustomComposedChartValueChange = (props: CustomComposedChartValueChangePro
   React.useEffect(() => {
     props.defaultOperation && setOperation(props.defaultOperation);
     props.defaultValue && setTextValue(`${props.defaultValue * 100}`);
-  }, []);
+  }, [props.defaultOperation, props.defaultValue]);
 
   React.useEffect(() => {
     if (isNaN(textValue as any)) {
