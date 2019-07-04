@@ -8,6 +8,7 @@ import { isArray } from "util";
 import { startsWith, groupBy } from "lodash";
 import { round } from "mathjs";
 import { Fragment } from "react";
+import { ComposedChartChangeValueDialog } from "../chart/ComposedChartChangeValueDialog";
 
 export type FilterMapDefinition = { [k in FilterMapTypes]?: { clearAll?: boolean } | undefined };
 
@@ -186,8 +187,18 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
         <Menu.Item className="dynamicMenuContext">{context.split(/(?=[A-Z])/).join(' ')}</Menu.Item>
         {
           df.map((d, i) => (
-            <Menu.Item link key={`${context}_${i}`} onClick={() => this.manageDynamicFilter(d, true)}>
-              {active}{d.key} {decodeOpe(d.operation)} {round(d.value * 100)}%
+            <Menu.Item link key={`${context}_${i}`} style={{ display: 'flex' }}>
+              <div style={{ width: '88%' }} onClick={() => this.manageDynamicFilter(d, true)}>
+                {active} {d.key} {decodeOpe(d.operation)} {round(d.value * 100)}%
+                </div>
+
+              <ComposedChartChangeValueDialog
+                trigger={<Icon link name="edit"></Icon>}
+                uid='dashboard'
+                attributeName={d.context}
+                attributeValue={d.key}
+              />
+
             </Menu.Item>)
           )
         }

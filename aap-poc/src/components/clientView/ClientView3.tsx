@@ -82,7 +82,7 @@ export const ClientView = conn.PureCompo(props => {
 
 
   React.useEffect(() => {
-    dispatch({hideProposal:true});
+    dispatch({ hideProposal: true });
     getClient({ id });
   }, [id, getClient]);
 
@@ -243,7 +243,7 @@ export const ClientView = conn.PureCompo(props => {
       if (val.data && val.data.length) {
         element.charts.push({
           title,
-          chart: <BreakdownView key={`breakdown${i}`} breakdown={val} chartView={chartView} />
+          chart: <BreakdownView uid={'dashboard'} key={`breakdown${i}`} breakdown={val} chartView={chartView} />
         })
       }
       return { ...memo, [prop]: element }

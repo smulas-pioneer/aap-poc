@@ -1,5 +1,5 @@
 import { round } from "mathjs";
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { appConnector } from "app-support";
 import { getSearchParms } from "../../reducers";
 import { searchClient } from "../../actions";
@@ -12,6 +12,7 @@ export interface ComposedChartChangeValueDialogProps {
   attributeName: string;
   attributeValue: string;
   onClose?: () => void;
+  trigger?: React.ReactElement;
 }
 
 const conn = appConnector<ComposedChartChangeValueDialogProps>()(
@@ -22,8 +23,8 @@ const conn = appConnector<ComposedChartChangeValueDialogProps>()(
 );
 
 export const ComposedChartChangeValueDialog = conn.PureCompo(props => {
-  const [isOpen, setIsOpen] = useState(true);
-  const { attributeName, attributeValue, onClose, searchClient } = props;
+  const [isOpen, setIsOpen] = useState(!props.trigger);
+  const { attributeName, attributeValue, onClose, searchClient, trigger } = props;
 
   const handleOnChange = ({ attributeName, attributeValue, operation, value }: CustomComposedChartValueChangeData) => {
     if (!operation) {
@@ -53,17 +54,27 @@ export const ComposedChartChangeValueDialog = conn.PureCompo(props => {
     if (onClose) onClose();
   }
 
+  const currentFilter = props.parms &&
+    props.parms.dynamicFilters &&
+    props.parms.dynamicFilters.find(f => f.context === attributeName && f.key === attributeValue);
+
+  const ManagedTrigger = () => trigger ? React.cloneElement(trigger, ({ onClick: () => { setIsOpen(true); } })) : <Fragment />;
   return (
-    <Modal size='small' open={isOpen} onClose={() => handleCancel()}>
-      <Modal.Header>{unCamelCase(attributeName)} - Add dynamic filter</Modal.Header>
-      <Modal.Content>
-        <CustomComposedChartValueChange
-          onChange={handleOnChange}
-          attributeName={attributeName}
-          attributeValue={attributeValue}
-        />
-      </Modal.Content>
-    </Modal>
+    <>
+      <ManagedTrigger />
+      <Modal size='small' open={isOpen} onClose={() => handleCancel()}>
+        <Modal.Header>{unCamelCase(attributeName)} - Add dynamic filter</Modal.Header>
+        <Modal.Content>
+          <CustomComposedChartValueChange
+            onChange={handleOnChange}
+            attributeName={attributeName}
+            attributeValue={attributeValue}
+            defaultOperation={currentFilter && currentFilter.operation}
+            defaultValue={currentFilter && currentFilter.value}
+          />
+        </Modal.Content>
+      </Modal>
+    </>
   );
 });
 
@@ -78,6 +89,8 @@ interface CustomComposedChartValueChangeProps {
   attributeName: string;
   attributeValue: string;
   onChange: (data: CustomComposedChartValueChangeData) => void;
+  defaultOperation?: DynamicFilterOperation;
+  defaultValue?: number;
 }
 
 const CustomComposedChartValueChange = (props: CustomComposedChartValueChangeProps) => {
@@ -85,6 +98,11 @@ const CustomComposedChartValueChange = (props: CustomComposedChartValueChangePro
   const [textValue, setTextValue] = React.useState("0");
   const [operation, setOperation] = React.useState(DynamicFilterOperation.GraterEqualThan);
   const [error, setError] = React.useState<string | undefined>(undefined);
+
+  React.useEffect(() => {
+    props.defaultOperation && setOperation(props.defaultOperation);
+    props.defaultValue && setTextValue(`${props.defaultValue * 100}`);
+  }, []);
 
   React.useEffect(() => {
     if (isNaN(textValue as any)) {

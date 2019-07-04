@@ -157,7 +157,7 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
     return (
       <Segment>
         <WidgetTitle title={header} shareButtons={['Image', 'Copy']} />
-        <CustomPieChart data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
+        <CustomPieChart uid={this.props.uid} data={valuesSizeGraph} nameKey="name" dataKey="value" filterKey="filter" onClick={(d) => this.searchAdvancedByGraph(searchprop, d)} />
       </Segment>
     );
   }
