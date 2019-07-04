@@ -233,6 +233,22 @@ export interface SearchParms {
   clientStatusDuration?: ClientStatusDuration[];
   uid: string;
   clientRiskProfile?: string[];
+  dynamicFilters?: DynamicSearchFilter[];
+}
+
+export interface DynamicSearchFilter {
+  context: string,
+  key: string,
+  operation: DynamicFilterOperation;
+  value: any;
+}
+
+export enum DynamicFilterOperation {
+  GreaterThan = 1,
+  GraterEqualThan,
+
+  LesserThan,
+  LesserEqualThan
 }
 
 export interface SearchResult {

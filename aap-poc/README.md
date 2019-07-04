@@ -16,3 +16,4 @@
 12. Configurare portfolio complesso
 13. Verificare Breakdown
 14. Proposal Validation to fix.
+15. Colore label grafici in light mode.

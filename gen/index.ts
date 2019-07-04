@@ -293,6 +293,7 @@ const alertHistoryCreator = (date: string, days: number, clients: Client[]): Ale
 }
 
 const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResult[] } => {
+  const today=new Date(REFERENCE_DATE_TODAY);
   return clients.reduce((prev, curr) => {
     const faker = getFake(curr.country);
     log('history for', curr.name);
@@ -300,10 +301,11 @@ const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResul
     prev[curr.id] = numArray(n).map(i => {
       const r = rnd(1, 100);
       const status = r < 30 ? 'REJECTED' : 'ACCEPTED';
-      let date = faker.date.past();
+      let date = faker.date.past(3,today);
+      /*
       while (moment(date).format('YYYY-MM-DD') >= REFERENCE_DATE_TODAY) {
-        date = faker.date.past();
-      }
+        date = faker.date.past(3,today);
+      }*/
 
       return {
         date: moment(date).format('YYYY-MM-DD'),
@@ -312,7 +314,6 @@ const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResul
       } as InterviewResult;
     }).sort((a, b) => a.date.localeCompare(b.date));
 
-    log('arrivo qui?');
     // LAst one is accepted for fake client and possibly ongoing for others.
     if (isFakeClient(curr.id)) {
       prev[curr.id][prev[curr.id].length - 1].status = 'ACCEPTED';
@@ -504,24 +505,15 @@ const go = async () => {
 
     const models = createModels();
     const clients = clientsCreator(models);
-    console.log('1');
     let histories = historyCreator(clients);
-    console.log('2');
     const strategies1 = clientStrategyCreator(clients);
-    console.log('3');
     const strategies2 = getAllStrategies();
-    console.log('4');
     const preformances = createAllSecuritiesPerformance();
-    console.log('5');
     const performances2 = getAllPerformances();
-    console.log('6');
     const secuirities = getAllSecuirities();
-    console.log('7');
     const allPerf = { ...preformances, ...performances2 };
-    console.log('8');
     const radars = createFakeRadar();
     //Calculate Clients Radar and aua
-    console.log('9');
 
     const strategies = { ...strategies1, ...strategies2 } as { [cli: string]: StrategyItem[] }
 

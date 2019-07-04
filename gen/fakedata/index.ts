@@ -8,29 +8,30 @@ import * as P4 from './fds_c2_m';
 import * as P5 from './fds_c3_m';
 import * as P6 from './fds_c4_m';
 import * as P7 from './fds_c3_c_bis';
+import * as BB from './baby';
 import { cash, wrapSecurities, wrapSecurity } from '../common/securities';
 import { modelPosition, createRadarSync, getRandomRadar } from '../common/radarUtils';
 
-const mapSecurity = (p: any) => {
+const mapSecurity = (p:any) => {
     return {
         IsinCode: p.Symbol,
         SecurityName: p.Name,
         AssetId: p.Symbol,
-        IsFund: '0',
         Kilovar: null,
+        IsFund: '0',
         MacroAssetClass: p.AssetClass,
         MicroAssetClass: p.AssetType,
-        Sector: null,
+        Sector: p.Sector,
         Currency: 'Euro',
-        Rating: null,
-        Country: null,
-        Region: null,
-        Maturity: null,
+        Rating: p.Rating,
+        Country: p.Country,
+        Region: p.Region,
+        Maturity: p.Maturity,
         SRRI: p.SRRI,
         Price: p.Price,
-        pushed: FD.pushed.indexOf(p.Symbol) > -1 || 
+        pushed: FD.pushed.indexOf(p.Symbol) > -1 ||
                 p.Name.toLowerCase().indexOf("amundi") > -1 ||
-                p.Name.toLowerCase().indexOf("pioneer") > -1 
+                p.Name.toLowerCase().indexOf("pioneer") > -1
             } as Security;
 }
 
@@ -95,6 +96,7 @@ const mapStrategy = (pos: any[], mod: any[]): StrategyItem[] => {
 
 export const getAllSecuirities = () => {
     const data = [
+        ...BB.bbCase,
         ...FD.case_2_initial,
         ...FD.case_2_model,
         ...FD.case_2_proposed,
@@ -210,7 +212,7 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
             isCash: items[0].isCash,
             fee: 1,
             newSecurity: false,
-            clientFavorites: FD.fav.indexOf(k) > -1            
+            clientFavorites: FD.fav.indexOf(k) > -1
         }
     });
 }
@@ -219,8 +221,9 @@ export const getAllStrategies = () => {
     let x = {
         "0": mapSuggestion(FD.case_2_initial, FD.case_2_model, FD.case_2_proposed).sort((a, b) => a.isCash ? -1 : 1),
         "1": mapSuggestion(FD.case_3_initial, FD.case_3_model, FD.case_3_proposed).sort((a, b) => a.isCash ? -1 : 1),
-        "2": mapSuggestion(FD.case_4_initial, FD.case_4_model, FD.case_4_proposed).sort((a, b) => a.isCash ? -1 : 1),
-    }
+//        "2": mapSuggestion(FD.case_4_initial, FD.case_4_model, FD.case_4_proposed).sort((a, b) => a.isCash ? -1 : 1),
+        "2": mapSuggestion(BB.bbCase, BB.bbCase, BB.bbCase,).sort((a, b) => a.isCash ? -1 : 1),
+}
     return x;
 }
 
@@ -228,7 +231,7 @@ import { radar2,radar3,radar4 } from './matthieu_radar.1';
 
 const scale = (value:number, min: number,max: number) => {
     if ( max >= min) {
-        return 2 + 7 * (max - value) / (max-min) * .9 
+        return 2 + 7 * (max - value) / (max-min) * .9
     } else {
         return scale(max-value, max,min);
     }
