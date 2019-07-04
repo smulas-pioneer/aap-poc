@@ -54,24 +54,6 @@
     "pushed": false
   },
   {
-    "IsinCode": "EUR",
-    "SecurityName": "EURO",
-    "AssetId": "EUR",
-    "Kilovar": null,
-    "IsFund": "0",
-    "MacroAssetClass": "Money Market",
-    "MicroAssetClass": "Money Market",
-    "Sector": null,
-    "Currency": "EUR",
-    "Rating": null,
-    "Country": "Europe",
-    "Region": "Europe",
-    "Maturity": null,
-    "SRRI": 1,
-    "Price": 1,
-    "pushed": false
-  },
-  {
     "IsinCode": "FR0000120628",
     "SecurityName": "AXA",
     "AssetId": "FR0000120628",

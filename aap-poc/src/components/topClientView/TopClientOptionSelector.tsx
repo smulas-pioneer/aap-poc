@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dropdown, DropdownItemProps, } from "semantic-ui-react";
+import { Dropdown, DropdownItemProps, Button, Menu, } from "semantic-ui-react";
 import { GroupTypes } from "./index";
 import { IndicatorOptionsType } from "../../actions/model";
 import { startCase } from "lodash";
@@ -57,30 +57,40 @@ export const TopClientOptionSelector = ({ group, indicator, onChange }: TopClien
   }
 
   return (
-    <div className='topClientOptionSelector' >
-      <h2  >
-        Top
-        &nbsp;
+    <div>
+
+      <div className='topClientOptionSelector' >
+        <h2  >
+          Top
+          &nbsp;
       <Dropdown className="topClientDropOption" icon={false} compact text={startCase(curGroup)} as='a' >
-          <Dropdown.Menu >
-            {renderOptions(curGroup, GroupTypes, onGroupChange)}
-          </Dropdown.Menu>
-        </Dropdown>
-        &nbsp;
-        Performers by
-        &nbsp;
+            <Dropdown.Menu >
+              {renderOptions(curGroup, GroupTypes, onGroupChange)}
+            </Dropdown.Menu>
+          </Dropdown>
+          &nbsp;
+          Performers by
+          &nbsp;
       <Dropdown className="topClientDropOption" icon={false} compact text={startCase(curIndicator)} as='a'>
-          <Dropdown.Menu>
-            {renderOptions(
-              curIndicator,
-              IndicatorOptionsType,
-              onIndicatorChange,
-              curGroup === GroupTypes[GroupTypes.Client] ? [IndicatorOptionsType[IndicatorOptionsType.clients]] : undefined)
-            }
-          </Dropdown.Menu>
-        </Dropdown>
-        <Share buttons={['Excel', 'Pdf', 'Copy']} />
-      </h2>
-    </div >
+            <Dropdown.Menu>
+              {renderOptions(
+                curIndicator,
+                IndicatorOptionsType,
+                onIndicatorChange,
+                curGroup === GroupTypes[GroupTypes.Client] ? [IndicatorOptionsType[IndicatorOptionsType.clients]] : undefined)
+              }
+            </Dropdown.Menu>
+          </Dropdown>
+          <Share buttons={['Excel', 'Pdf', 'Copy']} />
+        </h2>
+      </div >
+      <div className="btnProposals" >
+        <Menu secondary>
+          <Menu.Item>
+            <Button size="small" basic content="Generate Proposals" icon="lightning" />
+          </Menu.Item>
+        </Menu>
+      </div>
+    </div>
   );
 }
