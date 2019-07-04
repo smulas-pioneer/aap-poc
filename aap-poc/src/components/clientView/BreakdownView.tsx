@@ -16,14 +16,6 @@ interface State {
 
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const Colors = {
-  ORANGE: "#F07D00",
-  BLUE: "#004F9F",
-  RED: "#E6325E",
-  GRAY: "#3B7296",
-  GREEN: "#39B2B6",
-}
 
 export const perc = (num: number) => (100 * num).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
