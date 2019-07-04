@@ -210,7 +210,7 @@ class CustomComposedChartCompo extends conn.StatefulCompo<CustomChartState> {
       value
     }
     const newParms: any = { ...this.props.parms, dynamicFilters: [...previuosFilters, newFilter] };
-    this.props.searchClient(newParms);
+    this.setState(p => ({ modalManageValueOpen: false }), () => this.props.searchClient(newParms));
   }
 
   render() {
@@ -342,7 +342,7 @@ const CustomComposedChartValueChange = (props: any) => {
 
     <div style={{ flex: 1 }}>
       <Input size="small" inverted fluid value={textValue || ""} onChange={(a, b) => setTextValue(b.value)} >
-        <input style={{ color: value > 0 ? 'lightgreen' : 'red' }} />
+        <input />
       </Input>
     </div>
 
