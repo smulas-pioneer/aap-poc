@@ -3,7 +3,7 @@ import { appConnector } from "app-support";
 import { getSearchParms } from "../../reducers";
 import { searchClient } from "../../actions";
 import { DynamicFilterOperation, DynamicSearchFilter } from "../../_db/interfaces";
-import { Dropdown, Input, Button, Modal, Form, Label } from "semantic-ui-react";
+import { Dropdown, Input, Button, Modal, Form } from "semantic-ui-react";
 import { unCamelCase } from "../../commonUtils";
 
 export interface ComposedChartChangeValueDialogProps {
@@ -61,7 +61,7 @@ export const ComposedChartChangeValueDialog = conn.PureCompo(props => {
   return (
     <>
       <ManagedTrigger />
-      <Modal style={{ width: 600 }} open={isOpen} onClose={() => handleCancel()} closeOnDimmerClick={false} >
+      <Modal style={{ width: 600 }} open={isOpen} onClose={() => handleCancel()} >
         <Modal.Header>{unCamelCase(attributeName)} - Add dynamic filter</Modal.Header>
         <Modal.Content>
           <CustomComposedChartValueChange
@@ -154,7 +154,7 @@ const CustomComposedChartValueChange = (props: CustomComposedChartValueChangePro
       value: DynamicFilterOperation.LesserThan
     },
   ]
-  let input = undefined
+
   return <div style={{ display: 'flex', flexDirection: 'row', padding: 10 }}>
 
     <div style={{ textAlign: "right", paddingRight: 10 }}>
