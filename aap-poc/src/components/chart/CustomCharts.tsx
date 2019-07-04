@@ -9,6 +9,7 @@ import { appConnector } from 'app-support';
 import { searchClient } from '../../actions';
 import { getSearchParms } from '../../reducers';
 import { unCamelCase } from '../../commonUtils';
+import { ComposedChartChangeValueDialog } from './ComposedChartChangeValueDialog';
 const { ComposedChart, Legend, ResponsiveContainer, Sector, PieChart, Pie, Cell, Bar, XAxis, YAxis } = require('recharts');
 
 const Colors = {
@@ -40,7 +41,6 @@ export interface CustomPieProps extends CustomChartProps {
 
 interface CustomChartState {
   selected?: any;
-  modalManageValueOpen?: boolean;
 }
 
 
@@ -168,21 +168,12 @@ export class CustomPieChart extends React.Component<CustomPieProps, CustomChartS
   }
 }
 
-const conn = appConnector<CustomChartProps>()(
-  (s, p) => ({
-    parms: getSearchParms(s, 'dashboard')
-  }),
-  { searchClient }
-)
 
-class CustomComposedChartCompo extends conn.StatefulCompo<CustomChartState> {
+export class CustomComposedChart extends React.Component<CustomChartProps, CustomChartState> {
   constructor(props: any) {
     super(props);
     this.renderCustomizedLabel = this.renderCustomizedLabel.bind(this);
-    this.state = {
-      selected: undefined,
-      modalManageValueOpen: false
-    };
+    this.state = { selected: undefined };
   }
 
   renderCustomizedLabel = (props: any) => {
@@ -201,45 +192,17 @@ class CustomComposedChartCompo extends conn.StatefulCompo<CustomChartState> {
     </text>
   }
 
-  handleOnChange = (sender: any, operation: DynamicFilterOperation, value?: number) => {
-    let filters = (this.props.parms && this.props.parms.dynamicFilters) || [];
-    const newFilter: DynamicSearchFilter = {
-      context: sender.attributeName,
-      key: sender.attributeValue,
-      operation,
-      value
-    }
-    // update filter for same context and key (if any)
-    const toUpdate = filters.findIndex(f => f.context === newFilter.context && f.key === newFilter.key);
-    if (toUpdate !== -1) { filters[toUpdate] = newFilter; }
-    else { filters = [...filters, newFilter]; }
-    const newParms: any = { ...this.props.parms, dynamicFilters: filters };
-    this.setState(p => ({ modalManageValueOpen: false }), () => this.props.searchClient(newParms));
-  }
-
   render() {
     const { data, dataKey, nameKey, attributeName } = this.props;
     const { legend = true, caption = true, actions = true } = this.props;
 
     const color = this.props.color || getRndItem(Object.keys(Colors).map(k => Colors[k]));
-    const barActionableProps = actions && {
+    const barActionableProps = (actions && {
       cursor: "pointer",
       onClick: (data: any) => {
-        this.setState(p => ({ selected: data, modalManageValueOpen: true }))
+        this.setState(p => ({ selected: data }))
       }
-    } || {};
-
-    const ManageValueTooltip = ({ active = false, payload = [{ value: 0 }], label = undefined }) => {
-      if (active) {
-        return (
-          <div className="custom-tooltip">
-            <p className="label">{`${label} : ${payload[0].value}`}</p>
-            <p className="desc">Anything you want can be displayed here.</p>
-          </div>
-        );
-      }
-      return null;
-    };
+    }) || {};
 
     return (
       <>
@@ -250,110 +213,15 @@ class CustomComposedChartCompo extends conn.StatefulCompo<CustomChartState> {
             <Bar {...barActionableProps} dataKey={dataKey} name={nameKey} barSize={18} fill={color} label={caption && this.renderCustomizedLabel} />
           </ComposedChart>
         </CustomResponsiveContainer>
-        {actions && this.state.selected && <Modal size='small' open={this.state.modalManageValueOpen} onClose={() => this.setState(p => ({ modalManageValueOpen: false }))}>
-          <Modal.Header>{unCamelCase(attributeName)} - Add dynamic filter</Modal.Header>
-          <Modal.Content><CustomComposedChartValueChange onChange={this.handleOnChange} attributeName={attributeName} attributeValue={this.state.selected.payload.key} /></Modal.Content>
-        </Modal>}
+        {actions && attributeName && this.state.selected &&
+          <ComposedChartChangeValueDialog
+            uid='dashboard'
+            attributeName={attributeName}
+            attributeValue={this.state.selected.payload.key}
+            onClose={() => this.setState(p => ({ selected: undefined }))}
+          />
+        }
       </>
     );
   }
 }
-
-export const CustomComposedChart = conn.connect(CustomComposedChartCompo);
-
-const CustomComposedChartValueChange = (props: any) => {
-  const [value, setValue] = React.useState(0);
-  const [textValue, setTextValue] = React.useState("0");
-  const [operation, setOperation] = React.useState(DynamicFilterOperation.GraterEqualThan);
-  const [error, setError] = React.useState<string | undefined>(undefined);
-
-  React.useEffect(() => {
-    if (isNaN(textValue as any)) {
-      setError(`not a valid number`);
-    }
-    else {
-      const newValue = parseFloat(textValue);
-      if (newValue !== value) {
-        setValue(parseFloat(textValue));
-        setError(undefined);
-      }
-    }
-  }, [textValue, value]);
-
-  const handleSliderChange = (value: string) => {
-    if (!isNaN(value as any)) {
-      const numValue = round(parseFloat(value));
-      setTextValue(numValue.toString());
-    }
-  }
-
-  const sendChange = (operation?: DynamicFilterOperation, value?: number) => {
-    props.onChange(
-      props,
-      operation,
-      ((value || 0) / 100)
-    );
-  }
-
-  const reset = () => {
-    setTextValue("0");
-    sendChange();
-  }
-
-  const operations = [
-    {
-      key: DynamicFilterOperation.GraterEqualThan,
-      text: "greater equal than",
-      value: DynamicFilterOperation.GraterEqualThan
-    },
-    {
-      key: DynamicFilterOperation.GreaterThan,
-      text: "greater than",
-      value: DynamicFilterOperation.GreaterThan
-    },
-    {
-      key: DynamicFilterOperation.LesserEqualThan,
-      text: "less equal than",
-      value: DynamicFilterOperation.LesserEqualThan
-    },
-    {
-      key: DynamicFilterOperation.LesserThan,
-      text: "less than",
-      value: DynamicFilterOperation.LesserThan
-    },
-  ]
-
-  return <div style={{ display: 'flex', flexDirection: 'row', padding: 20 }}>
-
-    <div style={{ flex: 3 }}>
-      <h3>{props.attributeValue}</h3>
-    </div>
-
-    <div style={{ flex: 3 }}>
-      <h3>
-        <Dropdown
-          inline
-          options={operations}
-          value={operation}
-          onChange={(a, b) => setOperation(b.value as any)}
-        />
-      </h3>
-    </div>
-
-    <div style={{ flex: 2 }}>
-      <Input type="range" min={0} max={100} value={value} onChange={(a, b) => handleSliderChange(b.value)} />
-    </div>
-
-    <div style={{ flex: 1 }}>
-      <Input size="small" inverted fluid value={textValue || ""} onChange={(a, b) => setTextValue(b.value)} >
-        <input />
-      </Input>
-    </div>
-
-    <div style={{ flex: 1, display: 'flex' }}>
-      <Button inverted size="small" negative icon="cancel" onClick={() => reset()} />
-      <Button inverted size="small" positive icon="check" onClick={() => sendChange(operation, value)} />
-    </div>
-  </div>
-};
-
