@@ -10,7 +10,7 @@ const getImagesByGroup = async (groupId: string) => {
   const json = await man.json();
   return {
     name: groupId,
-    images: json.files.map((s: string) => ({ name: s, src: `/altoshow/${groupId}/${s}` }))
+    images: json.files.map((s: string) => ({ name: s.substring(0, s.length - 4), src: `/altoshow/${groupId}/${s}` }))
   }
 }
 
@@ -43,9 +43,9 @@ export const AltoShow = () => {
   const panels = list.map(s => ({
     key: s.name,
     title: s.name,
-    content: <div><List>
+    content: <Accordion.Content><List>
       {s.images.map(img => <List.Item onClick={() => setCurrent(img.src)}>{img.name}</List.Item>)}
-    </List></div>
+    </List></Accordion.Content>
   }))
 
   return <div style={{ height: '100vh', width: '100%' }} >
