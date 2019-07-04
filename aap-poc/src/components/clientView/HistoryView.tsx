@@ -96,18 +96,21 @@ export const HistoryViewTimelineEvent = ({ history, lang, height }: HistoryViewP
           memo.unshift(
             <TimelineEvent key={ix}
               title=''
+              className="timelineEvent"
               createdAt={moment(item.date).format(lang.DATE_FORMAT)}
               icon={<Icon name={icons[item.status]} size="large" style={{ margin: 0 }} />}
               iconColor={historyColors[item.status]}
               container="card"
               cardHeaderStyle={{ backgroundColor: historyColors[item.status] }}
             >
+
               <h3>{lang.STATUS}: {lang[item.status]}</h3>
               <p>{item.notes}</p>
+
             </TimelineEvent>
           );
           return memo;
-        },  [] as any)}
+        }, [] as any)}
       </Timeline>
     </div>
   )

@@ -39,6 +39,7 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
     this.renderAllFiltersHandler = this.renderAllFiltersHandler.bind(this);
     this.renderDynamicFilter = this.renderDynamicFilter.bind(this);
     this.manageDynamicFilter = this.manageDynamicFilter.bind(this);
+    this.clearAllDynamicFilters = this.clearAllDynamicFilters.bind(this);
   }
 
   renderAllFiltersHandler(name: string, value: boolean) {
@@ -165,6 +166,10 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
     this.props.onChange({ ...this.props.filterValue, dynamicFilters: filters });
   }
 
+  clearAllDynamicFilters() {
+    this.props.onChange({ ...this.props.filterValue, dynamicFilters: undefined });
+  }
+
   renderDynamicFilter() {
     const { dynamicFilters } = this.props.filterValue;
     if (!dynamicFilters || !dynamicFilters.length) return null;
@@ -184,7 +189,9 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
     }
     const createMenu = (context: string, df: DynamicSearchFilter[]) => (
       <Fragment key={context} >
-        <Menu.Item className="dynamicMenuContext">{context.split(/(?=[A-Z])/).join(' ')}</Menu.Item>
+        <Menu.Item className="dynamicMenuContext">
+          {context.split(/(?=[A-Z])/).join(' ')}
+        </Menu.Item>
         {
           df.map((d, i) => (
             <Menu.Item link key={`${context}_${i}`} style={{ display: 'flex' }}>
@@ -204,10 +211,19 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
         }
       </Fragment>
     );
+
     return (
       <Menu.Item key="dynamic-filters">
         <Menu.Header>
           Dynamic Filters
+          {dynamicFilters.length > 1 &&
+            <IconButton
+              color="grey"
+              name="remove"
+              floated="right"
+              onClick={() => this.clearAllDynamicFilters()}
+            />
+          }
         </Menu.Header>
         <Menu.Menu>
           {

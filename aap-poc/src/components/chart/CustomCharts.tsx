@@ -2,13 +2,6 @@
 import * as React from 'react';
 import { getRndItem } from '../../_db/utils';
 import { ChartBaseProps } from './ChartInterface';
-import { Input, Button, Modal, Dropdown } from 'semantic-ui-react';
-import { round } from 'mathjs';
-import { DynamicFilterOperation, DynamicSearchFilter } from '../../_db/interfaces';
-import { appConnector } from 'app-support';
-import { searchClient } from '../../actions';
-import { getSearchParms } from '../../reducers';
-import { unCamelCase } from '../../commonUtils';
 import { ComposedChartChangeValueDialog } from './ComposedChartChangeValueDialog';
 const { ComposedChart, Legend, ResponsiveContainer, Sector, PieChart, Pie, Cell, Bar, XAxis, YAxis } = require('recharts');
 
@@ -205,13 +198,15 @@ export class CustomComposedChart extends React.Component<CustomChartProps, Custo
       }
     }) || {};
 
+    const barSize = caption ? 18 : 8;
+
     return (
       <>
         <CustomResponsiveContainer height={'100%'}>
           <ComposedChart layout="vertical" height={500} width={500} data={data}  >
             <XAxis type="number" hide={!caption} tick={false} height={1} />
             <YAxis dataKey={nameKey} type="category" width={70} hide={!caption} />
-            <Bar {...barActionableProps} dataKey={dataKey} name={nameKey} barSize={18} fill={color} label={caption && this.renderCustomizedLabel} />
+            <Bar {...barActionableProps} dataKey={dataKey} name={nameKey} barSize={barSize} fill={color} label={caption && this.renderCustomizedLabel} />
           </ComposedChart>
         </CustomResponsiveContainer>
         {actions && attributeName && this.state.selected &&
