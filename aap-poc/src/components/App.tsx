@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { Route, RouteComponentProps } from 'react-router';
-import { Segment } from 'semantic-ui-react';
 import { ClientsView } from './clientsView/ClientsView';
 import { ClientView } from './clientView/ClientView3';
-
-import Dashboard from './Dashboard';
 import { AlertsView } from './alertsView/AlertsView';
 import { ManagerView } from './managerView/managerView';
 import { DashboardMgr } from './DashboardMgr';
+import Dashboard from './Dashboard';
 import MenuFlat from './MenuFlat';
-// import MenuFlat from './MenuFlat';
 
 interface IAppProps {
   manager?: boolean
@@ -26,11 +23,12 @@ const ScrollToTop = () => {
 class App extends React.Component<IAppProps, {}> {
   render() {
     const { manager } = this.props;
+
     return (
       <div className="app" style={{ height: '100vh', width: '100%', position: 'absolute', top: 0, bottom: 0 }}>
         <Route component={ScrollToTop} />
         {/* <Route exact={false} path="/" component={(p: RouteComponentProps<any>) => <MenuFlat history={p.history} />} /> */}
-        <Segment basic style={{ marginTop: 0, height: '95%' }}>
+        <div style={{ padding: '0 0.5rem', height: '95%' }}>
           {/* <Route exact path="/" component={(p: any) => <HomePage />} />
               <Route exact path="/homepage" component={(p: any) => <HomePage />} /> */}
           <Route exact path="/" component={(p: any) => manager ? <DashboardMgr uid="dashboard"><MenuFlat history={p.history} orientation='vertical' /> </DashboardMgr> : <Dashboard uid="dashboard" />} />
@@ -39,7 +37,7 @@ class App extends React.Component<IAppProps, {}> {
           <Route exact path="/manager" component={(p: any) => <ManagerView uid="port" showFilter showTitle />} />
           <Route exact path="/agents/:id/clients" component={(p: RouteComponentProps<any>) => <ClientsView uid="agecli" agent={p.match.params.id} showFilter showTitle />} />
           <Route exact path="/clients/:id" component={(p: RouteComponentProps<any>) => <ClientView id={p.match.params.id}><MenuFlat history={p.history} orientation='vertical' /></ClientView>} />
-        </Segment>
+        </div>
       </div>
     );
   }

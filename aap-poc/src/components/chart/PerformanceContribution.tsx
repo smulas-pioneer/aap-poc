@@ -48,12 +48,12 @@ export class PerformanceContributionGraph extends React.Component<PerformanceCon
     render() {
         const { legend = true, caption = true, actions = true } = this.props;
         const data = this.props.data;
-        
+
         return <ResponsiveContainer width="100%" height="100%">
             <BarChart width={500} height={600} data={data}>
                 <XAxis dataKey="year" hide={!caption} />
                 <YAxis width={40} hide={!caption} />
-                <CartesianGrid strokeDasharray="3 3" />
+                <CartesianGrid strokeDasharray={caption ? '3 3' : '1 1'} />
                 {actions && <Tooltip formatter={(d: number) => perc(d) + '%'} /> }
                 {legend && <Legend />}
                 {this.state.ids.map((d, i) => <Bar key={i} dataKey={d} stackId="a" fill={Colors[i]} />)}

@@ -1,15 +1,15 @@
 import * as React from "react";
 import { appConnector } from 'app-support';
-import { getLanguage, getCurrentUser, getConfigLayout } from '../reducers/index';
-import { Menu, MenuItemProps, Dropdown, Image, Icon, DropdownItem } from 'semantic-ui-react';
+import { getLanguage, getCurrentUser, getConfigLayout, getTheme } from '../reducers/index';
+import { Menu, MenuItemProps, Dropdown, Image, Icon, Button } from 'semantic-ui-react';
 import * as Model from '../actions/model';
 import { Link } from "react-router-dom";
 import { LangBar } from './LangBar';
 import { Spotlight } from './spotlight'
-import { logout, searchClient } from '../actions/index';
+import { logout, setAppTheme, searchClient } from '../actions/index';
 import { UserInfo } from '../actions/model';
 import { LangDictionary } from '../reducers/language/interfaces';
-import { SpotlightSearchResultItem, DynamicFilterOperation } from '../_db/interfaces';
+import { SpotlightSearchResultItem } from '../_db/interfaces';
 import { isClient, isAgent } from '../_db/utils';
 import { Share } from './Share';
 
@@ -32,10 +32,12 @@ const conn = appConnector<MenuFlatProps>()(
   (s, p) => ({
     lang: getLanguage(s),
     user: getCurrentUser(s),
-    layout: getConfigLayout(s)
+    layout: getConfigLayout(s),
+    theme: getTheme(s)
   }),
   {
     logout,
+    setAppTheme,
     searchClient
   }
 )
@@ -52,6 +54,7 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
     this.renderItem = this.renderItem.bind(this);
     this.handleItemClick = this.handleItemClick.bind(this);
     this.goHome = this.goHome.bind(this);
+    this.handleSetTheme = this.handleSetTheme.bind(this);
   }
 
   toggleSpotlight(toggle: boolean) { this.setState(prevState => ({ spotlightVisible: toggle })); }
@@ -104,6 +107,10 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
       <Image avatar src={user.isManager ? managerAvatar : advisorAvatar} />{lang.WELCOME}, {user.firstName}
     </span>
   );
+
+  handleSetTheme = () => {
+    this.props.setAppTheme(this.props.theme === 'dark' ? 'white' : 'dark');
+  }
 
   onItemNavigate = (item: SpotlightSearchResultItem) => {
     if (isClient(item)) {
@@ -181,42 +188,30 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
             {this.spotlightMenuItem(true)}
             {userMenuDropDown}
           </Menu>
-
-          {/* <Menu.Item>
-                        <span style={{ marginRight: 5 }}>v {process.env.REACT_APP_VERSION} </span>
-                        <LangBar />
-                    </Menu.Item>
-                    {this.renderSpotlightItem()} */}
         </Menu>
-        <Spotlight
-          onCancel={() => this.toggleSpotlight(false)}
-          onItemNavigate={this.onItemNavigate}
-          visible={spotlightVisible}
-        />
+        <Spotlight onCancel={() => this.toggleSpotlight(false)} onItemNavigate={this.onItemNavigate} visible={spotlightVisible} />
       </div>
     );
 
     else if (orientation === 'vertical') return (
       <div className={`menu-flat ${orientation}`}>
-        <Menu compact fluid className='menu-user' size='large' >
+        <Menu secondary borderless compact fluid className='menu-user' size='large' >
           {userMenuDropDown}
         </Menu>
-
-        <Menu compact fluid className='menu-options'>
+        <Menu secondary borderless compact fluid className='menu-options'>
           <Menu.Item as="a" onClick={() => this.goHome()} >
             <Icon size='large' name='home' />
           </Menu.Item>
           <Menu.Item as="a" position='right' >
-            <Share iconSize='large' buttons={['Print', 'Pdf', 'Email']} /*pointing="top right"*/ />
+            <Share iconSize='large' buttons={['Print', 'Pdf', 'Email']}  />
           </Menu.Item>
           {this.spotlightMenuItem()}
+          <Menu.Item onClick={this.handleSetTheme}>
+            <Button circular icon color={this.props.theme === 'dark' ? 'black' : undefined} size='mini'  />
+          </Menu.Item>
         </Menu>
 
-        <Spotlight
-          onCancel={() => this.toggleSpotlight(false)}
-          onItemNavigate={this.onItemNavigate}
-          visible={spotlightVisible}
-        />
+        <Spotlight onCancel={() => this.toggleSpotlight(false)} onItemNavigate={this.onItemNavigate} visible={spotlightVisible} />
       </div>
     );
     return null;

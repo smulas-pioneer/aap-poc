@@ -111,8 +111,8 @@ export const RadarGraph = (props: RadarGraphProps) => {
 
   return (
     <ResponsiveContainer width="100%" height="100%" >
-      <RadarChart cx='50%' cy='50%' startAngle={60} endAngle={420} width={600} height={600} data={data} outerRadius={'85%'} isAnimationActive startWithAnimation  >
-        {legend && <Legend height={1} verticalAlign="bottom" />}
+      <RadarChart cx='50%' cy='50%' startAngle={60} endAngle={420} width={100} height={100} data={data} outerRadius={'80%'} isAnimationActive startWithAnimation  >
+        {legend && <Legend verticalAlign="bottom" />}
         <Radar name="Actuals" dataKey="actual" stroke="#54C8FF" fill="#54C8FF" fillOpacity={1} dot />
         {props.hideProposal !== true && <Radar name="Proposed" dataKey="proposed" stroke="green" fill="green" fillOpacity={0.8} dot />}
         <Radar name="Guidelines" dataKey="guideLines" stroke="red" strokeWidth={3} fill="#00f" fillOpacity={0} />

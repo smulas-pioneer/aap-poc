@@ -28,7 +28,7 @@ export class RiskReturnGraph extends React.Component<RiskReturnChartProps, RiskR
 
     render() {
         const { scatterShapeCustom } = this.state;
-        const { legend = false, caption = false, actions = false } = this.props;
+        const { legend = true, caption = true, actions = true } = this.props;
 
         const model = this.props.data.filter(p => p.id === 'Model');
         const portfolio = this.props.data.filter(p => p.id === 'Portfolio');

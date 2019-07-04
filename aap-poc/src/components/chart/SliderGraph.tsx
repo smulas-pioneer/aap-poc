@@ -6,7 +6,6 @@ import { Divider, Icon, Segment } from 'semantic-ui-react';
 import Slider from "react-slick";
 import { WidgetTitle } from '../shared/WidgetTitle';
 import { numArray } from '../../_db/common/radarUtils';
-import { unCamelCase } from '../../commonUtils';
 
 
 interface SliderGraphBaseProps {
@@ -28,7 +27,6 @@ interface SliderGraphMultiViewProps extends SliderGraphBaseProps {
 
 interface SliderGraphProps extends SliderGraphBaseProps {
   defaultIndex?: number,
-  bordered?: boolean;
   slidesToShow?: number
 }
 
@@ -72,17 +70,15 @@ export const SliderGrapMultiView = (props: SliderGraphMultiViewProps) => {
     height: mode === 'multi' ? (height / settings.multiSegment) - 20 : height
   }
 
-  const Wrapper = (props: { children: any }) => <Segment style={{ marginBottom: 0 }}>{props.children}</Segment>
-
   return <div style={{ position: 'relative' }}>
     {mode === 'tumblr'
-      ? <Wrapper><SliderGraphTumblr {...graphProps} defaultIndex={0} slidesToShow={settings.tumblrSlidesToShow} /></Wrapper>
+      ? <Segment style={{ marginBottom: 0 }}><SliderGraphTumblr {...graphProps} defaultIndex={0} slidesToShow={settings.tumblrSlidesToShow} /></Segment>
       : mode === 'single'
-        ? <Wrapper><SliderGraph {...graphProps} defaultIndex={0} slidesToShow={settings.singleSlidesToShow} bordered={false} /></Wrapper>
+        ? <Segment style={{ marginBottom: 0 }}><SliderGraph {...graphProps} defaultIndex={0} slidesToShow={settings.singleSlidesToShow} /></Segment>
         : mode === 'multi'
           ? <div className='ui-flex ui-flex-col'>
             {numArray(settings.multiSegment).map((i) => (
-              <Wrapper><SliderGraph {...graphProps} defaultIndex={i} slidesToShow={settings.multiSlidesToShow} /></Wrapper>
+              <Segment key={i} style={{ marginBottom: 0 }}><SliderGraph {...graphProps} defaultIndex={i} slidesToShow={settings.multiSlidesToShow} /></Segment>
             ))}
           </div>
           : null
@@ -92,7 +88,7 @@ export const SliderGrapMultiView = (props: SliderGraphMultiViewProps) => {
 }
 
 export const SliderGraph = (props: SliderGraphProps) => {
-  const { graphs = [], bordered, defaultIndex = 0, slidesToShow = 1, height = 600 } = props;
+  const { graphs = [], defaultIndex = 0, slidesToShow = 1, height = 600 } = props;
 
   const settings = {
     infinite: true,
@@ -106,10 +102,9 @@ export const SliderGraph = (props: SliderGraphProps) => {
   };
 
   const sliderPanes = graphs.map((item, ix) => {
-    console.log(item);
     return <div className="sliderGraphItem" key={ix} style={{ height: `${height}px` }}>
-      <WidgetTitle size="mini" title={item.title} />
-      <div className={`${bordered ? 'bordered' : ''}`} style={{ height: item.icon === 'chart bar' ? `${height}px` : `${height - 18}px` }} >
+      <WidgetTitle size="small" title={item.title} />
+      <div style={{ textAlign: slidesToShow > 1 ? 'center' : 'left', height: item.icon === 'chart bar' ? `${height}px` : `${height - 32}px` }} >
         {getCharts(item, false)}
       </div>
     </div>
@@ -119,7 +114,7 @@ export const SliderGraph = (props: SliderGraphProps) => {
 }
 
 export const SliderGraphTumblr = (props: SliderGraphProps) => {
-  const { graphs = [], bordered = true, defaultIndex = 0, slidesToShow = 1, height = 600 } = props;
+  const { graphs = [], defaultIndex = 0, slidesToShow = 1, height = 600 } = props;
 
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
 
@@ -135,8 +130,8 @@ export const SliderGraphTumblr = (props: SliderGraphProps) => {
 
   const sliderPanes = graphs.map((item, ix) => {
     return <div className="sliderGraphItem" key={ix} style={{ height: '100px', padding: '2px' }}>
-      <label>{unCamelCase(item.title)}</label>
-      <div className={`${bordered ? 'bordered' : ''}`} style={{ height: '80%' }} onClick={() => setActiveIndex(ix)}>
+      <label>{item.title}</label>
+      <div className="bordered" style={{ height: '80%' }} onClick={() => setActiveIndex(ix)}>
         {getCharts(item, true)}
       </div>
     </div>
@@ -147,7 +142,7 @@ export const SliderGraphTumblr = (props: SliderGraphProps) => {
     <div style={{ flex: '1' }}>
       {getCharts(graphs[activeIndex], false)}
     </div>
-    <div className='sliderGraph' style={{ height: '130px' }}>
+    <div className='sliderGraph' style={{ height: '130px', marginTop: '10px' }}>
       <Divider />
       <Slider {...settings} >{sliderPanes}</Slider>
     </div>
@@ -156,4 +151,3 @@ export const SliderGraphTumblr = (props: SliderGraphProps) => {
 
 const CustomArrowPrev = (props: any) => (<div className={`custom-slick-arrow custom-slick-prev`}><Icon name='arrow left' onClick={props.onClick} link /></div>);
 const CustomArrowNext = (props: any) => (<div className={`custom-slick-arrow custom-slick-next`}><Icon name='arrow right' onClick={props.onClick} link /></div>);
-

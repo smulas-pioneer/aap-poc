@@ -162,8 +162,8 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
     const minDate = data && moment(data[0].date).format(lang.DATE_FORMAT);
     const maxDate = displayedData && moment(displayedData[displayedData.length - 1].date).format(lang.DATE_FORMAT);
 
-    return <div style={{ height: '100%' }}>
-      {actions && <Menu compact borderless fluid>
+    return <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      {actions && <Menu secondary compact borderless fluid style={{ marginBottom: '1em' }}>
         <Menu.Menu>
           <Menu.Item>
             <Input style={{}} type='number' label="Target Return (%)" size="mini" value={this.state.target_Return} onChange={(a, b) => this.handleChangeTargetReturn(b.value)} />
@@ -183,13 +183,14 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
             Probability: &nbsp;&nbsp;<Progress style={{ width: 100, margin: 0 }} color={this.state.probability >= 95 ? 'green' : this.state.probability > 60 ? 'orange' : 'red'} percent={this.state.probability} progress />
           </Menu.Item>
         </Menu.Menu>
-      </Menu>}
-      <ResponsiveContainer width="100%" height={actions ? '80%' : '100%'}>
+      </Menu>
+      }
+      <ResponsiveContainer style={{ flex: 1 }} width="100%" height={actions ? '80%' : '100%'}  >
         <LineChart width={500} height={700} data={displayedData}
           margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
           <XAxis dataKey="date" tickFormatter={() => ""} interval={10} hide={!caption} />
           <YAxis tickFormatter={(d: number) => perc(d)} domain={['auto', 'auto']} hide={!caption} />
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid strokeDasharray={caption ? '3 3' : '1 1'} />
           {actions && <Tooltip formatter={(d: number) => perc(d) + '%'} />}
           <Line type="monotone" dot={false} dataKey="perf" strokeWidth={3} stroke={Colors.RED} />
           <Line type="monotone" dot={false} dataKey="projection" strokeWidth={2} stroke={Colors.BLUE} />
