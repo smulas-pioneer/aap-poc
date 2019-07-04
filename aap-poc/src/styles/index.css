@@ -346,6 +346,13 @@ div.col-user-menu .menu-user{
   text-align: center;
 }
 
+.btnProposals {
+  padding: 10px;
+  position: absolute;
+  right:0;
+  top:0;
+  border:none;
+}
 /* TODO: Ask to ruska to put in theme color */
 .ui.dropdown .menu>.divider{
   border-top-color:  rgba(255,255,255,.1) !important;

@@ -19,16 +19,16 @@ const fmt = (num: number) => Math.ceil(num * 10) / 10
 const rndS = (data: string[]) => data[rnd(0, data.length - 1)];
 const dump = (file: string, data: any) => fs.writeFileSync(`./build/${file}`, JSON.stringify(data, null, 2));
 
-const regionCountry ={
+const regionCountry = {
   'Nord Ovest': 'Italy',
-  'Lombardia':'Italy',
+  'Lombardia': 'Italy',
   'Nord Est': 'Italy',
   'Centro Nord': 'Italy',
   'Centro': 'Italy',
   'Sud': 'Italy',
   'Sicilia': 'Italy',
   'Germany': 'Germany',
-  'Austria':'Austria',
+  'Austria': 'Austria',
   'Luxemburg': 'Luxemburg'
 }
 
@@ -110,16 +110,16 @@ const portfolioCreator = (id: string, name: string): Portfolio => {
 var clientIndex = 0;
 type Country = 'Italy' | 'Luxemburg' | 'Austria' | 'Germany'
 
-const getSameRegionAgents = (country:string) => {
-  const filteredAgents =  agents.filter(p=>agentDictionary[p].branch.city.country===country);
-//  console.log(country,filteredAgents,JSON.stringify(agentDictionary));
+const getSameRegionAgents = (country: string) => {
+  const filteredAgents = agents.filter(p => agentDictionary[p].branch.city.country === country);
+  //  console.log(country,filteredAgents,JSON.stringify(agentDictionary));
   return filteredAgents;
 }
 
 const clientCreator = (id: string, models: Portfolio[], agents: string[], country: Country): Client => {
   const faker = getFake(country);
 
-  
+
   const name = faker.name.firstName();
   const lastName = faker.name.lastName();
   const modelIx = Math.ceil(Math.random() * (MODEL_COUNT - 1));
@@ -272,8 +272,11 @@ const holdingsCreator = (num: number): Holding[] => {
   return numArray(num).map(i => {
     const sec = i == 0 ? cash : securities[rnd(1, securities.length - 1)];
     const quantity = Math.ceil(rnd(0, 100000));
-    const amount = i == 0 ? quantity : Math.ceil(rnd(0, 1000000));
-    tot += amount;
+    const amount = i == 0
+      ? quantity * 100
+      : Math.ceil(rnd(0, 1000000));
+
+      tot += amount;
     return {
       securityId: sec.IsinCode,
       weight: 0,
@@ -323,14 +326,14 @@ const alertHistoryCreator = (date: string, days: number, clients: Client[]): Ale
 }
 
 const historyCreator = (clients: Client[]): { [clientId: string]: InterviewResult[] } => {
-  const today=new Date(REFERENCE_DATE_TODAY);
+  const today = new Date(REFERENCE_DATE_TODAY);
   return clients.reduce((prev, curr) => {
     const faker = getFake(curr.country);
     const n = rnd(4, 12);
     prev[curr.id] = numArray(n).map(i => {
       const r = rnd(1, 100);
       const status = r < 30 ? 'REJECTED' : 'ACCEPTED';
-      let date = faker.date.past(3,today);
+      let date = faker.date.past(3, today);
       /*
       while (moment(date).format('YYYY-MM-DD') >= REFERENCE_DATE_TODAY) {
         date = faker.date.past(3,today);
@@ -405,8 +408,8 @@ const modelFaker = getFake('Italy');
 export const createModels = () => numArray(MODEL_COUNT)
   .map(i => portfolioCreator(i.toString(), modelFaker.commerce.productName()));
 
-  export const clientsCreator = (models: Portfolio[]) => {
-  let id=0;
+export const clientsCreator = (models: Portfolio[]) => {
+  let id = 0;
   return [
     ...numArray(CLIENT_COUNT_IT).map(i => clientCreator((id++).toString(), models, agents, 'Italy')),
     ...numArray(CLIENT_COUNT_AT).map(i => clientCreator((id++).toString(), models, agents, 'Austria')),
@@ -416,9 +419,9 @@ export const createModels = () => numArray(MODEL_COUNT)
 
 }
 
-export const createRandomPerformanceForSecurity = (dateFormat='YYYY-MM-DD') => {
+export const createRandomPerformanceForSecurity = (dateFormat = 'YYYY-MM-DD') => {
   let s = 1;
-  let date = moment(REFERENCE_DATE_TODAY).subtract(500,'days');
+  let date = moment(REFERENCE_DATE_TODAY).subtract(500, 'days');
   let ret = [
     { date: date.format(dateFormat), perf: 1 }
   ]
@@ -427,7 +430,7 @@ export const createRandomPerformanceForSecurity = (dateFormat='YYYY-MM-DD') => {
   const max = rnd(10, 170);
   numArray(50).forEach(i => {
     s = s + rnd(min, max) / 10000;
-    date = date.add(10,'days');
+    date = date.add(10, 'days');
     ret.push({ date: date.format(dateFormat), perf: s });
   });
   return ret;
@@ -458,7 +461,7 @@ const fixPerformance = (perf: { date: string, perf: number }[]) => {
       date,
       perf: lastPerf
     });
-    dt = dt.subtract(10,'days');
+    dt = dt.subtract(10, 'days');
   }
   return ret.sort((a, b) => a.date.localeCompare(b.date));
 }

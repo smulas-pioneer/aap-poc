@@ -55,7 +55,7 @@ const acceptAll = (forced: StrategyItem[]) => {
 
 
 const getAttributeBreakDown = (attributeName: string, holdings: PositionItem[]): Breakdown => {
-  console.log(holdings);
+  console.log(attributeName);
   const mappedData = holdings
     .filter(f => f.security![attributeName] !== null)
     .map(s => ({ value: s.security![attributeName], weight: s.weight, bmk: s.weight }));
