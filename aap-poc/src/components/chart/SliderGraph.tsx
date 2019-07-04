@@ -6,6 +6,7 @@ import { Divider, Icon, Segment } from 'semantic-ui-react';
 import Slider from "react-slick";
 import { WidgetTitle } from '../shared/WidgetTitle';
 import { numArray } from '../../_db/common/radarUtils';
+import { unCamelCase } from '../../commonUtils';
 
 
 interface SliderGraphBaseProps {
@@ -134,7 +135,7 @@ export const SliderGraphTumblr = (props: SliderGraphProps) => {
 
   const sliderPanes = graphs.map((item, ix) => {
     return <div className="sliderGraphItem" key={ix} style={{ height: '100px', padding: '2px' }}>
-      <label>{item.title}</label>
+      <label>{unCamelCase(item.title)}</label>
       <div className={`${bordered ? 'bordered' : ''}`} style={{ height: '80%' }} onClick={() => setActiveIndex(ix)}>
         {getCharts(item, true)}
       </div>

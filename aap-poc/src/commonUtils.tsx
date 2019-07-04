@@ -18,3 +18,13 @@ export function arrayHasValue(array?: any[], value?: any) {
   const a = array.find(v => v === value.toString());
   return a ? true : false;
 }
+
+/**
+ * Add space between camelCase text.
+ */
+export function unCamelCase(str?: string) {
+  if (!str) return str;
+  str = str.replace(/([a-z\xE0-\xFF])([A-Z\xC0\xDF])/g, '$1 $2');
+  str = str.replace(/^\w|\s\w/g, s => s.toUpperCase());
+  return str;
+}

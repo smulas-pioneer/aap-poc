@@ -353,6 +353,7 @@ div.col-user-menu .menu-user{
   border-top-color:  rgba(255,255,255,.1) !important;
 }
 
-.dynamicMenuContext{
-  color: rgb(84, 200, 255) !important;
+.custom-filter.menu .dynamicMenuContext {
+  /* color: rgb(84, 200, 255) !important; */
+  color: #949494 !important;
 }
