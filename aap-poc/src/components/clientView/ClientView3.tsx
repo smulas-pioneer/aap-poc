@@ -16,7 +16,7 @@ import { ClientAlert } from './ClientAlert';
 import { ClientCard } from './ClientCard';
 import { ClientHistory } from './ClientHistory';
 import { Fees } from './Fees';
-import { SliderGraph, SliderGrapMultiView, } from '../chart/SliderGraph';
+import { SliderGrapMultiView, } from '../chart/SliderGraph';
 import { PerformanceChart } from '../chart//PerformanceChart';
 import { RiskReturnGraph } from '../chart/RiskReturnGraph';
 import { RadarGraph } from '../chart/RadarGraph';
@@ -80,11 +80,10 @@ export const ClientView = conn.PureCompo(props => {
   const [state, dispatch] = React.useReducer(reducer, defaultState);
   const { radar, axes, somethingIsChanged, viewHistory, processing, stateStrategy, breakdown } = state;
 
+
   React.useEffect(() => {
+    dispatch({hideProposal:true});
     getClient({ id });
-    setTimeout(() => {
-      selectAllAxes();
-    }, 100);
   }, [id, getClient]);
 
   React.useEffect(() => {
@@ -110,20 +109,24 @@ export const ClientView = conn.PureCompo(props => {
     [axes]
   );
 
+  React.useEffect(() => {
+    toggleAllAxes(!state.hideProposal);
+  }, [state.hideProposal]);
+
   /*
   componentWillUnmount() {
     this.props.getClientSuccess();
   }
   */
 
-  const selectAllAxes = () => {
+  const toggleAllAxes = (value: boolean) => {
     const axes = {
-      concentration: true,
-      consistency: true,
-      riskAdequacy: true,
-      riskAnalysis: true,
-      overlap: true,
-      efficency: true
+      concentration: value,
+      consistency: value,
+      riskAdequacy: value,
+      riskAnalysis: value,
+      overlap: value,
+      efficency: value
     }
     dispatch({ axes });
   }

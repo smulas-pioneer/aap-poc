@@ -6,7 +6,7 @@ import * as Model from '../actions/model';
 import { Link } from "react-router-dom";
 import { LangBar } from './LangBar';
 import { Spotlight } from './spotlight'
-import { logout, setAppTheme } from '../actions/index';
+import { logout, setAppTheme, searchClient } from '../actions/index';
 import { UserInfo } from '../actions/model';
 import { LangDictionary } from '../reducers/language/interfaces';
 import { SpotlightSearchResultItem } from '../_db/interfaces';
@@ -37,7 +37,8 @@ const conn = appConnector<MenuFlatProps>()(
   }),
   {
     logout,
-    setAppTheme
+    setAppTheme,
+    searchClient
   }
 )
 
@@ -141,6 +142,25 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
         <Dropdown.Item onClick={() => logout()}>{lang.SIGN_OUT}</Dropdown.Item>
         <Dropdown.Divider />
         <Dropdown.Item><span style={{ marginRight: 5 }}>v {process.env.REACT_APP_VERSION} </span></Dropdown.Item>
+
+        {/* //TODO: Remove it!
+        <Dropdown.Divider />
+        <DropdownItem selected text=" -------- DEBUG -------- " ></DropdownItem>
+        <DropdownItem onClick={() => {
+          this.props.searchClient({
+            filter: '',
+            uid: 'dashboard',
+            dynamicFilters: [{ context: 'Currency', key: 'EUR', value: 0.5, operation: DynamicFilterOperation.GraterEqualThan }]
+          });
+        }}>Add Custom filter...</DropdownItem> */}
+        {/* <DropdownItem onClick={() => {
+          this.props.searchClient({
+            filter: '',
+            uid: 'dashboard',
+            dynamicFilters: undefined
+          });
+        }}>Remove Custom filter...</DropdownItem> */}
+
       </Dropdown.Menu>
     </Dropdown>;
 
@@ -178,13 +198,12 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
         <Menu secondary borderless compact fluid className='menu-user' size='large' >
           {userMenuDropDown}
         </Menu>
-
         <Menu secondary borderless compact fluid className='menu-options'>
           <Menu.Item as="a" onClick={() => this.goHome()} >
             <Icon size='large' name='home' />
           </Menu.Item>
           <Menu.Item as="a" position='right' >
-            <Share iconSize='large' buttons={['Print', 'Pdf', 'Email']} />
+            <Share iconSize='large' buttons={['Print', 'Pdf', 'Email']}  />
           </Menu.Item>
           {this.spotlightMenuItem()}
           <Menu.Item onClick={this.handleSetTheme}>

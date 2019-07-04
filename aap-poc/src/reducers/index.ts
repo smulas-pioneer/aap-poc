@@ -51,6 +51,7 @@ export const getSearchFilter = (state: AppState, uid: string) => fromSearch.getS
 export const getIsOnlyItaly = (state: AppState, uid: string) => fromSearch.getIsOnlyItaly(state.search, uid);
 export const getIsCountryActive = (state: AppState, uid: string) => (country: string) => fromSearch.getIsSearchActive(state.search, uid, 'countries', country);
 export const getIsRegionActive = (state: AppState, uid: string) => (region: string) => fromSearch.getIsSearchActive(state.search, uid, 'regions', region);
+export const getSearchParms = (state: AppState, uid: string) => fromSearch.getSearchParms(state.search, uid);
 
 export const getCurrentClient = (state: AppState) => fromClient.getCurrentClient(state.client);
 export const getSuggestedTransactions = (state: AppState) => fromClient.getSuggestedTransactions(state.client);

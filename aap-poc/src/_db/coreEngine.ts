@@ -1,4 +1,4 @@
-import { PositionItem, StrategyItem, RadarStrategyParm, Breakdown, PerformancePeriod, Client, TimeHorizon } from "./interfaces";
+import { PositionItem, StrategyItem, RadarStrategyParm, Breakdown, PerformancePeriod, TimeHorizon } from "./interfaces";
 import { sumBy, groupBy } from "lodash";
 import { solve } from "./solver";
 import { performances, perfSummary } from "./data/index";
@@ -38,8 +38,6 @@ const getSuggestion1 = (position: StrategyItem[], axes: RadarStrategyParm, calcu
 };
 
 
-
-
 const fixCash = (strategy: StrategyItem[]) => {
   const delta = sumBy(strategy, f => (f.currentWeight + (f.suggestionAccepted ? f.suggestedDelta : 0))) - 1;
   return strategy.map(s => {
@@ -74,9 +72,7 @@ const getAttributeBreakDown = (attributeName: string, holdings: PositionItem[]):
   }
 }
 
-export const getBreakdowns = (clients: Client[]) => {
 
-}
 
 export const getBreakdown = (holdings: PositionItem[]) => {
   const attributes = [

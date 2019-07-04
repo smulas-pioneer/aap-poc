@@ -1,5 +1,5 @@
 import { Client, Transaction, Breakdown, InterviewResult, StrategyItem } from "../_db/interfaces";
-import { getClientSuccess, getClientSuggestedTranasactionsSuccess, getBreakdownsSuccess, getHistorySuccess, getStrategySuccess, logoutSuccess } from "../actions/index";
+import { getClientSuccess, getClientSuggestedTranasactionsSuccess, getBreakdownsSuccess, getHistorySuccess, getStrategySuccess, logoutSuccess, getHistoryAndStrategySuccess } from "../actions/index";
 
 export interface ClientState {
     clientData: Client | undefined;
@@ -29,6 +29,8 @@ export default (state: ClientState = defaultState, action: any): ClientState => 
         return { ...state, breakdowns: action.payload }
     } else if (getHistorySuccess.matchAction(action)) {
         return { ...state, history: action.payload }
+    } else if (getHistoryAndStrategySuccess.matchAction(action)) {
+        return { ...state, history: action.payload[0], strategy: action.payload[1], strategySuccessCount: state.strategySuccessCount + 1 }
     } else if (getStrategySuccess.matchAction(action)) {
         return { ...state, strategy: action.payload, strategySuccessCount: state.strategySuccessCount + 1 }
     } else if (logoutSuccess.matchAction(action)) {
