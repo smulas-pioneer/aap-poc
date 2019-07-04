@@ -89,7 +89,7 @@ export const getBreakdown = (holdings: PositionItem[]) => {
 
 const performanceForPeriod = (isin: string, period: PerformancePeriod) => {
   const data = performances[isin];
-  if (!data) {
+  if (!data || data.length===0) {
     console.error('performances not found for:', isin);
     return [];
   }

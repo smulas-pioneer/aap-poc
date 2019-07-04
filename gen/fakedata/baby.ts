@@ -1,5 +1,4 @@
 import { Security } from "../common/interfaces";
-import { securities } from "../common/securities";
 
 export const babySecurities: Security[] = [
   { IsinCode: 'DE000A1HRVD5', Currency: 'EUR', Maturity: undefined, AssetId: 'DE000A1HRVD5', Kilovar: '1', IsFund: '0', SecurityName: 'DAIGAG 3.625% 10/21', MacroAssetClass: 'Fixed Income', MicroAssetClass: 'Real Estate', Sector: undefined, Rating: 'BBB+', Country: 'Germany', Region: 'Europe', Price: 108.5515 },
@@ -168,3 +167,5 @@ export const bbCase = babySecurities.map(s => {
     Shares: position[s.IsinCode].quantity ,
   }
 });
+
+

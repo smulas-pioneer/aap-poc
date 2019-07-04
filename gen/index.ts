@@ -375,37 +375,38 @@ const agents = Object.keys(agentDictionary);
 const modelFaker = getFake('Italy');
 export const createModels = () => numArray(MODEL_COUNT)
   .map(i => portfolioCreator(i.toString(), modelFaker.commerce.productName()));
-export const clientsCreator = (models: Portfolio[]) => {
 
+  export const clientsCreator = (models: Portfolio[]) => {
+  let id=0;
   return [
-    ...numArray(CLIENT_COUNT_IT).map(i => clientCreator(i.toString(), models, agents, 'Italy')),
-    ...numArray(CLIENT_COUNT_AT).map(i => clientCreator(i.toString(), models, agents, 'Austria')),
-    ...numArray(CLIENT_COUNT_DE).map(i => clientCreator(i.toString(), models, agents, 'Germany')),
-    ...numArray(CLIENT_COUNT_LU).map(i => clientCreator(i.toString(), models, agents, 'Luxemburg')),
+    ...numArray(CLIENT_COUNT_IT).map(i => clientCreator((id++).toString(), models, agents, 'Italy')),
+    ...numArray(CLIENT_COUNT_AT).map(i => clientCreator((id++).toString(), models, agents, 'Austria')),
+    ...numArray(CLIENT_COUNT_DE).map(i => clientCreator((id++).toString(), models, agents, 'Germany')),
+    ...numArray(CLIENT_COUNT_LU).map(i => clientCreator((id++).toString(), models, agents, 'Luxemburg')),
   ]
 
 }
 
-const createPerformance = () => {
+export const createRandomPerformanceForSecurity = (dateFormat='YYYY-MM-DD') => {
   let s = 1;
-  let date = moment(REFERENCE_DATE_TODAY).subtract('days', 500);
+  let date = moment(REFERENCE_DATE_TODAY).subtract(500,'days');
   let ret = [
-    { date: date.format('YYYY-MM-DD'), perf: 1 }
+    { date: date.format(dateFormat), perf: 1 }
   ]
 
   const min = rnd(-10, -100);
   const max = rnd(10, 170);
   numArray(50).forEach(i => {
     s = s + rnd(min, max) / 10000;
-    date = date.add('days', 10);
-    ret.push({ date: date.format('YYYY-MM-DD'), perf: s });
+    date = date.add(10,'days');
+    ret.push({ date: date.format(dateFormat), perf: s });
   });
   return ret;
 }
 
 const createAllSecuritiesPerformance = () => {
   return securities.reduce((prev, curr) => {
-    prev[curr.IsinCode] = createPerformance();
+    prev[curr.IsinCode] = createRandomPerformanceForSecurity();
     return prev;
   }, {});
 }
@@ -417,7 +418,7 @@ const fixPerformance = (perf: { date: string, perf: number }[]) => {
   }, {});
 
   const maxDate = maxBy(perf, d => d.date).date;
-  let dt = moment(maxDate);
+  let dt = moment(new Date(maxDate));
   let ret: { date: string, perf: number }[] = [];
   let lastPerf = dict[maxDate];
 
@@ -428,7 +429,7 @@ const fixPerformance = (perf: { date: string, perf: number }[]) => {
       date,
       perf: lastPerf
     });
-    dt = dt.subtract('days', 10);
+    dt = dt.subtract(10,'days');
   }
   return ret.sort((a, b) => a.date.localeCompare(b.date));
 }
