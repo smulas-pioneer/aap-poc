@@ -70,17 +70,15 @@ export const SliderGrapMultiView = (props: SliderGraphMultiViewProps) => {
     height: mode === 'multi' ? (height / settings.multiSegment) - 20 : height
   }
 
-  const Wrapper = (props: { children: any }) => <Segment style={{ marginBottom: 0 }}>{props.children}</Segment>
-
   return <div style={{ position: 'relative' }}>
     {mode === 'tumblr'
-      ? <Wrapper><SliderGraphTumblr {...graphProps} defaultIndex={0} slidesToShow={settings.tumblrSlidesToShow} /></Wrapper>
+      ? <Segment style={{ marginBottom: 0 }}><SliderGraphTumblr {...graphProps} defaultIndex={0} slidesToShow={settings.tumblrSlidesToShow} /></Segment>
       : mode === 'single'
-        ? <Wrapper><SliderGraph {...graphProps} defaultIndex={0} slidesToShow={settings.singleSlidesToShow}  /></Wrapper>
+        ? <Segment style={{ marginBottom: 0 }}><SliderGraph {...graphProps} defaultIndex={0} slidesToShow={settings.singleSlidesToShow}  /></Segment>
         : mode === 'multi'
           ? <div className='ui-flex ui-flex-col'>
             {numArray(settings.multiSegment).map((i) => (
-              <Wrapper key={i}><SliderGraph {...graphProps} defaultIndex={i} slidesToShow={settings.multiSlidesToShow}/></Wrapper>
+              <Segment key={i} style={{ marginBottom: 0 }}><SliderGraph {...graphProps} defaultIndex={i} slidesToShow={settings.multiSlidesToShow}/></Segment>
             ))}
           </div>
           : null
