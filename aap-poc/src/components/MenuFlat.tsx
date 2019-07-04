@@ -1,7 +1,7 @@
 import * as React from "react";
 import { appConnector } from 'app-support';
 import { getLanguage, getCurrentUser, getConfigLayout, getTheme } from '../reducers/index';
-import { Menu, MenuItemProps, Dropdown, Image, Icon, Button } from 'semantic-ui-react';
+import { Menu, MenuItemProps, Dropdown, Image, Icon } from 'semantic-ui-react';
 import * as Model from '../actions/model';
 import { Link } from "react-router-dom";
 import { LangBar } from './LangBar';
@@ -208,7 +208,7 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
           {this.spotlightMenuItem()}
           <Menu.Item as="a" onClick={this.handleSetTheme}>
             <svg width='20' height='20' viewBox="0 0 50 50" >
-              <circle cx="25" cy="25" r="25" fill={this.props.theme === 'dark' ? 'white' : 'black'}/>
+              <circle cx="25" cy="25" r="25" fill={this.props.theme === 'dark' ? 'white' : 'black'} />
             </svg>
           </Menu.Item>
         </Menu>
