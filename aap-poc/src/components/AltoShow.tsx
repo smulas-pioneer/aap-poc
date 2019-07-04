@@ -2,18 +2,36 @@ import * as React from 'react';
 import Slider from 'react-slick';
 import { Icon, List, Accordion } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
+import { parse } from '@babel/parser';
 
+const parseName = (name: string) => {
+  const nameWithoutExt = name.substring(0, name.length - 4)
+  const ix = nameWithoutExt.indexOf('.');
+  if (ix > -1) {
+    return {
+      name: nameWithoutExt.substr(ix + 1),
+      id: parseInt(nameWithoutExt.substr(0, ix))
+    }
+  } else {
+    return {
+      name: nameWithoutExt,
+      id: 0
+    }
+  }
 
+}
 
 const getImagesByGroup = async (groupId: string) => {
   const man = await fetch(`altoshow/${groupId}/manifest.json`)
   const json = await man.json();
   return {
     name: groupId,
-    images: json.files.map((s: string) => ({ name: s.substring(0, s.length - 4), src: `/altoshow/${groupId}/${s}` }))
+    images: json.files.map((s: string) => ({
+      ...parseName(s),
+      src: `${process.env.REACT_APP_ALTOSHOWPREFIX || ''}/altoshow/${groupId}/${s}`
+    }))
   }
 }
-
 
 export const AltoShow = () => {
   const [list, setList] = useState<{ name: string, images: any[] }[]>([]);
@@ -43,14 +61,22 @@ export const AltoShow = () => {
   const panels = list.map(s => ({
     key: s.name,
     title: s.name,
-    content: <Accordion.Content><List>
-      {s.images.map(img => <List.Item onClick={() => setCurrent(img.src)}>{img.name}</List.Item>)}
-    </List></Accordion.Content>
+    content: <Accordion.Content>
+      <List >
+          {s.images.map((img, ix) =>
+            <List.Item as="a" key={ix} onClick={() => setCurrent(img.src)} >
+              <List.Icon name='marker' color={img.src === current ? 'yellow':'grey'}/>
+              <List.Content>
+                {img.name}
+              </List.Content>
+            </List.Item>)}
+      </List>
+    </Accordion.Content>
   }))
 
   return <div style={{ height: '100vh', width: '100%' }} >
     <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
-      <Accordion defaultActiveIndex={0} panels={panels} styled style={{ width: '200px' }} />
+      <Accordion defaultActiveIndex={0} panels={panels} styled style={{ width: '250px' }} />
       <div style={{ flex: '1' }}>
         {current && <img width='100%' src={current} />}
       </div>
