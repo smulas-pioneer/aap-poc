@@ -34,8 +34,7 @@ export const AgentGeoPie = ({ clients, width = 700, height = 300 }: { clients: C
                 labelLine
                 label={renderCustomizedLabel}
                 outerRadius={80}
-                fill="#8884d8"
-            >
+                fill="#8884d8"            >
                 {
                     data.map((entry: any, index: any) => <Cell key={index} fill={REGION_COLORS[index % REGION_COLORS.length]} />)
                 }

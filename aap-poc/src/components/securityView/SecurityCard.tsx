@@ -5,7 +5,7 @@ import { WithLang } from "../../reducers/language/interfaces";
 import { getPerformances } from "../../_db/coreEngine";
 import { PerformanceChart } from "../chart/PerformanceChart";
 
-export const SecurityCard = ({ security, lang }: { security: Security } & WithLang) => {
+export const SecurityCard = ({ security, lang, height }: { security: Security, height: number } & WithLang) => {
     const p = getPerformances([security.IsinCode], '1Y')[security.IsinCode];
     const fmt = new Intl.NumberFormat(lang.NUMBER_FORMAT, {
         minimumFractionDigits: 2,
@@ -15,45 +15,47 @@ export const SecurityCard = ({ security, lang }: { security: Security } & WithLa
     const lastPerf = fmt.format(100 * (p[p.length - 1].perf)) + '%';
     const delta = p[p.length - 1].perf - p[p.length - 2].perf;
 
-    return <Segment padded fluid="very">
-        <Segment textAlign="center" basic >
-            <h1>{security.SecurityName}</h1>
-        </Segment>
-        <Grid>
-            <Grid.Row columns={2}  >
-                <Grid.Column width={8}>
-                    <Table compact>
-                        <Table.Body>
-                            <Item label="Country" value={security.Country} />
-                            <Item label="Currency" value={security.Currency} />
-                            <Item label="Isin Code" value={security.IsinCode} />
-                            <Item label="Kilovar" value={security.Kilovar} />
-                            <Item label="Macro Asset Class" value={security.MacroAssetClass} />
-                            <Item label="Micro Asset Class" value={security.MicroAssetClass} />
-                            <Item label="Maturity" value={security.Maturity} />
-                            <Item label="Rating" value={security.Rating} />
-                            <Item label="Region" value={security.Region} />
-                            <Item label="Sector" value={security.Sector} />
-                            <Advise label="Advise" value={security} />
-                        </Table.Body>
-                    </Table>
-                </Grid.Column>
-                <Grid.Column width={8}>
-                    <PerformanceChart data={p}  lang={lang} version={1} />
-                    <Statistic.Group size="small" widths="1">
-                        <Statistic>
-                            <Statistic.Value>
-                                {lastPerf}
-                                {' '}
-                                <Icon size="large" name={delta > 0 ? 'triangle up' : 'triangle down'} color={delta > 0 ? 'green' : 'red'} />
-                            </Statistic.Value>
-                            <Statistic.Label>performance</Statistic.Label>
-                        </Statistic>
-                    </Statistic.Group>
-                </Grid.Column>
-            </Grid.Row>
-        </Grid>
-    </Segment>
+    return <Grid style={{ height: `${height}px` }}>
+        <Grid.Row >
+            <Grid.Column textAlign="center" >
+                <h1>{security.SecurityName}</h1>
+            </Grid.Column>
+        </Grid.Row>
+        <Grid.Row >
+            <Grid.Column width={6}>
+                <Table compact>
+                    <Table.Body>
+                        <Item label="Country" value={security.Country} />
+                        <Item label="Currency" value={security.Currency} />
+                        <Item label="Isin Code" value={security.IsinCode} />
+                        <Item label="Kilovar" value={security.Kilovar} />
+                        <Item label="Macro Asset Class" value={security.MacroAssetClass} />
+                        <Item label="Micro Asset Class" value={security.MicroAssetClass} />
+                        <Item label="Maturity" value={security.Maturity} />
+                        <Item label="Rating" value={security.Rating} />
+                        <Item label="Region" value={security.Region} />
+                        <Item label="Sector" value={security.Sector} />
+                        <Advise label="Advise" value={security} />
+                    </Table.Body>
+                </Table>
+                <Statistic.Group size="small" widths="1">
+                    <Statistic>
+                        <Statistic.Value>
+                            {lastPerf}
+                            {' '}
+                            <Icon size="large" name={delta > 0 ? 'triangle up' : 'triangle down'} color={delta > 0 ? 'green' : 'red'} />
+                        </Statistic.Value>
+                        <Statistic.Label>performance</Statistic.Label>
+                    </Statistic>
+                </Statistic.Group>
+            </Grid.Column>
+            <Grid.Column width={10} >
+                <div style={{ height: `100%` }}>
+                    <PerformanceChart data={p} lang={lang} version={1} actions={false} />
+                </div>
+            </Grid.Column>
+        </Grid.Row>
+    </Grid>
 }
 
 const Item = (props: { label: string, value: string | null }) => {
