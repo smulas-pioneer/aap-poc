@@ -26,14 +26,16 @@ export const Root = conn.PureCompo(props => {
   }, [])
 
   const { logged, manager, login, theme } = props;
-  
-  if (theme === 'dark') {
-    require('../styles/bigone-gen.css');
-    require('../styles/bigone.css');
-  }
+
+  const themeLink = (theme === 'dark')
+    ? <>
+      <link href="../bigone.css" rel="stylesheet" />
+    </>
+    : null;
 
   return (
     <div>
+      {themeLink}
       {
         logged
           ? <App manager={manager} />
