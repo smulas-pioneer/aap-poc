@@ -158,7 +158,7 @@ const CustomComposedChartValueChange = (props: CustomComposedChartValueChangePro
   return <div style={{ display: 'flex', flexDirection: 'row', padding: 10 }}>
 
     <div style={{ textAlign: "right", paddingRight: 10 }}>
-      <h2 style={{ color: "#54c8ff" }} >{props.attributeValue}</h2>
+      <h2 style={{ color: "#2185d0" }} >{props.attributeValue}</h2>
     </div>
 
     <div >
