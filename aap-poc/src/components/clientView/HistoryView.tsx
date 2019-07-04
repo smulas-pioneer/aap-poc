@@ -11,11 +11,11 @@ interface HistoryViewProps {
   lang: LangDictionary,
   height?: number;
 }
-export const historyColors: { [id: string]: 'green' | '#db2828' | 'olive' | '#2185CB' | 'blue' | 'red' | 'orange' } = {
+export const historyColors: { [id: string]: 'green' | 'olive' | 'blue' | 'red' | 'orange' } = {
   ACCEPTED: 'green',
-  REJECTED: '#db2828',
+  REJECTED: 'red',
   ONGOING: 'olive',
-  ONHOLD: '#2185CB',
+  ONHOLD: 'blue',
   ...ClientStateColors as any
 }
 

@@ -14,10 +14,11 @@ import { GeoItalyClientsChart } from './GeoItalyClientsChart';
 import { MenuPagination } from '../shared/MenuPagination';
 import { FilterMapTypes } from '../../actions/model';
 import { ItalyMapClientsChart } from './ItalyMapClientsChart';
-import { formatAua, formatNumber } from '../../_db/utils';
+import { formatAua, formatNumber, getColorCustomClassName  } from '../../_db/utils';
 import { WidgetTitle } from '../shared/WidgetTitle';
 import { icons, historyColors } from '../clientView/HistoryView';
 import { REFERENCE_DATE_TODAY } from '../../_db/common/consts';
+
 import moment from 'moment';
 
 const conn = appConnector<{ uid: string, hideGraphs?: boolean, manager?: boolean, showTitle?: boolean, showFilter?: boolean }>()(
@@ -151,19 +152,18 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
               resultPage.map((client, clIndex) =>
                 <Table.Row key={clIndex}>
                   <Table.Cell>
-                    <Link to={`/clients/${client.id}`}>
+                    <Link to={`/clients/${client.id}`} className="color-blue">
                       {client.name}
                     </Link>
                   </Table.Cell>
                   {manager && <Table.Cell>{client.agent}</Table.Cell>}
                   <Table.Cell textAlign="right" >{fmt(client.aua)}</Table.Cell>
                   <Table.Cell>{client.lastInterviewDate}</Table.Cell>
-                  <Table.Cell style={{ color: historyColors[client.clientStatus] }}>
-                    <Icon name={icons[client.clientStatus]} size="small" />
+                  <Table.Cell className={getColorCustomClassName(historyColors[client.clientStatus])}>
+                     <Icon name={icons[client.clientStatus]} size="small" />
                     {client.clientStatus}
                   </Table.Cell>
-                  <Table.Cell>{client.clientStatusAge},&nbsp;
-                                            <small style={{ color: 'grey' }}>{moment(REFERENCE_DATE_TODAY).to(moment(client.clientStatusAge))}</small>
+                  <Table.Cell>{client.clientStatusAge},&nbsp;<small style={{ color: 'lightgrey' }}>{moment(REFERENCE_DATE_TODAY).to(moment(client.clientStatusAge))}</small>
                   </Table.Cell>
                   <Table.Cell>{client.clientRiskProfile}</Table.Cell>
                   <Table.Cell>{client.regulatoryIndicator === 0 ? '' : fmt(client.regulatoryIndicator, 1)}</Table.Cell>
