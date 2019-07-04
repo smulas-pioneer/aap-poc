@@ -203,11 +203,13 @@ class MenuFlat extends conn.StatefulCompo<MenuFlatState> {
             <Icon size='large' name='home' />
           </Menu.Item>
           <Menu.Item as="a" position='right' >
-            <Share iconSize='large' buttons={['Print', 'Pdf', 'Email']}  />
+            <Share iconSize='large' buttons={['Print', 'Pdf', 'Email']} />
           </Menu.Item>
           {this.spotlightMenuItem()}
-          <Menu.Item onClick={this.handleSetTheme}>
-            <Button circular icon color={this.props.theme === 'dark' ? 'black' : undefined} size='mini'  />
+          <Menu.Item as="a" onClick={this.handleSetTheme}>
+            <svg width='20' height='20' viewBox="0 0 50 50" >
+              <circle cx="25" cy="25" r="25" fill={this.props.theme === 'dark' ? 'white' : 'black'}/>
+            </svg>
           </Menu.Item>
         </Menu>
 

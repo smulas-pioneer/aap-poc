@@ -1,3 +1,5 @@
+@import "bigone-gen.css";
+
 :root {
     --background-app: #171618;
 }
@@ -21,5 +23,3 @@ html,
     border: 1px solid rgba(95, 119, 136, 0.5);
     border-radius: 5px;
 }
-
-@import "bigone-gen.css";

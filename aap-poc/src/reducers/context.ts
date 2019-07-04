@@ -10,7 +10,7 @@ export interface ContextState {
 const defaultState: ContextState = {
     user: undefined,
     ready: false,
-    theme: 'white'
+    theme: 'dark'
 };
 
 // Root Reducer
