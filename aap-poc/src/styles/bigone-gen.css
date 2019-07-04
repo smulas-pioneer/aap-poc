@@ -1211,7 +1211,7 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
 
 .ui.active.button,
 .ui.active.button:hover {
-    color: #000
+    color: #fff
 }
 
 .ui.active.button,
@@ -13156,7 +13156,7 @@ img.ui.bordered.image {
     font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif;
     padding: .67857143em 1em;
     background: #272f38;
-    border: none;
+    border: 1px solid rgba(95, 119, 136, .5);
     color: #fff;
     border-radius: .28571429rem;
     -webkit-transition: box-shadow .1s ease, border-color .1s ease;
@@ -13581,6 +13581,7 @@ img.ui.bordered.image {
     color: rgba(0, 0, 0, .6);
     text-transform: none;
     font-weight: 700;
+    border: 1px solid rgba(95, 119, 136, .5);
     border-radius: .28571429rem;
     -webkit-transition: background .1s ease;
     transition: background .1s ease
@@ -16278,7 +16279,7 @@ ol.ui.horizontal.list li:before {
     margin: 1rem 0;
     padding: 1em;
     border-radius: .28571429rem;
-    border: none
+    border: 1px solid rgba(95, 119, 136, .5)
 }
 
 .ui.segment:first-child {
@@ -16342,7 +16343,7 @@ ol.ui.horizontal.list li:before {
 
 .ui.basic.table.segment {
     background: #272f38;
-    border: none;
+    border: 1px solid rgba(95, 119, 136, .5);
     box-shadow: none
 }
 
@@ -16425,7 +16426,7 @@ ol.ui.horizontal.list li:before {
     left: 0;
     position: absolute;
     width: 100%;
-    border: none;
+    border: 1px solid rgba(95, 119, 136, .5);
     box-shadow: ""
 }
 
@@ -16546,7 +16547,7 @@ ol.ui.horizontal.list li:before {
     flex-direction: column;
     position: relative;
     margin: 1rem 0;
-    border: none;
+    border: 1px solid rgba(95, 119, 136, .5);
     box-shadow: none;
     border-radius: .28571429rem
 }
@@ -16567,7 +16568,7 @@ ol.ui.horizontal.list li:before {
     width: auto;
     box-shadow: none;
     border: none;
-    border-top: none
+    border-top: 1px solid rgba(95, 119, 136, .5)
 }
 
 .ui.segments:not(.horizontal)>.segment:first-child {
@@ -16593,7 +16594,7 @@ ol.ui.horizontal.list li:before {
 }
 
 .ui.segments>.ui.segments {
-    border-top: none;
+    border-top: 1px solid rgba(95, 119, 136, .5);
     margin: 1rem
 }
 
@@ -16615,7 +16616,7 @@ ol.ui.horizontal.list li:before {
     box-shadow: none;
     margin: 1rem 0;
     border-radius: .28571429rem;
-    border: none
+    border: 1px solid rgba(95, 119, 136, .5)
 }
 
 .ui.segments>.horizontal.segments {
@@ -16624,7 +16625,7 @@ ol.ui.horizontal.list li:before {
     border-radius: 0;
     border: none;
     box-shadow: none;
-    border-top: none
+    border-top: 1px solid rgba(95, 119, 136, .5)
 }
 
 .ui.horizontal.segments>.segment {
@@ -17043,7 +17044,7 @@ ol.ui.horizontal.list li:before {
     color: #fff;
     box-shadow: none;
     border-radius: 0;
-    border: none;
+    border: 1px solid rgba(95, 119, 136, .5);
     border-right: 1px solid rgba(95, 119, 136, .5)
 }
 
@@ -17267,7 +17268,7 @@ ol.ui.horizontal.list li:before {
 }
 
 .ui.steps .step.active .title {
-    color: #000
+    color: #fff
 }
 
 .ui.ordered.steps .step.active:before,
@@ -20396,7 +20397,7 @@ ol.ui.horizontal.list li:before {
     font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif;
     background: #272f38;
     font-weight: 400;
-    border: none;
+    border: 1px solid rgba(95, 119, 136, .5);
     box-shadow: none;
     border-radius: .28571429rem;
     min-height: 2.85714286em
@@ -20555,6 +20556,8 @@ ol.ui.horizontal.list li:before {
     text-align: left;
     font-size: 1em !important;
     padding: .78571429em 1.14285714em !important;
+    background: #272f38 !important;
+    color: #fff !important;
     text-transform: none !important;
     font-weight: 400 !important;
     box-shadow: none !important;
@@ -20562,11 +20565,14 @@ ol.ui.horizontal.list li:before {
     transition: none !important
 }
 
+.ui.menu .ui.dropdown .menu>.item:hover {
+    background: rgba(56, 178, 182, .5) !important;
+    color: #fff !important
+}
+
 .ui.menu .ui.dropdown .menu>.active.item,
-.ui.menu .ui.dropdown .menu>.item,
-.ui.menu .ui.dropdown .menu>.item:hover,
 .ui.menu .ui.dropdown .menu>.selected.item {
-    background: #272f38 !important;
+    background: rgba(95, 119, 136, .5) !important;
     color: #fff !important
 }
 
@@ -20700,19 +20706,20 @@ ol.ui.horizontal.list li:before {
 .ui.menu .link.item:hover,
 .ui.menu a.item:hover {
     cursor: pointer;
-    background: rgba(95, 119, 136, .5);
+    background: rgba(56, 178, 182, .5);
     color: #fff
 }
 
 .ui.link.menu .item:active,
-.ui.menu .active.item,
 .ui.menu .link.item:active,
 .ui.menu a.item:active {
-    background: rgba(95, 119, 136, .5);
+    background: rgba(56, 178, 182, .5);
     color: #fff
 }
 
 .ui.menu .active.item {
+    background: rgba(95, 119, 136, .5);
+    color: #fff;
     font-weight: 400;
     box-shadow: none
 }
@@ -20884,7 +20891,7 @@ ol.ui.horizontal.list li:before {
 }
 
 .ui.tabular.menu .active.item {
-    background: #272f38;
+    background: rgba(95, 119, 136, .5);
     color: #fff;
     border-top-width: 1px;
     border-color: #d4d4d5;
@@ -20926,7 +20933,7 @@ ol.ui.horizontal.list li:before {
 }
 
 .ui.bottom.tabular.menu .active.item {
-    background: #272f38;
+    background: rgba(95, 119, 136, .5);
     color: #fff;
     border-color: #d4d4d5;
     margin: -1px 0 0;
@@ -20950,7 +20957,7 @@ ol.ui.horizontal.list li:before {
 }
 
 .ui.vertical.tabular.menu .active.item {
-    background: #272f38;
+    background: rgba(95, 119, 136, .5);
     color: #fff;
     border-color: #d4d4d5;
     margin: 0 -1px 0 0;
@@ -20975,7 +20982,7 @@ ol.ui.horizontal.list li:before {
 }
 
 .ui.vertical.right.tabular.menu .active.item {
-    background: #272f38;
+    background: rgba(95, 119, 136, .5);
     color: #fff;
     border-color: #d4d4d5;
     margin: 0 0 0 -1px;
@@ -21060,7 +21067,7 @@ ol.ui.horizontal.list li:before {
 .ui.secondary.menu .dropdown.item:hover,
 .ui.secondary.menu .link.item:hover,
 .ui.secondary.menu a.item:hover {
-    background: rgba(95, 119, 136, .5);
+    background: rgba(56, 178, 182, .5);
     color: #fff
 }
 
@@ -21132,7 +21139,7 @@ ol.ui.horizontal.list li:before {
 .ui.secondary.pointing.menu {
     margin-left: 0;
     margin-right: 0;
-    border-bottom: 2px solid rgba(95, 119, 136, .5)
+    border-bottom: 2px solid #272f38
 }
 
 .ui.secondary.pointing.menu .item {
@@ -21148,7 +21155,7 @@ ol.ui.horizontal.list li:before {
 }
 
 .ui.secondary.pointing.menu .header.item {
-    color: rgba(95, 119, 136, .5) !important
+    color: #fff !important
 }
 
 .ui.secondary.pointing.menu .text.item {
@@ -21170,7 +21177,7 @@ ol.ui.horizontal.list li:before {
 .ui.secondary.pointing.menu .link.item:active,
 .ui.secondary.pointing.menu a.item:active {
     background-color: transparent;
-    border-color: rgba(95, 119, 136, .5)
+    border-color: #272f38
 }
 
 .ui.secondary.pointing.menu .active.item {
@@ -21194,7 +21201,7 @@ ol.ui.horizontal.list li:before {
     border-bottom-width: 0;
     border-right-width: 2px;
     border-right-style: solid;
-    border-right-color: rgba(95, 119, 136, .5)
+    border-right-color: #272f38
 }
 
 .ui.secondary.vertical.pointing.menu .item {
@@ -21213,7 +21220,7 @@ ol.ui.horizontal.list li:before {
 .ui.secondary.inverted.pointing.menu {
     border-color: hsla(0, 0%, 100%, .1);
     border-width: 2px;
-    border-color: rgba(95, 119, 136, .5)
+    border-color: #272f38
 }
 
 .ui.secondary.inverted.pointing.menu .item {
@@ -22584,7 +22591,6 @@ ol.ui.horizontal.list li:before {
     width: 100%;
     background: #272f38;
     margin: 1em 0;
-    border: none;
     box-shadow: none;
     border-radius: .28571429rem;
     text-align: left;
@@ -22852,9 +22858,9 @@ ol.ui.horizontal.list li:before {
 
 .ui.table td.active,
 .ui.table tr.active {
-    box-shadow: inset 0 0 0 #000;
+    box-shadow: inset 0 0 0 #fff;
     background: #e0e0e0 !important;
-    color: #000 !important
+    color: #fff !important
 }
 
 .ui.table tr.disabled:hover,
@@ -22990,7 +22996,7 @@ ol.ui.horizontal.list li:before {
 .ui.selectable.table tr:hover td.active,
 .ui.table tr td.selectable.active:hover {
     background: #e0e0e0 !important;
-    color: #000 !important
+    color: #fff !important
 }
 
 .ui.selectable.table tr.positive:hover,
@@ -23371,7 +23377,7 @@ ol.ui.horizontal.list li:before {
 }
 
 .ui.sortable.table thead th:hover {
-    background: rgba(95, 119, 136, .5);
+    background: rgba(56, 178, 182, .5);
     color: #fff
 }
 
@@ -23758,7 +23764,7 @@ ol.ui.horizontal.list li:before {
     min-height: 0;
     background: #272f38;
     padding: 0;
-    border: none;
+    border: 1px solid rgba(95, 119, 136, .5);
     border-radius: .28571429rem;
     box-shadow: none;
     -webkit-transition: box-shadow .1s ease, -webkit-transform .1s ease;
@@ -24128,7 +24134,7 @@ a.ui.card:hover {
     cursor: pointer;
     z-index: 5;
     background: #fff;
-    border: none;
+    border: 1px solid rgba(95, 119, 136, .5);
     box-shadow: 0 1px 3px 0 #bcbdbd, 0 0 0 1px #d4d4d5;
     -webkit-transform: translateY(-3px);
     transform: translateY(-3px)
@@ -25084,7 +25090,7 @@ a.ui.card:hover {
     min-height: 0;
     background: #272f38;
     padding: 0;
-    border: none;
+    border: 1px solid rgba(95, 119, 136, .5);
     border-radius: 0;
     box-shadow: none;
     -webkit-transition: box-shadow .1s ease;
@@ -27406,7 +27412,7 @@ select.ui.dropdown {
 }
 
 .ui.dropdown .menu>.item:hover {
-    background: rgba(95, 119, 136, .5);
+    background: rgba(56, 178, 182, .5);
     color: #fff;
     z-index: 13
 }
@@ -28171,7 +28177,6 @@ select.ui.dropdown {
     z-index: 1001;
     text-align: left;
     background: #272f38;
-    border: none;
     box-shadow: none;
     -webkit-transform-origin: 50% 25%;
     transform-origin: 50% 25%;
@@ -28816,7 +28821,7 @@ a.ui.nag {
     min-width: -moz-min-content;
     min-width: min-content;
     z-index: 1900;
-    border: none;
+    border: 1px solid rgba(95, 119, 136, .5);
     line-height: 1.4285em;
     max-width: 250px;
     background: #272f38;
@@ -28879,7 +28884,7 @@ a.ui.nag {
     text-transform: none;
     text-align: left;
     white-space: nowrap;
-    border: none;
+    border: 1px solid rgba(95, 119, 136, .5);
     line-height: 1.4285em;
     max-width: none;
     padding: .833em 1em;
@@ -29461,7 +29466,7 @@ a.ui.nag {
     position: relative;
     display: block;
     max-width: 100%;
-    border: none;
+    border: 1px solid rgba(95, 119, 136, .5);
     margin: 1em 0 2.5em;
     box-shadow: none;
     background: #272f38;
@@ -29902,7 +29907,7 @@ a.ui.nag {
 
 .ui.rating .active.icon {
     background: transparent;
-    color: #000
+    color: #fff
 }
 
 .ui.rating .icon.selected,

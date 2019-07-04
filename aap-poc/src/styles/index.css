@@ -37,10 +37,12 @@ html {
     margin-right: 10px;
 }
 
+/*
 .sliderGraphItem.slick-slide {
     text-align: center;
     cursor: pointer;
 }
+*/
 
 .sliderGraphItem.slick-slide * {
     cursor: pointer;
@@ -48,7 +50,7 @@ html {
 
 .sliderGraphItem.slick-slide.bordered,
 .sliderGraphItem.slick-slide .bordered {
-    border: 1px solid grey;
+    border: 1px solid rgba(34,36,38,.15);
     border-radius: 5px;
 }
 
@@ -331,14 +333,10 @@ div.menu-flat.vertical{
 }
 
 div.col-user-menu{
-  width: 206px !important;
+  width: 226px !important;
   right: 0px;
   position: absolute !important;
 }
-
-/* div.col-user-menu .menu-options{
-   margin-top: 0px !important;
-} */
 
 div.col-user-menu .menu-user{
     margin-top: -10px !important;
@@ -353,6 +351,7 @@ div.col-user-menu .menu-user{
   border-top-color:  rgba(255,255,255,.1) !important;
 }
 
-.dynamicMenuContext{
-  color: rgb(84, 200, 255) !important;
+.custom-filter.menu .dynamicMenuContext {
+  /* color: rgb(84, 200, 255) !important; */
+  color: #949494 !important;
 }
