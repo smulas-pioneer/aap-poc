@@ -6,7 +6,7 @@ import { AlertsView } from './alertsView/AlertsView';
 import { ManagerView } from './managerView/managerView';
 import { DashboardMgr } from './DashboardMgr';
 import { DashboardAdv } from './DashboardAdv';
-import { AltoShow } from './AltoShow';
+import { AltoShow } from './AltoShow/AltoShow';
 
 import MenuFlat from './MenuFlat';
 
@@ -31,8 +31,10 @@ class App extends React.Component<IAppProps, {}> {
         <Route component={ScrollToTop} />
         {/* <Route exact={false} path="/" component={(p: RouteComponentProps<any>) => <MenuFlat history={p.history} />} /> */}
         <div style={{ padding: '0 0.5rem', height: '95%' }}>
-          {/* <Route exact path="/" component={(p: any) => <HomePage />} />
-              <Route exact path="/homepage" component={(p: any) => <HomePage />} /> */}
+          {/*
+            <Route exact path="/" component={(p: any) => <HomePage />} />
+            <Route exact path="/homepage" component={(p: any) => <HomePage />} />
+          */}
           <Switch>
 
             <Route exact path="/" component={(p: any) => manager
@@ -47,13 +49,11 @@ class App extends React.Component<IAppProps, {}> {
 
               {/*}: <Dashboard uid="dashboard" />} />*/}
 
-
             <Route exact path="/clients" component={(p: any) => <ClientsView uid="cli" showFilter showTitle />} />
             <Route exact path="/alerts" component={(p: any) => <AlertsView uid="alerts" manager={manager} showFilter showTitle />} />
             <Route exact path="/manager" component={(p: any) => <ManagerView uid="port" showFilter showTitle />} />
             <Route exact path="/agents/:id/clients" component={(p: RouteComponentProps<any>) => <ClientsView uid="agecli" agent={p.match.params.id} showFilter showTitle />} />
             <Route exact path="/clients/:id" component={(p: RouteComponentProps<any>) => <ClientView id={p.match.params.id}><MenuFlat history={p.history} orientation='vertical' /></ClientView>} />
-
             <Route exact path="/AltoShow" component={(p: RouteComponentProps<any>) => <AltoShow />} />
           </Switch>
         </div>

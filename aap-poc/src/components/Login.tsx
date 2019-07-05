@@ -48,23 +48,23 @@ export class Login extends React.Component<LoginProps, LoginState>{
 
     render() {
         return (
+            <Segment basic style={{ margin: 0 }} >
             <Grid style={{ height: '100vh' }} textAlign="center" verticalAlign="middle" >
                 <Grid.Column width={5}>
-                    <Header as="h2" style={{ color: '#005483', fontFamily: 'Helvetica' }} content="Advisory Platform" />
+                    <Header as="h2" style={{ fontFamily: 'Helvetica' }} content="Advisory Platform" />
                     <Form size='large' onSubmit={this.onLogin}>
-                        <Segment stacked secondary>
                             <Form.Input autoFocus icon="user" defaultValue={this.state.user} iconPosition="left" placeholder='User' onChange={(e, d) => this.setState(prev => ({ user: d.value }), this.checkError)} />
                             <Form.Input icon="lock" type="Password" iconPosition="left" placeholder='Password' onChange={(e, d) => this.setState(prev => ({ password: d.value }), this.checkError)} />
-                            <Button fluid color="blue" size="large" content="Login" />
+                            <Button fluid basic color="blue" size="large" content="Login" />
                             <Message visible={this.state.error} error>
                                 <Header content="Wrong Credentials" size="tiny" />
                                 You can only sign up for an account <br />
                                 between "advisor" and "manager"
                             </Message>
-                        </Segment>
                     </Form>
                 </Grid.Column>
             </Grid>
+            </Segment>
         );
     }
 }
