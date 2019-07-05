@@ -362,3 +362,8 @@ div.col-user-menu .menu-user{
   /* color: rgb(84, 200, 255) !important; */
   color: #949494 !important;
 }
+
+.altoshow-groups-explorer::-webkit-scrollbar { width: 0 !important }
+.altoshow-groups-explorer { overflow: -moz-scrollbars-none; }
+.altoshow-groups-explorer { -ms-overflow-style: none; }
+

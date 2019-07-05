@@ -87,7 +87,7 @@ export const AltoShow = () => {
     key: s.name,
     title: capitalize(s.name),
     content: <Accordion.Content>
-      <List style={{ overflowY: 'scroll', maxHeight: '400px' }}>
+      <List className="altoshow-groups-explorer" style={{ overflowY: 'scroll', maxHeight: '400px' }}>
         {s.images.map((img, ix) =>
           <List.Item as="a" key={ix} onClick={() => setCurrent(img.src)} >
             <List.Icon name='marker' color={img.src === current ? 'yellow' : 'grey'} />
