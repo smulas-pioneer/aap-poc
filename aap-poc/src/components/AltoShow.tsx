@@ -18,8 +18,8 @@ const parseName = (name: string) => {
       id: 0
     }
   }
-
 }
+const logo = require('./alto-logo.png');
 
 const getImagesByGroup = async (groupId: string) => {
   const man = await fetch(`altoshow/${groupId}/manifest.json`)
@@ -62,23 +62,26 @@ export const AltoShow = () => {
     key: s.name,
     title: s.name,
     content: <Accordion.Content>
-      <List >
-          {s.images.map((img, ix) =>
-            <List.Item as="a" key={ix} onClick={() => setCurrent(img.src)} >
-              <List.Icon name='marker' color={img.src === current ? 'yellow':'grey'}/>
-              <List.Content>
-                {img.name}
-              </List.Content>
-            </List.Item>)}
+      <List style={{    overflowY: 'scroll', maxHeight:'400px'}}>
+        {s.images.map((img, ix) =>
+          <List.Item as="a" key={ix} onClick={() => setCurrent(img.src)} >
+            <List.Icon name='marker' color={img.src === current ? 'yellow' : 'grey'} />
+            <List.Content>
+              {img.name}
+            </List.Content>
+          </List.Item>)}
       </List>
     </Accordion.Content>
   }))
 
   return <div style={{ height: '100vh', width: '100%' }} >
     <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
-      <Accordion defaultActiveIndex={0} panels={panels} styled style={{ width: '250px' }} />
-      <div style={{ flex: '1' }}>
-        {current && <img width='100%' src={current} />}
+      <div>
+        <img src={logo} style={{width:'250px'}} />
+        <Accordion defaultActiveIndex={0} panels={panels} styled style={{ width: '250px' }} />
+      </div>
+      <div style={{ flex: '1',overflowY: 'scroll'}}>
+        {current && <img width='100%' src={encodeURIComponent(current)} />}
       </div>
     </div>
   </div>
