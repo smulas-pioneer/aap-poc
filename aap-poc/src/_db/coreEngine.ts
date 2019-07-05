@@ -7,6 +7,7 @@ import * as math from 'mathjs';
 import { suggestedPositionExCash, } from "./common/radarUtils";
 import { securityList } from "./data";
 import { Security } from "./common/interfaces";
+import { MainColors } from "./common/consts";
 
 
 export const getSuggestion = (position: StrategyItem[], axes: RadarStrategyParm, calculateFromAxes: boolean, forced?: StrategyItem[]): StrategyItem[] => {
@@ -22,10 +23,10 @@ const getSuggestion1 = (position: StrategyItem[], axes: RadarStrategyParm, calcu
     let newPos = forced
       ? forced.map(p => {
         const strategy = position.find(r => r.security.IsinCode === p.security.IsinCode);
-        if ( strategy ) {
+        if (strategy) {
           return { ...p, suggestionAccepted: strategy.suggestionAccepted }
         }
-      //console.log('ERROR', strategy,forced.map(i=>i.security.IsinCode), position.map(i=>i.security.IsinCode),p.security.IsinCode);
+        //console.log('ERROR', strategy,forced.map(i=>i.security.IsinCode), position.map(i=>i.security.IsinCode),p.security.IsinCode);
         return p;
       })
       : position;
@@ -53,9 +54,17 @@ const acceptAll = (forced: StrategyItem[]) => {
   });
 }
 
+const colorFor = {
+  'Rating': MainColors.Rating,
+  'MacroAssetClass': MainColors.MacroAssetClass,
+  'MicroAssetClass': MainColors.MicroAssetClass,
+  'Sector': MainColors.Sector,
+  'Currency': MainColors.Currency,
+  'Region': MainColors.Region,
+  'Maturity': MainColors.Maturity
+}
 
 const getAttributeBreakDown = (attributeName: string, holdings: PositionItem[]): Breakdown => {
-  console.log(attributeName);
   const mappedData = holdings
     .filter(f => f.security![attributeName] !== null)
     .map(s => ({ value: s.security![attributeName], weight: s.weight, bmk: s.weight }));
@@ -69,6 +78,7 @@ const getAttributeBreakDown = (attributeName: string, holdings: PositionItem[]):
   });
   return {
     data,
+    color: colorFor[attributeName],
     attributeName,
     weight: sumBy(mappedData, w => w.weight)
   }
@@ -91,7 +101,7 @@ export const getBreakdown = (holdings: PositionItem[]) => {
 
 const performanceForPeriod = (isin: string, period: PerformancePeriod) => {
   const data = performances[isin];
-  if (!data || data.length===0) {
+  if (!data || data.length === 0) {
     console.error('performances not found for:', isin);
     return [];
   }
@@ -157,7 +167,7 @@ const getPerfContrib = (isin: string[]) => {
 }
 
 export const getPerfContribution = (position: PositionItem[]) => {
-  const key:keyof Security="IsinCode";
+  const key: keyof Security = "IsinCode";
 
   const filteredPos = position.filter(w => w.weight !== 0);
   const keys = filteredPos.map(p => p.security[key]);
