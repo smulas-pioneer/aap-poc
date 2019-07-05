@@ -18,7 +18,8 @@ interface SliderGraphBaseProps {
 interface SliderGraphMultiViewProps extends SliderGraphBaseProps {
   defaultMode?: 'tumblr' | 'single' | 'multi',
   config?: {
-    multiSegment?: number
+    defaultIndex?: number[],
+    multiSegment?: number,
     tumblrSlidesToShow?: number,
     singleSlidesToShow?: number,
     multiSlidesToShow?: number,
@@ -34,7 +35,7 @@ interface SliderGraphProps extends SliderGraphBaseProps {
 const getCharts = (item: any, slider: boolean) => {
   return item.charts && item.charts.map((v: any, j: number) => {
     return slider
-      ? React.cloneElement(v.chart, { key: j, legend: false, caption: false, actions: false})
+      ? React.cloneElement(v.chart, { key: j, legend: false, caption: false, actions: false })
       : React.cloneElement(v.chart, { key: 'current-graph' })
   });
 }
@@ -59,6 +60,7 @@ export const SliderGrapMultiView = (props: SliderGraphMultiViewProps) => {
   }
 
   const settings = {
+    defaultIndex: [0],
     multiSegment: 2,
     tumblrSlidesToShow: 3,
     singleSlidesToShow: 1,
@@ -73,14 +75,14 @@ export const SliderGrapMultiView = (props: SliderGraphMultiViewProps) => {
 
   return <div style={{ position: 'relative' }}>
     {mode === 'tumblr'
-      ? <Segment style={{ marginBottom: 0 }}><SliderGraphTumblr {...graphProps} defaultIndex={0} slidesToShow={settings.tumblrSlidesToShow} /></Segment>
+      ? <Segment style={{ marginBottom: 0 }}><SliderGraphTumblr {...graphProps} defaultIndex={settings.defaultIndex[0]} slidesToShow={settings.tumblrSlidesToShow} /></Segment>
       : mode === 'single'
-        ? <Segment style={{ marginBottom: 0 }}><SliderGraph {...graphProps} defaultIndex={0} slidesToShow={settings.singleSlidesToShow} /></Segment>
+        ? <Segment style={{ marginBottom: 0 }}><SliderGraph {...graphProps} defaultIndex={settings.defaultIndex[0]} slidesToShow={settings.singleSlidesToShow} /></Segment>
         : mode === 'multi'
           ? <div className='ui-flex ui-flex-col'>
-            {numArray(settings.multiSegment).map((i) => (
-              <Segment key={i} style={{ marginBottom: 0 }}><SliderGraph {...graphProps} defaultIndex={i} slidesToShow={settings.multiSlidesToShow} /></Segment>
-            ))}
+            {numArray(settings.multiSegment).map((i) => {
+              return <Segment key={i} style={{ marginBottom: 0 }}><SliderGraph {...graphProps} defaultIndex={settings.defaultIndex[i]} slidesToShow={settings.multiSlidesToShow} /></Segment>
+            })}
           </div>
           : null
     }
@@ -96,7 +98,7 @@ export const SliderGraph = (props: SliderGraphProps) => {
     speed: 500,
     slidesToShow,
     slidesToScroll: slidesToShow,
-    initialSlide: defaultIndex,
+    initialSlide: defaultIndex >= graphs.length ? 0 : defaultIndex,
     lazyLoad: true,
     prevArrow: <CustomArrowPrev />,
     nextArrow: <CustomArrowNext />

@@ -18,7 +18,7 @@ export default (state: ContextState = defaultState, action: any): ContextState =
     if (loginSuccess.matchAction(action)) {
         return { ...state, user: action.payload, ready: state.ready }
     } else if (logoutSuccess.matchAction(action)) {
-        return defaultState;
+        return { ...defaultState, theme: state.theme };
     } else if (ready.matchAction(action)) {
         return { ...state, user: state.user, ready: action.payload };
     }

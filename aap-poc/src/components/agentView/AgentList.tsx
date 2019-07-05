@@ -6,6 +6,7 @@ import { Card, Responsive } from 'semantic-ui-react';
 
 export interface AgentListProps {
   data: AgentView[] | undefined
+  onBrowse?: (agent: string) => void;
 }
 
 export const AgentList = (props: AgentListProps & WithLang) => {
