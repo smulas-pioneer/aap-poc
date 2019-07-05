@@ -380,3 +380,10 @@ div.col-user-menu .menu-user{
   animation-name: fade-in;
   animation-duration: 1s;
 }
+
+ .altoshow  .slick-center {
+   border-left: 1.3px solid yellow;
+   border-right: 1.3px solid yellow;
+   border-radius: 4px;
+}
+

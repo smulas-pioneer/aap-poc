@@ -1,8 +1,9 @@
 import * as React from 'react';
-import Slider from 'react-slick';
+import Slider, { Settings } from 'react-slick';
 import { Icon, List, Accordion, Segment, Transition } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
 import { capitalize } from 'lodash';
+import { bool } from 'prop-types';
 
 const parseName = (name: string) => {
   const nameWithoutExt = name.substring(0, name.length - 4);
@@ -40,10 +41,11 @@ export const AltoShow = () => {
   const [list, setList] = useState<{ name: string, images: any[], showThumbnails: boolean }[]>([]);
 
   const [activeIndex, setactiveIndex] = useState<number>(0);
-  const [current, setCurrent] = useState<string | undefined>(undefined);
+  const [current, setCurrent] = useState<{ src: string, index: number } | undefined>(undefined);
   const [animationClass, setAnimationClass] = useState<string | undefined>(undefined);
   const [showSilder, setShowSlider] = useState(true);
   const mainContent = React.useRef<any>(null);
+  const slider = React.useRef<any>(null);
 
   useEffect(() => {
     Promise.all([
@@ -52,6 +54,14 @@ export const AltoShow = () => {
       getImagesByGroup('reporting', false)
     ]).then(setList)
   }, [])
+
+  useEffect(() => {
+    if (current && list[activeIndex].showThumbnails) {
+      setTimeout(() =>
+        slider.current.slickGoTo(current.index, true)
+        , .300)
+    }
+  }, [current]);
 
   useEffect(() => {
     setAnimationClass('altoshow-current');
@@ -67,12 +77,13 @@ export const AltoShow = () => {
 
   }, [current]);
 
-  const settings = {
+  const settings: Settings = {
     infinite: true,
     speed: 500,
     slidesToShow: 7,
     slidesToScroll: 2,
     initialSlide: 0,
+    centerMode: true,
     prevArrow: <CustomArrowPrev />,
     nextArrow: <CustomArrowNext />,
   };
@@ -84,7 +95,7 @@ export const AltoShow = () => {
 
   const sliderPanes = list.length && list[activeIndex] && list[activeIndex].images.map((img: any, ix: number) => {
     return <div className="sliderGraphItem" key={ix} style={{ height: '110px', marginTop: '3px' }}>
-      <div style={{ border: '1px solid grey', margin: '0 3px' }} onClick={() => setCurrent(img.src)} >
+      <div style={{ border: '1px solid grey', margin: '0 3px' }} onClick={() => setCurrent({ src: img.src, index: ix })} >
         <Transition duration={2000} transitionOnMount visible mountOnShow unmountOnHide animation='fade' >
           {image(img.src)}
         </Transition>
@@ -98,8 +109,8 @@ export const AltoShow = () => {
     content: <Accordion.Content>
       <List className="altoshow-groups-explorer" style={{ overflowY: 'scroll', maxHeight: '400px' }}>
         {s.images.map((img, ix) =>
-          <List.Item as="a" key={ix} onClick={() => setCurrent(img.src)} >
-            <List.Icon name='marker' color={img.src === current ? 'yellow' : 'grey'} />
+          <List.Item as="a" key={ix} onClick={() => setCurrent({ src: img.src, index: ix })} >
+            <List.Icon name='marker' color={current && img.src === current.src ? 'yellow' : 'grey'} />
             <List.Content className='color-blue'>
               {img.name}
             </List.Content>
@@ -108,7 +119,7 @@ export const AltoShow = () => {
     </Accordion.Content>
   }))
 
-  return <div style={{ height: '100vh', width: '100%' }} >
+  return <div className="altoshow" style={{ height: '100vh', width: '100%' }} >
     <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <img src={logo} style={{ width: '250px', cursor: 'pointer' }} onClick={() => setCurrent(undefined)} />
@@ -125,15 +136,15 @@ export const AltoShow = () => {
         <div ref={mainContent} style={{ flex: '1', overflowY: 'scroll', marginBottom: '2px' }}>
           <Segment>
             {current
-              ? image(current, animationClass)
+              ? image(current.src, animationClass)
               : <img width='100%' src={home} />
             }
           </Segment>
         </div>
         {showSilder && current && list[activeIndex].showThumbnails &&
           <Segment style={{ marginTop: '2px', padding: '0.1em 1em' }}>
-            <div style={{ background: 'black', margin: '2px auto', height: '120px', paddingLeft: '10%', paddingRight: '10%' }}>
-              <Slider  {...settings} >{sliderPanes}</Slider>
+            <div style={{ margin: '2px auto', height: '120px', paddingLeft: '10%', paddingRight: '10%' }}>
+              <Slider ref={slider} {...settings} >{sliderPanes}</Slider>
             </div>
           </Segment>
         }
