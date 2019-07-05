@@ -3,7 +3,7 @@ import { SearchParms, Client } from '../_db/interfaces';
 import { appConnector } from 'app-support';
 import { searchClient } from '../actions/index';
 import { getSearchResult, getSearchFilter, getLanguage, getConfigLayout, getIsCountryActive, getIsRegionActive } from '../reducers/index';
-import { SemanticICONS, Statistic, Grid, Segment, SemanticCOLORS, Icon, Menu, Tab } from 'semantic-ui-react';
+import { SemanticICONS, Statistic, Grid, Segment, SemanticCOLORS, Icon, Menu, Tab, Card } from 'semantic-ui-react';
 import { filterMapItems, FilterMap, FilterMapTypes } from '../actions/model';
 import { TopClient } from './topClientView/index';
 import { CustomPieChart } from './chart/CustomCharts';
@@ -22,17 +22,17 @@ import { ClientListBudget } from './clientsView/ClientListBudget';
 
 const sprintf = require("sprintf-js").sprintf;
 
-export interface DashboardMgrProps {
+export interface DashboardAdvProps {
   uid: string,
   page?: string,
   commonMenu?: React.ReactChildren;
   history?: any;
 }
-export interface DashboardMgrState {
+export interface DashboardAdvState {
   searchParms: SearchParms
 }
 
-const conn = appConnector<DashboardMgrProps>()(
+const conn = appConnector<DashboardAdvProps>()(
   (s, p) => ({
     data: getSearchResult(s, p.uid),
     filter: getSearchFilter(s, p.uid),
@@ -45,7 +45,7 @@ const conn = appConnector<DashboardMgrProps>()(
   { searchClient }
 )
 
-class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
+class DashboardAdvCompo extends conn.StatefulCompo<DashboardAdvState> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -123,37 +123,17 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
   // render filter
   renderFilterGraphics(data: Client[]) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { lang, layout, filter = { Aua: {} }, isOnlyItaly, isCountryActive, isRegionActive } = this.props;
+    const { lang, filter = { Aua: {} } } = this.props;
+
+    const graphs = this.createGraphs();
 
     return <div className='tab-dashboard ui-flex ui-flex-col'>
       <div className='ui-flex ui-flex-row'>
-        <Segment>
-          <EuropaMap
-            transform="scale(1.8) translate(-100, -250)"
-            lang={lang}
-            clients={data}
-            layout={layout}
-            height={600}
-            isOnlyItaly={isOnlyItaly}
-            filterMap={filterMapItems.Countries}
-            onFilterChange={(map, val) => {
-              switch (map.prop) {
-                case filterMapItems.Countries.prop: {
-                  this.searchAdvanced(map.searchprop, val, isCountryActive(val));
-                  break;
-                }
-                case filterMapItems.Regions.prop: {
-                  this.searchAdvanced(map.searchprop, val, isRegionActive(val));
-                  break;
-                }
-              }
-            }}
-          />
-        </Segment>
-        <SliderGrapMultiView graphs={this.createGraphs()} lang={lang} height={600} config={{ multiSlidesToShow: 2 }} />
+        <SliderGrapMultiView defaultMode='tumblr' graphs={graphs} lang={lang} height={600} config={{ multiSlidesToShow: 2 }} />
+        <SliderGrapMultiView defaultMode='multi' graphs={graphs} lang={lang} height={600} config={{ multiSlidesToShow: 2, defaultIndex: [1, 3] }} />
       </div>
       <Segment>
-        <TopClient clients={data} lang={lang} />
+        <ClientListBudget clients={data} lang={lang} />
       </Segment>
     </div >
   }
@@ -201,13 +181,6 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
   alertsDetail = (numOfAlerts: string) => sprintf(this.props.lang.DB_ALERTS_DETAIL, numOfAlerts);
   percDetail = (value: number | undefined, from: string, period: 'Y' | 'M' | 'D', info?: string) => sprintf(this.props.lang.DB_PERC_DETAIL, (value ? value + '% ' : ''), (info ? info + ' ' : ''), from, period === 'Y' ? this.props.lang.YEAR : period === 'M' ? this.props.lang.MONTH : this.props.lang.DAY);
 
-  renderTabItem(langProps: string, icon: SemanticICONS, color: SemanticCOLORS) {
-    return (<Menu.Item name={this.props.lang[langProps]} key={langProps}>
-      <Icon name={icon} color={color} />
-      {this.props.lang[langProps]}
-    </Menu.Item>);
-  }
-
   renderTabItem1(key: string, name: string, icon: SemanticICONS, color: SemanticCOLORS, activeKey: string, onClick?: () => void) {
     return (<Menu.Item key={key} name={this.props.lang[name]} active={key === activeKey} onClick={() => this.handleOnChangeTab(key)} >
       <Icon name={icon} color={color} />
@@ -216,9 +189,18 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
   }
 
   createGraphs() {
-    const { filter = { Aua: {} } } = this.props;
+    const { filter = { Alerts: {}, Aua: {} } } = this.props;
+
     let graphs = {
-      Performance: {
+      ALERTS: {
+        title: 'ALERTS',
+        icon: 'pie chart',
+        charts: [{
+          title: 'ALERTS',
+          chart: this.renderFilterGraphItem(1, filterMapItems.Alerts, filter.Alerts)
+        }]
+      },
+      AUA: {
         title: 'AUA',
         icon: 'pie chart',
         charts: [{
@@ -258,39 +240,37 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         render: () => <div>{this.renderFilterGraphics(data.result)}</div>
       },
       {
-        menuItem: this.renderTabItem1('1', 'MY_PORTFOLIOS', 'users', 'blue', page),
-        render: () => <div style={{ padding: '5px 0px' }}><ManagerView uid={uid} /></div>
+        menuItem: this.renderTabItem1('1', 'MY_CLIENTS', 'users', 'blue', page),
+        render: () => <div style={{ padding: '8px 4px' }}><ClientsView uid={uid} /></div>
       },
       {
         menuItem: this.renderTabItem1('2', 'MY_ALERTS', 'alarm', 'red', page),
         render: () => <div style={{ padding: '5px 0px' }}><AlertsView manager uid={uid} hideGraphs /></div>
       },
-      {
-        menuItem: this.renderTabItem1('3', 'MY_CLIENTS', 'users', 'blue', page),
-        render: () => <div style={{ padding: '8px 4px' }}><ClientsView uid={uid} /></div>
-      }
     ]
 
     const info = data.result.reduce<
-      { length: number, assetUnder: number, clientAlert: number, mifidAlert: number, acceptedProposals: number, totalProposals: number, rejectedProposals: number, totalBudget: number, totRevenues: number, totalTurnover: number }>(
+      { length: number, assetUnder: number, clientAlert: number, mifidAlert: number, acceptedProposals: number, totalProposals: number, pendingProposals: number, pendingExecution: number, totalBudget: number, totRevenues: number, totalTurnover: number }>(
         (ret, v, i) => {
+          const isPP = v.clientStatus === 'PENDING PROPOSAL';
+          const isPE = v.clientStatus === 'PENDING EXECUTION';
+
           ret.length += 1;
           ret.totalBudget += v.budget;
           ret.totRevenues += v.ongoingFees + v.upfrontFees;
-          ret.acceptedProposals += v.numOfAcceptedProposal / 2;
-          ret.totalProposals += v.numOfInterviews / 2;
+          ret.acceptedProposals += isPE ? 1 : isPP ? 0 : v.numOfAcceptedProposal / 2;
+          ret.totalProposals += isPE || isPP ? 1 : v.numOfInterviews / 2;
+          ret.pendingProposals += isPP ? 1 : 0;
+          ret.pendingExecution += isPE ? 1 : 0;
           ret.assetUnder += v.aua;
           ret.clientAlert += v.radar.numOfAlerts > 0 ? 1 : 0;
           ret.mifidAlert += v.radar.riskAdequacyAlert !== 'green' ? 1 : 0;
           ret.totalTurnover += v.turnover;
           return ret;
         },
-        { length: 0, assetUnder: 0, clientAlert: 0, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0, rejectedProposals: 0, totalBudget: 0, totRevenues: 0, totalTurnover: 0 });
+        { length: 0, assetUnder: 0, clientAlert: 0, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0, pendingExecution: 0, pendingProposals: 0, totalBudget: 0, totRevenues: 0, totalTurnover: 0 });
 
-    let filterMaps: FilterMapTypes[] = ['Countries', 'Aua', 'Segment', 'RiskProfile'];
-    if (this.props.isOnlyItaly) {
-      filterMaps.splice(1, 0, 'Regions', 'Branch', 'Agents');
-    }
+    let filterMaps: FilterMapTypes[] = ['AlertType', 'ClientStatus', 'ClientStatusDuration', 'Aua', 'RiskProfile'];
 
     return (
       <AdvancedGrid className="grid-header-fix" >
@@ -324,9 +304,15 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
             <Menu pointing style={{ margin: 0 }}>
               {panes.map(s => s.menuItem)}
             </Menu>
-              {panes[page].render()}
+            {panes[page].render()}
           </div>
           <Segment style={{ margin: 0 }}>
+            <Card fluid>
+              {this.renderItem(fmt(info.pendingProposals), lang.DB_PENDING_PROPOSALS)}
+            </Card>
+            <Card fluid>
+              {this.renderItem(fmt(info.pendingExecution), lang.DB_PROPOSAL_ACCEPTED_NOT_EXECUTED)}
+            </Card>
             <WidgetTitle size="mini" title={lang.FILTER} />
             <ClientFilter
               searchPlaceholder={lang.ENTER_FILTER_TEXT}
@@ -342,4 +328,4 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
   }
 }
 
-export const DashboardMgr = conn.connect(DashboardMgrCompo);
+export const DashboardAdv = conn.connect(DashboardAdvCompo);

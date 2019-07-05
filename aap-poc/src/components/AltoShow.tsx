@@ -94,7 +94,7 @@ export const AltoShow = () => {
     <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
       <div style={{ display: 'flex', flexDirection: 'column'}}>
         <img src={logo} style={{ width: '250px' }} />
-        <Accordion activeIndex={activeIndex} panels={panels} onTitleClick={handleTitleClick} styled style={{ width: '250px', flex: 1 }} />
+        <Accordion activeIndex={activeIndex} panels={panels} onTitleClick={handleTitleClick} styled style={{ width: '250px',  flex: 1 }} />
       </div>
       <div style={{ display: 'flex', flex: 1, flexDirection: 'column', width: '85%' }}>
         <Segment style={{ flex: '1', overflowY: 'scroll', marginBottom: '2px'  }}>

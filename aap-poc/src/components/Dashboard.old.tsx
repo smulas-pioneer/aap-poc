@@ -229,9 +229,6 @@ class Dashboard extends conn.StatefulCompo<DashboardState> {
             <Grid.Column textAlign="center">
               {this.renderItem(fmt(info.clientAlert), lang.DB_CLIENTS_ALERTS, this.alertsDetail(fmt(info.mifidAlert)), 'red')}
             </Grid.Column>
-            {/* <Grid.Column textAlign="center">
-                            {this.renderItem(info.interviews, lang.DB_INTERVIEWS, this.percDetail(undefined, '1', 'M'))}
-                        </Grid.Column> */}
             <Grid.Column textAlign="center">
               {this.renderItem(fmt(info.totalBudget) + "€", lang.BUDGET, Math.round(100 * (info.totRevenues / info.totalBudget)).toString() + '% accomplished YTD', 'blue', 'green')}
             </Grid.Column>
