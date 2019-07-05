@@ -22,8 +22,7 @@ const parseName = (name: string) => {
 const logo = require('./alto-logo.png');
 const home = require('./home.png');
 
-
-const getImagesByGroup = async (groupId: string, showThumbnails=true) => {
+const getImagesByGroup = async (groupId: string, showThumbnails = true) => {
   const man = await fetch(`altoshow/${groupId}/manifest.json`)
   const json = await man.json();
   return {
@@ -38,7 +37,7 @@ const getImagesByGroup = async (groupId: string, showThumbnails=true) => {
 
 
 export const AltoShow = () => {
-  const [list, setList] = useState<{ name: string, images: any[], showThumbnails:boolean }[]>([]);
+  const [list, setList] = useState<{ name: string, images: any[], showThumbnails: boolean }[]>([]);
 
   const [activeIndex, setactiveIndex] = useState<number>(0);
   const [current, setCurrent] = useState<string | undefined>(undefined);
@@ -50,8 +49,7 @@ export const AltoShow = () => {
     Promise.all([
       getImagesByGroup('alto-win'),
       getImagesByGroup('alto-web'),
-      getImagesByGroup('reporting',false),
-
+      getImagesByGroup('reporting', false)
     ]).then(setList)
   }, [])
 
@@ -77,9 +75,6 @@ export const AltoShow = () => {
     setactiveIndex(index);
   }
 
-  //getImagesByGroup('new').then(console.log);
-  //
-
   const sliderPanes = list.length && list[activeIndex] && list[activeIndex].images.map((img: any, ix: number) => {
     return <div className="sliderGraphItem" key={ix} style={{ height: '110px', marginTop: '3px' }}>
       <div style={{ border: '1px solid grey', margin: '0 3px' }} onClick={() => setCurrent(img.src)} >
@@ -87,11 +82,12 @@ export const AltoShow = () => {
       </div>
     </div>
   });
+
   const panels = list.map(s => ({
     key: s.name,
     title: capitalize(s.name),
     content: <Accordion.Content>
-      <List style={{ overflowY: 'scroll',  maxHeight: '400px' }}>
+      <List style={{ overflowY: 'scroll', maxHeight: '400px' }}>
         {s.images.map((img, ix) =>
           <List.Item as="a" key={ix} onClick={() => setCurrent(img.src)} >
             <List.Icon name='marker' color={img.src === current ? 'yellow' : 'grey'} />
@@ -125,11 +121,13 @@ export const AltoShow = () => {
             }
           </Segment>
         </div>
-        {showSilder && current && list[activeIndex].showThumbnails && <Segment style={{ marginTop: '2px', padding: '0.1em 1em' }}>
-          <div style={{ margin: '2px auto', height: '120px' }}>
-            <Slider  {...settings} >{sliderPanes}</Slider>
-          </div>
-        </Segment>}
+        {showSilder && current && list[activeIndex].showThumbnails &&
+          <Segment style={{ marginTop: '2px', padding: '0.1em 1em' }}>
+            <div style={{ background: 'black', margin: '2px auto', height: '120px', paddingLeft: '10%', paddingRight: '10%' }}>
+              <Slider  {...settings} >{sliderPanes}</Slider>
+            </div>
+          </Segment>
+        }
       </div>
     </div>
   </div>
@@ -138,10 +136,10 @@ export const AltoShow = () => {
 const CustomArrowPrev = (props: any) => (<div className={`custom-slick-arrow custom-slick-prev`}><Icon name='arrow left' onClick={props.onClick} link /></div>);
 const CustomArrowNext = (props: any) => (<div className={`custom-slick-arrow custom-slick-next`}><Icon name='arrow right' onClick={props.onClick} link /></div>);
 
-
-const image = (src: string) => {
-  return src.endsWith('.pdf')
-    //    ? <embed width="100%" src={src} type="application/pdf" ></embed>
+const image = (src?: string) => {
+  if (!src) return null;
+  const isPdf = src.endsWith('.pdf');
+  return isPdf
     ? <div style={{ width: '100%', height: '100%' }}><object data={src} type="application/pdf" style={{ minHeight: '100vh', height: '100%', width: '100%' }}>
       <p>It appears you don't have a PDF plugin for this browser.
 No biggie... you can <a href={src}>click here to
