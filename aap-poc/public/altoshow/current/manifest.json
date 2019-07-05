@@ -1,7 +1,6 @@
 {
   "files": [
     "1. Global exposure.png",
-    "10. Portfolio liquidity analysis.png",
     "2. ESG Allocation.png",
     "3. Credit rating breakdown.png",
     "4. Seniority breakdown.png",
@@ -9,6 +8,7 @@
     "6. Portfolio stress test.png",
     "7. Portfolio risk and risk factor analysis.png",
     "8. Risk historical indicators.png",
-    "9. Portfolio liquidity overview.png"
+    "9. Portfolio liquidity overview.png",
+    "10. Portfolio liquidity analysis.png"
   ]
 }
