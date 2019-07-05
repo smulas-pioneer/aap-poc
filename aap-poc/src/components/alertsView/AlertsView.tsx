@@ -136,7 +136,7 @@ class AlertsViewCompo extends conn.StatefulCompo<AlertsViewState> {
             <Table.Row>
               {this.renderHeader('name', lang.CLIENT_NAME, 2)}
               {manager && <Table.HeaderCell width={2}>{lang.MANAGED_BY}</Table.HeaderCell>}
-              {this.renderHeader('aua', lang.AUA, 2, 'right')}
+              {this.renderHeader('aua', lang.AUA, 1, 'right')}
               {this.renderHeader('lastInterviewDate', lang.LAST_INTERVIEW_DATE, 1)}
               {this.renderHeader('clientStatus', lang.STATUS, 2)}
               {this.renderHeader('clientStatusAge', lang.STATUS_DATE, 2)}
