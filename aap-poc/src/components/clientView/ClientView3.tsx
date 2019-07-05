@@ -198,6 +198,7 @@ export const ClientView = conn.PureCompo(props => {
               lang={lang} />
           }]
       },
+
       RiskReturn: {
         title: 'Risk Return',
         icon: 'area graph',
@@ -207,6 +208,7 @@ export const ClientView = conn.PureCompo(props => {
             chart: <RiskReturnGraph key={1} data={ce.getRiskReturn(suggestedPosition(stateStrategy), modelPosition(stateStrategy), 'All')} lang={lang} />
           }]
       },
+      /*
       PerfContr: {
         title: 'Perf. Contr.',
         icon: 'area graph',
@@ -216,6 +218,7 @@ export const ClientView = conn.PureCompo(props => {
             chart: <PerformanceContributionGraph key={2} data={ce.getPerfContribution(suggestedPosition(stateStrategy))} lang={lang} />
           }]
       }
+      */
     };
 
     graphs = breakdown && breakdown.reduce((memo, val, i) => {
@@ -294,7 +297,7 @@ export const ClientView = conn.PureCompo(props => {
               axes={state.axes}
             />}
             {
-              !state.hideProposal && <Fees 
+              !state.hideProposal && <Fees
               strategy={stateStrategy} lang={lang} targetReturn={state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={true} />
             }
           </Segment>

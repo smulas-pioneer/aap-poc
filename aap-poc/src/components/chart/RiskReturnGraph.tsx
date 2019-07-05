@@ -47,7 +47,7 @@ export class RiskReturnGraph extends React.Component<RiskReturnChartProps, RiskR
                     <Scatter name='Model' data={model} fill={Colors.GREEN} shape={renderScatter('circle', scatterShapeCustom, 8)} />
                 </ScatterChart>
             </ResponsiveContainer>
-            {actions && <Button icon='grid layout' onClick={() => this.setState({ scatterShapeCustom: !scatterShapeCustom })} color='yellow' circular style={{ position: 'absolute', top: '10px', zOrder: 9999, right: '10px' }} />}
+            {false && <Button icon='grid layout' onClick={() => this.setState({ scatterShapeCustom: !scatterShapeCustom })} color='yellow' circular style={{ position: 'absolute', top: '10px', zOrder: 9999, right: '10px' }} />}
         </div>
     }
 }

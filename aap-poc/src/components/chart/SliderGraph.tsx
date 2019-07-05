@@ -34,7 +34,7 @@ interface SliderGraphProps extends SliderGraphBaseProps {
 const getCharts = (item: any, slider: boolean) => {
   return item.charts && item.charts.map((v: any, j: number) => {
     return slider
-      ? React.cloneElement(v.chart, { key: j, legend: false, caption: false, actions: false })
+      ? React.cloneElement(v.chart, { key: j, legend: false, caption: false, actions: false})
       : React.cloneElement(v.chart, { key: 'current-graph' })
   });
 }
