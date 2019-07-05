@@ -399,6 +399,23 @@ div.col-user-menu .menu-user {
     overflow: -moz-scrollbars-none;
 }
 
-.altoshow-groups-explorer {
-    -ms-overflow-style: none;
+
+@keyframes fade-in {
+  from {opacity: 0}
+  to { opacity: 1};
 }
+
+.altoshow-current{
+  display: none;
+}
+.altoshow-animate-current{
+  animation-name: fade-in;
+  animation-duration: 1s;
+}
+
+ .altoshow  .slick-center {
+   border-left: 1.3px solid yellow;
+   border-right: 1.3px solid yellow;
+   border-radius: 4px;
+}
+

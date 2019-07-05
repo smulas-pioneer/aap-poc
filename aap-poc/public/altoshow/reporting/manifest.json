@@ -1,11 +1,4 @@
 {
-  "files": [
-    "20190704_Sample_ImpaQt_ExchangeOrder.pdf",
-    "20190704_Sample_ImpaQt_InvestmentProposal.pdf",
-    "20190704_Sample_ImpaQt_RiskProfile.pdf",
-    "30074550.pdf",
-    "Mandat-PEA-Client.pdf",
-    "Predica-Client.pdf",
-    "SG_EBENE PRIV.pdf"
-  ]
+  "files":
+  ["ImpaQt Exchange Order.pdf", "ImpaQt Investment Proposal.pdf", "Mandat PEA Client.pdf", "Predica.pdf", "SG Private.pdf", "Sample ImpaQt RiskProfile.pdf", "Unicredit Premi\u00e8re.pdf"]
 }

@@ -1,8 +1,9 @@
 import * as React from 'react';
-import Slider from 'react-slick';
-import { Icon, List, Accordion, Segment } from 'semantic-ui-react';
+import Slider, { Settings } from 'react-slick';
+import { Icon, List, Accordion, Segment, Transition } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
 import { capitalize } from 'lodash';
+import { bool } from 'prop-types';
 
 const parseName = (name: string) => {
   const nameWithoutExt = name.substring(0, name.length - 4);
@@ -40,10 +41,11 @@ export const AltoShow = () => {
   const [list, setList] = useState<{ name: string, images: any[], showThumbnails: boolean }[]>([]);
 
   const [activeIndex, setactiveIndex] = useState<number>(0);
-  const [current, setCurrent] = useState<string | undefined>(undefined);
-  const [currentGroup, setCurrentGroup] = useState<any | undefined>(undefined);
+  const [current, setCurrent] = useState<{ src: string, index: number } | undefined>(undefined);
+  const [animationClass, setAnimationClass] = useState<string | undefined>(undefined);
   const [showSilder, setShowSlider] = useState(true);
   const mainContent = React.useRef<any>(null);
+  const slider = React.useRef<any>(null);
 
   useEffect(() => {
     Promise.all([
@@ -54,18 +56,34 @@ export const AltoShow = () => {
   }, [])
 
   useEffect(() => {
+    if (current && list[activeIndex].showThumbnails && showSilder) {
+      setTimeout(() =>
+        slider.current.slickGoTo(current.index, true)
+        , .300)
+    }
+  }, [current]);
+
+  useEffect(() => {
+    setAnimationClass('altoshow-current');
+    setTimeout(() => {
+      setAnimationClass('altoshow-animate-current');
+    }, .300);
+  }, [current]);
+
+  useEffect(() => {
     if (mainContent.current) {
       mainContent.current.scrollTo({ top: 0 });
     }
 
   }, [current]);
 
-  const settings = {
+  const settings: Settings = {
     infinite: true,
     speed: 500,
     slidesToShow: 7,
     slidesToScroll: 2,
     initialSlide: 0,
+    centerMode: true,
     prevArrow: <CustomArrowPrev />,
     nextArrow: <CustomArrowNext />,
   };
@@ -77,8 +95,10 @@ export const AltoShow = () => {
 
   const sliderPanes = list.length && list[activeIndex] && list[activeIndex].images.map((img: any, ix: number) => {
     return <div className="sliderGraphItem" key={ix} style={{ height: '110px', marginTop: '3px' }}>
-      <div style={{ border: '1px solid grey', margin: '0 3px' }} onClick={() => setCurrent(img.src)} >
-        {image(img.src)}
+      <div style={{ border: '1px solid grey', margin: '0 3px' }} onClick={() => setCurrent({ src: img.src, index: ix })} >
+        <Transition duration={2000} transitionOnMount visible mountOnShow unmountOnHide animation='fade' >
+          {image(img.src)}
+        </Transition>
       </div>
     </div>
   });
@@ -89,8 +109,8 @@ export const AltoShow = () => {
     content: <Accordion.Content>
       <List className="altoshow-groups-explorer" style={{ overflowY: 'scroll', maxHeight: '400px' }}>
         {s.images.map((img, ix) =>
-          <List.Item as="a" key={ix} onClick={() => setCurrent(img.src)} >
-            <List.Icon name='marker' color={img.src === current ? 'yellow' : 'grey'} />
+          <List.Item as="a" key={ix} onClick={() => setCurrent({ src: img.src, index: ix })} >
+            <List.Icon name='marker' color={current && img.src === current.src ? 'yellow' : 'grey'} />
             <List.Content className='color-blue'>
               {img.name}
             </List.Content>
@@ -99,7 +119,7 @@ export const AltoShow = () => {
     </Accordion.Content>
   }))
 
-  return <div style={{ height: '100vh', width: '100%' }} >
+  return <div className="altoshow" style={{ height: '100vh', width: '100%' }} >
     <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <img src={logo} style={{ width: '250px', cursor: 'pointer' }} onClick={() => setCurrent(undefined)} />
@@ -116,15 +136,15 @@ export const AltoShow = () => {
         <div ref={mainContent} style={{ flex: '1', overflowY: 'scroll', marginBottom: '2px' }}>
           <Segment>
             {current
-              ? image(current)
+              ? image(current.src, animationClass)
               : <img width='100%' src={home} />
             }
           </Segment>
         </div>
         {showSilder && current && list[activeIndex].showThumbnails &&
           <Segment style={{ marginTop: '2px', padding: '0.1em 1em' }}>
-            <div style={{ background: 'black', margin: '2px auto', height: '120px', paddingLeft: '10%', paddingRight: '10%' }}>
-              <Slider  {...settings} >{sliderPanes}</Slider>
+            <div style={{ margin: '2px auto', height: '120px', paddingLeft: '10%', paddingRight: '10%' }}>
+              <Slider ref={slider} {...settings} >{sliderPanes}</Slider>
             </div>
           </Segment>
         }
@@ -136,14 +156,14 @@ export const AltoShow = () => {
 const CustomArrowPrev = (props: any) => (<div className={`custom-slick-arrow custom-slick-prev`}><Icon name='arrow left' onClick={props.onClick} link /></div>);
 const CustomArrowNext = (props: any) => (<div className={`custom-slick-arrow custom-slick-next`}><Icon name='arrow right' onClick={props.onClick} link /></div>);
 
-const image = (src?: string) => {
+const image = (src?: string, animationClass?: string) => {
   if (!src) return null;
   const isPdf = src.endsWith('.pdf');
   return isPdf
-    ? <div style={{ width: '100%', height: '100%' }}><object data={src} type="application/pdf" style={{ minHeight: '100vh', height: '100%', width: '100%' }}>
+    ? <div className={animationClass} style={{ width: '100%', height: '100%' }}><object data={src} type="application/pdf" style={{ minHeight: '100vh', height: '100%', width: '100%' }}>
       <p>It appears you don't have a PDF plugin for this browser.
 No biggie... you can <a href={src}>click here to
 download the PDF file.</a></p>
     </object></div>
-    : <img src={src} height='100%' width='100%' />
+    : <img className={animationClass} src={src} height='100%' width='100%' />
 }
