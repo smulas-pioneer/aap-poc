@@ -97,10 +97,10 @@ export const AltoShow = () => {
         <Accordion activeIndex={activeIndex} panels={panels} onTitleClick={handleTitleClick} styled style={{ width: '250px', flex: 1 }} />
       </div>
       <div style={{ display: 'flex', flex: 1, flexDirection: 'column', width: '85%' }}>
-        <Segment style={{ flex: '1', overflowY: 'scroll' }}>
+        <Segment style={{ flex: '1', overflowY: 'scroll', marginBottom: '2px'  }}>
           {current && <img width='100%' src={(current)} />}
         </Segment>
-        <Segment style={{ marginTop: '2px' }}>
+        <Segment style={{ marginTop: '2px', padding:'0.1em 1em' }}>
           <div style={{ margin: '2px auto', height: '120px' }}>
             <Slider  {...settings} >{sliderPanes}</Slider>
           </div>
