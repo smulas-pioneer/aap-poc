@@ -1,11 +1,12 @@
 import * as React from 'react';
 import Slider from 'react-slick';
-import { Icon, List, Accordion } from 'semantic-ui-react';
+import { Icon, List, Accordion, Segment } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
 import { parse } from '@babel/parser';
+import { ClientsViewFilterText } from './clientsView/ClientsViewParms';
 
 const parseName = (name: string) => {
-  const nameWithoutExt = name.substring(0, name.length - 4)
+  const nameWithoutExt = name.substring(0, name.length - 4);
   const ix = nameWithoutExt.indexOf('.');
   if (ix > -1) {
     return {
@@ -36,7 +37,9 @@ const getImagesByGroup = async (groupId: string) => {
 export const AltoShow = () => {
   const [list, setList] = useState<{ name: string, images: any[] }[]>([]);
 
+  const [activeIndex, setactiveIndex] = useState<number>(0);
   const [current, setCurrent] = useState<string | undefined>(undefined);
+  const [currentGroup, setCurrentGroup] = useState<any | undefined>(undefined);
 
   useEffect(() => {
     Promise.all([
@@ -48,21 +51,34 @@ export const AltoShow = () => {
   const settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: 2,
+    slidesToShow: 7,
     slidesToScroll: 2,
     initialSlide: 0,
     prevArrow: <CustomArrowPrev />,
     nextArrow: <CustomArrowNext />,
   };
 
+  const handleTitleClick = (e: any, itemProps: any) => {
+    const { index } = itemProps
+    setactiveIndex(index);
+  }
+
   //getImagesByGroup('new').then(console.log);
   //
+
+  const sliderPanes = list.length && list[activeIndex].images.map((img: any, ix: number) => {
+    return <div className="sliderGraphItem" key={ix} style={{ height: '110px', marginTop: '3px' }}>
+      <div style={{ border: '1px solid grey', margin: '0 3px' }} onClick={() => setCurrent(img.src)} >
+        <img src={img.src} height='100%' width='100%'/>
+      </div>
+    </div>
+  });
 
   const panels = list.map(s => ({
     key: s.name,
     title: s.name,
     content: <Accordion.Content>
-      <List style={{    overflowY: 'scroll', maxHeight:'400px'}}>
+      <List style={{ overflowY: 'scroll', maxHeight: '400px' }}>
         {s.images.map((img, ix) =>
           <List.Item as="a" key={ix} onClick={() => setCurrent(img.src)} >
             <List.Icon name='marker' color={img.src === current ? 'yellow' : 'grey'} />
@@ -76,12 +92,19 @@ export const AltoShow = () => {
 
   return <div style={{ height: '100vh', width: '100%' }} >
     <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
-      <div>
-        <img src={logo} style={{width:'250px'}} />
-        <Accordion defaultActiveIndex={0} panels={panels} styled style={{ width: '250px' }} />
+      <div style={{ display: 'flex', flexDirection: 'column'}}>
+        <img src={logo} style={{ width: '250px' }} />
+        <Accordion activeIndex={activeIndex} panels={panels} onTitleClick={handleTitleClick} styled style={{ width: '250px', flex: 1 }} />
       </div>
-      <div style={{ flex: '1',overflowY: 'scroll'}}>
-        {current && <img width='100%' src={(current)} />}
+      <div style={{ display: 'flex', flex: 1, flexDirection: 'column', width: '85%' }}>
+        <Segment style={{ flex: '1', overflowY: 'scroll' }}>
+          {current && <img width='100%' src={(current)} />}
+        </Segment>
+        <Segment style={{ marginTop: '2px' }}>
+          <div style={{ margin: '2px auto', height: '120px' }}>
+            <Slider  {...settings} >{sliderPanes}</Slider>
+          </div>
+        </Segment>
       </div>
     </div>
   </div>

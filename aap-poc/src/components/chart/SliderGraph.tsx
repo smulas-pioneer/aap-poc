@@ -126,7 +126,7 @@ export const SliderGraphTumblr = (props: SliderGraphProps) => {
     slidesToScroll: slidesToShow,
     initialSlide: defaultIndex,
     prevArrow: <CustomArrowPrev />,
-    nextArrow: <CustomArrowNext />,
+    nextArrow: <CustomArrowNext />
   };
 
   const sliderPanes = graphs.map((item, ix) => {
