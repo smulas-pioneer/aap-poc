@@ -70,7 +70,7 @@ export const SliderGrapMultiView = (props: SliderGraphMultiViewProps) => {
 
   const graphProps = {
     ...otherProps,
-    height: mode === 'multi' ? (height / settings.multiSegment) - 20 : height
+    height: mode === 'multi' ? (height / settings.multiSegment) - 16 : height
   }
 
   return <div style={{ position: 'relative' }}>
@@ -81,7 +81,7 @@ export const SliderGrapMultiView = (props: SliderGraphMultiViewProps) => {
         : mode === 'multi'
           ? <div className='ui-flex ui-flex-col'>
             {numArray(settings.multiSegment).map((i) => {
-              return <Segment key={i} style={{ marginBottom: 0 }}><SliderGraph {...graphProps} defaultIndex={settings.defaultIndex[i]} slidesToShow={settings.multiSlidesToShow} /></Segment>
+              return <Segment key={i}><SliderGraph {...graphProps} defaultIndex={settings.defaultIndex[i]} slidesToShow={settings.multiSlidesToShow} /></Segment>
             })}
           </div>
           : null

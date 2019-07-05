@@ -200,15 +200,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
   // lang
   alertsDetail = (numOfAlerts: string) => sprintf(this.props.lang.DB_ALERTS_DETAIL, numOfAlerts);
   percDetail = (value: number | undefined, from: string, period: 'Y' | 'M' | 'D', info?: string) => sprintf(this.props.lang.DB_PERC_DETAIL, (value ? value + '% ' : ''), (info ? info + ' ' : ''), from, period === 'Y' ? this.props.lang.YEAR : period === 'M' ? this.props.lang.MONTH : this.props.lang.DAY);
-
-  renderTabItem(langProps: string, icon: SemanticICONS, color: SemanticCOLORS) {
-    return (<Menu.Item name={this.props.lang[langProps]} key={langProps}>
-      <Icon name={icon} color={color} />
-      {this.props.lang[langProps]}
-    </Menu.Item>);
-  }
-
-  renderTabItem1(key: string, name: string, icon: SemanticICONS, color: SemanticCOLORS, activeKey: string, onClick?: () => void) {
+  renderTabItem(key: string, name: string, icon: SemanticICONS, color: SemanticCOLORS, activeKey: string, onClick?: () => void) {
     return (<Menu.Item key={key} name={this.props.lang[name]} active={key === activeKey} onClick={() => this.handleOnChangeTab(key)} >
       <Icon name={icon} color={color} />
       {this.props.lang[name]}
@@ -254,20 +246,20 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
 
     const panes = [
       {
-        menuItem: this.renderTabItem1('0', 'DASHBOARD', 'pie graph', 'green', page),
+        menuItem: this.renderTabItem('0', 'DASHBOARD', 'pie graph', 'green', page),
         render: () => <div>{this.renderFilterGraphics(data.result)}</div>
       },
       {
-        menuItem: this.renderTabItem1('1', 'MY_PORTFOLIOS', 'users', 'blue', page),
-        render: () => <div style={{ padding: '5px 0px' }}><ManagerView uid={uid} /></div>
+        menuItem: this.renderTabItem('1', 'MY_PORTFOLIOS', 'users', 'blue', page),
+        render: () => <div><ManagerView uid={uid} /></div>
       },
       {
-        menuItem: this.renderTabItem1('2', 'MY_ALERTS', 'alarm', 'red', page),
-        render: () => <div style={{ padding: '5px 0px' }}><AlertsView manager uid={uid} hideGraphs /></div>
+        menuItem: this.renderTabItem('2', 'MY_ALERTS', 'alarm', 'red', page),
+        render: () => <div><AlertsView manager uid={uid} hideGraphs /></div>
       },
       {
-        menuItem: this.renderTabItem1('3', 'MY_CLIENTS', 'users', 'blue', page),
-        render: () => <div style={{ padding: '8px 4px' }}><ClientsView uid={uid} /></div>
+        menuItem: this.renderTabItem('3', 'MY_CLIENTS', 'users', 'blue', page),
+        render: () => <div><ClientsView uid={uid} /></div>
       }
     ]
 
@@ -293,8 +285,8 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
     }
 
     return (
-      <AdvancedGrid className="grid-header-fix" >
-        <Segment compact style={{ width: '100%', margin: 0 }} >
+      <AdvancedGrid className="grid-header-fix ui-col" >
+        <Segment compact style={{ width: '100%' }} >
           <Grid columns={7}   >
             <Grid.Column textAlign="center" >
               {this.renderItem(fmt(info.length), lang.DB_TOTAL_CLIENTS, this.percDetail(6.9, '1', 'Y'), 'blue', 'green')}
@@ -319,14 +311,14 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
             </Grid.Column>
           </Grid>
         </Segment>
-        <AdvancedGrid className="grid-filter-right">
-          <div style={{ position: 'relative' }}>
-            <Menu style={{ margin: 0 }}>
+        <AdvancedGrid className="grid-filter-right ui-row">
+          <div className='ui-col' style={{ position: 'relative' }}>
+            <Menu>
               {panes.map(s => s.menuItem)}
             </Menu>
-              {panes[page].render()}
+            {panes[page].render()}
           </div>
-          <Segment style={{ margin: 0 }}>
+          <Segment className=''>
             <WidgetTitle size="mini" title={lang.FILTER} />
             <ClientFilter
               searchPlaceholder={lang.ENTER_FILTER_TEXT}

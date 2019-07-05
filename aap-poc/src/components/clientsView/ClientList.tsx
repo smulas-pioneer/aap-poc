@@ -15,13 +15,13 @@ export const ClientList = (props: ClientListProps & WithLang) => {
 
   return <div className="clients-list">
     <Responsive {...Responsive.onlyMobile}>
-      <Card.Group itemsPerRow={1}>{cards}</Card.Group>
+      <Card.Group className="ui-grid"  itemsPerRow={1}>{cards}</Card.Group>
     </Responsive>
     <Responsive {...Responsive.onlyTablet}>
-      <Card.Group itemsPerRow={2}> {cards}</Card.Group>
+      <Card.Group className="ui-grid" itemsPerRow={2}> {cards}</Card.Group>
     </Responsive>
     <Responsive {...Responsive.onlyComputer}>
-      <Card.Group itemsPerRow={3}> {cards}</Card.Group>
+      <Card.Group className="ui-grid" itemsPerRow={3}> {cards}</Card.Group>
     </Responsive>
   </div>
 };

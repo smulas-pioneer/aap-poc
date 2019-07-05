@@ -260,8 +260,8 @@ export const ClientView = conn.PureCompo(props => {
   const graphs = calculateGraphs();
   return (
     <div>
-      <AdvancedGrid className="grid-client-view-main" style={{ marginBottom: '10px' }}>
-        <Segment style={{ margin: 0 }} >
+      <AdvancedGrid className="grid-client-view-main ui-col" >
+        <Segment>
           <Grid columns={14}>
             <Grid.Column width={13}>
               <ClientCard client={client} lang={lang} color={'blue'} />
@@ -271,7 +271,7 @@ export const ClientView = conn.PureCompo(props => {
             </Grid.Column>
           </Grid>
         </Segment>
-        <Segment style={{ margin: 0 }}>
+        <Segment>
           <ClientAlert radar={client.radar} client={client} lang={lang} onOpenHistory={() => dispatch({ viewHistory: true })} />
         </Segment>
         <div className='ui-flex ui-flex-row'>
@@ -301,7 +301,7 @@ export const ClientView = conn.PureCompo(props => {
                 strategy={stateStrategy} lang={lang} targetReturn={state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={true} />
             }
           </Segment>
-          <div className='ui-flex ui-flex-col' style={{ margin: 0, width: '400px' }}>
+          <div className='ui-flex ui-flex-col' style={{width: '400px' }}>
             <SliderGrapMultiView graphs={graphs} lang={lang} height={800} defaultMode={"multi"} config={{ multiSlidesToShow: 1, defaultIndex: [0, 1] }} />
           </div>
         </div>

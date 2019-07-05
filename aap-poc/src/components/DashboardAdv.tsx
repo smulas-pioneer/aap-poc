@@ -238,11 +238,11 @@ class DashboardAdvCompo extends conn.StatefulCompo<DashboardAdvState> {
       },
       {
         menuItem: this.renderTabItem1('1', 'MY_CLIENTS', 'users', 'blue', page),
-        render: () => <div style={{ padding: '8px 4px' }}><ClientsView uid={uid} /></div>
+        render: () => <div><ClientsView uid={uid} /></div>
       },
       {
         menuItem: this.renderTabItem1('2', 'MY_ALERTS', 'alarm', 'red', page),
-        render: () => <div style={{ padding: '5px 0px' }}><AlertsView manager uid={uid} hideGraphs /></div>
+        render: () => <div><AlertsView manager uid={uid} hideGraphs /></div>
       },
     ]
 
@@ -270,7 +270,7 @@ class DashboardAdvCompo extends conn.StatefulCompo<DashboardAdvState> {
     let filterMaps: FilterMapTypes[] = ['AlertType', 'ClientStatus', 'ClientStatusDuration', 'Aua', 'RiskProfile'];
 
     return (
-      <AdvancedGrid className="grid-header-fix" >
+      <AdvancedGrid className="grid-header-fix ui-col" >
         <Segment compact style={{ width: '100%', margin: 0 }} >
           <Grid columns={7}   >
             <Grid.Column textAlign="center" >
@@ -296,14 +296,14 @@ class DashboardAdvCompo extends conn.StatefulCompo<DashboardAdvState> {
             </Grid.Column>
           </Grid>
         </Segment>
-        <AdvancedGrid className="grid-filter-right">
-          <div style={{ position: 'relative' }}>
-            <Menu style={{ margin: 0 }}>
+        <AdvancedGrid className="grid-filter-right ui-row">
+          <div className='ui-col' style={{ position: 'relative' }}>
+            <Menu>
               {panes.map(s => s.menuItem)}
             </Menu>
             {panes[page].render()}
           </div>
-          <Segment style={{ margin: 0 }}>
+          <Segment>
 {/*
             <Card fluid>
               {this.renderItem(fmt(info.pendingProposals), lang.DB_PENDING_PROPOSALS)}

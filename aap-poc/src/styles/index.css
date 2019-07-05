@@ -7,6 +7,21 @@ html {
     background-color: rgba(0, 0, 0, 0.55) !important;
 }
 
+.margin-y {
+    margin-top: 0 !important;
+    margin-bottom: 0.5em !important;
+    ;
+}
+
+.margin-x {
+    margin-left: 0;
+    margin-right: 0.5em;
+}
+
+.margin-x:last-child {
+    margin-right: 0em;
+}
+
 /* SLIDER */
 .custom-slick-arrow {
     position: absolute;
@@ -37,20 +52,13 @@ html {
     margin-right: 10px;
 }
 
-/*
-.sliderGraphItem.slick-slide {
-    text-align: center;
-    cursor: pointer;
-}
-*/
-
 .sliderGraphItem.slick-slide * {
     cursor: pointer;
 }
 
 .sliderGraphItem.slick-slide.bordered,
 .sliderGraphItem.slick-slide .bordered {
-    border: 1px solid rgba(34,36,38,.15);
+    border: 1px solid rgba(34, 36, 38, .15);
     border-radius: 5px;
 }
 
@@ -74,16 +82,35 @@ html {
     flex-direction: row;
 }
 
-.ui-flex.ui-flex-row>div {
-    margin: 5px 5px !important;
+.ui-flex.ui-flex-row>div:not(:last-child),
+.ui-row>div:not(:last-child) {
+    margin: 0 0.5em 0 0 !important;
+}
+.ui-flex.ui-flex-row>div:last-child,
+.ui-row>div:last-child {
+    margin: 0px !important;
 }
 
-.ui-flex.ui-flex-row>div:first-child {
-    margin-left: 0px !important;
+.ui-flex.ui-flex-col>div:not(:last-child),
+.ui-col>div:not(:last-child) {
+    margin: 0 0 0.5em 0 !important;
 }
 
-.ui-flex.ui-flex-row>div:last-child {
-    margin-right: 0px !important;
+.ui-flex.ui-flex-col>div:last-child,
+.ui-col>div:last-child {
+    margin: 0px !important;
+}
+
+.ui-grid > div {
+    margin: 0 0.5em 0.5em 0 !important;
+}
+
+.ui-grid.ui.three.cards {
+    margin: 0px -0.5em 0px 0px !important; 
+}
+
+.ui-grid.ui.three.cards > .card {
+    width: calc(33.33333333% - 0.5em) !important;
 }
 
 .tab-dashboard .ui-flex.ui-flex-row>div {
@@ -153,12 +180,12 @@ html {
     margin: 0;
     display: grid;
     height: 100%;
-    grid-column-gap: 0.5em;
-    grid-row-gap: 0.5em;
+    /* grid-column-gap: 0.5em; */
+    /* grid-row-gap: 0.5em; */
 }
 
 .grid-advanced.grid-header-fix {
-    grid-template-rows: 95px auto;
+    grid-template-rows: 102px auto;
 }
 
 .grid-advanced.grid-header-min {
@@ -327,43 +354,51 @@ svg .boundaries>path {
     width: 50%
 }
 
-div.menu-flat.vertical{
-  margin: 0;
-  border-left: solid thin #1b1c1d;
+div.menu-flat.vertical {
+    margin: 0;
+    border-left: solid thin #1b1c1d;
 }
 
-div.col-user-menu{
-  width: 226px !important;
-  right: 0px;
-  position: absolute !important;
+div.col-user-menu {
+    width: 226px !important;
+    right: 0px;
+    position: absolute !important;
 }
 
-div.col-user-menu .menu-user{
+div.col-user-menu .menu-user {
     margin-top: -10px !important;
 }
 
-.topClientOptionSelector{
-  text-align: center;
+.topClientOptionSelector {
+    text-align: center;
 }
 
 .btnProposals {
-  padding: 10px;
-  position: absolute;
-  right:0;
-  top:0;
-  border:none;
+    padding: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: none;
 }
+
 /* TODO: Ask to ruska to put in theme color */
-.ui.dropdown .menu>.divider{
-  border-top-color:  rgba(255,255,255,.1) !important;
+.ui.dropdown .menu>.divider {
+    border-top-color: rgba(255, 255, 255, .1) !important;
 }
 
 .custom-filter.menu .dynamicMenuContext {
-  /* color: rgb(84, 200, 255) !important; */
-  color: #949494 !important;
+    /* color: rgb(84, 200, 255) !important; */
+    color: #949494 !important;
 }
 
-.altoshow-groups-explorer::-webkit-scrollbar { width: 0 !important }
-.altoshow-groups-explorer { overflow: -moz-scrollbars-none; }
-.altoshow-groups-explorer { -ms-overflow-style: none; }
+.altoshow-groups-explorer::-webkit-scrollbar {
+    width: 0 !important
+}
 
+.altoshow-groups-explorer {
+    overflow: -moz-scrollbars-none;
+}
+
+.altoshow-groups-explorer {
+    -ms-overflow-style: none;
+}
