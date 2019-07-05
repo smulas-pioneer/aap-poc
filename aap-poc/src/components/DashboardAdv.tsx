@@ -5,10 +5,8 @@ import { searchClient } from '../actions/index';
 import { getSearchResult, getSearchFilter, getLanguage, getConfigLayout, getIsCountryActive, getIsRegionActive } from '../reducers/index';
 import { SemanticICONS, Statistic, Grid, Segment, SemanticCOLORS, Icon, Menu, Tab, Card } from 'semantic-ui-react';
 import { filterMapItems, FilterMap, FilterMapTypes } from '../actions/model';
-import { TopClient } from './topClientView/index';
 import { CustomPieChart } from './chart/CustomCharts';
 import { AdvancedGrid } from './shared/GridOverflow';
-import { ManagerView } from './managerView/managerView';
 import { AlertsView } from './alertsView/AlertsView';
 import { formatAua, formatNumber, getColorCustomClassName } from '../_db/utils';
 import { ClientFilter } from './shared/ClientFilter';
@@ -16,7 +14,6 @@ import { WidgetTitle } from './shared/WidgetTitle';
 import { BreakdownView } from './clientView/BreakdownView';
 import { ClientsView } from './clientsView/ClientsView';
 import { SliderGrapMultiView } from './chart/SliderGraph';
-import { EuropaMap } from './maps/europe/EuropeMap';
 import { getIsOnlyItaly } from '../reducers';
 import { ClientListBudget } from './clientsView/ClientListBudget';
 
@@ -301,18 +298,20 @@ class DashboardAdvCompo extends conn.StatefulCompo<DashboardAdvState> {
         </Segment>
         <AdvancedGrid className="grid-filter-right">
           <div style={{ position: 'relative' }}>
-            <Menu pointing style={{ margin: 0 }}>
+            <Menu style={{ margin: 0 }}>
               {panes.map(s => s.menuItem)}
             </Menu>
             {panes[page].render()}
           </div>
           <Segment style={{ margin: 0 }}>
+{/*
             <Card fluid>
               {this.renderItem(fmt(info.pendingProposals), lang.DB_PENDING_PROPOSALS)}
             </Card>
             <Card fluid>
               {this.renderItem(fmt(info.pendingExecution), lang.DB_PROPOSAL_ACCEPTED_NOT_EXECUTED)}
             </Card>
+ */}
             <WidgetTitle size="mini" title={lang.FILTER} />
             <ClientFilter
               searchPlaceholder={lang.ENTER_FILTER_TEXT}

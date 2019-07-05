@@ -321,7 +321,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         </Segment>
         <AdvancedGrid className="grid-filter-right">
           <div style={{ position: 'relative' }}>
-            <Menu pointing style={{ margin: 0 }}>
+            <Menu style={{ margin: 0 }}>
               {panes.map(s => s.menuItem)}
             </Menu>
               {panes[page].render()}
