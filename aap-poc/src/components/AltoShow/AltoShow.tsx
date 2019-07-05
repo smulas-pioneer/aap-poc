@@ -134,10 +134,10 @@ export const AltoShow = () => {
       </div>
       <div style={{ display: 'flex', flex: 1, flexDirection: 'column', width: showSilder ? '85%' : '100%' }}>
         <div ref={mainContent} style={{ flex: '1', overflowY: 'scroll', marginBottom: '2px' }}>
-          <Segment>
+          <Segment style={current ? {}:{height:'100%', textAlign:'center', backgroundColor:'white'}}>
             {current
               ? image(current.src, animationClass)
-              : <img width='100%' src={home} />
+              : <img  height='100%' src={home} style={{margin:'auto'}} />
             }
           </Segment>
         </div>
