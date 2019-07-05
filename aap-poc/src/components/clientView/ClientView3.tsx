@@ -302,7 +302,7 @@ export const ClientView = conn.PureCompo(props => {
             }
           </Segment>
           <div className='ui-flex ui-flex-col' style={{ margin: 0, width: '400px' }}>
-            <SliderGrapMultiView graphs={graphs} lang={lang} height={800} config={{ multiSlidesToShow: 1, defaultIndex: [0, 1] }} />
+            <SliderGrapMultiView graphs={graphs} lang={lang} height={800} defaultMode={"multi"} config={{ multiSlidesToShow: 1, defaultIndex: [0, 1] }} />
           </div>
         </div>
         {viewHistory && <Modal open closeOnDimmerClick={false} closeOnEscape onClose={() => dispatch({ viewHistory: false })}>
