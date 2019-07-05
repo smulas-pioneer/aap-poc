@@ -246,7 +246,7 @@ export const ClientView = conn.PureCompo(props => {
       if (val.data && val.data.length) {
         element.charts.push({
           title,
-          chart: <BreakdownView uid={'dashboard'} key={`breakdown${i}`} breakdown={val} chartView={chartView} />
+          chart: <BreakdownView uid={'dashboard'} key={`breakdown${i}`} breakdown={val} chartView={chartView} actions={false} />
         })
       }
       return { ...memo, [prop]: element }
@@ -298,7 +298,7 @@ export const ClientView = conn.PureCompo(props => {
             />}
             {
               !state.hideProposal && <Fees
-              strategy={stateStrategy} lang={lang} targetReturn={state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={true} />
+                strategy={stateStrategy} lang={lang} targetReturn={state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={true} />
             }
           </Segment>
           <div className='ui-flex ui-flex-col' style={{ margin: 0, width: '400px' }}>
