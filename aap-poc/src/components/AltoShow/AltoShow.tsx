@@ -56,7 +56,7 @@ export const AltoShow = () => {
   }, [])
 
   useEffect(() => {
-    if (current && list[activeIndex].showThumbnails) {
+    if (current && list[activeIndex].showThumbnails && showSilder) {
       setTimeout(() =>
         slider.current.slickGoTo(current.index, true)
         , .300)
