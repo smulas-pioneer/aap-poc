@@ -307,12 +307,14 @@ class DashboardAdvCompo extends conn.StatefulCompo<DashboardAdvState> {
             {panes[page].render()}
           </div>
           <Segment style={{ margin: 0 }}>
+{/*
             <Card fluid>
               {this.renderItem(fmt(info.pendingProposals), lang.DB_PENDING_PROPOSALS)}
             </Card>
             <Card fluid>
               {this.renderItem(fmt(info.pendingExecution), lang.DB_PROPOSAL_ACCEPTED_NOT_EXECUTED)}
             </Card>
+ */}
             <WidgetTitle size="mini" title={lang.FILTER} />
             <ClientFilter
               searchPlaceholder={lang.ENTER_FILTER_TEXT}
