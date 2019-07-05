@@ -39,9 +39,9 @@ export class TopClient extends React.Component<TopClientProps, TopClientState> {
   constructor(props: TopClientProps) {
     super(props);
     this.state = {
-      currentGroup: GroupTypes.Region,
-      currentIndicator: IndicatorOptionsType.clients,
-      currentData: this.calculateData(props.clients, GroupTypes.Region, IndicatorOptionsType.clients)
+      currentGroup: GroupTypes.Client,
+      currentIndicator: IndicatorOptionsType.aua,
+      currentData: this.calculateData(props.clients, GroupTypes.Client, IndicatorOptionsType.aua)
     }
     this.onOptionsChange = this.onOptionsChange.bind(this);
     this.calculateData = this.calculateData.bind(this);

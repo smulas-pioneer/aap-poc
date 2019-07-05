@@ -152,7 +152,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         <SliderGrapMultiView graphs={this.createGraphs()} lang={lang} height={600} config={{ multiSlidesToShow: 2 }} />
       </div>
       <Segment>
-        <TopClient clients={data} lang={lang} />
+        <TopClient clients={data} lang={lang} max={20} />
       </Segment>
     </div >
   }
