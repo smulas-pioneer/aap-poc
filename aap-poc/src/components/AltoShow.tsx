@@ -28,7 +28,7 @@ const getImagesByGroup = async (groupId: string) => {
     name: groupId,
     images: json.files.map((s: string) => ({
       ...parseName(s),
-      src: `${process.env.REACT_APP_ALTOSHOWPREFIX || ''}/altoshow/${groupId}/${s}`
+      src: `${process.env.REACT_APP_ALTOSHOWPREFIX || ''}/altoshow/${groupId}/${encodeURIComponent(s)}`
     }))
   }
 }
@@ -81,7 +81,7 @@ export const AltoShow = () => {
         <Accordion defaultActiveIndex={0} panels={panels} styled style={{ width: '250px' }} />
       </div>
       <div style={{ flex: '1',overflowY: 'scroll'}}>
-        {current && <img width='100%' src={encodeURIComponent(current)} />}
+        {current && <img width='100%' src={(current)} />}
       </div>
     </div>
   </div>
