@@ -1,5 +1,5 @@
 import { PositionItem, RadarItem, StrategyItem, Alert, Radar, Client, AlertHistory2 } from "./interfaces";
-import { sumBy, endsWith,  } from "lodash";
+import { sumBy, endsWith, } from "lodash";
 import moment from 'moment';
 import * as math from 'mathjs';
 import { REFERENCE_DATE_TODAY } from "./consts";
@@ -26,8 +26,8 @@ export const avgRadar = (position: PositionItem[]): RadarItem => {
 }
 
 export const adjustRadarValue = (value: number) => {
-    if ( value >10 ) return value;
-    return value * 20 ;
+    if (value > 10) return value;
+    return value * 20;
 }
 
 export const getRAG = (act: number, limit: number, mifid: boolean): Alert => {
@@ -52,10 +52,10 @@ export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: stri
     const model = modelPosition(strategy);
     const sugg = suggestedPosition(strategy);
 
-    const radarActual = avgRadar(actual);
+    const radarActual = r ? r.actual : avgRadar(actual);
     const radarModel = r ? r.guideLines : avgRadar(model);
     const radarLimit = r ? r.guideLines : getRadarLimitSync(radarModel);
-    const radarSugg = avgRadar(sugg);
+    const radarSugg = r ? r.proposed : avgRadar(sugg);
 
     return createRadarSync(radarModel, radarActual, radarLimit, radarSugg);
 }
@@ -82,26 +82,28 @@ export const createRadarSync = (guideLines: RadarItem,
     const reds = alerts.filter(r => r === 'red').length;
     const oranges = alerts.filter(r => r === 'orange').length;
     const numOfAlerts = reds + oranges;
-    
+
     const color = numOfAlerts === 0 ? 'green' : reds === 0 ? 'orange' : 'red';
 
-    const f= (n:number) => n/20
+    const f = (n: number) => n / 20
 
-    const regulatoryIndicator =math.max( f(actual.riskAdequacy - guideLines.riskAdequacy),0);
+    const regulatoryIndicator = math.max(f(actual.riskAdequacy - guideLines.riskAdequacy), 0);
     const distances = [
-        actual.concentration -guideLines.concentration,
-        actual.consistency -guideLines.consistency,
-        actual.efficency -guideLines.efficency,
-        actual.overlap -guideLines.overlap,
-        actual.riskAnalysis -guideLines.riskAnalysis,
+        actual.concentration - guideLines.concentration,
+        actual.consistency - guideLines.consistency,
+        actual.efficency - guideLines.efficency,
+        actual.overlap - guideLines.overlap,
+        actual.riskAnalysis - guideLines.riskAnalysis,
     ]
-    const aboveGuidelines = f(distances.filter(d=>d> 0).reduce((a,b)=>a+b,0));
-    const belowGuidelines = f(distances.filter(d=>d< 0).reduce((a,b)=>a+b,0));
-    return { ...data, numOfAlerts, color,
+    const aboveGuidelines = f(distances.filter(d => d > 0).reduce((a, b) => a + b, 0));
+    const belowGuidelines = f(distances.filter(d => d < 0).reduce((a, b) => a + b, 0));
+    return {
+        ...data, numOfAlerts, color,
 
-                belowGuidelines,
-                aboveGuidelines,
-                 regulatoryIndicator };
+        belowGuidelines,
+        aboveGuidelines,
+        regulatoryIndicator
+    };
 
 }
 

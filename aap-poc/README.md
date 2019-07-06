@@ -7,19 +7,19 @@
 3. Colonna impatto transazione su Indicatori
 ~~4. Grafico peformance rimuovere simbolo ultimo giorno perf.~~
 5. Rimuovere new Cash
-6. Aggiungere extra dati security
+~~6. Aggiungere extra dati security~~
 ~~7. Filtro per Attributi~~
 ~~8. Rimettere bordi ai bottoni~~
-9. Switch grafici su cliente
-10. Modificare colori viola e verde sui grafici
+~~9. Switch grafici su cliente~~
+~~10. Modificare colori viola e verde sui grafici~~
 11. Alternate Security
-12. Configurare portfolio complesso
+~~12. Configurare portfolio complesso~~
 ~~13. Verificare Breakdown~~
 14. Proposal Validation to fix.
 15. Colore label grafici in light mode.
 ~~16. Spaccato grafico performance in search.~~
-17. Risk Contribution map to asset class instead of securities
 ~~18. Rebalance Asset Class Distribution ~~
+~~17. Risk Contribution map to asset class instead of securities~~
 
 
 -- CREATE FOLDER JSON MANIFEST: python -c 'import os, json; print json.dumps( sorted( os.listdir(".")) )' > manifest.json

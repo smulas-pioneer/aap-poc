@@ -242,9 +242,9 @@ const mapSuggestion = (pos: any[], mod: any[], sugg: any[]): StrategyItem[] => {
 export const getAllStrategies = () => {
   let x = {
     //"0": mapSuggestion(FD.case_2_initial, FD.case_2_model, FD.case_2_proposed).sort((a, b) => a.isCash ? -1 : 1),
+    "0": mapSuggestion(BB.bbCase, BB.bbCase, BB.bbProposal).sort((a, b) => a.isCash ? -1 : 1),
     "1": mapSuggestion(FD.case_3_initial, FD.case_3_model, FD.case_3_proposed).sort((a, b) => a.isCash ? -1 : 1),
     "2": mapSuggestion(FD.case_4_initial, FD.case_4_model, FD.case_4_proposed).sort((a, b) => a.isCash ? -1 : 1),
-    "0": mapSuggestion(BB.bbCase, BB.bbCase, BB.bbProposal).sort((a, b) => a.isCash ? -1 : 1),
   }
   return x;
 }

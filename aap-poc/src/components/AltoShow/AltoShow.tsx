@@ -3,7 +3,6 @@ import Slider, { Settings } from 'react-slick';
 import { Icon, List, Accordion, Segment, Transition } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
 import { capitalize } from 'lodash';
-import { bool } from 'prop-types';
 
 const parseName = (name: string) => {
   const nameWithoutExt = name.substring(0, name.length - 4);
@@ -61,7 +60,7 @@ export const AltoShow = () => {
         slider.current.slickGoTo(current.index, true)
         , .300)
     }
-  }, [current]);
+  }, [current,activeIndex,showSilder,list]);
 
   useEffect(() => {
     setAnimationClass('altoshow-current');
@@ -97,7 +96,7 @@ export const AltoShow = () => {
     return <div className="sliderGraphItem" key={ix} style={{ height: '110px', marginTop: '3px' }}>
       <div style={{ border: '1px solid grey', margin: '0 3px' }} onClick={() => setCurrent({ src: img.src, index: ix })} >
         <Transition duration={2000} transitionOnMount visible mountOnShow unmountOnHide animation='fade' >
-          {image(img.src)}
+          {image(img.src, undefined,img.name)}
         </Transition>
       </div>
     </div>
@@ -122,7 +121,7 @@ export const AltoShow = () => {
   return <div className="altoshow" style={{ height: '100vh', width: '100%' }} >
     <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <img src={logo} style={{ width: '250px', cursor: 'pointer' }} onClick={() => setCurrent(undefined)} />
+        <img alt="" src={logo} style={{ width: '250px', cursor: 'pointer' }} onClick={() => setCurrent(undefined)} />
         <Accordion activeIndex={activeIndex} panels={panels} onTitleClick={handleTitleClick} styled style={{ width: '250px', flex: 1 }} />
         {current && list[activeIndex].showThumbnails && <Segment>
           <List.Item onClick={() => setShowSlider(!showSilder)} >
@@ -137,7 +136,7 @@ export const AltoShow = () => {
           <Segment style={current ? {}:{height:'100%', textAlign:'center', backgroundColor:'white'}}>
             {current
               ? image(current.src, animationClass)
-              : <img  height='100%' src={home} style={{margin:'auto'}} />
+              : <img  alt=""  height='100%' src={home} style={{margin:'auto'}} />
             }
           </Segment>
         </div>
@@ -156,7 +155,7 @@ export const AltoShow = () => {
 const CustomArrowPrev = (props: any) => (<div className={`custom-slick-arrow custom-slick-prev`}><Icon name='arrow left' onClick={props.onClick} link /></div>);
 const CustomArrowNext = (props: any) => (<div className={`custom-slick-arrow custom-slick-next`}><Icon name='arrow right' onClick={props.onClick} link /></div>);
 
-const image = (src?: string, animationClass?: string) => {
+const image = (src?: string, animationClass?: string, name?:string) => {
   if (!src) return null;
   const isPdf = src.endsWith('.pdf');
   return isPdf
@@ -165,5 +164,5 @@ const image = (src?: string, animationClass?: string) => {
 No biggie... you can <a href={src}>click here to
 download the PDF file.</a></p>
     </object></div>
-    : <img className={animationClass} src={src} height='100%' width='100%' />
+    : <img  alt="" title={name} className={animationClass} src={src} height='100%' width='100%' />
 }

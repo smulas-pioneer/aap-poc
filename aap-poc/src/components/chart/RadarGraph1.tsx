@@ -13,7 +13,7 @@ interface RadarGraphProps extends ChartBaseProps {
 }
 
 export const RadarGraph = (props: RadarGraphProps) => {
-  const { legend = true, caption = true, actions = true } = props;
+  const { legend = true, caption = true} = props;
 
   const d = props.data;
   const data = [

@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { Segment, Table, Menu } from 'semantic-ui-react';
+import {  Table, Menu } from 'semantic-ui-react';
 import { Client, } from "../../_db/interfaces";
 import { LangDictionary, } from '../../reducers/language/interfaces';
 import { formatNumber, getColorCustomClassName } from "../../_db/utils";
-import client from '../../reducers/client';
 import { numArray } from '../../_db/common/radarUtils';
 import { WidgetTitle } from '../shared/WidgetTitle';
 import { Link } from 'react-router-dom';

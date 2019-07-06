@@ -14,7 +14,6 @@ export const PopoverChange = (props: PopoverChangeProps) => {
   const originalSuggestion = round(props.item.suggestedDelta * 100);
   const [textValue, setTextValue] = React.useState(originalSuggestion.toString());
   const [value, setValue] = React.useState(originalSuggestion);
-  const [enabled, setEnabled] = React.useState(props.item.suggestionAccepted);
   const [error, setError] = React.useState<string | undefined>(undefined);
 
   React.useEffect(() => {
@@ -41,11 +40,9 @@ export const PopoverChange = (props: PopoverChangeProps) => {
 
   const reset = () => {
     setTextValue(originalSuggestion.toString());
-    setEnabled(false);
     sendChange(originalSuggestion, false);
   }
 
-  const isChanged = enabled !== props.item.suggestionAccepted || originalSuggestion !== value;
   const handleSliderChange = (value: string) => {
     if (!isNaN(value as any)) {
       const numValue = round(parseFloat(value) / 10);
@@ -67,7 +64,7 @@ export const PopoverChange = (props: PopoverChangeProps) => {
     </div>
     <div style={{ flex: 1, display: 'flex' }}>
       <div style={{ flex: 3, verticalAlign: 'middle' }}>
-        <Input size="small" inverted fluid value={textValue || ""} onChange={(a, b) => setTextValue(b.value)} >
+        <Input error={error ? true : false} size="small" inverted fluid value={textValue || ""} onChange={(a, b) => setTextValue(b.value)} >
           <input style={{ color: value > 0 ? 'lightgreen' : 'red' }} />
         </Input>
       </div>

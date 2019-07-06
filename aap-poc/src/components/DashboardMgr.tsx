@@ -3,7 +3,7 @@ import { SearchParms, Client } from '../_db/interfaces';
 import { appConnector } from 'app-support';
 import { searchClient } from '../actions/index';
 import { getSearchResult, getSearchFilter, getLanguage, getConfigLayout, getIsCountryActive, getIsRegionActive } from '../reducers/index';
-import { SemanticICONS, Statistic, Grid, Segment, SemanticCOLORS, Icon, Menu, Tab } from 'semantic-ui-react';
+import { SemanticICONS, Statistic, Grid, Segment, SemanticCOLORS, Icon, Menu } from 'semantic-ui-react';
 import { filterMapItems, FilterMap, FilterMapTypes } from '../actions/model';
 import { TopClient } from './topClientView/index';
 import { CustomPieChart } from './chart/CustomCharts';
@@ -18,7 +18,6 @@ import { ClientsView } from './clientsView/ClientsView';
 import { SliderGrapMultiView } from './chart/SliderGraph';
 import { EuropaMap } from './maps/europe/EuropeMap';
 import { getIsOnlyItaly } from '../reducers';
-import { ClientListBudget } from './clientsView/ClientListBudget';
 
 const sprintf = require("sprintf-js").sprintf;
 

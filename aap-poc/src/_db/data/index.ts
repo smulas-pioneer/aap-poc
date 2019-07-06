@@ -60,7 +60,7 @@ export const loadDatabase = (appName: string) => {
     clients[1].name = "Costanzo Bianchi";
     clients[1].email = "costanzo.bianchi@gmail.com";
     clients[1].bornDate = "1968-12-21";
-    clients[1].timeHorizon = "10 Years";
+    clients[1].timeHorizon = "5 Years";
     clients[1].projectAccomplishment = 60;
     clients[1].project = "Retirement";
   }));

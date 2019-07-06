@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Menu, Button, Input, Grid, Dropdown, Progress, Icon, Label } from 'semantic-ui-react';
+import { Menu, Button, Input, Grid, Dropdown, Progress } from 'semantic-ui-react';
 import { calculateProjection } from '../../_db/coreEngine';
 import { LangDictionary } from '../../reducers/language/interfaces';
 import moment from 'moment';
 import { TimeHorizon, TimeHorizonMonths, PerformancePeriod } from '../../_db/interfaces';
 import { ChartBaseProps } from './ChartInterface';
-const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } = require('recharts');
+const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } = require('recharts');
 
 const Colors = {
   ACCENT: "#00B6ED",
@@ -145,7 +145,7 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
   }
   render() {
     const { lang, actualData } = this.props;
-    const { legend = true, caption = true, actions = true } = this.props;
+    const { caption = true, actions = true } = this.props;
 
     const { data, period, initalPerf } = this.state;
     const fmt = new Intl.NumberFormat(lang.NUMBER_FORMAT, {
@@ -158,16 +158,20 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
     const displayedData = data.filter((d, i) => d.date < "2018-03");
 
     const perf = actualData && fmt.format(100 * (actualData[actualData.length - 1].perf! - initalPerf));
+    /*
     const primary = actualData && actualData[actualData.length - 1].perf! > 0;
     const minDate = data && moment(data[0].date).format(lang.DATE_FORMAT);
     const maxDate = displayedData && moment(displayedData[displayedData.length - 1].date).format(lang.DATE_FORMAT);
-
+*/
     return <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       {actions && <Menu secondary compact borderless fluid style={{ marginBottom: '1em' }}>
         <Menu.Menu>
           <Menu.Item>
-            <label style={{ whiteSpace: 'nowrap', marginRight: '10px'}}><b>Target Return (%) :</b></label> 
-            <Input type='number' size="mini" value={this.state.target_Return} onChange={(a, b) => this.handleChangeTargetReturn(b.value)} />
+            <label style={{ whiteSpace: 'nowrap', marginRight: '10px' }}><b>Target Return (%) :</b></label>
+            <Input type='number' size="mini"
+              value={convY(this.state.target_Return, this.state.timeHorizon, false)}
+              onChange={(a, b) => this.handleChangeTargetReturn(convY(b.value, this.state.timeHorizon, true))}
+            />
           </Menu.Item>
           <Menu.Item>
             <Dropdown text={`${lang.TIME_HORIZON}: ${this.state.timeHorizon}`} pointing='left' className='link item'>
@@ -181,7 +185,7 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
         </Menu.Menu>
         <Menu.Menu position="right">
           <Menu.Item position="right">
-            <label style={{ whiteSpace: 'nowrap', marginRight: '10px'}}><b>Probability :</b></label> 
+            <label style={{ whiteSpace: 'nowrap', marginRight: '10px' }}><b>Probability :</b></label>
             <Progress style={{ width: 100, margin: 0 }} color={this.state.probability >= 95 ? 'green' : this.state.probability > 60 ? 'orange' : 'red'} percent={this.state.probability} progress />
           </Menu.Item>
         </Menu.Menu>
@@ -202,7 +206,10 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
       </ResponsiveContainer>
       {actions &&
         <Grid size="mini">
-          <Grid.Row columns="1" >
+          <Grid.Row columns="2" >
+            <Grid.Column>
+              {period} Performance: <b>{perf}%</b>
+            </Grid.Column>
             <Grid.Column textAlign="center">
               <Button.Group basic compact size="tiny" color="teal">
                 <Button active={period === '1M'} size="tiny" content="1m" onClick={() => this.setData({ period: '1M' })} />
@@ -240,4 +247,19 @@ const regression = (show: boolean, days: number, data: { date: string, perf: num
     getProbabilityByTimeHorizon: ret.getProbabilityByTimeHorizon,
     returnFor95: ret.returnFor95
   };
+}
+
+
+const convY = (value: string, timeHorizon: TimeHorizon, inverse: boolean) => {
+  try {
+    const num = parseFloat(value);
+    const k = TimeHorizonMonths[timeHorizon];
+    if (inverse) {
+      return (num * k / 120).toString();
+    } else {
+      return (num * 120 / k).toString();
+    }
+  } catch (error) {
+    return value;
+  }
 }

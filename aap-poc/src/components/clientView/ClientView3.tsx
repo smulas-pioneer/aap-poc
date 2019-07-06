@@ -20,7 +20,6 @@ import { SliderGrapMultiView, } from '../chart/SliderGraph';
 import { PerformanceChart } from '../chart//PerformanceChart';
 import { RiskReturnGraph } from '../chart/RiskReturnGraph';
 import { RadarGraph } from '../chart/RadarGraph';
-import { PerformanceContributionGraph } from '../chart/PerformanceContribution';
 
 const conn = appConnector<{ id: string, children: any }>()(
   (s, p) => ({
@@ -78,7 +77,8 @@ const reducer = (state: State, action: Partial<State>): State => {
 export const ClientView = conn.PureCompo(props => {
   const { client, lang, history, id, getClient, getSuggestions, strategySuccessCount, strategy } = props;
   const [state, dispatch] = React.useReducer(reducer, defaultState);
-  const { radar, axes, somethingIsChanged, viewHistory, processing, stateStrategy, breakdown } = state;
+  const { radar, axes, viewHistory, processing, stateStrategy, breakdown } = state;
+
 
 
   React.useEffect(() => {
@@ -189,8 +189,8 @@ export const ClientView = conn.PureCompo(props => {
           {
             title: 'Performance',
             chart: <PerformanceChart key={0}
-              data={ce.getPositionPerformance(suggestedPosition(stateStrategy))}
-              actualData={ce.getPositionPerformance(currentPosition(stateStrategy))}
+              data={ce.getPositionPerformance(suggestedPosition(strategy))}
+              actualData={ce.getPositionPerformance(currentPosition(strategy))}
               clientTimeHorizon={client!.timeHorizon}
               advancedView={true}
               version={strategySuccessCount}
@@ -301,7 +301,7 @@ export const ClientView = conn.PureCompo(props => {
                 strategy={stateStrategy} lang={lang} targetReturn={state.currentTargetReturn} timeHorizon={client.timeHorizon} isInSimulationMode={true} />
             }
           </Segment>
-          <div className='ui-flex ui-flex-col' style={{width: '400px' }}>
+          <div className='ui-flex ui-flex-col' style={{ width: '400px' }}>
             <SliderGrapMultiView graphs={graphs} lang={lang} height={800} defaultMode={"multi"} config={{ multiSlidesToShow: 1, defaultIndex: [0, 1] }} />
           </div>
         </div>

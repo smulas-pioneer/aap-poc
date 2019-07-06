@@ -543,7 +543,6 @@ const getClientState = (decision: string, radar: Radar): ClientState => {
 }
 
 const go = async () => {
-  log('generating...')
   try {
     if (!fs.existsSync('build/output')) fs.mkdirSync('build/output');
 
@@ -582,7 +581,8 @@ const go = async () => {
       c.Y1_Upfront_FEES = rnd(-c.MTD_Upfront_FEES, c.MTD_Ongoing_FEES);
 
       c.size = c.aua > 20000000 ? '>20M' : c.aua > 10000000 ? '10-20M' : c.aua > 5000000 ? '5-10M' : c.aua > 1000000 ? '1-5M' : '<1M';
-      c.segment = c.aua > 15000000 ? 'Private' : c.aua > 5000000 ? 'Wealth Management' : c.aua > 2000000 ? 'Mass Affluent' : 'Retail';
+      //c.segment = c.aua > 15000000 ? 'Private' : c.aua > 5000000 ? 'Wealth Management' : c.aua > 2000000 ? 'Mass Affluent' : 'Retail';
+      c.segment = c.aua > 5000000 ? 'Wealth Management':'Private';
       c.breaks = Object.keys(c.radar).filter(k => k.endsWith("Alert")).filter(k => c.radar[k] !== "green").map(k => k.replace('Alert', ''));
 
       const acc = histories[c.id].filter(p => p.status == 'ACCEPTED');

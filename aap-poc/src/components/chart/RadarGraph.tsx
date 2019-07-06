@@ -5,7 +5,7 @@ import { LangDictionary } from '../../reducers/language/interfaces';
 import { getRAG } from '../../_db/common/radarUtils';
 import { ChartBaseProps } from './ChartInterface';
 
-var { Radar, Legend, ResponsiveContainer, RadarChart, PolarAngleAxis, PolarRadiusAxis, PolarGrid, Text } = require('recharts');
+var { Radar, Legend, ResponsiveContainer, RadarChart, PolarAngleAxis, PolarRadiusAxis, PolarGrid } = require('recharts');
 
 interface RadarGraphProps extends ChartBaseProps {
   data: RadarModel,
@@ -15,11 +15,11 @@ interface RadarGraphProps extends ChartBaseProps {
   onClick?: () => void,
   onClickShape?: (subject: string) => void
   alertsAbout: 'actual' | 'proposed'
-}
+};
 
 export const RadarGraph = (props: RadarGraphProps) => {
   const { lang } = props;
-  const { legend = true, caption = true, actions = true } = props;
+  const { legend = true, caption = true } = props;
 
   const d = props.data;
 
@@ -111,22 +111,22 @@ export const RadarGraph = (props: RadarGraphProps) => {
 
   return (
     <ResponsiveContainer width="100%" height="100%" >
-      <RadarChart cx='50%' cy='50%' startAngle={60} endAngle={420} width={100} height={100} data={data} outerRadius={'80%'} isAnimationActive startWithAnimation  >
+      <RadarChart cx='50%' cy='50%' width={100} height={100} data={data} outerRadius={'80%'} isAnimationActive startWithAnimation  >
         {legend && <Legend verticalAlign="bottom" />}
         <Radar name="Actuals" dataKey="actual" stroke="#54C8FF" fill="#54C8FF" fillOpacity={1} dot />
         {props.hideProposal !== true && <Radar name="Proposed" dataKey="proposed" stroke="green" fill="green" fillOpacity={0.8} dot />}
         <Radar name="Guidelines" dataKey="guideLines" stroke="red" strokeWidth={3} fill="#00f" fillOpacity={0} />
         <PolarGrid stroke="grey" />
         <PolarRadiusAxis angle={30} />
-        <PolarAngleAxis dataKey="subject" tick={caption && <CustomizedShape axes={props.axes} names={alertNames} colors={alertColors} onClickShape={props.onClickShape} />} />
+        <PolarAngleAxis dataKey="subject" tick={caption && <CustomizedShape axes={props.axes} lang={lang} names={alertNames} colors={alertColors} onClickShape={props.onClickShape} />} />
       </RadarChart>
     </ResponsiveContainer>
   );
 }
 
 const CustomizedShape = (props: any) => {
-  let { x, y, axes, onClickShape, textAnchor, names, colors } = props;
-
+  let { x, y, axes, textAnchor, names, colors, lang } = props;
+  const [tooltip, setTooltip] = React.useState(undefined);
   const value = props.payload.value;
   const KK = 5;
   x = (value === 'efficency' || value === 'consistency' || value === 'riskAnalysis') ? x + KK : x - KK;
@@ -138,18 +138,43 @@ const CustomizedShape = (props: any) => {
   const alarmed = color !== "green";
 
   const actualX = selected || alarmed ? (textAnchor === "start" ? x + 15 : x - 15) : x;
+  const actualTextAnchor = alarmed ? (textAnchor === 'middle' ? 'end' : textAnchor) : textAnchor;
   const actualY = y + 5;
-  const selectable = onClickShape && value !== 'riskAdequacy';
-  const selectableClass = selectable ? "selectable" : undefined;
+  // const selectable = onClickShape && value !== 'riskAdequacy';
+  // const selectableClass = selectable ? "selectable" : undefined;
+  const title = names[value].name;
+
   return (
-    <g style={{ cursor: selectable ? 'pointer' : 'not-allowed' }} onClick={() => selectable && onClickShape(value)} className={selectableClass} >
+    <g onMouseEnter={() => setTooltip(title)}
+      onMouseLeave={() => setTooltip(undefined)}
+      style={{/* cursor: selectable ? 'pointer' : 'not-allowed' */ }}
+      onClick={undefined/*() => selectable && onClickShape(value)} className={selectableClass*/} >
       {
         alarmed ?
           (
             <path fill={color} transform={`translate(${x - 12},${y - 12})`} d="M17.8 14.7l1.7-4.7c1-2.8-.5-5.5-3.5-6.6s-5.9 0-6.9 2.8l-1.7 4.7c-.7 1.9-1 2.8-2.9 2.1l-.3 1 14.1 5.1.3-.9c-1.9-.7-1.5-1.6-.8-3.5zM12 19.8l-2.8-1c-.3.9.8 2.4 2.1 2.9s3.2.1 3.5-.9l-2.8-1z" />
           ) : null
       }
-      <Text {...props} x={actualX} y={actualY} fill={selected ? "grey" : "lightgrey"}>{`${names[value].name}`}</Text>
+      <text textAnchor={actualTextAnchor} color="red" fontSize={14} x={actualX} y={actualY} fill={selected ? "grey" : "lightgrey"}>{title}
+
+      </text>
+      <rect height="150px" width="150px" y={y} x={x}
+        visibility={tooltip === title ? 'visible' : 'hidden'}>
+
+        <text
+          id="thepopup" x={x} y={y}
+          fontSize="30"
+          fill="white">
+          {getSentence(lang, title)}
+        </text>
+      </rect>
     </g >
   );
 };
+
+const getSentence = (lang: LangDictionary, title: string) => {
+  const key = Object.keys(lang.ALERTS).find(k => {
+    return lang.ALERTS[k].name === title;
+  })!;
+  return lang.ALERTS[key].sentence;
+}

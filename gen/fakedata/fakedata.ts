@@ -56,7 +56,6 @@ export const case_3_initial = [
     { Symbol: 'LU0201576401', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Inflation Linked', Name: 'Amundi Fds Bond Euro Inflation', Mstar_BCH: '', Mstar_SRRI: 4, WEIGHT: 0.15, SRRI: 0.4, Amont: 10000, Price: 151.8, Shares: 65.8761528326746, },
     { Symbol: 'IE0007472990', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Government Bond', Name: 'Vanguard Euro Government Bond Index', Mstar_BCH: '', Mstar_SRRI: 3, WEIGHT: 0.35, SRRI: 1.05, Amont: 35000, Price: 222.98, Shares: 156.964750201812, },
     { Symbol: 'LU1191877379', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'High Yield', Name: 'BGF European High Yield Bond Fund', Mstar_BCH: '', Mstar_SRRI: 3, WEIGHT: 0.15, SRRI: 0.3, Amont: 10000, Price: 11.07, Shares: 903.342366757001, },
-
     { Symbol: 'LU0518421895', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Government Bond', Name: 'Amundi Fds Bond Euro Government', Mstar_BCH: 'Citi EMU GBI EUR', 
     Mstar_SRRI: 3, WEIGHT: 0.20, SRRI: 0.45, 
     Amont: 15000, Price: 215.113, Shares: 69.7307926531637, },

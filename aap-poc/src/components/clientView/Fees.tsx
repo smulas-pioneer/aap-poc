@@ -1,5 +1,5 @@
 import { LangDictionary } from '../../reducers/language/interfaces';
-import { StrategyItem, TimeHorizon } from '../../_db/interfaces';
+import { StrategyItem, TimeHorizon, TimeHorizonMonths } from '../../_db/interfaces';
 import * as React from 'react';
 import { sumBy } from 'lodash';
 import { Segment, Statistic } from 'semantic-ui-react';
@@ -11,10 +11,16 @@ export const Fees = (props: {
   isInSimulationMode: boolean;
 }) => {
   const { lang, strategy } = props;
+  const months = TimeHorizonMonths[props.timeHorizon];
   const fmt = new Intl.NumberFormat(lang.NUMBER_FORMAT, {
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
   });
+  const fmt2 = new Intl.NumberFormat(lang.NUMBER_FORMAT, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
   const fees = Math.round(sumBy(strategy.filter(s => s.suggestionAccepted), s => s.fee * Math.abs(s.suggestedDelta * s.currentAmount) * .05));
   const perc = 100 * fees / sumBy(strategy, v => v.currentAmount);
   const amount = sumBy(strategy, s => s.currentAmount);
@@ -38,7 +44,7 @@ export const Fees = (props: {
           <Statistic.Label style={{ fontSize: 10 }}>(prob. 95%)</Statistic.Label>
         </Statistic>}
         {props.targetReturn && <Statistic size="mini">
-          <Statistic.Value>{fmt.format(props.targetReturn)}%</Statistic.Value>
+          <Statistic.Value>{fmt2.format(props.targetReturn * 120 / months)}%</Statistic.Value>
           <Statistic.Label>{"EXPECTED RETURN"} </Statistic.Label>
           <Statistic.Label style={{ fontSize: 10 }}>(prob. 95%)</Statistic.Label>
         </Statistic>}

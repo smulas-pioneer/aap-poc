@@ -21,7 +21,13 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
                     </p>
                 </List.Content>
             </List.Item>)
-            : null;
+            : (<List.Item  key={key}  >
+                <List.Content style={{ marginBottom: '6px' }}>
+                    <p style={{ fontSize: "14px" }} >
+                        <b className={getColorCustomClassName(value)}>{alert.name.toUpperCase()}</b> : {alert.sentence}
+                    </p>
+                </List.Content>
+            </List.Item>)
     }
 
     const alertTitle = radar.numOfAlerts === 0 ? lang.NO_ALERTS

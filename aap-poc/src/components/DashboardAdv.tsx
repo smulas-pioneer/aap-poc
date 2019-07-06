@@ -3,7 +3,7 @@ import { SearchParms, Client } from '../_db/interfaces';
 import { appConnector } from 'app-support';
 import { searchClient } from '../actions/index';
 import { getSearchResult, getSearchFilter, getLanguage, getConfigLayout, getIsCountryActive, getIsRegionActive } from '../reducers/index';
-import { SemanticICONS, Statistic, Grid, Segment, SemanticCOLORS, Icon, Menu, Tab, Card } from 'semantic-ui-react';
+import { SemanticICONS, Statistic, Grid, Segment, SemanticCOLORS, Icon, Menu } from 'semantic-ui-react';
 import { filterMapItems, FilterMap, FilterMapTypes } from '../actions/model';
 import { CustomPieChart } from './chart/CustomCharts';
 import { AdvancedGrid } from './shared/GridOverflow';

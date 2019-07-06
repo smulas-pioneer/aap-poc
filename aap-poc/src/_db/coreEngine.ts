@@ -115,7 +115,7 @@ const performanceForPeriod = (isin: string, period: PerformancePeriod) => {
   const filteredData = data.filter(p => p.date >= minDateStr);
   return filteredData.map(p => ({
     ...p,
-    perf: p.perf - filteredData[0].perf
+    perf: (p.perf*0.51) - filteredData[0].perf
   }));
 }
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Grid, Table, Segment, Statistic, Icon } from "semantic-ui-react";
+import { Grid, Table, Statistic, Icon } from "semantic-ui-react";
 import { Security } from "../../_db/interfaces";
 import { WithLang } from "../../reducers/language/interfaces";
 import { getPerformances } from "../../_db/coreEngine";
