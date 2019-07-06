@@ -15,6 +15,7 @@ interface RadarGraphProps extends ChartBaseProps {
   onClick?: () => void,
   onClickShape?: (subject: string) => void
   alertsAbout: 'actual' | 'proposed'
+  setHighlighted: (value:string|undefined) =>void;
 };
 
 export const RadarGraph = (props: RadarGraphProps) => {
@@ -118,7 +119,7 @@ export const RadarGraph = (props: RadarGraphProps) => {
         <Radar name="Guidelines" dataKey="guideLines" stroke="red" strokeWidth={3} fill="#00f" fillOpacity={0} />
         <PolarGrid stroke="grey" />
         <PolarRadiusAxis angle={30} />
-        <PolarAngleAxis dataKey="subject" tick={caption && <CustomizedShape axes={props.axes} lang={lang} names={alertNames} colors={alertColors} onClickShape={props.onClickShape} />} />
+        <PolarAngleAxis dataKey="subject" tick={caption && <CustomizedShape setHighlighted={props.setHighlighted} axes={props.axes} lang={lang} names={alertNames} colors={alertColors} onClickShape={props.onClickShape} />} />
       </RadarChart>
     </ResponsiveContainer>
   );
@@ -126,7 +127,6 @@ export const RadarGraph = (props: RadarGraphProps) => {
 
 const CustomizedShape = (props: any) => {
   let { x, y, axes, textAnchor, names, colors, lang } = props;
-  const [tooltip, setTooltip] = React.useState(undefined);
   const value = props.payload.value;
   const KK = 5;
   x = (value === 'efficency' || value === 'consistency' || value === 'riskAnalysis') ? x + KK : x - KK;
@@ -145,8 +145,8 @@ const CustomizedShape = (props: any) => {
   const title = names[value].name;
 
   return (
-    <g onMouseEnter={() => setTooltip(title)}
-      onMouseLeave={() => setTooltip(undefined)}
+    <g onMouseEnter={() => props.setHighlighted(title)}
+      onMouseLeave={() => props.setHighlighted(undefined)}
       style={{/* cursor: selectable ? 'pointer' : 'not-allowed' */ }}
       onClick={undefined/*() => selectable && onClickShape(value)} className={selectableClass*/} >
       {
@@ -158,23 +158,7 @@ const CustomizedShape = (props: any) => {
       <text textAnchor={actualTextAnchor} color="red" fontSize={14} x={actualX} y={actualY} fill={selected ? "grey" : "lightgrey"}>{title}
 
       </text>
-      <rect height="150px" width="150px" y={y} x={x}
-        visibility={tooltip === title ? 'visible' : 'hidden'}>
-
-        <text
-          id="thepopup" x={x} y={y}
-          fontSize="30"
-          fill="white">
-          {getSentence(lang, title)}
-        </text>
-      </rect>
     </g >
   );
 };
 
-const getSentence = (lang: LangDictionary, title: string) => {
-  const key = Object.keys(lang.ALERTS).find(k => {
-    return lang.ALERTS[k].name === title;
-  })!;
-  return lang.ALERTS[key].sentence;
-}

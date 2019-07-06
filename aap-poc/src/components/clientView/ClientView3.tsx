@@ -78,7 +78,7 @@ export const ClientView = conn.PureCompo(props => {
   const { client, lang, history, id, getClient, getSuggestions, strategySuccessCount, strategy } = props;
   const [state, dispatch] = React.useReducer(reducer, defaultState);
   const { radar, axes, viewHistory, processing, stateStrategy, breakdown } = state;
-
+  const [highlightedAlert, setHighlightedAlert] = React.useState<string|undefined>(undefined);
 
 
   React.useEffect(() => {
@@ -178,7 +178,7 @@ export const ClientView = conn.PureCompo(props => {
         charts: radar && [
           {
             title: lang.PORTFOLIO_MONITORING,
-            chart: <RadarGraph hideProposal={state.hideProposal} data={radar} lang={lang} axes={axes} onClickShape={handleAxesChange} alertsAbout={'actual'} />
+            chart: <RadarGraph setHighlighted={setHighlightedAlert} hideProposal={state.hideProposal} data={radar} lang={lang} axes={axes} onClickShape={handleAxesChange} alertsAbout={'actual'} />
           }
         ]
       },
@@ -272,7 +272,7 @@ export const ClientView = conn.PureCompo(props => {
           </Grid>
         </Segment>
         <Segment>
-          <ClientAlert radar={client.radar} client={client} lang={lang} onOpenHistory={() => dispatch({ viewHistory: true })} />
+          <ClientAlert highlighedAlert={highlightedAlert} radar={client.radar} client={client} lang={lang} onOpenHistory={() => dispatch({ viewHistory: true })} />
         </Segment>
         <div className='ui-flex ui-flex-row'>
           <Segment style={{ margin: 0 }}>

@@ -113,12 +113,12 @@ export interface LangDictionary {
     name: string, sentence: string
   },
   ALERTS: {
-    riskAdequacyAlert: { name: string, sentence: string },
-    efficencyAlert: { name: string, sentence: string },
-    consistencyAlert: { name: string, sentence: string },
-    riskAnalysisAlert: { name: string, sentence: string },
-    concentrationAlert: { name: string, sentence: string },
-    overlapAlert: { name: string, sentence: string }
+    riskAdequacyAlert: { name: string, sentence: string, positiveSentence: string },
+    efficencyAlert: { name: string, sentence: string, positiveSentence: string },
+    consistencyAlert: { name: string, sentence: string, positiveSentence: string },
+    riskAnalysisAlert: { name: string, sentence: string, positiveSentence: string },
+    concentrationAlert: { name: string, sentence: string , positiveSentence: string},
+    overlapAlert: { name: string, sentence: string , positiveSentence: string}
   },
   BUDGET_YTD_UPFRONT_FEES: string,
   BUDGET_YTD_ONGOING_FEES: string,

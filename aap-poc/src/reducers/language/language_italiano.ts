@@ -99,12 +99,36 @@ export const Italiano: LanguageState = {
     NO_ALERTS: 'Nessun allarme',
 
     ALERTS: {
-      riskAdequacyAlert: { name: 'Rischio Adeguatezza', sentence: 'Il livello del rischio del portafoglio non è adeguato al profilo MIFID del cliente' },
-      efficencyAlert: { name: 'Efficienza', sentence: `L'efficienza del portafoglio non è allineata al suo modello` },
-      consistencyAlert: { name: 'Consistenza', sentence: 'La consistenza del portafoglio non è allineata al suo modello' },
-      riskAnalysisAlert: { name: 'Analisi del rischio', sentence: 'Il livello di rischio del portafoglio non è adeguato al profilo MIFID del cliente' },
-      concentrationAlert: { name: 'Concentrazione', sentence: 'La concentrazione del portafoglio non è allineata al suo modello' },
-      overlapAlert: { name: 'Sovrapposizione', sentence: 'La sovrapposizione del portafoglio non è allineata al suo modello' }
+      riskAdequacyAlert: {
+        name: 'Rischio Adeguatezza',
+        sentence: 'Il livello del rischio del portafoglio non è adeguato al profilo MIFID del cliente',
+        positiveSentence: 'Il livello del rischio del portafoglio non è adeguato al profilo MIFID del cliente'
+      },
+      efficencyAlert: {
+        name: 'Efficienza',
+        sentence: `L'efficienza del portafoglio non è allineata al suo modello`,
+        positiveSentence: `L'efficienza del portafoglio non è allineata al suo modello`
+      },
+      consistencyAlert: {
+        name: 'Consistenza',
+        sentence: 'La consistenza del portafoglio non è allineata al suo modello',
+        positiveSentence: 'La consistenza del portafoglio non è allineata al suo modello'
+      },
+      riskAnalysisAlert: {
+        name: 'Analisi del rischio',
+        sentence: 'Il livello di rischio del portafoglio non è adeguato al profilo MIFID del cliente',
+        positiveSentence: 'Il livello di rischio del portafoglio non è adeguato al profilo MIFID del cliente'
+      },
+      concentrationAlert: {
+        name: 'Concentrazione',
+        sentence: 'La concentrazione del portafoglio non è allineata al suo modello',
+        positiveSentence: 'La concentrazione del portafoglio non è allineata al suo modello'
+      },
+      overlapAlert: {
+        name: 'Sovrapposizione',
+        sentence: 'La sovrapposizione del portafoglio non è allineata al suo modello',
+        positiveSentence: 'La sovrapposizione del portafoglio non è allineata al suo modello'
+      }
     },
 
     DASHBOARD: 'Cruscotto',

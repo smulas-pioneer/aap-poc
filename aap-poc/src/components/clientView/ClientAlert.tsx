@@ -1,33 +1,18 @@
 import { Radar, Client } from "../../_db/interfaces";
 import { LangDictionary } from "../../reducers/language/interfaces";
-import { List, Segment, Header, Icon, Accordion } from "semantic-ui-react";
+import { List, Segment, Header, Icon, Accordion, Card } from "semantic-ui-react";
 import * as React from 'react';
 import { REFERENCE_DATE_TODAY } from "../../_db/common/consts";
 import moment from 'moment';
 import { getColorCustomClassName } from "../../_db/utils";
 
-export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client: Client, onOpenHistory: () => void }) => {
+export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client: Client, onOpenHistory: () => void, highlighedAlert?:string }) => {
     const { radar, lang } = props;
 
     const alertsListItem = (prop: string, key: any) => {
         const alert = lang.ALERTS[prop];
         const value = radar[prop];
-
-        return value !== 'green'
-            ? (<List.Item  key={key}  >
-                <List.Content style={{ marginBottom: '6px' }}>
-                    <p style={{ fontSize: "14px" }} >
-                        <b className={getColorCustomClassName(value)}>{alert.name.toUpperCase()}</b> : {alert.sentence}
-                    </p>
-                </List.Content>
-            </List.Item>)
-            : (<List.Item  key={key}  >
-                <List.Content style={{ marginBottom: '6px' }}>
-                    <p style={{ fontSize: "14px" }} >
-                        <b className={getColorCustomClassName(value)}>{alert.name.toUpperCase()}</b> : {alert.sentence}
-                    </p>
-                </List.Content>
-            </List.Item>)
+        return alertItemView(key, value, alert, props.highlighedAlert === alert.name)
     }
 
     const alertTitle = radar.numOfAlerts === 0 ? lang.NO_ALERTS
@@ -37,7 +22,7 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
         ? lang.ONHOLD + ' (' + alertTitle + ')'
         : alertTitle
 
-    const alertColor = props.client.decision==='ONHOLD' ? 'blue': radar.numOfAlerts ===0 ? 'green' : radar.riskAdequacyAlert ==='red' ? 'red' : 'orange';
+    const alertColor = props.client.decision === 'ONHOLD' ? 'blue' : radar.numOfAlerts === 0 ? 'green' : radar.riskAdequacyAlert === 'red' ? 'red' : 'orange';
 
     const dur = moment(REFERENCE_DATE_TODAY).to(moment(props.client.clientStatusAge));
     const title = (
@@ -57,7 +42,7 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
         </Segment>
     )
 
-    if (radar.numOfAlerts) {
+    if (true || radar.numOfAlerts) {
         const accordion = [
             {
                 key: 'Alert',
@@ -65,9 +50,9 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
                 content: {
                     key: 'alertContent',
                     content: (
-                        <Segment basic>
+                        <Card.Group>
                             {Object.keys(lang.ALERTS).map((v, i) => alertsListItem(v, i))}
-                        </Segment>
+                        </Card.Group>
                     )
                 }
             }
@@ -76,4 +61,26 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
     } else {
         return title;
     }
+}
+const alertItemView = (key: any, value: any, alert: any, higlighted: boolean) => {
+    return <Card raised style={{backgroundColor:higlighted ? 'black': 'rgb(25, 30, 36)'}} key={key}>
+        <Card.Content >
+            <Card.Header><b className={getColorCustomClassName(value)}>{alert.name.toUpperCase()}</b></Card.Header>
+            <Card.Description style={{color:'white'}}>
+                {alert.color==='green' ? alert.sentence : alert.positiveSentence}
+            </Card.Description>
+        </Card.Content>
+    </Card>
+
+}
+
+
+const alertItemView_ = (key: any, value: any, alert: any) => {
+    return <List.Item key={key}>
+        <List.Content style={{ marginBottom: '6px' }}>
+            <p style={{ fontSize: "14px" }}>
+                <b style={{ minWidth: 150 }} className={getColorCustomClassName(value)}>{alert.name.toUpperCase()}</b>: {alert.sentence}
+            </p>
+        </List.Content>
+    </List.Item>;
 }
