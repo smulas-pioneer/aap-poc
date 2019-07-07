@@ -6967,7 +6967,7 @@ const fix = {
   'FR0010314401':{region:'Europe',country:'France',rating:null},
   'LU0119099819':{region:'Europe',country:'Luxembourg',rating:'A'},
   'LU0281578517':{region:'Europe',country:'Luxembourg',rating:'A'},
-  'LU0201576401':{region:'Europe',country:'v',rating:'AA'},
+  'LU0201576401':{region:'Europe',country:'Luxembourg',rating:'AA'},
   'LU0281579598':{region:'Europe',country:'Luxembourg',rating:'A'},
   'LU0568620560':{region:'Europe',country:'Luxembourg',rating:'B'},
   'IE00B4ND3602':{region:'Europe',country:'Ireland',rating:'A'},
@@ -6976,7 +6976,7 @@ const fix = {
   'FR0010930446':{region:'Europe',country:'France',rating:null},
   'LU0627756538':{region:'Europe',country:'Luxembourg',rating:'A'},
   'LU0518421895':{region:'Europe',country:'Luxembourg',rating:'A'},
-  'NL0011585146':{region:'Europe',country:'Netherlands',rating:null},
+  'NL0011585146':{region:'Europe',country:'Netherlands',rating:null,sector:'Utilities'},
   'XS1327539976':{region:'Europe',country:'United Kingdom',rating:'B'},
   'LU0145482039':{region:'Europe',country:'Luxembourg',rating:'A'},
   'IE0007472990':{region:'Europe',country:'Ireland',rating:'BBB'},
@@ -6996,6 +6996,7 @@ export const wrapSecurity = (s: any) => {
     s.Region = fix[s.IsinCode].region;
     s.Rating = fix[s.IsinCode].rating;
     s.Country = fix[s.IsinCode].country;
+    s.Sector = fix[s.IsinCode].sector || s.Sector;
   }
 
   return {

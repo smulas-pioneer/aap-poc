@@ -161,6 +161,7 @@ export const getBreakdown = (holdings: Model.Holding[] | undefined) => {
     'Sector',
     'Currency',
     'Rating',
+    'Region',
     'Country',
     'Maturity'
   ];

@@ -61,7 +61,8 @@ const colorFor = {
   'Sector': MainColors.Sector,
   'Currency': MainColors.Currency,
   'Region': MainColors.Region,
-  'Maturity': MainColors.Maturity
+  'Maturity': MainColors.Maturity,
+  'Country': MainColors.Country
 }
 
 const getAttributeBreakDown = (attributeName: string, holdings: PositionItem[]): Breakdown => {
@@ -90,11 +91,12 @@ export const getBreakdown = (holdings: PositionItem[]) => {
   const attributes = [
     'MacroAssetClass',
     'MicroAssetClass',
-    'Sector',
-    'Currency',
+    'Country',
     'Rating',
+    'Currency',
     'Region',
-    'Maturity'
+    'Maturity',
+    'Sector'
   ];
   return attributes.map(r => getAttributeBreakDown(r, holdings));
 }
