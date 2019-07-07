@@ -75,7 +75,7 @@ const reducer = (state: State, action: Partial<State>): State => {
 
 //class ClientViewCompo extends conn.StatefulCompo<State> {
 export const ClientView = conn.PureCompo(props => {
-  const { client, lang, history, id, getClient, getSuggestions, strategySuccessCount, strategy } = props;
+  const { client, lang, history, id, getClient, getSuggestions, strategySuccessCount,strategy } = props;
   const [state, dispatch] = React.useReducer(reducer, defaultState);
   const { radar, axes, viewHistory, processing, stateStrategy, breakdown } = state;
   const [highlightedAlert, setHighlightedAlert] = React.useState<string|undefined>(undefined);
@@ -178,7 +178,7 @@ export const ClientView = conn.PureCompo(props => {
         charts: radar && [
           {
             title: lang.PORTFOLIO_MONITORING,
-            chart: <RadarGraph setHighlighted={setHighlightedAlert} hideProposal={state.hideProposal} data={radar} lang={lang} axes={axes} onClickShape={handleAxesChange} alertsAbout={'actual'} />
+            chart: <RadarGraph setHighlighted={setHighlightedAlert} hideProposal={state.hideProposal} data={radar} lang={lang} axes={axes} onClickShape={handleAxesChange} alertsAbout={'proposed'} />
           }
         ]
       },
@@ -189,8 +189,8 @@ export const ClientView = conn.PureCompo(props => {
           {
             title: 'Performance',
             chart: <PerformanceChart key={0}
-              data={ce.getPositionPerformance(suggestedPosition(strategy))}
-              actualData={ce.getPositionPerformance(currentPosition(strategy))}
+              data={ce.getPositionPerformance(suggestedPosition(stateStrategy))}
+              actualData={ce.getPositionPerformance(currentPosition(stateStrategy))}
               clientTimeHorizon={client!.timeHorizon}
               advancedView={true}
               version={strategySuccessCount}

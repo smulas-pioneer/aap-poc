@@ -15,7 +15,7 @@ interface RadarGraphProps extends ChartBaseProps {
   onClick?: () => void,
   onClickShape?: (subject: string) => void
   alertsAbout: 'actual' | 'proposed'
-  setHighlighted: (value:string|undefined) =>void;
+  setHighlighted?: (value:string|undefined) =>void;
 };
 
 export const RadarGraph = (props: RadarGraphProps) => {
@@ -110,6 +110,7 @@ export const RadarGraph = (props: RadarGraphProps) => {
     },
   ];
 
+  
   return (
     <ResponsiveContainer width="100%" height="100%" >
       <RadarChart cx='50%' cy='50%' width={100} height={100} data={data} outerRadius={'80%'} isAnimationActive startWithAnimation  >

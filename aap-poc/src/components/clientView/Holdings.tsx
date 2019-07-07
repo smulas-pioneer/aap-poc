@@ -196,7 +196,7 @@ export const Holdings = (props: Props) => {
                 <div style={{ width: '100%' }}>
                   <OrderList data={holdings} lang={lang} />
                   <div style={{ height: '300px' }}>
-                    <RadarGraph data={props.radar!} lang={lang} axes={props.axes} onClickShape={() => { }} alertsAbout={'proposed'} />
+                    <RadarGraph  data={props.radar!} lang={lang} axes={props.axes} onClickShape={() => { }} alertsAbout={'proposed'} />
                   </div>
                   <Checkbox defaultChecked label='Open pdf after generation' />
                 </div>

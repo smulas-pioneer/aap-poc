@@ -1,8 +1,10 @@
 import { PositionItem, RadarItem, StrategyItem, Alert, Radar, Client, AlertHistory2 } from "./interfaces";
-import { sumBy, endsWith, } from "lodash";
+import { sumBy, endsWith, sum, } from "lodash";
 import moment from 'moment';
 import * as math from 'mathjs';
 import { REFERENCE_DATE_TODAY } from "./consts";
+import { radars, strategies } from "../data";
+import { bigIntLiteral } from "@babel/types";
 
 export const isFakeClient = (clientId: string) => ["0", "1", "2"].indexOf(clientId) > -1;
 
@@ -38,12 +40,12 @@ export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: stri
     let r = null;
     if (isFakeClient(clientId)) {
 
-        if (strategy.filter(f => f.suggestionAccepted).length > 0) {
+        if (strategy.filter(f => f.suggestionAccepted).length <=1) {
             // Simulation...
-            r = radars[clientId + "!"];
-        } else {
-            // Real portfolio
             r = radars[clientId]
+        } else {
+            r = getCustomRadar(strategy, clientId);
+            // Real portfolio
         }
 
     }
@@ -229,3 +231,43 @@ export const getRandomRadar = () => {
         riskAnalysis: rnd(10, max)
     };
 };
+
+
+const getCustomRadar = (strategy: StrategyItem[], clientId: string) => {
+    const fake = strategies[clientId];
+    const changesFromApprovedFake = strategyChanges(fake, strategy);
+    if (changesFromApprovedFake === 0) {
+        return radars[clientId + "!"];
+    } else {
+        return mixRadars(radars[clientId +"!"], radars[clientId], changesFromApprovedFake);
+    }
+}
+
+const strategyChanges = (fake: StrategyItem[], curr: StrategyItem[]) => {
+    let changes = fake.map((f, ix) => {
+        const c = curr.find(i => i.security.IsinCode === f.security.IsinCode);
+        if (!c) {
+            return 1;
+        } else {
+            const fW = f.currentWeight + f.suggestedDelta;
+            const cW = c.suggestionAccepted ? (c.currentWeight + c.suggestedDelta) : c.currentWeight;
+            return Math.abs(cW - fW);
+        }
+    });
+    return sum(changes) / fake.length;
+}
+
+const mixRadars = (r1:Radar, r2:Radar, k:number) => {
+    const proposed: RadarItem = {
+        riskAdequacy: r1.proposed.riskAdequacy* (1+k),
+        riskAnalysis: r1.proposed.riskAnalysis* (1+k),
+        overlap: r1.proposed.overlap* (1+k),
+        concentration: r1.proposed.concentration* (1+k),
+        consistency: r1.proposed.consistency* (1+k),
+        efficency: r1.proposed.efficency* (1+k),
+    }
+    return {
+        ...r1,
+        proposed
+    }
+}

@@ -209,8 +209,8 @@
       "efficency": 160,
       "consistency": 84,
       "riskAnalysis": 90,
-      "concentration": 100,
-      "overlap": 100
+      "concentration": 95,
+      "overlap": 95
     },
     "concentrationAlert": "green",
     "consistencyAlert": "green",
