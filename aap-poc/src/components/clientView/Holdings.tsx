@@ -159,10 +159,6 @@ export const Holdings = (props: Props) => {
           <Icon name="add" />
           Add Security
         </Menu.Item>
-        <Menu.Item>
-          <Icon name="add" />
-          New Cash
-        </Menu.Item>
         {!isProposingMode && <Menu.Menu position="right">
           <Menu.Item onClick={() => props.setHideProposal(false)}  ><Icon name="lightning" />Get Proposals</Menu.Item>
         </Menu.Menu>}

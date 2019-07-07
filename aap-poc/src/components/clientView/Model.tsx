@@ -34,7 +34,7 @@ export class Model extends React.Component<Props, State> {
                 <Menu.Item ><Icon name="print" />Print</Menu.Item>
                 <Menu.Item ><Icon name="file pdf outline" />Export to Pdf</Menu.Item>
             </Menu>
-            <Table compact size="small">
+            <Table striped compact size="small">
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell width={1} style={{ width: '10px' }} ></Table.HeaderCell>

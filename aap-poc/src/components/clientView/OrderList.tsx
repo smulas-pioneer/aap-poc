@@ -13,7 +13,7 @@ export const OrderList = (props: {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-  return <Table compact size="small">
+  return <Table striped compact size="small">
     <Table.Header>
       <Table.Row>
         <Table.HeaderCell>{lang.ISIN}</Table.HeaderCell>

@@ -77,7 +77,6 @@ export class ConfirmDialog extends React.Component<ConfirmDialogProps, ConfirmDi
         const { customButton } = this.props;
         if (customButton) {
             return [
-                <Button.Or key={1} />,
                 <Button key={2} color={customButton.color} onClick={this.handleCustom}>
                     <Icon name={customButton.icon} />{customButton.text}
                 </Button>
@@ -102,10 +101,10 @@ export class ConfirmDialog extends React.Component<ConfirmDialogProps, ConfirmDi
                 onClose={this.handleCancel}
             >
                 <Modal.Header>
-                    <Segment basic clearing style={{ padding: 0 }}>
-                        <Button floated="right" size="tiny" basic negative circular icon="remove" onClick={this.handleClose} />
+                    <div style={{padding:1}}>
+                        <Button floated="right" size="tiny" basic icon="close" onClick={this.handleClose} />
                         {title && <WidgetTitle title={title} shareButtons={shareButtons} style={{ marginTop: 0 }} />}
-                    </Segment>
+                    </div>
                 </Modal.Header>
                 <Modal.Content image>
                     {content || children}
@@ -116,8 +115,6 @@ export class ConfirmDialog extends React.Component<ConfirmDialogProps, ConfirmDi
                         <Button color='green' onClick={this.handleConfirm}>
                             <Icon name='checkmark' /> {confirmButton || 'Yes'}
                         </Button>
-
-                        <Button.Or />
 
                         <Button color='red' onClick={this.handleCancel}>
                             <Icon name='remove' /> {cancelButton || 'No'}
