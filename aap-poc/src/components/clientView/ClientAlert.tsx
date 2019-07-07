@@ -50,7 +50,7 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
                 content: {
                     key: 'alertContent',
                     content: (
-                        <Card.Group>
+                        <Card.Group itemsPerRow="6">
                             {Object.keys(lang.ALERTS).map((v, i) => alertsListItem(v, i))}
                         </Card.Group>
                     )
