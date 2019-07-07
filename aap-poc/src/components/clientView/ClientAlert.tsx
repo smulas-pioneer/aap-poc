@@ -6,7 +6,7 @@ import { REFERENCE_DATE_TODAY } from "../../_db/common/consts";
 import moment from 'moment';
 import { getColorCustomClassName } from "../../_db/utils";
 
-export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client: Client, onOpenHistory: () => void, highlighedAlert?:string }) => {
+export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client: Client, onOpenHistory: () => void, highlighedAlert?: string }) => {
     const { radar, lang } = props;
 
     const alertsListItem = (prop: string, key: any) => {
@@ -62,16 +62,21 @@ export const ClientAlert = (props: { radar: Radar, lang: LangDictionary, client:
         return title;
     }
 }
+
+const higlightedStyle: React.CSSProperties = {
+    backgroundColor: 'black',
+    borderColor: 'yellow',
+    transform: "scale(1.05)"
+}
 const alertItemView = (key: any, value: any, alert: any, higlighted: boolean) => {
-    return <Card raised style={{backgroundColor:higlighted ? 'black': 'rgb(25, 30, 36)'}} key={key}>
+    return <Card raised style={{ backgroundColor: 'rgb(25, 30, 36)', ...higlighted && higlightedStyle}} key = { key } >
         <Card.Content >
             <Card.Header><b className={getColorCustomClassName(value)}>{alert.name.toUpperCase()}</b></Card.Header>
-            <Card.Description style={{color:'white'}}>
-                {alert.color==='green' ? alert.sentence : alert.positiveSentence}
+            <Card.Description style={{ color: 'white' }}>
+                {alert.color === 'green' ? alert.sentence : alert.positiveSentence}
             </Card.Description>
         </Card.Content>
-    </Card>
-
+    </Card >
 }
 
 
