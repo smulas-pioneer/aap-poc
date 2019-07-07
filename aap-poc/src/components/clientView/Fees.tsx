@@ -46,7 +46,7 @@ export const Fees = (props: {
         {props.targetReturn && <Statistic size="mini">
           <Statistic.Value>{fmt2.format(props.targetReturn * 120 / months)}%</Statistic.Value>
           <Statistic.Label>{"EXPECTED RETURN"} </Statistic.Label>
-          <Statistic.Label style={{ fontSize: 10 }}>(prob. 95%)</Statistic.Label>
+          <Statistic.Label style={{ fontSize: 10 }}>(Yearly Based, prob. 95%)</Statistic.Label>
         </Statistic>}
         {props.targetReturn && <Statistic size="mini">
           <Statistic.Value>{props.timeHorizon}</Statistic.Value>
@@ -59,7 +59,7 @@ export const Fees = (props: {
         </Statistic>
         <Statistic size="mini">
           <Statistic.Label>Press <b>Simulate</b></Statistic.Label>
-          <Statistic.Label>to calculate Fees</Statistic.Label>
+          <Statistic.Label>to calculate Fees</Statistic.Label>sm
         </Statistic>
       </Segment>
     }
