@@ -3,8 +3,6 @@ import { sumBy, endsWith, sum, } from "lodash";
 import moment from 'moment';
 import * as math from 'mathjs';
 import { REFERENCE_DATE_TODAY } from "./consts";
-import { radars, strategies } from "../data";
-import { bigIntLiteral } from "@babel/types";
 
 export const isFakeClient = (clientId: string) => ["0", "1", "2"].indexOf(clientId) > -1;
 
@@ -36,7 +34,7 @@ export const getRAG = (act: number, limit: number, mifid: boolean): Alert => {
     return act > (limit + 1) ? (mifid ? 'red' : 'orange') : 'green'
 }
 
-export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: string, radars: any) => {
+export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: string, radars: any, strategies:any) => {
     let r = null;
     if (isFakeClient(clientId)) {
 
@@ -44,7 +42,7 @@ export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: stri
             // Simulation...
             r = radars[clientId]
         } else {
-            r = getCustomRadar(strategy, clientId);
+            r = getCustomRadar(strategy, clientId, radars, strategies);
             // Real portfolio
         }
 
@@ -233,7 +231,7 @@ export const getRandomRadar = () => {
 };
 
 
-const getCustomRadar = (strategy: StrategyItem[], clientId: string) => {
+const getCustomRadar = (strategy: StrategyItem[], clientId: string,radars:any, strategies:any) => {
     const fake = strategies[clientId];
     const changesFromApprovedFake = strategyChanges(fake, strategy);
     if (changesFromApprovedFake === 0) {

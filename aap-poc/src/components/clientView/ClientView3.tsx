@@ -10,7 +10,7 @@ import { BreakdownView } from './BreakdownView';
 import { AdvancedGrid } from '../shared/GridOverflow';
 import { createRadarFromStrategy, suggestedPosition, currentPosition, modelPosition } from '../../_db/common/radarUtils';
 import { WidgetTitle } from '../shared/WidgetTitle';
-import { radars } from '../../_db/data';
+import { radars, strategies } from '../../_db/data';
 import { Model } from './Model';
 import { ClientAlert } from './ClientAlert';
 import { ClientCard } from './ClientCard';
@@ -90,7 +90,7 @@ export const ClientView = conn.PureCompo(props => {
     if (strategy.length > 0) {
       const sugg = suggestedPosition(strategy);
       const suggBreakdown = ce.getBreakdown(sugg);
-      const radar = createRadarFromStrategy(strategy, id, radars);
+      const radar = createRadarFromStrategy(strategy, id, radars, strategies);
       dispatch({
         breakdown: suggBreakdown,
         stateStrategy: strategy,

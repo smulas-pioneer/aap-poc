@@ -225,6 +225,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
       MacroAssetClass: 'composed',
       MicroAssetClass: 'composed'
     }
+    console.log(this.props.data!.breakdowns);
     const bd = this.props.data!.breakdowns.map((b, i) => {
       return {
         title: b.attributeName,

@@ -21,7 +21,7 @@ export const radar3 =  {
         efficency:160,
         consistency:104,
         riskAnalysis:110,
-        overlap:100,
-        concentration:100
+        overlap:95,
+        concentration:95
     }     
 }

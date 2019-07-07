@@ -1,5 +1,5 @@
 import { PositionItem, RadarItem, StrategyItem, Alert, Radar, Client, AlertHistory2 } from "./interfaces";
-import { sumBy, endsWith,  } from "lodash";
+import { sumBy, endsWith, sum, } from "lodash";
 import moment from 'moment';
 import * as math from 'mathjs';
 import { REFERENCE_DATE_TODAY } from "./consts";
@@ -26,24 +26,24 @@ export const avgRadar = (position: PositionItem[]): RadarItem => {
 }
 
 export const adjustRadarValue = (value: number) => {
-    if ( value >10 ) return value;
-    return value * 20 ;
+    if (value > 10) return value;
+    return value * 20;
 }
 
 export const getRAG = (act: number, limit: number, mifid: boolean): Alert => {
     return act > (limit + 1) ? (mifid ? 'red' : 'orange') : 'green'
 }
 
-export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: string, radars: any) => {
+export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: string, radars: any, strategies:any) => {
     let r = null;
     if (isFakeClient(clientId)) {
 
-        if (strategy.filter(f => f.suggestionAccepted).length > 0) {
+        if (strategy.filter(f => f.suggestionAccepted).length <=1) {
             // Simulation...
-            r = radars[clientId + "!"];
-        } else {
-            // Real portfolio
             r = radars[clientId]
+        } else {
+            r = getCustomRadar(strategy, clientId, radars, strategies);
+            // Real portfolio
         }
 
     }
@@ -52,10 +52,10 @@ export const createRadarFromStrategy = (strategy: StrategyItem[], clientId: stri
     const model = modelPosition(strategy);
     const sugg = suggestedPosition(strategy);
 
-    const radarActual = avgRadar(actual);
+    const radarActual = r ? r.actual : avgRadar(actual);
     const radarModel = r ? r.guideLines : avgRadar(model);
     const radarLimit = r ? r.guideLines : getRadarLimitSync(radarModel);
-    const radarSugg = avgRadar(sugg);
+    const radarSugg = r ? r.proposed : avgRadar(sugg);
 
     return createRadarSync(radarModel, radarActual, radarLimit, radarSugg);
 }
@@ -82,26 +82,28 @@ export const createRadarSync = (guideLines: RadarItem,
     const reds = alerts.filter(r => r === 'red').length;
     const oranges = alerts.filter(r => r === 'orange').length;
     const numOfAlerts = reds + oranges;
-    
+
     const color = numOfAlerts === 0 ? 'green' : reds === 0 ? 'orange' : 'red';
 
-    const f= (n:number) => n/20
+    const f = (n: number) => n / 20
 
-    const regulatoryIndicator =math.max( f(actual.riskAdequacy - guideLines.riskAdequacy),0);
+    const regulatoryIndicator = math.max(f(actual.riskAdequacy - guideLines.riskAdequacy), 0);
     const distances = [
-        actual.concentration -guideLines.concentration,
-        actual.consistency -guideLines.consistency,
-        actual.efficency -guideLines.efficency,
-        actual.overlap -guideLines.overlap,
-        actual.riskAnalysis -guideLines.riskAnalysis,
+        actual.concentration - guideLines.concentration,
+        actual.consistency - guideLines.consistency,
+        actual.efficency - guideLines.efficency,
+        actual.overlap - guideLines.overlap,
+        actual.riskAnalysis - guideLines.riskAnalysis,
     ]
-    const aboveGuidelines = f(distances.filter(d=>d> 0).reduce((a,b)=>a+b,0));
-    const belowGuidelines = f(distances.filter(d=>d< 0).reduce((a,b)=>a+b,0));
-    return { ...data, numOfAlerts, color,
+    const aboveGuidelines = f(distances.filter(d => d > 0).reduce((a, b) => a + b, 0));
+    const belowGuidelines = f(distances.filter(d => d < 0).reduce((a, b) => a + b, 0));
+    return {
+        ...data, numOfAlerts, color,
 
-                belowGuidelines,
-                aboveGuidelines,
-                 regulatoryIndicator };
+        belowGuidelines,
+        aboveGuidelines,
+        regulatoryIndicator
+    };
 
 }
 
@@ -227,3 +229,43 @@ export const getRandomRadar = () => {
         riskAnalysis: rnd(10, max)
     };
 };
+
+
+const getCustomRadar = (strategy: StrategyItem[], clientId: string,radars:any, strategies:any) => {
+    const fake = strategies[clientId];
+    const changesFromApprovedFake = strategyChanges(fake, strategy);
+    if (changesFromApprovedFake === 0) {
+        return radars[clientId + "!"];
+    } else {
+        return mixRadars(radars[clientId +"!"], radars[clientId], changesFromApprovedFake);
+    }
+}
+
+const strategyChanges = (fake: StrategyItem[], curr: StrategyItem[]) => {
+    let changes = fake.map((f, ix) => {
+        const c = curr.find(i => i.security.IsinCode === f.security.IsinCode);
+        if (!c) {
+            return 1;
+        } else {
+            const fW = f.currentWeight + f.suggestedDelta;
+            const cW = c.suggestionAccepted ? (c.currentWeight + c.suggestedDelta) : c.currentWeight;
+            return Math.abs(cW - fW);
+        }
+    });
+    return sum(changes) / fake.length;
+}
+
+const mixRadars = (r1:Radar, r2:Radar, k:number) => {
+    const proposed: RadarItem = {
+        riskAdequacy: r1.proposed.riskAdequacy* (1+k),
+        riskAnalysis: r1.proposed.riskAnalysis* (1+k),
+        overlap: r1.proposed.overlap* (1+k),
+        concentration: r1.proposed.concentration* (1+k),
+        consistency: r1.proposed.consistency* (1+k),
+        efficency: r1.proposed.efficency* (1+k),
+    }
+    return {
+        ...r1,
+        proposed
+    }
+}

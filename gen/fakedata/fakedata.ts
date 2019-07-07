@@ -50,27 +50,26 @@ export const case_3_model = [
 
 export const case_3_initial = [
     
-    { Symbol: 'CASH_EUR', MacroAssetClass: 'CASH', AssetClass: 'CASH', AssetType: 'CASH', Name: 'CASH', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 0, SRRI: 1, Amont: 0, Price: 1, Shares: 0, },
-    { Symbol: 'NL0011585146', MacroAssetClass: 'Equity', AssetClass: 'Equity', AssetType: 'Equity', Name: 'Ferrari NV', Mstar_BCH: '', Mstar_SRRI: 6, WEIGHT: 0.05, SRRI: 1.2, Amont: 20000, Price: 55.3, Shares: 361.663652802893, },
-    { Symbol: 'XS1327539976', MacroAssetClass: 'Fixed Income', AssetClass: 'Fixed Income', AssetType: 'Corporate', Name: 'OTE Plc 4.375% 02-DEC-2019', Mstar_BCH: '', Mstar_SRRI: 7, WEIGHT: 0.1, SRRI: 0.7, Amont: 10000, Price: 106.28, Shares: 94.0910801656003, },
-    { Symbol: 'LU0201576401', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Inflation Linked', Name: 'Amundi Fds Bond Euro Inflation', Mstar_BCH: '', Mstar_SRRI: 4, WEIGHT: 0.15, SRRI: 0.4, Amont: 10000, Price: 151.8, Shares: 65.8761528326746, },
-    { Symbol: 'IE0007472990', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Government Bond', Name: 'Vanguard Euro Government Bond Index', Mstar_BCH: '', Mstar_SRRI: 3, WEIGHT: 0.35, SRRI: 1.05, Amont: 35000, Price: 222.98, Shares: 156.964750201812, },
-    { Symbol: 'LU1191877379', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'High Yield', Name: 'BGF European High Yield Bond Fund', Mstar_BCH: '', Mstar_SRRI: 3, WEIGHT: 0.15, SRRI: 0.3, Amont: 10000, Price: 11.07, Shares: 903.342366757001, },
-    { Symbol: 'LU0518421895', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Government Bond', Name: 'Amundi Fds Bond Euro Government', Mstar_BCH: 'Citi EMU GBI EUR', 
+    { currency:'EUR',Symbol: 'CASH_EUR', MacroAssetClass: 'CASH', AssetClass: 'CASH', AssetType: 'CASH', Name: 'CASH', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 0, SRRI: 1, Amont: 0, Price: 1, Shares: 0, },
+    { currency:'EUR',Symbol: 'NL0011585146', MacroAssetClass: 'Equity', AssetClass: 'Equity', AssetType: 'Equity', Name: 'Ferrari NV', Mstar_BCH: '', Mstar_SRRI: 6, WEIGHT: 0.05, SRRI: 1.2, Amont: 20000, Price: 55.3, Shares: 361.663652802893, },
+    { currency:'EUR',Symbol: 'XS1327539976', MacroAssetClass: 'Fixed Income', AssetClass: 'Fixed Income', AssetType: 'Corporate', Name: 'OTE Plc 4.375% 02-DEC-2019', Mstar_BCH: '', Mstar_SRRI: 7, WEIGHT: 0.1, SRRI: 0.7, Amont: 10000, Price: 106.28, Shares: 94.0910801656003, },
+    { currency:'EUR',Symbol: 'LU0201576401', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Inflation Linked', Name: 'Amundi Fds Bond Euro Inflation', Mstar_BCH: '', Mstar_SRRI: 4, WEIGHT: 0.15, SRRI: 0.4, Amont: 10000, Price: 151.8, Shares: 65.8761528326746, },
+    { currency:'EUR',Symbol: 'IE0007472990', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Government Bond', Name: 'Vanguard Euro Government Bond Index', Mstar_BCH: '', Mstar_SRRI: 3, WEIGHT: 0.35, SRRI: 1.05, Amont: 35000, Price: 222.98, Shares: 156.964750201812, },
+    { currency:'EUR',Symbol: 'LU1191877379', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'High Yield', Name: 'BGF European High Yield Bond Fund', Mstar_BCH: '', Mstar_SRRI: 3, WEIGHT: 0.15, SRRI: 0.3, Amont: 10000, Price: 11.07, Shares: 903.342366757001, },
+    { currency:'EUR',Symbol: 'LU0518421895', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Government Bond', Name: 'Amundi Fds Bond Euro Government', Mstar_BCH: 'Citi EMU GBI EUR', 
     Mstar_SRRI: 3, WEIGHT: 0.20, SRRI: 0.45, 
     Amont: 15000, Price: 215.113, Shares: 69.7307926531637, },
 ]
 
 export const case_3_proposed = [
-    { Symbol: 'CASH_EUR', MacroAssetClass: 'CASH', AssetClass: 'CASH', AssetType: 'CASH', Name: 'CASH', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 0, SRRI: 1, Amont: 0, Price: 1, Shares: 0, },
-    { Symbol: 'NL0011585146', MacroAssetClass: 'Equity', AssetClass: 'Equity', AssetType: 'Equity', Name: 'Ferrari', Mstar_BCH: '', Mstar_SRRI: 6, WEIGHT: 0.05, SRRI: 0.6, Amont: 10000, Price: 55.3, Shares: 180.831826401447, },
-    { Symbol: 'IE0007472990', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Government Bond', Name: 'Vanguard Euro Government Bond Index', Mstar_BCH: '', Mstar_SRRI: 3, WEIGHT: 0, SRRI: 1.05, Amont: 0, Price: 222.98, Shares: 0, },
-    { Symbol: 'FR0010314401', MacroAssetClass: 'Funds', AssetClass: 'Equity', AssetType: 'Large Cap', Name: 'Amundi Actions Euro', Mstar_BCH: 'MSCI EMU NR USD', Mstar_SRRI: 6, WEIGHT: 0.15, SRRI: 0.6, Amont: 10000, Price: 66147, Shares: 0.151178435907902, },
-    { Symbol: 'LU0119099819', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Corporate Bond', Name: 'Amundi Fds Bond Euro Corporate', Mstar_BCH: 'Barclays Euro Agg Corps TR EUR', Mstar_SRRI: 3, WEIGHT: 0.2, SRRI: 0.6, Amont: 20000, Price: 19.21, Shares: 1041.12441436752, },
-    { Symbol: 'LU0201576401', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Inflation Linked', Name: 'Amundi Fds Bond Euro Inflation', Mstar_BCH: 'Barclays Euro Infln Lkd TR EUR', Mstar_SRRI: 3, WEIGHT: 0.1, SRRI: 0.3, Amont: 10000, Price: 151.8, Shares: 65.8761528326746, },
-    { Symbol: 'LU0281579598', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'High Yield', Name: 'Amundi Fds Euro High Yield', Mstar_BCH: 'BofAML European Ccy HY Constnd TR HEUR', Mstar_SRRI: 3, WEIGHT: 0.1, SRRI: 0.3, Amont: 10000, Price: 67.68, Shares: 147.754137115839, },
-
-    { Symbol: 'LU0145482039', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Corporate Bond', Name: 'Generali IS Euro Corporate Bond', 
+    { Currency:'EUR',Symbol: 'CASH_EUR', MacroAssetClass: 'CASH', AssetClass: 'CASH', AssetType: 'CASH', Name: 'CASH', Mstar_BCH: '', Mstar_SRRI: 1, WEIGHT: 0, SRRI: 1, Amont: 0, Price: 1, Shares: 0, },
+    { Currency:'EUR',Symbol: 'NL0011585146', MacroAssetClass: 'Equity', AssetClass: 'Equity', AssetType: 'Equity', Name: 'Ferrari', Mstar_BCH: '', Mstar_SRRI: 6, WEIGHT: 0.05, SRRI: 0.6, Amont: 10000, Price: 55.3, Shares: 180.831826401447, },
+    { Currency:'EUR',Symbol: 'IE0007472990', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Government Bond', Name: 'Vanguard Euro Government Bond Index', Mstar_BCH: '', Mstar_SRRI: 3, WEIGHT: 0, SRRI: 1.05, Amont: 0, Price: 222.98, Shares: 0, },
+    { Currency:'EUR',Symbol: 'FR0010314401', MacroAssetClass: 'Funds', AssetClass: 'Equity', AssetType: 'Large Cap', Name: 'Amundi Actions Euro', Mstar_BCH: 'MSCI EMU NR USD', Mstar_SRRI: 6, WEIGHT: 0.15, SRRI: 0.6, Amont: 10000, Price: 66147, Shares: 0.151178435907902, },
+    { Currency:'EUR',Symbol: 'LU0119099819', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Corporate Bond', Name: 'Amundi Fds Bond Euro Corporate', Mstar_BCH: 'Barclays Euro Agg Corps TR EUR', Mstar_SRRI: 3, WEIGHT: 0.2, SRRI: 0.6, Amont: 20000, Price: 19.21, Shares: 1041.12441436752, },
+    { Currency:'EUR',Symbol: 'LU0201576401', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Inflation Linked', Name: 'Amundi Fds Bond Euro Inflation', Mstar_BCH: 'Barclays Euro Infln Lkd TR EUR', Mstar_SRRI: 3, WEIGHT: 0.1, SRRI: 0.3, Amont: 10000, Price: 151.8, Shares: 65.8761528326746, },
+    { Currency:'EUR',Symbol: 'LU0281579598', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'High Yield', Name: 'Amundi Fds Euro High Yield', Mstar_BCH: 'BofAML European Ccy HY Constnd TR HEUR', Mstar_SRRI: 3, WEIGHT: 0.1, SRRI: 0.3, Amont: 10000, Price: 67.68, Shares: 147.754137115839, },
+    { Currency:'EUR',Symbol: 'LU0145482039', MacroAssetClass: 'Funds', AssetClass: 'Fixed Income', AssetType: 'Corporate Bond', Name: 'Generali IS Euro Corporate Bond', 
     Mstar_SRRI: 3, WEIGHT: 0.4, SRRI: 1.2, 
     Amont: 40000, Price: 131.89, Shares: 303.28303889605, },
 ]

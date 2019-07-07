@@ -21,8 +21,8 @@ const mapSecurity = (p: any) => {
     IsFund: '0',
     MacroAssetClass: isCash(p) ? 'Cash': p.AssetClass,
     MicroAssetClass: p.AssetType,
-    Sector: p.Sector,
-    Currency: p.Currency,
+    Sector: p.Sector|| 'Other',
+    Currency: p.Currency || 'EUR',
     Rating: p.Rating,
     Country: p.Country,
     Region: p.Region,
@@ -107,12 +107,12 @@ export const getAllSecuirities = () => {
     ...FD.case_2_initial,
     ...FD.case_2_model,
     ...FD.case_2_proposed,
-    ...FD.case_3_initial,
-    ...FD.case_3_model,
-    ...FD.case_3_proposed,
     ...FD.case_4_initial,
     ...FD.case_4_model,
     ...FD.case_4_proposed,
+    ...FD.case_3_initial,
+    ...FD.case_3_model,
+    ...FD.case_3_proposed,
   ]
   return uniqBy(mapSecurities(data), s => s.IsinCode);
 }

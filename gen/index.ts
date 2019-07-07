@@ -565,7 +565,7 @@ const go = async () => {
       if (isFakeClient(c.id)) {
         c.radar = radars[c.id]
       } else {
-        c.radar = createRadarFromStrategy(strategies[c.id], c.id, radars);
+        c.radar = createRadarFromStrategy(strategies[c.id], c.id, radars, strategies);
       }
       c.aua = sumBy(strategies[c.id], v => v.currentAmount);
       c.ongoingFees = c.aua * rnd(1, 10) / 1000;

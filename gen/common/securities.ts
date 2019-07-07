@@ -7001,8 +7001,8 @@ export const wrapSecurity = (s: any) => {
   return {
     ...s,
     Currency: dictCur[s.Currency] || s.Currency,
-    MicroAssetClass: s.IsinCode =='CASH' ? "Cash":  dictMI[s.MicroAssetClass] || s.MicroAssetClass,
-    MacroAssetClass: s.IsinCode =='CASH' ? "Cash": s.MacroAssetClass === "Balanced" ? "Balanced" : dictMA2[s.MicroAssetClass] || s.MacroAssetClass,
+    MicroAssetClass: s.IsinCode ==='CASH' ? "Cash":  dictMI[s.MicroAssetClass] || s.MicroAssetClass,
+    MacroAssetClass: s.IsinCode ==='CASH' ? "Cash": s.MacroAssetClass === "Balanced" ? "Balanced" : dictMA2[s.MicroAssetClass] || s.MacroAssetClass,
     Region: (s.Region && wRegion[s.Region.toLowerCase()]) || s.Region
   }
 }
