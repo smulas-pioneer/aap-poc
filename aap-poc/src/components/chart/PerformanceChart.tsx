@@ -211,13 +211,13 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
               {period} Performance: <b>{perf}%</b>
             </Grid.Column>
             <Grid.Column textAlign="center">
-              <Button.Group basic compact size="tiny" color="teal">
-                <Button active={period === '1M'} size="tiny" content="1m" onClick={() => this.setData({ period: '1M' })} />
-                <Button active={period === '3M'} size="tiny" content="3m" onClick={() => this.setData({ period: '3M' })} />
-                <Button active={period === '6M'} size="tiny" content="6m" onClick={() => this.setData({ period: '6M' })} />
-                <Button active={period === 'YTD'} size="tiny" content="YTD" onClick={() => this.setData({ period: 'YTD' })} />
-                <Button active={period === '1Y'} size="tiny" content="1Y" onClick={() => this.setData({ period: '1Y' })} />
-                <Button active={period === 'All'} size="tiny" content="All" onClick={() => this.setData({ period: 'All' })} />
+              <Button.Group  compact size="tiny" >
+                <Button color={period === '1M' ?'red':'blue'}  content="1m" onClick={() => this.setData({ period: '1M' })} />
+                <Button color={period === '3M' ?'red':'blue'}  content="3m" onClick={() => this.setData({ period: '3M' })} />
+                <Button color={period === '6M' ?'red':'blue'}  content="6m" onClick={() => this.setData({ period: '6M' })} />
+                <Button color={period === 'YTD'?'red':'blue'}  content="YTD" onClick={() => this.setData({ period: 'YTD' })} />
+                <Button color={period === '1Y' ?'red':'blue'}  content="1Y" onClick={() => this.setData({ period: '1Y' })} />
+                <Button color={period === 'All'?'red':'blue'}  content="All" onClick={() => this.setData({ period: 'All' })} />
               </Button.Group>
             </Grid.Column>
           </Grid.Row>
