@@ -127,7 +127,7 @@ export const RadarGraph = (props: RadarGraphProps) => {
 }
 
 const CustomizedShape = (props: any) => {
-  let { x, y, axes, textAnchor, names, colors, lang } = props;
+  let { x, y, axes, textAnchor, names, colors } = props;
   const value = props.payload.value;
   const KK = 5;
   x = (value === 'efficency' || value === 'consistency' || value === 'riskAnalysis') ? x + KK : x - KK;

@@ -1,6 +1,6 @@
 import { Radar, Client } from "../../_db/interfaces";
 import { LangDictionary } from "../../reducers/language/interfaces";
-import { List, Segment, Header, Icon, Accordion, Card } from "semantic-ui-react";
+import {  Segment, Header, Icon, Accordion, Card } from "semantic-ui-react";
 import * as React from 'react';
 import { REFERENCE_DATE_TODAY } from "../../_db/common/consts";
 import moment from 'moment';
@@ -79,7 +79,7 @@ const alertItemView = (key: any, value: any, alert: any, higlighted: boolean) =>
     </Card >
 }
 
-
+/*
 const alertItemView_ = (key: any, value: any, alert: any) => {
     return <List.Item key={key}>
         <List.Content style={{ marginBottom: '6px' }}>
@@ -89,3 +89,4 @@ const alertItemView_ = (key: any, value: any, alert: any) => {
         </List.Content>
     </List.Item>;
 }
+*/

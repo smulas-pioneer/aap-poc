@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Modal, Button, Icon, SemanticICONS, SemanticCOLORS, Segment } from 'semantic-ui-react';
+import { Modal, Button, Icon, SemanticICONS, SemanticCOLORS } from 'semantic-ui-react';
 import { WidgetTitle } from './WidgetTitle';
 import { ShareButton } from '../Share';
 
