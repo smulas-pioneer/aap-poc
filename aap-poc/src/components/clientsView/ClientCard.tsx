@@ -48,7 +48,7 @@ export const ClientCard = ({ client, onBrowse = () => { }, lang }: { client: Cli
               <Table.Cell className="client-card-left" width="7" >
                 {numberOfAlerts(client)}
                 <Header as="h3" style={{ margin: 0 }}>
-                  <Link to={`/clients/${client.id}`}>
+                  <Link className="color-blue" to={`/clients/${client.id}`}>
                     {client.name}
                   </Link>
                 </Header>

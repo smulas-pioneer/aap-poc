@@ -92,11 +92,11 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
       return 0;
     }).reduce((memo, prop, j) => {
       const { current, isInUse } = values[prop];
-
       const item = (
         <Menu.Item key={j} name='prop' link onClick={() => searchprop && this.searchAdvanced(searchprop, prop, isInUse)}>
           {current > 0 && <Label size="tiny" content={current} />}
           {isInUse && <Icon name="checkmark" color="green" style={{ float: 'none', margin: '0 .5em 0 0' }} />}
+
           {prop !== '0' ? (label ? label(prop) : prop) : 'none'}
         </Menu.Item>
       );

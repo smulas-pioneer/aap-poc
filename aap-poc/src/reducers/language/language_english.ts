@@ -115,7 +115,7 @@ export const English: LanguageState = {
         positiveSentence: 'The risk level of the client’s portfolio is below the risk level of the model portfolio linked to the MiFID profile of the client',
       },
       efficencyAlert: {
-        name: 'Efficency',
+        name: 'Efficiency',
         sentence: 'The level of efficiency of the client’s portfolio in terms of expected risk/return is below the relevant model portfolio',
         positiveSentence: 'The level of efficiency of the client’s portfolio in terms of expected risk/return is aligned with the relevant model portfolio'
       },

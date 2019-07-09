@@ -97,7 +97,7 @@ export const filterMapItems: { [key in FilterMapTypes]: FilterMap } = {
   AlertType: {
     prop: 'breaks',
     searchprop: 'alertTypes',
-    render: { header: 'Alert Type', icon: 'alarm', label: (value: string) => startCase(value) }
+    render: { header: 'Alert Type', icon: 'alarm', label: (value: string) =>value==='efficency' ? 'Efficiency': startCase(value) }
   },
   Segment: {
     prop: 'segment',
