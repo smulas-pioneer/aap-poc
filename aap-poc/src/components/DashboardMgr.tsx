@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { SearchParms, Client } from '../_db/interfaces';
 import { appConnector } from 'app-support';
-import { searchClient } from '../actions/index';
+import { searchClient, login, LoginType } from '../actions/index';
 import { getSearchResult, getSearchFilter, getLanguage, getConfigLayout, getIsCountryActive, getIsRegionActive } from '../reducers/index';
 import { SemanticICONS, Statistic, Grid, Segment, SemanticCOLORS, Icon, Menu } from 'semantic-ui-react';
 import { filterMapItems, FilterMap, FilterMapTypes } from '../actions/model';
@@ -41,7 +41,10 @@ const conn = appConnector<DashboardMgrProps>()(
     isCountryActive: getIsCountryActive(s, p.uid),
     isRegionActive: getIsRegionActive(s, p.uid)
   }),
-  { searchClient }
+  {
+    searchClient,
+    login
+  }
 )
 
 class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
@@ -59,9 +62,12 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
   }
 
   componentDidMount() {
-    if (!this.props.data) {
-      this.props.searchClient({ uid: this.props.uid, filter: '' });
-    }
+    console.log('Dashboard did mount');
+
+    //if (!this.props.data) {
+    this.props.searchClient({ uid: this.props.uid, filter: '', reset: true });
+    //}
+    this.props.login(LoginType.Manager);
   }
 
   componentWillReceiveProps(next: any) {
@@ -102,7 +108,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
   }
 
   handleOnChangeTab = (page: string) => {
-    this.props.history && this.props.history.push(`/dsh/${page}`);
+    this.props.history && this.props.history.push(`/manager/${page}`);
   }
 
   // render statistic

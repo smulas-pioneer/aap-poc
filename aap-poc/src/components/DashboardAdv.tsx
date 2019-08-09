@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { SearchParms, Client } from '../_db/interfaces';
 import { appConnector } from 'app-support';
-import { searchClient } from '../actions/index';
+import { searchClient, login, LoginType } from '../actions/index';
 import { getSearchResult, getSearchFilter, getLanguage, getConfigLayout, getIsCountryActive, getIsRegionActive } from '../reducers/index';
 import { SemanticICONS, Statistic, Grid, Segment, SemanticCOLORS, Icon, Menu } from 'semantic-ui-react';
 import { filterMapItems, FilterMap, FilterMapTypes } from '../actions/model';
@@ -39,7 +39,8 @@ const conn = appConnector<DashboardAdvProps>()(
     isCountryActive: getIsCountryActive(s, p.uid),
     isRegionActive: getIsRegionActive(s, p.uid)
   }),
-  { searchClient }
+  { searchClient,
+  login }
 )
 
 class DashboardAdvCompo extends conn.StatefulCompo<DashboardAdvState> {
@@ -57,9 +58,11 @@ class DashboardAdvCompo extends conn.StatefulCompo<DashboardAdvState> {
   }
 
   componentDidMount() {
-    if (!this.props.data) {
-      this.props.searchClient({ uid: this.props.uid, filter: '' });
-    }
+    //if (!this.props.data) {
+      this.props.searchClient({ uid: this.props.uid,reset:true, filter: '' });
+    //}
+    this.props.login(LoginType.Advisor);
+
   }
 
   componentWillReceiveProps(next: any) {
@@ -100,7 +103,7 @@ class DashboardAdvCompo extends conn.StatefulCompo<DashboardAdvState> {
   }
 
   handleOnChangeTab = (page: string) => {
-    this.props.history && this.props.history.push(`/dsh/${page}`);
+    this.props.history && this.props.history.push(`/advisor/${page}`);
   }
 
   // render statistic
@@ -140,7 +143,6 @@ class DashboardAdvCompo extends conn.StatefulCompo<DashboardAdvState> {
   renderFilterGraphItem(key: number, map: FilterMap, values: any) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { searchprop, render: { header, label } } = map;
-
     let valuesSizeGraph: any[] = Object.keys(values).reduce(
       (memo, r, index) => {
         const filter = values[r];

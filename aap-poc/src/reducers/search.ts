@@ -32,6 +32,7 @@ const defaultState: State = {
 export default (state: State = defaultState, action: any): State => {
   if (searchClientSuccess.matchAction(action)) {
     const uid = action.payload.parms.uid;
+
     return {
       ...state,
       result: {
@@ -40,7 +41,7 @@ export default (state: State = defaultState, action: any): State => {
       },
       filter: {
         ...state.filter,
-        [uid]: Model.createFilterAdv(action.payload.result, action.payload.parms, state.filter && state.filter[uid])
+        [uid]: Model.createFilterAdv(action.payload.result, action.payload.parms,  (state.filter && state.filter[uid]),action.payload.parms.reset )
       },
       agentView: {
         ...state.agentView,

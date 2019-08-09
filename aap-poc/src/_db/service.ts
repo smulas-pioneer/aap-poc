@@ -85,7 +85,6 @@ export const searchClient = (parms: Model.SearchParms, visibility?: string[]): P
   //   return curr && curr.weight >= 0.5;
   // });
 
-
   const ret = {
     parms,
     result: filteredClients,

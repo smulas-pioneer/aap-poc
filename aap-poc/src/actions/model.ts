@@ -97,7 +97,7 @@ export const filterMapItems: { [key in FilterMapTypes]: FilterMap } = {
   AlertType: {
     prop: 'breaks',
     searchprop: 'alertTypes',
-    render: { header: 'Alert Type', icon: 'alarm', label: (value: string) =>value==='efficency' ? 'Efficiency': startCase(value) }
+    render: { header: 'Alert Type', icon: 'alarm', label: (value: string) => value === 'efficency' ? 'Efficiency' : startCase(value) }
   },
   Segment: {
     prop: 'segment',
@@ -122,7 +122,7 @@ export const filterMapItems: { [key in FilterMapTypes]: FilterMap } = {
   RiskProfile: {
     prop: 'clientRiskProfile',
     searchprop: 'clientRiskProfile',
-    render: { header: 'Client Risk Profile', icon: 'credit card', label: undefined }
+    render: { header: 'Client Risk Profile', icon: 'vcard', label: undefined }
 
   }
 }
@@ -138,7 +138,7 @@ export interface ClientFilters {
   Segment: SearchFilter;
   Branch: SearchFilter;
 }
-export const createFilterAdv = (data: Client[], searchParms?: SearchParms | undefined, from?: ClientFilters | undefined) => {
+export const createFilterAdv = (data: Client[], searchParms?: SearchParms | undefined, from?: ClientFilters | undefined, reset?: boolean) => {
 
   const isChecked = (array?: any[], value?: any) => {
     if (!array || !array.length) return false;
@@ -170,7 +170,7 @@ export const createFilterAdv = (data: Client[], searchParms?: SearchParms | unde
     });
 
     Object.keys(filter).forEach(v => {
-      filter[v] = { ...filter[v], init: filter[v].init || filter[v].current };
+      filter[v] = { ...filter[v], init: reset ? filter[v].current : filter[v].init || filter[v].current };
     })
 
     return { ...memo, [key]: filter };

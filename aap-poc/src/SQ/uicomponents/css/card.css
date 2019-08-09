@@ -1,0 +1,45 @@
+.card {
+  width: 270px; /*256px;*/
+  min-width: 236px;
+  background-color: #fff;
+  box-shadow: 0 5px 25px -1px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.card .icon-container {
+  display: block;
+  position: relative;
+  top: -35px;
+  left: 20px;
+  background-color: #E2001A;
+  border-radius: 50%;
+  box-shadow: 3px 3px 5px 1px rgba(0,0,0,0.1);
+  z-index: 1;
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
+}
+
+.card .label-container {
+  width: 100%;
+  font-weight: 400;
+  font-size: 30px;
+  color: black;
+  background-color: #eee;
+  padding: 20px ;
+  height: 130px;
+  line-height: 1;
+  word-wrap: break-word;
+  border-bottom: 6px #666666 solid;
+}
+
+.card .content-container {
+  height: calc(100% - 3em);
+  font-size: 1.2em;
+  padding: 0;
+  margin: -35px 10px 10px 10px;
+}
+
+.list-item {
+  color:black;
+}

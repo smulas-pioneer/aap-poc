@@ -1,0 +1,746 @@
+.sq-home {
+
+@import "./uicomponents/css/button.css";
+@import "./uicomponents/css/card.css";
+@import "./uicomponents/css/checkbox.css";
+@import "./uicomponents/css/datagrid.css";
+@import "./uicomponents/css/dropdown-menu.css";
+@import "./uicomponents/css/list.css";
+@import "./uicomponents/css/tab-navigator.css";
+@import "./uicomponents/css/text-input.css";
+
+/* Fonts
+------------------------------------------------------*/
+@font-face {
+  font-family: 'Roboto';
+  src: url('./fonts/roboto/roboto_regular/Roboto-Regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./fonts/roboto/roboto_bold/Roboto-Bold-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./fonts/roboto/roboto_medium/Roboto-Medium-webfont.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./fonts/roboto/roboto_light/Roboto-Light-webfont.woff') format('woff');
+  font-weight: 200;
+  font-style: normal;
+}
+/*
+@font-face {
+  font-family: 'Roboto Condensed';
+  src: url('./fonts/roboto/roboto_condensed/RobotoCondensed-Regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  src: url('./fonts/roboto/roboto_lightcondensed/RobotoCondensed-Light-webfont.woff') format('woff');
+  font-weight: 200;
+  font-style: normal;
+}
+*/
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: normal;
+  src: url(./fonts/material-icons/MaterialIcons-Regular.woff) format('woff');
+}
+
+
+/* Material Icons
+------------------------------------------------------*/
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: block;
+  line-height: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+}
+
+.material-icons.md-14 {
+  font-size: 14px;
+}
+
+.material-icons.md-18 {
+  font-size: 18px;
+}
+
+.material-icons.md-24 {
+  font-size: 24px;
+}
+
+.material-icons.md-28 {
+  font-size: 28px;
+}
+
+.material-icons.md-30 {
+  font-size: 30px;
+}
+
+.material-icons.md-32 {
+  font-size: 32px;
+}
+
+.material-icons.md-36 {
+  font-size: 36px;
+}
+
+.material-icons.md-48 {
+  font-size: 48px;
+}
+
+
+/* General
+------------------------------------------------------*/
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+  overflow: hidden;
+
+  background-color: #b8b8b8;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 2 1'%3E%3Cdefs%3E%3ClinearGradient id='a' gradientUnits='userSpaceOnUse' x1='0' x2='0' y1='0' y2='1' gradientTransform='rotate(0,0.5,0.5)'%3E%3Cstop offset='0' stop-color='%23b8b8b8'/%3E%3Cstop offset='1' stop-color='%23ffffff'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='0' y1='0' x2='0' y2='1' gradientTransform='rotate(0,0.5,0.5)'%3E%3Cstop offset='0' stop-color='%23ffffff' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23ffffff' stop-opacity='1'/%3E%3C/linearGradient%3E%3ClinearGradient id='c' gradientUnits='userSpaceOnUse' x1='0' y1='0' x2='2' y2='2' gradientTransform='rotate(210,0.5,0.5)'%3E%3Cstop offset='0' stop-color='%23ffffff' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23ffffff' stop-opacity='1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='0' fill='url(%23a)' width='2' height='1'/%3E%3Cg %3E%3Cpolygon fill='url(%23b)' points='0 1 0 0 2 0'/%3E%3Cpolygon fill='url(%23c)' points='2 1 2 0 0 0'/%3E%3C/g%3E%3C/svg%3E");
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
+#application {
+  height: 100%;
+  overflow: hidden;
+}
+
+.main {
+  height: 100%;
+  overflow: hidden;
+}
+
+header {
+  width: 100%;
+  height: 50px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.35);
+  z-index: 2;
+  position: absolute;
+}
+
+header .toolbar {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  display: flex;
+  z-index: 3;
+}
+
+.logo {
+  margin-left: 15px;
+  padding-top: 13px;
+  position: absolute;
+  width: 120px;
+  cursor: pointer;
+}
+
+header .toolbar > *:not(.icon-bar-separator) {
+  margin-left: 2px;
+}
+
+.icon-bar-separator {
+  height: 50px;
+  width: 1px;
+  margin: -5px 7px 0 11px;
+  background-color: #ddd;
+}
+
+h1 {
+  color: black;
+  font-weight: bold;
+  display: block;
+  margin: 0 auto;
+  padding-top: 8px;
+  font-size: 24px;
+  position: relative;
+  text-align: center;
+  pointer-events: none;
+}
+
+h2 {
+  color: black;
+  font-size: 18px;
+}
+
+
+/* SideToolBar
+------------------------------------------------------*/
+.side-tool-bar {
+  display: block;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  bottom: 0;
+  width: 70px;
+  padding-top: 15px;
+  background-color: #333333;
+  box-shadow: 3px 0 4px 1px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  z-index: 2;
+  transition: left 0.2s ease-out;
+}
+
+.side-tool-bar.hidden {
+  left: -70px;
+}
+
+.side-tool-bar .icon-bar-separator {
+  height: 1px;
+  width: 50px;
+  margin: 11px 10px 11px 10px;
+  background-color: #aaa;
+}
+
+.side-tool-bar .icon-button {
+  color: #fff;
+}
+
+.side-tool-bar .icon-button:hover,
+.side-tool-bar .icon-button:focus {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+.side-tool-bar .icon-button.neutral,
+.side-tool-bar .icon-button.neutral:focus {
+  background-color: rgba(0, 0, 0, 0);
+  color: #fff;
+}
+
+.side-tool-bar .icon-button .ripple {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.side-tool-bar .icon-button .button-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-size: 24px 24px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+
+/* TabNavigator
+ ------------------------------------------------------*/
+.tab-navigator {
+  height: calc(100% - 50px);
+  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Home
+------------------------------------------------------*/
+.home {
+  display: block;
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  transition: left 0.5s ease-out, opacity 0.5s ease-out;
+  z-index: 1;
+  will-change: transform;
+}
+
+.home.hidden {
+  z-index: 0;
+  opacity: 0;
+  left: 150%;
+}
+
+
+/* Cards
+ ------------------------------------------------------*/
+.home .cards {
+  position: absolute;
+  display: flex;
+  flex-wrap: nowrap;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+.home .cards .card {
+  margin-right: 20px;
+  height: 640px;  /*580px;*/
+}
+
+.home .cards .card:nth-child(5n) {
+  margin-right: 0;
+}
+
+.home .cards .card .icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-size: 40px 40px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+.card-button {
+  position: absolute;
+  bottom: 10px;
+  width: 236px;
+  white-space: pre-line;
+}
+
+.card-button.disabled {
+  background-color: rgb(235, 235, 235);
+  color: #999999;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  min-height: 62px;
+}
+
+
+/* MainViews
+------------------------------------------------------*/
+.main-view {
+  display: block;
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  left: 70px;
+  right: 0;
+  opacity: 1;
+  transition: left 0.5s ease-out, right 0.5s ease-out, opacity 0.5s ease-out;
+  z-index: 1;
+  padding: 0 10px 10px 10px;
+  will-change: transform;
+}
+
+.main-view.hidden {
+  z-index: 0;
+  opacity: 0;
+  left: -100%;
+  right: 100%;
+}
+
+.main-view .buttonbar {
+  display: block;
+  margin: 30px auto;
+  width: 60%; /*500px*/
+}
+
+/*.buttonbar {*/
+  /*margin: 30px auto;*/
+  /*width: 60%;*/
+/*}*/
+
+
+
+
+/* SubSection: General
+------------------------------------------------------*/
+.sub-section {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: calc(100% - 20px);
+  top: 20px;
+}
+
+.sub-section .left-pane {
+  display: flex;
+  flex-direction: column;
+  float: left;
+  width: 220px;
+  height: 100%;
+  /*background-color: #eeff7c;*/
+}
+
+.sub-section .right-pane {
+  display: block;
+  float: left;
+  width: calc(100% - 220px);
+  height: 100%;
+}
+
+.sub-section .right-pane .top {
+  display: flex;
+  width: 100%;
+  height: 50%;
+}
+
+.sub-section .right-pane .top .left {
+  display: flex;
+  width: 50%;
+  height: 100%;
+}
+
+.sub-section .right-pane .top .right {
+  display: flex;
+  width: 50%;
+  height: 100%;
+}
+
+.sub-section .right-pane .bottom {
+  display: flex;
+  width: 100%;
+  height: 50%;
+  /*background-color: #ff98df;*/
+}
+
+.sub-section .graph-container {
+  padding: 0px 10px 0px 10px;
+  /*box-shadow: 0 5px 25px -1px rgba(0, 0, 0, 0.3);*/
+}
+
+.graph-container {
+  width: 100%;
+  height: 100%;
+  min-width: 236px;
+  background-color: #ffffff;
+  /*box-shadow: 0 0px 25px -1px rgba(0, 0, 0, 0.3);*/
+  /*overflow: hidden;*/
+  overflow: visible;
+}
+
+.graph-container .icon-container {
+  display: block;
+  position: relative;
+  top: -35px;
+  left: 20px;
+  background-color: #019ee3;
+  border-radius: 50%;
+  box-shadow: 3px 3px 5px 1px rgba(0,0,0,0.1);
+  z-index: 1;
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
+}
+
+.graph-container .label-container {
+  width: calc(100% - 20px);
+  font-weight: 100;
+  font-size: 30px;
+  color: #fff;
+  background-color: #eee;
+  padding: 20px 0 0 20px;
+  height: 130px;
+  word-wrap: break-word;
+}
+
+.graph-container .content-container {
+  height: calc(100% - 3em);
+  font-size: 1.2em;
+  padding: 0;
+  margin: -35px 10px 10px 10px;
+}
+
+
+/* Sections
+------------------------------------------------------*/
+
+.sub-section .sub-container {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/*
+.strategic-asset-allocations .sub-section-1 {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.strategic-asset-allocations .sub-section-2 {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.tactical-asset-allocations .sub-section-1 {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.tactical-asset-allocations .sub-section-2 {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.tactical-asset-allocations .sub-section-3 {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.tactical-asset-allocations .sub-section-4 {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.model-portfolios .sub-section-1 {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.model-portfolios .sub-section-2 {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.model-portfolios .sub-section-3 {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.model-portfolios .sub-section-4 {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.building-blocks .sub-section-1 {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.building-blocks .sub-section-2 {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+*/
+
+
+
+/*.tactical-asset-allocations .sub-section-4 .left-pane {*/
+  /*display: flex;*/
+  /*position: relative;*/
+  /*width: 30%;*/
+  /*height: 100%;*/
+  /*background-color: #eeff7c;*/
+/*}*/
+
+/*.tactical-asset-allocations .sub-section-4 .right-pane {*/
+  /*display: flex;*/
+  /*position: relative;*/
+  /*width: 30%;*/
+  /*height: 100%;*/
+  /*background-color: #eeff7c;*/
+/*}*/
+
+
+
+/* Taken from DPM
+------------------------------------------------------*/
+.plot-container {
+  font-family: Helvetica, sans-serif;
+  position: relative;
+  /*overflow: hidden;*/
+  margin: 30px 5px 0 10px;
+  padding: 0;
+  width: 100%;
+  /* this trick below is causing jitters on chart mouse over interactions */
+  /*padding-top: 60%;*/ /* this allows us to set the width to height ratio of plot containers */
+  /* let's fix the height here for now, but it is likely better to set daynamically in the scaffolding anyway to achieve optimum sizes */
+  /*height: 466px;*/
+  background: #fff;
+  /*box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);*/
+  /*border-radius: 5px;*/
+}
+.plot-content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.plot {
+  position: relative;
+  top: 3px;
+  left: 3px;
+  width: calc(100% - 6px);
+  height: calc(100% - 6px);
+  border-radius: 5px;
+}
+.container {
+  width: 200px;
+  border-radius: 5px;
+  border: none;
+  font-family: Helvetica, sans-serif;
+  box-shadow: 4px 4px 15px 0 rgba(0, 0, 0, 0.25);
+  background: #fff;
+  padding: 10px;
+  margin-right: 0px;
+  opacity: 0.95;
+}
+.grid-container {
+  width: 100%;
+  left: 5px;
+  top: 5px;
+  right: 5px;
+  bottom: 5px;
+}
+
+
+/*------------- Strategic Allocation Styles ---------------*/
+
+.sub-section .left-pane .portfolio-summary{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  background-color: #efefef;
+}
+
+.sub-section .left-pane .portfolio-summary .infocard{
+  display: block;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  justify-content: center;
+
+}
+
+.sub-section .left-pane .portfolio-summary .infocard:not(:last-child){
+  border-bottom: 1px solid #ddd;
+}
+
+.sub-section .left-pane .portfolio-summary .infocard .label{
+  display: block;
+  font-weight: 700;
+  text-align: center;
+}
+
+.sub-section .left-pane .portfolio-summary .infocard .value{
+  display: block;
+  font-weight: 700;
+  color: #aaa;
+  text-align: center;
+}
+
+.sub-section .left-pane .portfolio-summary .infocard .value.negative{
+  display: block;
+  font-weight: 700;
+  color: #b13130;
+  text-align: center;
+}
+
+.sub-section .left-pane .filters{
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.sub-section .left-pane .action-buttons{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /*border: 1px solid #ddd;*/
+  margin-top: 20px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.sub-section .left-pane .action-buttons .raised-button{
+  margin-top: 5px;
+  width: 99%;
+}
+
+.sub-section header {
+  position: relative;
+  width: auto;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  left: 10px;
+  height: 50px;
+  background-color: #fff;
+  box-shadow: none;
+  border: 1px solid #ddd;
+  z-index: 2;
+  padding-top: 0;
+}
+
+.sub-section header .infobar {
+  position: absolute;
+  display: flex;
+  z-index: 3;
+  flex-wrap: nowrap;
+  width: 100%;
+  background-color: #efefef;
+}
+
+.sub-section header .infobar .infocard{
+  display: block;
+  height: 40px;
+  padding-top: 10px;
+  width: 100%;
+  justify-content: center;
+}
+
+.sub-section header .infobar .infocard:not(:last-child){
+  border-right: 1px solid #ddd;
+}
+
+.sub-section header .infobar .infocard .label{
+  display: block;
+  font-weight: 700;
+  text-align: center;
+}
+
+.sub-section header .infobar .infocard .value{
+  display: block;
+  font-weight: 700;
+  color: #aaa;
+  text-align: center;
+}
+
+.sub-section header .infobar .infocard .value.negative{
+  display: block;
+  font-weight: 700;
+  color: #b13130;
+  text-align: center;
+}
+}

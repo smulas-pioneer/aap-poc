@@ -1,0 +1,49 @@
+.list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.list .list-item {
+    padding: 15px 10px 15px 10px;
+    border-bottom: 1px solid #dfdfdf;
+    display: flex;
+    justify-content: space-between;
+    -webkit-transition: all 350ms ease;
+    -moz-transition: all 350ms ease;
+    -o-transition: all 350ms ease;
+    transition: all 350ms ease;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+.list .list-item:hover {
+    background-color: #eaeaea;
+}
+
+.list .list-item:focus {
+    background-color: #e3e3e3;
+    outline: none;
+    box-shadow: none;
+}
+
+.list .list-item.selected,
+.list .list-item.selected:focus {
+    color: #000;
+    background-color: #f2f2f2;
+}
+
+.list .list-item.disabled:hover,
+.list .list-item.disabled {
+    cursor: default;
+    pointer-events: none;
+    color: #ccc;
+}
+
+
+.list  a {
+  color: black;
+}

@@ -33,7 +33,7 @@ export class Login extends React.Component<LoginProps, LoginState>{
     const { user, password } = this.state;
     const { action } = this.props;
     if (user.toLowerCase().trim() === 'advisor' && IsOk(password)) {
-      action(LoginType.Advisor);
+      action(LoginType.Manager);
     }
     else if (user.toLowerCase().trim() === 'manager' && IsOk(password)) {
       action(LoginType.Manager);
