@@ -66,7 +66,7 @@ export const homeConfiguration = [
     sections: [
       {
         title: 'CIO cockpit',
-        url: 'http://www.codebox.ch/swissquant/ims/dpm/index.html',
+        url: 'https://ims.swissquant.com:9000',
         embed: true
       },
       {
@@ -81,11 +81,12 @@ export const homeConfiguration = [
       },
       {
         title: 'Stress-tests scenarios',
-        url: 'http://www.codebox.ch/swissquant/ims/dpm/index.html',
+        url: 'http://demo.swissquant.com:9004/',
         embed: true
       },
     ]
   },
+
   {
     title: 'Commercial Governance',
     icon: propertyManagingIcon,
