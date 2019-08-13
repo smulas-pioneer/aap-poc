@@ -28,8 +28,16 @@ const regionCountry = {
   'Sud': 'Italy',
   'Sicilia': 'Italy',
   'Germany': 'Germany',
-  'Austria': 'Austria',
-  'Luxemburg': 'Luxemburg'
+  'Luxemburg': 'Luxemburg',
+  'Burgenland': 'Austria',
+  'Carinthia': 'Austria',
+  'Lower Austria': 'Austria',
+  'Upper Austria': 'Austria',
+  'Styria': 'Austria',
+  'Salzburg': 'Austria',
+  'Tyrol': 'Austria',
+  'Vorarlberg': 'Austria',
+  'Vienna': 'Austria',
 }
 
 const italyRegions = [
@@ -41,7 +49,15 @@ const italyRegions = [
   'Sud',
   'Sicilia',
   'Germany',
-  'Austria',
+  'Burgenland',
+  'Carinthia',
+  'Lower Austria',
+  'Upper Austria',
+  'Styria',
+  'Salzburg',
+  'Tyrol',
+  'Vorarlberg',
+  'Vienna',
   'Luxemburg'];
 
 const italyRegionsRate = {
@@ -53,19 +69,29 @@ const italyRegionsRate = {
   'Sud': 6,
   'Sicilia': 5,
   'Germany': 6,
-  'Austria': 7,
+  'Burgenland': 7,
+  'Carinthia': 7,
+  'Lower Austria': 7,
+  'Upper Austria': 7,
+  'Styria': 7,
+  'Salzburg': 7,
+  'Tyrol': 7,
+  'Vorarlberg': 7,
+  'Vienna': 7,
   'Luxemburg': 9
 }
 const getFake = (region: string) => {
-  if (region === 'Germany') {
+  const country = regionCountry[region];
+
+  if (country === 'Germany') {
     let faker = fakerGER;
     faker.locale = 'de';
     return faker as Faker.FakerStatic;
-  } else if (region === 'Austria') {
+  } else if (country === 'Austria') {
     let faker = fakerAUT;
     faker.locale = 'de_AT';
     return faker as Faker.FakerStatic;
-  } else if (region === 'Luxemburg') {
+  } else if (country === 'Luxemburg') {
     let faker = fakerGER;
     faker.locale = 'fr';
     return faker as Faker.FakerStatic;
@@ -226,7 +252,7 @@ const getRandomSecurity = () => {
   return ret;
 }
 
-const assetClassMoltiplicator = (sec: Security) =>{
+const assetClassMoltiplicator = (sec: Security) => {
   switch (sec.MacroAssetClass) {
     case "Cash": return 80;
     case "Money Market": return 5;
@@ -253,7 +279,7 @@ const strategyCreator = (): StrategyItem[] => {
     const sec = i == 0 ? cash : getRandomSecurity();
     const k = assetClassMoltiplicator(sec);
 
-    const quantity = skipQ ? 0 : Math.ceil(rnd(0, qUbound*k));
+    const quantity = skipQ ? 0 : Math.ceil(rnd(0, qUbound * k));
     const price = i == 0 ? 1 : rnd(0, 8000) / 100;
     const modelWeight = i == 0 ? 0 : skipM ? 0 : quantity * (1 + rnd(-50, 50) / 100);
 
@@ -582,7 +608,7 @@ const go = async () => {
 
       c.size = c.aua > 20000000 ? '>20M' : c.aua > 10000000 ? '10-20M' : c.aua > 5000000 ? '5-10M' : c.aua > 1000000 ? '1-5M' : '<1M';
       //c.segment = c.aua > 15000000 ? 'Private' : c.aua > 5000000 ? 'Wealth Management' : c.aua > 2000000 ? 'Mass Affluent' : 'Retail';
-      c.segment = c.aua > 5000000 ? 'Wealth Management':'Private';
+      c.segment = c.aua > 5000000 ? 'Wealth Management' : 'Private';
       c.breaks = Object.keys(c.radar).filter(k => k.endsWith("Alert")).filter(k => c.radar[k] !== "green").map(k => k.replace('Alert', ''));
 
       const acc = histories[c.id].filter(p => p.status == 'ACCEPTED');

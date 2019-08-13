@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -e 
+set -e
+set -x
 
 # Remove _db
 rm -rf _db
@@ -9,7 +10,7 @@ rm -rf _db
 cp -r ../aap-poc/src/_db/common .
 
 # Compile
-tsc 
+tsc
 
 # Run
 node build/index.js
