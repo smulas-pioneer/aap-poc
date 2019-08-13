@@ -1,14 +1,7 @@
 import * as React from 'react';
 
-import { Area1 } from './Area1';
-import { Area2 } from './Area2';
-import { Area3 } from './Area3';
-import { Area4 } from './Area4';
-import { Area5 } from './Area5';
-import { Area6 } from './Area6';
-import { Area7 } from './Area7';
-import { Boundaries } from './Boundaries';
-import { ColorsLegend } from './../../shared/ColorsLegend';
+
+import { ColorsLegend } from '../../shared/ColorsLegend';
 import { IndicatorOptionsType, MapLegend, FilterMap } from '../../../actions/model';
 
 import { countBy, sumBy, uniqBy } from 'lodash';
@@ -28,7 +21,7 @@ import { WidgetTitle } from '../../shared/WidgetTitle';
 const { Legend, ResponsiveContainer } = require('recharts');
 const ReactTooltip = require('react-tooltip');
 
-export interface ItalyMapProps {
+export interface AustriaMapProps {
   lang: LangDictionary,
   layout: ConfigLayout,
   clients: Client[]
@@ -38,22 +31,22 @@ export interface ItalyMapProps {
   onFilterChange?: (map: FilterMap, value: string) => void;
 }
 
-export interface ItalyMapState {
+export interface AustriaMapState {
   mapIndex: number | undefined;
   requestMapIndex: number | undefined;
   values: { type: IndicatorOptionsType, areaValues: AreaValue[], countWithValues: number };
 }
 
-export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
+export class AustriaMap extends React.Component<AustriaMapProps, AustriaMapState> {
 
-  static AREA_MAP_INDEX = ['Nord Ovest', 'Lombardia', 'Nord Est', 'Centro Nord', 'Centro', 'Sud', 'Sicilia'];
+  static AREA_MAP_INDEX = ['Burgenland', 'Carinthia', 'Lower Austria', 'Upper Austria', 'Styria', 'Salzburg', 'Tyrol', 'Vorarlberg', 'Vienna'];
 
   colors: number[][];
   MAX_COLORS_LEN = 0;
 
   LAST_COLOR = '';
 
-  constructor(props: ItalyMapProps) {
+  constructor(props: AustriaMapProps) {
     super(props);
 
     this.calculateAreaValues = this.calculateAreaValues.bind(this);
@@ -99,7 +92,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
     };
   }
 
-  componentWillReceiveProps(props: ItalyMapProps) {
+  componentWillReceiveProps(props: AustriaMapProps) {
     const values = this.calculateAreaValues(props.clients, this.state.values.type);
     this.setState(prev => ({ values }));
   }
@@ -133,34 +126,34 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
     if (regionFilter) ds = ds.filter(d => d.address.region === regionFilter);
 
     // reduce to area : count of
-    let values: any = {}; ItalyMap.AREA_MAP_INDEX.forEach(v => values[v] = 0);
+    let values: any = {}; AustriaMap.AREA_MAP_INDEX.forEach(v => values[v] = 0);
 
     switch (type) {
       case IndicatorOptionsType.clients: {
         const countByRegion = countBy(ds, c => c.address.region);
-        ItalyMap.AREA_MAP_INDEX.forEach(area => values[area] = countByRegion[area]);
+        AustriaMap.AREA_MAP_INDEX.forEach(area => values[area] = countByRegion[area]);
         break;
       }
       case IndicatorOptionsType.aua: {
-        ItalyMap.AREA_MAP_INDEX.forEach(area => {
+        AustriaMap.AREA_MAP_INDEX.forEach(area => {
           values[area] = sumBy(ds.filter(c => c.address.region === area), c => c.aua);
         });
         break;
       }
       case IndicatorOptionsType.alerts: {
-        ItalyMap.AREA_MAP_INDEX.forEach(area => {
+        AustriaMap.AREA_MAP_INDEX.forEach(area => {
           values[area] = ds.filter(c => c.address.region === area && c.radar.numOfAlerts > 0).length;
         });
         break;
       }
       case IndicatorOptionsType.proposals: {
-        ItalyMap.AREA_MAP_INDEX.forEach(area => {
+        AustriaMap.AREA_MAP_INDEX.forEach(area => {
           values[area] = sumBy(ds.filter(c => c.address.region === area), c => c.numOfInterviews);
         });
         break;
       }
       case IndicatorOptionsType.acceptedProposals: {
-        ItalyMap.AREA_MAP_INDEX.forEach(area => {
+        AustriaMap.AREA_MAP_INDEX.forEach(area => {
           values[area] = sumBy(ds.filter(c => c.address.region === area), c => c.numOfAcceptedProposal);
         });
         break;
@@ -178,7 +171,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
       if (minValue === undefined || v < minValue) minValue = v;
     });
 
-    const areaValues = ItalyMap.AREA_MAP_INDEX.reduce((acc, key, idx) => {
+    const areaValues = AustriaMap.AREA_MAP_INDEX.reduce((acc, key, idx) => {
       const value = values[key] ? values[key] : 0;
       const perc = (value * 100) / maxValue;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -311,7 +304,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
         <svg x="0px" y="0px" width="100%" height="76%" viewBox="0 0 340 400">
           <g className="regions" >
             {
-              ItalyMap.AREA_MAP_INDEX.map((val, idx) => {
+              AustriaMap.AREA_MAP_INDEX.map((val, idx) => {
                 const aValue = areaValues[idx];
                 const htmlTooltip = aValue.value !== 0 ? this.getTooltipText(aValue.key, type, aValue.value) : undefined;
                 return this.getAreaById(idx,
@@ -325,23 +318,10 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
               })
             }
           </g>
-          <Boundaries />
         </svg>
 
         <MapOptions onChange={e => this.onMapOptionsChange(e)} lang={lang} />
         <ReactTooltip html type='info' delayShow={countWithValues > 1 ? 600 : 100} place="bottom" />
-
-        {/* </Transition> */}
-
-        {/* <Transition visible={showRegion} animation="fade" duration={350} onComplete={(_, e) => { !showRegion && this.setState(prev => ({ mapIndex: prev.requestMapIndex })) }} >
-          <div style={{ margin: 0, width: "100%", height: "100%" }}>
-            <Label size="medium" color="blue" ribbon >{regionLegend && regionLegend.title}</Label>
-            <FillAreaLegend legend={regionLegend} />
-            <svg version="1.2" id="aap-italy" baseProfile="tiny" x="0px" y="0px" width="100%" height="98%" viewBox="-832 802.4417725 340 400" onClick={() => this.setState({ requestMapIndex: undefined })}>
-              {this.getAreaById(this.state.mapIndex!, { fill: true, color: this.LAST_COLOR })}
-            </svg>
-          </div>
-        </Transition> */}
       </div >
     )
   }

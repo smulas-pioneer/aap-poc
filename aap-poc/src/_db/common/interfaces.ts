@@ -248,8 +248,8 @@ export enum DynamicFilterOperation {
   GreaterThan = 1,
   GraterEqualThan,
 
-  LesserThan,
-  LesserEqualThan
+  LessThan,
+  LessEqualThan
 }
 
 export interface SearchResult {

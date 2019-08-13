@@ -144,14 +144,14 @@ const CustomComposedChartValueChange = (props: CustomComposedChartValueChangePro
       value: DynamicFilterOperation.GreaterThan
     },
     {
-      key: DynamicFilterOperation.LesserEqualThan,
+      key: DynamicFilterOperation.LessEqualThan,
       text: "less equal than",
-      value: DynamicFilterOperation.LesserEqualThan
+      value: DynamicFilterOperation.LessEqualThan
     },
     {
-      key: DynamicFilterOperation.LesserThan,
+      key: DynamicFilterOperation.LessThan,
       text: "less than",
-      value: DynamicFilterOperation.LesserThan
+      value: DynamicFilterOperation.LessThan
     },
   ]
 

@@ -181,9 +181,9 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
           return ">=";
         case DynamicFilterOperation.GreaterThan:
           return ">";
-        case DynamicFilterOperation.LesserEqualThan:
+        case DynamicFilterOperation.LessEqualThan:
           return "<=";
-        case DynamicFilterOperation.LesserThan:
+        case DynamicFilterOperation.LessThan:
           return "<";
       }
     }

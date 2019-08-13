@@ -44,9 +44,9 @@ const clientDynamicFilter = (dynaFilter: Model.DynamicSearchFilter) => (c: Model
         return curr.weight >= dynaFilter.value;
       case Model.DynamicFilterOperation.GreaterThan:
         return curr.weight > dynaFilter.value;
-      case Model.DynamicFilterOperation.LesserEqualThan:
+      case Model.DynamicFilterOperation.LessEqualThan:
         return curr.weight <= dynaFilter.value;
-      case Model.DynamicFilterOperation.LesserThan:
+      case Model.DynamicFilterOperation.LessThan:
         return curr.weight < dynaFilter.value;
     }
   }
@@ -54,6 +54,9 @@ const clientDynamicFilter = (dynaFilter: Model.DynamicSearchFilter) => (c: Model
 };
 export const searchClient = (parms: Model.SearchParms, visibility?: string[]): Promise<Model.SearchResult> => {
   let theList = process.env.REACT_APP_LIMIT_DATA_ROWS ? clientList.slice(0, parseInt(process.env.REACT_APP_LIMIT_DATA_ROWS)) : clientList;
+
+  theList = theList.filter(f => ['Austria', 'Germany'].includes(f.country));
+
   if (visibility && visibility.length) theList = theList.filter(c => arrayContains(visibility, c.agent));
   if (parms.onlyWithAlerts) theList = theList.filter(r => r.radar.numOfAlerts);
 
