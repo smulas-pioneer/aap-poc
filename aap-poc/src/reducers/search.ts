@@ -41,7 +41,7 @@ export default (state: State = defaultState, action: any): State => {
       },
       filter: {
         ...state.filter,
-        [uid]: Model.createFilterAdv(action.payload.result, action.payload.parms,  (state.filter && state.filter[uid]),action.payload.parms.reset )
+        [uid]: Model.createFilterAdv(action.payload.result, action.payload.parms, (state.filter && state.filter[uid]), action.payload.parms.reset)
       },
       agentView: {
         ...state.agentView,
@@ -60,6 +60,16 @@ export default (state: State = defaultState, action: any): State => {
   }
   return state;
 };
+
+export const getSingleCountry = (state: State, uid: string) => {
+  const params = getSearchParms(state, uid);
+  const countries = params && params['countries'];
+  var ret: string | undefined = undefined;
+  if (countries && countries.length === 1) {
+    ret = countries[0];
+  }
+  return ret;
+}
 
 export const getIsOnlyItaly = (state: State, uid: string) => {
   const params = getSearchParms(state, uid);

@@ -55,7 +55,7 @@ const clientDynamicFilter = (dynaFilter: Model.DynamicSearchFilter) => (c: Model
 export const searchClient = (parms: Model.SearchParms, visibility?: string[]): Promise<Model.SearchResult> => {
   let theList = process.env.REACT_APP_LIMIT_DATA_ROWS ? clientList.slice(0, parseInt(process.env.REACT_APP_LIMIT_DATA_ROWS)) : clientList;
 
-  theList = theList.filter(f => ['Austria', 'Germany'].includes(f.country));
+  // theList = theList.filter(f => ['Austria', 'Germany'].includes(f.country));
 
   if (visibility && visibility.length) theList = theList.filter(c => arrayContains(visibility, c.agent));
   if (parms.onlyWithAlerts) theList = theList.filter(r => r.radar.numOfAlerts);
@@ -94,9 +94,6 @@ export const searchClient = (parms: Model.SearchParms, visibility?: string[]): P
     radar: undefined,
     breakdowns: getClientsBreakdowns(filteredClients)
   };
-
-
-
   return Promise.resolve(ret);
 };
 

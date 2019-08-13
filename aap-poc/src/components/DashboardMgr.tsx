@@ -17,7 +17,7 @@ import { BreakdownView } from './clientView/BreakdownView';
 import { ClientsView } from './clientsView/ClientsView';
 import { SliderGrapMultiView } from './chart/SliderGraph';
 import { EuropaMap } from './maps/europe/EuropeMap';
-import { getIsOnlyItaly } from '../reducers';
+import { getSingleCountry } from '../reducers';
 
 const sprintf = require("sprintf-js").sprintf;
 
@@ -37,7 +37,7 @@ const conn = appConnector<DashboardMgrProps>()(
     filter: getSearchFilter(s, p.uid),
     lang: getLanguage(s),
     layout: getConfigLayout(s),
-    isOnlyItaly: getIsOnlyItaly(s, p.uid),
+    singleCountry: getSingleCountry(s, p.uid),
     isCountryActive: getIsCountryActive(s, p.uid),
     isRegionActive: getIsRegionActive(s, p.uid)
   }),
@@ -97,7 +97,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
     this.searchAdvanced(prop, data.filter, data.isActive);
   }
   handleOnChangeFilter = (searchParms: SearchParms) => {
-    if (searchParms.countries && searchParms.countries.length === 1 && searchParms.countries[0] === 'Italy') { }
+    if (searchParms.countries && searchParms.countries.length === 1 && ['Austria', 'Italy'].includes(searchParms.countries[0])) { }
     else {
       searchParms[filterMapItems.Regions.searchprop] = undefined;
       searchParms[filterMapItems.Branch.searchprop] = undefined;
@@ -128,7 +128,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
   // render filter
   renderFilterGraphics(data: Client[]) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { lang, layout, filter = { Aua: {} }, isOnlyItaly, isCountryActive, isRegionActive } = this.props;
+    const { lang, layout, filter = { Aua: {} }, singleCountry, isCountryActive, isRegionActive } = this.props;
 
     return <div className='tab-dashboard ui-flex ui-flex-col'>
       <div className='ui-flex ui-flex-row'>
@@ -139,7 +139,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
             clients={data}
             layout={layout}
             height={600}
-            isOnlyItaly={isOnlyItaly}
+            singleCountry={singleCountry}
             filterMap={filterMapItems.Countries}
             onFilterChange={(map, val) => {
               switch (map.prop) {
@@ -285,7 +285,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         { length: 0, assetUnder: 0, clientAlert: 0, mifidAlert: 0, acceptedProposals: 0, totalProposals: 0, rejectedProposals: 0, totalBudget: 0, totRevenues: 0, totalTurnover: 0 });
 
     let filterMaps: FilterMapTypes[] = ['Countries', 'Aua', 'Segment', 'RiskProfile'];
-    if (this.props.isOnlyItaly) {
+    if (['Italy', 'Austria'].includes(this.props.singleCountry || '')) {
       filterMaps.splice(1, 0, 'Regions', 'Branch', 'Agents');
     }
 

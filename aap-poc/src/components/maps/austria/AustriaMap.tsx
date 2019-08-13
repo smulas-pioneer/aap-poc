@@ -16,6 +16,15 @@ import { ConfigLayout } from '../../../reducers/config';
 import { isArray } from 'util';
 import { AreaValue } from '../../shared/AreaMapProps';
 import { WidgetTitle } from '../../shared/WidgetTitle';
+import { Area1 } from './Area1';
+import { Area2 } from './Area2';
+import { Area3 } from './Area3';
+import { Area4 } from './Area4';
+import { Area5 } from './Area5';
+import { Area6 } from './Area6';
+import { Area7 } from './Area7';
+import { Area8 } from './Area8';
+import { Area9 } from './Area9';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { Legend, ResponsiveContainer } = require('recharts');
@@ -209,6 +218,8 @@ export class AustriaMap extends React.Component<AustriaMapProps, AustriaMapState
       case 4: return <Area5 key={index} {...props} />
       case 5: return <Area6 key={index} {...props} />
       case 6: return <Area7 key={index} {...props} />
+      case 7: return <Area8 key={index} {...props} />
+      case 8: return <Area9 key={index} {...props} />
       default:
         return null;
     }
@@ -301,7 +312,15 @@ export class AustriaMap extends React.Component<AustriaMapProps, AustriaMapState
           shareButtons={['Image', 'Copy']}
           rightComponent={currentLegend} />}
 
-        <svg x="0px" y="0px" width="100%" height="76%" viewBox="0 0 340 400">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
+          version="1.1"
+          x="0px"
+          y="0px"
+          width="100%"
+          height="82%"
+          viewBox="0 0 620 320">
+
           <g className="regions" >
             {
               AustriaMap.AREA_MAP_INDEX.map((val, idx) => {
