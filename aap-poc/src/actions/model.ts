@@ -65,18 +65,20 @@ export interface FilterMap {
   searchprop: string;
   render: { header: string, icon: SemanticICONS, max?: number | undefined, label: ((value: any, lang?: LangDictionary) => string) | undefined };
   enableClearAll?: boolean;
+  clearIfEmpty?: boolean;
 }
 export const filterMapItems: { [key in FilterMapTypes]: FilterMap } = {
   Countries: {
     prop: 'country',
     searchprop: 'countries',
-    render: { header: 'Countries', icon: 'flag', label: undefined }
+    render: { header: 'Countries', icon: 'flag', label: undefined },
   },
   Regions: {
     prop: 'address',
     subprop: 'region',
     searchprop: 'regions',
-    render: { header: 'Regions', icon: 'globe', label: undefined }
+    render: { header: 'Regions', icon: 'globe', label: undefined },
+    clearIfEmpty: true
   },
   Alerts: {
     prop: 'radar',
@@ -87,7 +89,8 @@ export const filterMapItems: { [key in FilterMapTypes]: FilterMap } = {
   Agents: {
     prop: 'agent',
     searchprop: 'agents',
-    render: { header: 'Financial Advisors', icon: 'address book outline', label: undefined, max: 5 }
+    render: { header: 'Financial Advisors', icon: 'address book outline', label: undefined, max: 5 },
+    clearIfEmpty: true
   },
   Aua: {
     prop: 'size',
@@ -107,7 +110,8 @@ export const filterMapItems: { [key in FilterMapTypes]: FilterMap } = {
   Branch: {
     prop: 'branch',
     searchprop: 'branch',
-    render: { header: 'Branch', icon: 'id badge', label: undefined, max: 5 }
+    render: { header: 'Branch', icon: 'id badge', label: undefined, max: 5 },
+    clearIfEmpty: true
   },
   ClientStatus: {
     prop: 'clientStatus',
@@ -147,7 +151,7 @@ export const createFilterAdv = (data: Client[], searchParms?: SearchParms | unde
   }
 
   return Object.keys(filterMapItems).reduce((memo, key) => {
-    const { prop, subprop, searchprop } = filterMapItems[key];
+    const { prop, subprop, searchprop, clearIfEmpty } = filterMapItems[key];
 
     let filter = { ...memo[key] } || {};
     let appliedFilters = searchParms && searchParms[searchprop];
@@ -172,6 +176,12 @@ export const createFilterAdv = (data: Client[], searchParms?: SearchParms | unde
     Object.keys(filter).forEach(v => {
       filter[v] = { ...filter[v], init: reset ? filter[v].current : filter[v].init || filter[v].current };
     })
+
+    if (clearIfEmpty) {
+      Object.keys(filter).forEach(v => {
+        if (filter[v].init === 0) { delete filter[v]; }
+      });
+    }
 
     return { ...memo, [key]: filter };
   }, from || {} as ClientFilters);

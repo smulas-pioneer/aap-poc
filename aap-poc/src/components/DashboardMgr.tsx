@@ -62,8 +62,6 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
   }
 
   componentDidMount() {
-    console.log('Dashboard did mount');
-
     //if (!this.props.data) {
     this.props.searchClient({ uid: this.props.uid, filter: '', reset: true });
     //}
@@ -90,14 +88,21 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
         propFilterValues.push(value);
       }
 
-      this.handleOnChangeFilter({ ...this.state.searchParms, [prop]: propFilterValues });
+      this.handleOnChangeFilter({ ...this.state.searchParms, [prop]: propFilterValues, reset: this.filterReset(prop) });
     }
   }
   searchAdvancedByGraph = (prop: string, data: { name: string, value: number, filter: string, percent: number, payload: any, isActive: boolean }) => {
     this.searchAdvanced(prop, data.filter, data.isActive);
   }
+
+  filterReset = (name: string) => {
+    return (name === 'countries')
+  }
   handleOnChangeFilter = (searchParms: SearchParms) => {
-    if (searchParms.countries && searchParms.countries.length === 1 && ['Austria', 'Italy'].includes(searchParms.countries[0])) { }
+    if (searchParms.countries &&
+      searchParms.countries.length === 1 &&
+      ['Austria', 'Italy'].includes(searchParms.countries[0])) {
+    }
     else {
       searchParms[filterMapItems.Regions.searchprop] = undefined;
       searchParms[filterMapItems.Branch.searchprop] = undefined;
@@ -331,6 +336,7 @@ class DashboardMgrCompo extends conn.StatefulCompo<DashboardMgrState> {
               filterMaps={filterMaps}
               filterValue={data.parms}
               onChange={this.handleOnChangeFilter}
+              reset={this.filterReset}
             />
           </Segment>
         </AdvancedGrid>
