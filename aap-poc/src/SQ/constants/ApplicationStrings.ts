@@ -48,12 +48,12 @@ export const homeConfiguration = [
         embed: false
       },
       {
-        title: 'Strategical asset allocation',
+        title: 'Complex Portfolio Optimization',
         url: '/altoshow/alto-web',
         embed: false
       },
       {
-        title: 'Tactical asset allocation',
+        title: 'Advanced Risk & Performance Modules',
         url: '/altoshow/alto-web',
         embed: false
       },
@@ -70,12 +70,12 @@ export const homeConfiguration = [
         embed: true
       },
       {
-        title: 'Aggregated risk analysis',
+        title: 'Strategic & Tactical Asset Allocation',
         url: 'http://www.codebox.ch/swissquant/ims/dpm/index.html',
         embed: true
       },
       {
-        title: 'Compliance checks',
+        title: 'Aggregated risk & Compliance Analysis',
         url: 'http://www.codebox.ch/swissquant/ims/dpm/index.html',
         embed: true
       },
