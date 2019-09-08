@@ -26,7 +26,6 @@ const getSuggestion1 = (position: StrategyItem[], axes: RadarStrategyParm, calcu
         if (strategy) {
           return { ...p, suggestionAccepted: strategy.suggestionAccepted }
         }
-        //console.log('ERROR', strategy,forced.map(i=>i.security.IsinCode), position.map(i=>i.security.IsinCode),p.security.IsinCode);
         return p;
       })
       : position;
@@ -117,7 +116,7 @@ const performanceForPeriod = (isin: string, period: PerformancePeriod) => {
   const filteredData = data.filter(p => p.date >= minDateStr);
   return filteredData.map(p => ({
     ...p,
-    perf: (p.perf*0.51) - filteredData[0].perf
+    perf: (p.perf*0.19) - filteredData[0].perf
   }));
 }
 

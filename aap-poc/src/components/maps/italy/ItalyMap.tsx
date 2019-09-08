@@ -16,7 +16,7 @@ import { LangDictionary } from '../../../reducers/language/interfaces';
 import { MapOptions } from '../../shared/MapOptions';
 import { Client } from '../../../_db/interfaces';
 import { formatAua } from '../../../_db/utils';
-import { SingleAreaLegend } from './SingleAreaLegend';
+import { SingleAreaLegend } from '../../shared/SingleAreaLegend';
 import { getMapOptionTypeCaption } from '../../../commonUtils';
 
 import { ConfigLayout } from '../../../reducers/config';
@@ -128,7 +128,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
   }
 
   calculateAreaValues(clients: Client[], type: IndicatorOptionsType = IndicatorOptionsType.clients, regionFilter?: string) {
-    // distinct clietns by id
+    // distinct clients by id
     let ds = uniqBy(clients, c => c.id);
     if (regionFilter) ds = ds.filter(d => d.address.region === regionFilter);
 
@@ -308,7 +308,7 @@ export class ItalyMap extends React.Component<ItalyMapProps, ItalyMapState> {
           shareButtons={['Image', 'Copy']}
           rightComponent={currentLegend} />}
 
-        <svg x="0px" y="0px" width="100%" height="76%" viewBox="0 0 340 400">
+        <svg x="0px" y="0px" width="100%" height="82%" viewBox="0 0 340 400">
           <g className="regions" >
             {
               ItalyMap.AREA_MAP_INDEX.map((val, idx) => {

@@ -1,6 +1,6 @@
 {
   "name": "aap-poc",
-  "version": "2.0.31",
+  "version": "2.0.41",
   "private": true,
   "homepage": ".",
   "dependencies": {
@@ -9,6 +9,7 @@
     "lodash": "^4.17.4",
     "mathjs": "^3.16.5",
     "moment": "^2.19.1",
+    "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-event-timeline": "^1.4.0",

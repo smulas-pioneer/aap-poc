@@ -51,6 +51,7 @@ export const setAppTheme = createAction<'white' | 'dark'>('SET_APP_THEME');
 
 export const setLanguage = createAction<'gb' | 'it' | 'de'>('SET_LANGUAGE');
 export const searchClientSuccess = createAction<SearchResult>('SEARCH_CLIENT_SUCCESS');
+
 export const searchClient = (args: SearchParms) => (dispatch: any, getState: () => any) => {
     const s = getState();
     const usr = getCurrentUser(s)!;

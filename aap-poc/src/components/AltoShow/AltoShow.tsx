@@ -3,6 +3,7 @@ import Slider, { Settings } from 'react-slick';
 import { Icon, List, Accordion, Segment, Transition } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
 import { capitalize } from 'lodash';
+import { Link } from 'react-router-dom';
 
 const parseName = (name: string) => {
   const nameWithoutExt = name.substring(0, name.length - 4);
@@ -36,11 +37,11 @@ const getImagesByGroup = async (groupId: string, showThumbnails = true) => {
 }
 
 
-export const AltoShow = () => {
+export const AltoShow = (props: { current: string }) => {
   const [list, setList] = useState<{ name: string, images: any[], showThumbnails: boolean }[]>([]);
 
   const [activeIndex, setactiveIndex] = useState<number>(0);
-  const [current, setCurrent] = useState<{ src: string, index: number } | undefined>(undefined);
+  const [current, setCurrent] = useState<{ src: string, index: number } | undefined>(undefined);//props.current !=='' ? { src: props.current, index: 0 }:undefined);
   const [animationClass, setAnimationClass] = useState<string | undefined>(undefined);
   const [showSilder, setShowSlider] = useState(true);
   const mainContent = React.useRef<any>(null);
@@ -51,7 +52,13 @@ export const AltoShow = () => {
       getImagesByGroup('alto-win'),
       getImagesByGroup('alto-web'),
       getImagesByGroup('reporting', false)
-    ]).then(setList)
+    ]).then(l=>{
+      setList(l);
+      if ( props.current) {
+        const ix =  ['alto-win','alto-web','reporting'].indexOf(props.current);
+        setactiveIndex(ix);
+      }
+    });
   }, [])
 
   useEffect(() => {
@@ -60,7 +67,7 @@ export const AltoShow = () => {
         slider.current.slickGoTo(current.index, true)
         , .300)
     }
-  }, [current,activeIndex,showSilder,list]);
+  }, [current, activeIndex, showSilder, list]);
 
   useEffect(() => {
     setAnimationClass('altoshow-current');
@@ -89,14 +96,18 @@ export const AltoShow = () => {
 
   const handleTitleClick = (e: any, itemProps: any) => {
     const { index } = itemProps;
-    setactiveIndex(index);
+    if ( activeIndex=== index) {
+      setCurrent(undefined);
+    } else {
+      setactiveIndex(index);
+    }
   }
 
   const sliderPanes = list.length && list[activeIndex] && list[activeIndex].images.map((img: any, ix: number) => {
     return <div className="sliderGraphItem" key={ix} style={{ height: '110px', marginTop: '3px' }}>
       <div style={{ border: '1px solid grey', margin: '0 3px' }} onClick={() => setCurrent({ src: img.src, index: ix })} >
         <Transition duration={2000} transitionOnMount visible mountOnShow unmountOnHide animation='fade' >
-          {image(img.src, undefined,img.name)}
+          {image(img.src, undefined, img.name)}
         </Transition>
       </div>
     </div>
@@ -121,10 +132,10 @@ export const AltoShow = () => {
   return <div className="altoshow" style={{ height: '100vh', width: '100%' }} >
     <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <img alt="" src={logo} style={{ width: '250px', cursor: 'pointer' }} onClick={() => setCurrent(undefined)} />
+        <Link to="/"><img alt="" src={logo} style={{ width: '250px', cursor: 'pointer' }}  /></Link>
         <Accordion activeIndex={activeIndex} panels={panels} onTitleClick={handleTitleClick} styled style={{ width: '250px', flex: 1 }} />
         {current && list[activeIndex].showThumbnails && <Segment>
-          <List.Item onClick={() => setShowSlider(!showSilder)} >
+          <List.Item onClick={() => setShowSlider(!showSilder)} style={{ cursor:'pointer' }} >
             <List.Content>
               {`${showSilder ? 'Hide' : 'Show'} Thumbnails`}
             </List.Content>
@@ -133,15 +144,15 @@ export const AltoShow = () => {
       </div>
       <div style={{ display: 'flex', flex: 1, flexDirection: 'column', width: showSilder ? '85%' : '100%' }}>
         <div ref={mainContent} style={{ flex: '1', overflowY: 'scroll', marginBottom: '2px' }}>
-          <Segment style={current ? {}:{height:'100%', textAlign:'center', backgroundColor:'white'}}>
+          <Segment style={current ? {} : { height: '100%', textAlign: 'center', backgroundColor: 'white' }}>
             {current
               ? image(current.src, animationClass)
-              : <img  alt=""  height='100%' src={home} style={{margin:'auto'}} />
+              : <img alt="" height='100%' src={home} style={{ margin: 'auto' }} />
             }
           </Segment>
         </div>
         {showSilder && current && list[activeIndex].showThumbnails &&
-          <Segment style={{ marginTop: '2px', padding: '0.1em 1em' }}>
+          <Segment style={{ marginTop: '2px', padding: '0.1em 1em'}}>
             <div style={{ margin: '2px auto', height: '120px', paddingLeft: '10%', paddingRight: '10%' }}>
               <Slider ref={slider} {...settings} >{sliderPanes}</Slider>
             </div>
@@ -155,7 +166,7 @@ export const AltoShow = () => {
 const CustomArrowPrev = (props: any) => (<div className={`custom-slick-arrow custom-slick-prev`}><Icon name='arrow left' onClick={props.onClick} link /></div>);
 const CustomArrowNext = (props: any) => (<div className={`custom-slick-arrow custom-slick-next`}><Icon name='arrow right' onClick={props.onClick} link /></div>);
 
-const image = (src?: string, animationClass?: string, name?:string) => {
+const image = (src?: string, animationClass?: string, name?: string) => {
   if (!src) return null;
   const isPdf = src.endsWith('.pdf');
   return isPdf
@@ -164,5 +175,5 @@ const image = (src?: string, animationClass?: string, name?:string) => {
 No biggie... you can <a href={src}>click here to
 download the PDF file.</a></p>
     </object></div>
-    : <img  alt="" title={name} className={animationClass} src={src} height='100%' width='100%' />
+    : <img alt="" title={name} className={animationClass} src={src} height='100%' width='100%' />
 }

@@ -9,6 +9,7 @@ import { startsWith, groupBy } from "lodash";
 import { round } from "mathjs";
 import { Fragment } from "react";
 import { ComposedChartChangeValueDialog } from "../chart/ComposedChartChangeValueDialog";
+import { throwStatement } from "@babel/types";
 
 export type FilterMapDefinition = { [k in FilterMapTypes]?: { clearAll?: boolean } | undefined };
 
@@ -19,6 +20,7 @@ export interface ClientFilterProps {
   filterMaps: FilterMapTypes[] | FilterMapDefinition;
   searchPlaceholder?: string;
   freeFilterText?: boolean;
+  reset?: (filterName: string) => boolean;
 }
 
 export interface ClientFilterState {
@@ -55,11 +57,13 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
       propFilterValues.push(value);
     }
 
-    this.props.onChange({ ...this.props.filterValue, [name]: propFilterValues });
+    const reset = this.props.reset ? this.props.reset(name) : false;
+
+    this.props.onChange({ ...this.props.filterValue, [name]: propFilterValues, reset });
   }
 
   clearAllFilters(name: string) {
-    this.props.onChange({ ...this.props.filterValue, [name]: undefined });
+    this.props.onChange({ ...this.props.filterValue, [name]: undefined, reset: true });
   }
 
   hasMoreThenOneFilter(values: SearchFilter) { return Object.keys(values).filter(e => values[e].isInUse).length > 1; }
@@ -92,11 +96,11 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
       return 0;
     }).reduce((memo, prop, j) => {
       const { current, isInUse } = values[prop];
-
       const item = (
         <Menu.Item key={j} name='prop' link onClick={() => searchprop && this.searchAdvanced(searchprop, prop, isInUse)}>
           {current > 0 && <Label size="tiny" content={current} />}
           {isInUse && <Icon name="checkmark" color="green" style={{ float: 'none', margin: '0 .5em 0 0' }} />}
+
           {prop !== '0' ? (label ? label(prop) : prop) : 'none'}
         </Menu.Item>
       );
@@ -163,11 +167,12 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
     } else {
       filters.push(filter);
     }
-    this.props.onChange({ ...this.props.filterValue, dynamicFilters: filters });
+
+    this.props.onChange({ ...this.props.filterValue, dynamicFilters: filters, reset: false });
   }
 
   clearAllDynamicFilters() {
-    this.props.onChange({ ...this.props.filterValue, dynamicFilters: undefined });
+    this.props.onChange({ ...this.props.filterValue, dynamicFilters: undefined, reset: true });
   }
 
   renderDynamicFilter() {
@@ -181,9 +186,9 @@ export class ClientFilter extends React.Component<ClientFilterProps, ClientFilte
           return ">=";
         case DynamicFilterOperation.GreaterThan:
           return ">";
-        case DynamicFilterOperation.LesserEqualThan:
+        case DynamicFilterOperation.LessEqualThan:
           return "<=";
-        case DynamicFilterOperation.LesserThan:
+        case DynamicFilterOperation.LessThan:
           return "<";
       }
     }

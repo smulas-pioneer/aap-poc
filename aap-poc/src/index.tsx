@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import * as reducers from './reducers';
 import { configureStore, loadConfiguration } from 'app-support';
-import { HashRouter as Router } from 'react-router-dom';
+import { HashRouter as Router, Route } from 'react-router-dom';
 import './styles/index.css';
 import 'semantic-ui-css/semantic.min.css';
 import './styles/hovereffect.css';
@@ -39,7 +39,7 @@ loadConfiguration('config.json').then((_cfg) => {
     render(
       <Provider store={store}>
         <Router >
-          <Root />
+        <Root></Root>
         </Router>
       </Provider>,
       document.getElementById('root')

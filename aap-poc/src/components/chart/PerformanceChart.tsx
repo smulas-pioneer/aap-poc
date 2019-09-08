@@ -80,6 +80,8 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
   }
 
   componentWillReceiveProps(next: PerformanceChartProps) {
+
+
     if (next.data && next.data[next.data.length - 1].perf !== this.state.data[this.state.data.length - 1].perf) {
       this.setData({ data: next.data })
     }
@@ -115,11 +117,17 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
 
     this.getProbabilityByTimeHorizon = regr.getProbabilityByTimeHorizon;
     this.returnFor95 = regr.returnFor95;
+
+    const target_return =  this.returnFor95(this.state.timeHorizon);;
+    const changed = target_return.toString() !== this.state.target_Return.toString();
     this.setState({
       data: regr.data,
       period: period,
       initalPerf: filteredActuals[0].perf!,
-      target_Return: this.returnFor95(this.state.timeHorizon).toString()
+      target_Return: target_return.toString()
+    },()=>{
+
+      this.props.onCalculate95TargetRetForClientTimeHorizon && changed && this.props.onCalculate95TargetRetForClientTimeHorizon(target_return);
     });
   }
 
@@ -137,7 +145,6 @@ export class PerformanceChart extends React.Component<PerformanceChartProps, Per
 
   handleChangeTargetReturn = (value: string) => {
     const n = parseFloat(value);
-
     this.setState({
       target_Return: value,
       probability: this.getProbabilityByTimeHorizon(this.state.timeHorizon, n)

@@ -44,9 +44,9 @@ const clientDynamicFilter = (dynaFilter: Model.DynamicSearchFilter) => (c: Model
         return curr.weight >= dynaFilter.value;
       case Model.DynamicFilterOperation.GreaterThan:
         return curr.weight > dynaFilter.value;
-      case Model.DynamicFilterOperation.LesserEqualThan:
+      case Model.DynamicFilterOperation.LessEqualThan:
         return curr.weight <= dynaFilter.value;
-      case Model.DynamicFilterOperation.LesserThan:
+      case Model.DynamicFilterOperation.LessThan:
         return curr.weight < dynaFilter.value;
     }
   }
@@ -54,6 +54,8 @@ const clientDynamicFilter = (dynaFilter: Model.DynamicSearchFilter) => (c: Model
 };
 export const searchClient = (parms: Model.SearchParms, visibility?: string[]): Promise<Model.SearchResult> => {
   let theList = process.env.REACT_APP_LIMIT_DATA_ROWS ? clientList.slice(0, parseInt(process.env.REACT_APP_LIMIT_DATA_ROWS)) : clientList;
+  theList = process.env.REACT_APP_FILTER_DATA_COUNTRIES ? theList.filter(f => (process.env.REACT_APP_FILTER_DATA_COUNTRIES || '').split(',').includes(f.country)) : theList;
+
   if (visibility && visibility.length) theList = theList.filter(c => arrayContains(visibility, c.agent));
   if (parms.onlyWithAlerts) theList = theList.filter(r => r.radar.numOfAlerts);
 
@@ -85,17 +87,12 @@ export const searchClient = (parms: Model.SearchParms, visibility?: string[]): P
   //   return curr && curr.weight >= 0.5;
   // });
 
-  // console.log(yyy, 'with aggregated values!');
-
   const ret = {
     parms,
     result: filteredClients,
     radar: undefined,
     breakdowns: getClientsBreakdowns(filteredClients)
   };
-
-
-
   return Promise.resolve(ret);
 };
 

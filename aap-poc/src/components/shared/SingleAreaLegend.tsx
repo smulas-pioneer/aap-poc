@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { LangDictionary } from "../../../reducers/language/interfaces";
+import { LangDictionary } from "../../reducers/language/interfaces";
 
-import { formatAua, } from '../../../_db/utils';
-import { getMapOptionTypeCaption } from '../../../commonUtils';
-import { IndicatorOptionsType } from '../../../actions/model';
-import { AreaValue } from '../../shared/AreaMapProps';
+import { formatAua, } from '../../_db/utils';
+import { getMapOptionTypeCaption } from '../../commonUtils';
+import { IndicatorOptionsType } from '../../actions/model';
+import { AreaValue } from './AreaMapProps';
 
 export const SingleAreaLegend = ({ type, value, lang, showTitle = true }: { type: IndicatorOptionsType, value: AreaValue, lang: LangDictionary, showTitle?: boolean }) => {
   if (!value) return null;

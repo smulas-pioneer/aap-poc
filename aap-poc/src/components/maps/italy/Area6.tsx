@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AreaMapProps } from '../../shared/AreaMapProps';
-import { Marker } from './Marker';
+import { Marker } from '../../shared/Marker';
 
 export const Area6 = ({ htmlTooltip, onClick, fill, color, percentage }: AreaMapProps) => (
     <g data-tip={htmlTooltip}>

@@ -219,6 +219,7 @@ export type Size = '<1M' | '1-5M' | '5-10M' | '10-20M' | '>20M';
 export type ClientStatusDuration = '<1W' | '1W-1M' | '1M-6M' | '>6M';
 
 export interface SearchParms {
+  reset? : boolean,
   filter: string;
   agents?: string[];
   branch?: string[];

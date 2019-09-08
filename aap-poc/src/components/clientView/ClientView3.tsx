@@ -75,10 +75,10 @@ const reducer = (state: State, action: Partial<State>): State => {
 
 //class ClientViewCompo extends conn.StatefulCompo<State> {
 export const ClientView = conn.PureCompo(props => {
-  const { client, lang, history, id, getClient, getSuggestions, strategySuccessCount,strategy } = props;
+  const { client, lang, history, id, getClient, getSuggestions, strategySuccessCount, strategy } = props;
   const [state, dispatch] = React.useReducer(reducer, defaultState);
   const { radar, axes, viewHistory, processing, stateStrategy, breakdown } = state;
-  const [highlightedAlert, setHighlightedAlert] = React.useState<string|undefined>(undefined);
+  const [highlightedAlert, setHighlightedAlert] = React.useState<string | undefined>(undefined);
 
 
   React.useEffect(() => {
@@ -133,7 +133,6 @@ export const ClientView = conn.PureCompo(props => {
 
 
   const handleOnChange = (strategy: StrategyItem[]) => {
-    //console.log(strategy);
     if (strategy.length > 0) {
       dispatch({ firstSimulation: false, processing: undefined, somethingIsChanged: false });
       setTimeout(() => {
@@ -194,7 +193,9 @@ export const ClientView = conn.PureCompo(props => {
               clientTimeHorizon={client!.timeHorizon}
               advancedView={true}
               version={strategySuccessCount}
-              onCalculate95TargetRetForClientTimeHorizon={currentTargetReturn => dispatch({ currentTargetReturn })}
+              onCalculate95TargetRetForClientTimeHorizon={currentTargetReturn => {
+                dispatch({ currentTargetReturn })
+              }}
               lang={lang} />
           }]
       },
@@ -272,7 +273,7 @@ export const ClientView = conn.PureCompo(props => {
           </Grid>
         </Segment>
         <Segment>
-          <ClientAlert highlighedAlert={highlightedAlert} radar={client.radar} client={client} lang={lang} onOpenHistory={() => dispatch({ viewHistory: true })} />
+          <ClientAlert highlighedAlert={highlightedAlert} radar={radar || client.radar} client={client} lang={lang} onOpenHistory={() => dispatch({ viewHistory: true })} />
         </Segment>
         <div className='ui-flex ui-flex-row'>
           <Segment style={{ margin: 0 }}>
