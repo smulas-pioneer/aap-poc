@@ -28,5 +28,5 @@ zip -r ./${APP_NAME}-${PACKAGE_VER}.zip .
 cp ./${APP_NAME}-${PACKAGE_VER}.zip ./${APP_NAME}-latest.zip
 
 # Publish to BITBUCKET Downloads using datacenter
-../../../datacenter/releaseBB.sh ${APP_NAME} ${APP_NAME}
+# ../../../datacenter/releaseBB.sh ${APP_NAME} ${APP_NAME}
 
