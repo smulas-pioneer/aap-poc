@@ -5,7 +5,7 @@
   "main": "index-html",
   "license": "MIT",
   "dependencies": {
-    "serve": "^6.5.3"
+    "serve": "^11.3.2"
   },
   "scripts": {
     "start": "serve . --port 8080"
