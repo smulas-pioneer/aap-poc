@@ -8,7 +8,7 @@
     "@types/react-tooltip": "^3.3.2",
     "app-support": "^2.0.17",
     "javascript-lp-solver": "^0.4.5",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.21",
     "mathjs": "^3.16.5",
     "moment": "^2.19.1",
     "react-event-timeline": "^1.4.0",
