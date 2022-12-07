@@ -22,7 +22,7 @@
     "@types/lodash": "^4.14.78",
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
-    "express": "^4.15.2",
+    "express": "^4.17.3",
     "faker": "^4.1.0",
     "isomorphic-fetch": "^2.2.1",
     "javascript-lp-solver": "^0.4.5",
